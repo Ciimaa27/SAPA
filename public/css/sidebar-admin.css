@@ -1,0 +1,111 @@
+.sidebar-admin{
+    width:230px;
+    height:100vh;
+    background:#f7f7f7;
+    position:fixed;
+    left:0;
+    top:0;
+    padding:12px;
+    border-right:1px solid #ddd;
+
+    display:flex;
+    flex-direction:column;
+
+    box-shadow:2px 0 6px rgba(0,0,0,0.05);
+}
+
+/* LOGO */
+
+.logo-area{
+    margin-bottom:8px;
+}
+
+.logo-area h2{
+    font-weight:800;
+    color:#7b5cff;
+    margin:0;
+    font-size:20px;
+}
+
+.logo-area p{
+    font-size:10px;
+    color:#666;
+    margin:0;
+}
+
+/* TITLE MENU */
+
+.menu-title{
+    font-size:10px;
+    color:#999;
+    margin-top:6px;
+    margin-bottom:2px;
+    font-weight:600;
+}
+
+/* MENU */
+
+.menu-list{
+    list-style:none;
+    padding:0;
+    flex:1;
+}
+
+.menu-item{
+    margin-bottom:1px;
+}
+
+.menu-item a{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 8px;
+    text-decoration:none;
+    color:#555;
+    border-radius:6px;
+    font-size:12px;
+    transition:0.2s;
+}
+
+.menu-item a i{
+    font-size:12px;
+    width:14px;
+}
+
+.menu-item a:hover{
+    background:#ece6ff;
+}
+
+.menu-item.active a{
+    background:#e5dcff;
+    color:#6f42c1;
+    font-weight:600;
+}
+
+/* LOGOUT */
+
+.logout{
+    margin-top:auto;
+}
+
+.logout a{
+    font-size:12px;
+    padding:6px 8px;
+    display:flex;
+    gap:6px;
+    text-decoration:none;
+    color:#555;
+}
+
+.logout a:hover{
+    background:#ece6ff;
+    border-radius:6px;
+}
+
+/* CONTENT WRAPPER */
+
+.content{
+    margin-left:230px;
+    min-height:100vh;
+    background:#f4f6fb;
+}

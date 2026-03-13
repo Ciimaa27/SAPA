@@ -1,0 +1,56 @@
+.topbar-admin{
+    position:fixed;
+    top:0;
+    left:230px;
+
+    width:calc(100% - 230px);
+    height:60px;
+
+    background:#ffffff;
+    border-bottom:1px solid #eee;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:0 25px;
+
+    z-index:1000;
+}
+
+.topbar-left{
+    font-size:14px;
+    font-weight:500;
+    color:#555;
+}
+
+.topbar-right{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.topbar-right span{
+    font-size:14px;
+    font-weight:600;
+    color:#333;
+}
+
+.topbar-right i{
+    font-size:18px;
+    color:#777;
+    cursor:pointer;
+}
+
+.topbar-right i:hover{
+    color:#6f42c1;
+}
+
+
+/* supaya content tidak ketimpa topbar */
+
+.content{
+    margin-left:230px;
+    padding:25px;
+    padding-top:80px;
+}

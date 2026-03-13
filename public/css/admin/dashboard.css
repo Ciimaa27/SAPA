@@ -1,0 +1,121 @@
+.main-dashboard{
+    min-height:100vh;
+}
+
+/* CARD */
+
+.card-dashboard{
+    background:#ffffff;
+    border-radius:10px;
+    padding:12px 14px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.05);
+    position:relative;
+    border:1px solid #eee;
+    transition:0.2s;
+}
+
+.card-dashboard:hover{
+    transform:translateY(-2px);
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* SECTION */
+
+.section{
+    margin-bottom:18px;
+}
+
+.section-title{
+    font-size:14px;
+    font-weight:600;
+    color:#555;
+    margin-bottom:10px;
+}
+
+/* CARD TEXT */
+
+.card-dashboard p{
+    font-size:12px;
+    color:#777;
+    margin-bottom:3px;
+}
+
+.card-dashboard h3{
+    font-size:20px;
+    font-weight:700;
+    color:#6a4bc4;
+    margin:0;
+}
+
+/* ICON */
+
+.icon-orange{
+    position:absolute;
+    right:12px;
+    top:12px;
+    font-size:16px;
+    color:#f2b177;
+}
+
+/* CHART */
+
+.card-dashboard canvas{
+    margin-top:10px;
+}
+
+/* TABLE */
+
+.table{
+    font-size:12px;
+}
+
+.table thead th{
+    font-size:12px;
+    font-weight:600;
+    color:#666;
+}
+
+.table tbody td{
+    font-size:12px;
+    vertical-align:middle;
+}
+
+/* BADGE */
+
+.badge{
+    font-size:11px;
+    padding:4px 6px;
+}
+
+.badge-icon{
+    position:absolute;
+    right:12px;
+    bottom:10px;
+    width:22px;
+    height:22px;
+    border-radius:5px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:11px;
+}
+
+.badge-icon.up{
+    background:#ffe3c6;
+    color:#f4a261;
+}
+
+.badge-icon.down{
+    background:#ffe3c6;
+    color:#f4a261;
+}
+
+.badge-icon.success{
+    background:#e4fff5;
+    color:#2ec4b6;
+}
+
+.badge-icon.danger{
+    background:#ffe5e5;
+    color:#ff6b6b;
+}
