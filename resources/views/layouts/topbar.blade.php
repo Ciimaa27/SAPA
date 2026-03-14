@@ -36,7 +36,6 @@ function updateDateTime(){
     const jam = now.toLocaleTimeString('id-ID',{
         hour:'2-digit',
         minute:'2-digit',
-        second:'2-digit'
     });
 
     document.getElementById("tanggal").innerHTML = hari + ", " + tanggal;

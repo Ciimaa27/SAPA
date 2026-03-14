@@ -11,15 +11,15 @@
     <!-- Menu -->
     <ul class="menu-list">
 
-        <li class="menu-item active">
+        <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
             <a href="{{ route('dashboard') }}">
                 <i class="fas fa-th-large"></i>
                 Dashboard
             </a>
         </li>
 
-        <li class="menu-item">
-            <a href="#">
+        <li class="menu-item {{ request()->routeIs('kelola-akun') ? 'active' : '' }}">
+            <a href="{{ route('kelola-akun') }}">
                 <i class="fas fa-user"></i>
                 Kelola akun
             </a>
@@ -27,29 +27,29 @@
 
         <p class="menu-title">Data Master</p>
 
-        <li class="menu-item">
-            <a href="#">
+        <li class="menu-item {{ request()->routeIs('data-siswa') ? 'active' : '' }}">
+            <a href="{{ route('data-siswa') }}">
                 <i class="fas fa-users"></i>
                 Data siswa
             </a>
         </li>
 
-        <li class="menu-item">
-            <a href="#">
+        <li class="menu-item {{ request()->routeIs('data-wali') ? 'active' : '' }}">
+            <a href="{{ route('data-wali') }}">
                 <i class="fas fa-user-friends"></i>
                 Data wali
             </a>
         </li>
 
-        <li class="menu-item">
-            <a href="#">
+        <li class="menu-item {{ request()->routeIs('guru') ? 'active' : '' }}">
+            <a href="{{ route('guru') }}">
                 <i class="fas fa-chalkboard-teacher"></i>
                 Guru & kelas
             </a>
         </li>
 
-        <li class="menu-item">
-            <a href="#">
+        <li class="menu-item {{ request()->routeIs('relasi') ? 'active' : '' }}">
+            <a href="{{ route('relasi') }}">
                 <i class="fas fa-link"></i>
                 Relasi siswa dan wali
             </a>
@@ -57,8 +57,8 @@
 
         <p class="menu-title">Pendaftaran IoT</p>
 
-        <li class="menu-item">
-            <a href="#">
+         <li class="menu-item {{ request()->routeIs('rfid') ? 'active' : '' }}">
+            <a href="{{ route('rfid') }}">
                 <i class="fas fa-wifi"></i>
                 RFID dan sidik jari
             </a>

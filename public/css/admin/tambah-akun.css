@@ -1,0 +1,43 @@
+.btn-kembali{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+
+    background:#e9e1ff;
+    color:#6f42c1;
+
+    border:1px solid #d6c8ff;
+    border-radius:6px;
+
+    padding:4px 10px;
+    font-size:12px;
+    font-weight:500;
+
+    text-decoration:none;
+
+    width:fit-content;
+    max-width:max-content;
+}
+
+.btn-kembali:hover{
+    background:#dcd0ff;
+    color:#5a34a3;
+}
+
+.form-label{
+    font-size:13px;
+    font-weight:600;
+}
+
+.form-control{
+    font-size:13px;
+}
+
+.btn-success{
+    background:#0eac3b;
+    border:none;
+}
+
+.btn-warning{
+    color:white;
+}
