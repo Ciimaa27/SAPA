@@ -18,6 +18,7 @@
 
             <div class="card mb-3 p-3">
                 <div class="d-flex align-items-center gap-3">
+
                     <div style="min-width:140px;">
                         Total Siswa : <strong>501</strong>
                     </div>
@@ -31,7 +32,7 @@
                         </select>
                     </div>
 
-                    <a href="#" class="btn btn-primary btn-sm btn-tambah">
+                    <a href="{{ route('tambah-siswa') }}" class="btn btn-primary btn-sm btn-tambah">
                         <i class="fa fa-plus"></i> Tambah
                     </a>
 
@@ -41,6 +42,7 @@
                         </span>
                         <input type="text" class="form-control" placeholder="Pencarian">
                     </div>
+
                 </div>
             </div>
 
@@ -145,4 +147,4 @@
         </div>
     </div>
 
-@endsection 
+@endsection

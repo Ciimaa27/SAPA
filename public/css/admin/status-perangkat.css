@@ -7,15 +7,17 @@
     padding:5px 30px 20px 20px;
 }
 
-.search-flex{
-    flex:1;
+.status-card{
+    border-radius:10px;
 }
 
-.btn-tambah{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    padding:6px 14px;
+.status-online{
+    color:#20b26b;
+    font-weight:500;
+}
+
+.status-offline{
+    color:#e74c3c;
     font-weight:500;
 }
 
@@ -28,21 +30,13 @@
     font-weight:600;
 }
 
-.btn-warning{
-    color:white;
-}
-
-.btn-danger{
-    color:white;
-}
-
-body{
-    overflow-x:hidden;
-}
-
 .content{
     margin-left:230px;
     padding-top:60px;
     padding-left:10px;
     padding-right:10px;
+}
+
+body{
+    overflow-x:hidden;
 }

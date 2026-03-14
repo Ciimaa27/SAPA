@@ -1,0 +1,118 @@
+.container-dashboard {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.btn-kembali{
+display:inline-flex;
+align-items:center;
+gap:5px;
+
+background:#e9e1ff;
+color:#6f42c1;
+
+border:1px solid #d6c8ff;
+border-radius:6px;
+
+padding:4px 10px;
+font-size:12px;
+font-weight:500;
+
+text-decoration:none;
+width:fit-content;
+}
+
+.btn-kembali:hover{
+background:#dcd0ff;
+color:#5a34a3;
+}
+
+
+.info-kelas{
+max-width:400px;
+}
+
+.info-row{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:10px;
+}
+
+.info-row label{
+width:90px;
+font-weight:600;
+font-size:13px;
+}
+
+.info-row span{
+width:10px;
+}
+
+.info-row .form-control{
+flex:1;
+font-size:13px;
+}
+.main-dashboard {
+    padding: 5px 30px 20px 20px;
+}
+
+.form-label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status-group {
+    display: flex;
+    gap: 8px;
+}
+
+.status-btn {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    font-size: 12px;
+    cursor: pointer;
+    background: #f5f5f5;
+}
+
+.status-btn.active {
+    background: #e9e1ff;
+    border: 1px solid #6f42c1;
+    color: #6f42c1;
+    font-weight: 600;
+}
+
+.table td {
+    font-size: 13px;
+}
+
+.table th {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.content {
+    margin-left: 230px;
+    padding-top: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.card-footer-absen{
+    border-top:1px solid #eee;
+    padding:12px 16px;
+
+    display:flex;
+    justify-content:flex-end;
+}
+
+.card-footer-absen .btn{
+    padding:6px 14px;
+    font-size:13px;
+}
+

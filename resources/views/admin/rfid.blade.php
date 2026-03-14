@@ -22,15 +22,6 @@
                     <a href="{{ route('rfid') }}" class="btn btn-tab active">RFID</a>
                     <a href="{{ route('sidik-jari') }}" class="btn btn-tab">Sidik jari</a>
 
-                    <div style="width:170px;">
-                        <select class="form-select form-select-sm">
-                            <option>Tampilkan</option>
-                            <option>10</option>
-                            <option>25</option>
-                            <option>50</option>
-                        </select>
-                    </div>
-
                     <div class="input-group input-group-sm search-flex">
                         <span class="input-group-text bg-white">
                             <i class="fa fa-search"></i>

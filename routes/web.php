@@ -53,3 +53,19 @@ Route::get('/rfid', function () {
 Route::get('/sidik-jari', function () {
     return view('admin.sidik-jari');
 })->name('sidik-jari');
+
+Route::get('/data-penjemputan', function () {
+    return view('admin.data-penjemputan');
+})->name('data-penjemputan');
+
+Route::get('/status-perangkat', function () {
+    return view('admin.status-perangkat');
+})->name('status-perangkat');
+
+Route::get('/tambah-siswa', function () {
+    return view('admin.tambah-siswa');
+})->name('tambah-siswa');
+
+Route::get('/siswa-kelas', function () {
+    return view('admin.siswa-kelas');
+})->name('siswa-kelas');

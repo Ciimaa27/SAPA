@@ -61,9 +61,9 @@
                                 <td>Arif Nasution</td>
                                 <td>25</td>
                                 <td>
-                                    <button class="btn btn-success btn-sm">
-                                        Lihat siswa
-                                    </button>
+                                    <a href="{{ route('siswa-kelas') }}" class="btn btn-success btn-sm">
+                                Lihat siswa
+                                </a>
                                 </td>
                             </tr>
 

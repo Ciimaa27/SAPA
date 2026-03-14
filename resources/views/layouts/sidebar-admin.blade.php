@@ -66,8 +66,8 @@
 
         <p class="menu-title">Operasional</p>
 
-        <li class="menu-item">
-            <a href="#">
+        <li class="menu-item {{ request()->routeIs('data-penjemputan') ? 'active' : '' }}">
+            <a href="{{ route('data-penjemputan') }}">
                 <i class="fas fa-download"></i>
                 Data penjemputan
             </a>
@@ -89,8 +89,8 @@
 
         <p class="menu-title">Monitoring IoT</p>
 
-        <li class="menu-item">
-            <a href="#">
+         <li class="menu-item {{ request()->routeIs('status-perangkat') ? 'active' : '' }}">
+            <a href="{{ route('status-perangkat') }}">
                 <i class="fas fa-exclamation-circle"></i>
                 Status perangkat dan log aktivitas
             </a>
