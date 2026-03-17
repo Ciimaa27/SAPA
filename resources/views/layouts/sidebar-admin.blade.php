@@ -48,19 +48,19 @@
             </a>
         </li>
 
-        <li class="menu-item {{ request()->routeIs('relasi') ? 'active' : '' }}">
-            <a href="{{ route('relasi') }}">
+        <li class="menu-item {{ request()->routeIs('relasi.*') ? 'active' : '' }}">
+            <a href="{{ route('relasi.index') }}">
                 <i class="fas fa-link"></i>
                 Relasi siswa dan wali
             </a>
         </li>
-
+         
         <p class="menu-title">Pendaftaran IoT</p>
 
-         <li class="menu-item {{ request()->routeIs('rfid') ? 'active' : '' }}">
-            <a href="{{ route('rfid') }}">
+         <li class="menu-item {{ request()->routeIs('iot.index') ? 'active' : '' }}">
+            <a href="{{ route('iot.index', ['tab'=>'rfid']) }}">
                 <i class="fas fa-wifi"></i>
-                RFID dan sidik jari
+                RFID dan Sidik Jari
             </a>
         </li>
 

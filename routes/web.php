@@ -1,71 +1,114 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\KelolaAkunController;
+use App\Http\Controllers\Admin\DataSiswaController;
+use App\Http\Controllers\Admin\DataWaliController;
+use App\Http\Controllers\Admin\GuruKelasController;
+use App\Http\Controllers\RelasiController;
+use App\Http\Controllers\Admin\IoTController;
+use App\Http\Controllers\Admin\DataPenjemputanController;
 
-Route::get('/', function () { return view('welcome'); });
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
 
-// Route Halaman Login
+Route::get('/', function () {
+    return view('welcome');
+});
+
+// Login
 Route::get('/login', function () {
     return view('login');
 })->name('login');
 
-// Route Halaman Lupa Sandi
+Route::post('/login', function () {
+    return redirect()->route('dashboard');
+});
+
+// Lupa Sandi
 Route::get('/lupasandi', function () {
     return view('lupasandi');
 })->name('lupasandi');
 
-Route::get('/dashboard', function () {
-    return view('admin.dashboard');
-})->name('dashboard');
 
-Route::get('/kelola-akun', function () {
-    return view('admin.kelola-akun');
-})->name('kelola-akun');
+/*
+|--------------------------------------------------------------------------
+| Admin Routes
+|--------------------------------------------------------------------------
+*/
 
-Route::get('/tambah-akun', function () {
-    return view('admin.tambah-akun');
-})->name('tambah-akun');
+Route::prefix('admin')->group(function () {
 
-Route::get('/data-siswa', function () {
-    return view('admin.data-siswa');
-})->name('data-siswa');
+    // Dashboard
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('dashboard');
 
-Route::get('/data-wali', function () {
-    return view('admin.data-wali');
-})->name('data-wali');
+    // ========================
+    // KELOLA AKUN
+    // ========================
+    Route::get('/kelola-akun', [KelolaAkunController::class, 'index'])->name('kelola-akun');
+    Route::delete('/kelola-akun/{id}', [KelolaAkunController::class, 'destroy'])->name('hapus-akun');
 
-Route::get('/guru', function () {
-    return view('admin.guru');
-})->name('guru');
+    Route::get('/tambah-akun', function () {
+        return view('admin.tambah-akun');
+    })->name('tambah-akun');
 
-Route::get('/kelas', function () {
-    return view('admin.kelas');
-})->name('kelas');
+    // ========================
+    // DATA SISWA
+    // ========================
+    Route::get('/data-siswa', [DataSiswaController::class, 'index'])->name('data-siswa');
+    Route::delete('/data-siswa/{id}', [DataSiswaController::class, 'destroy'])->name('hapus-siswa');
 
-Route::get('/relasi', function () {
-    return view('admin.relasi');
-})->name('relasi');
+    Route::get('/tambah-siswa', function () {
+        return view('admin.tambah-siswa');
+    })->name('tambah-siswa');
 
-Route::get('/rfid', function () {
-    return view('admin.rfid');
-})->name('rfid');
+    Route::get('/siswa-kelas', function () {
+        return view('admin.siswa-kelas');
+    })->name('siswa-kelas');
 
-Route::get('/sidik-jari', function () {
-    return view('admin.sidik-jari');
-})->name('sidik-jari');
+    // ========================
+    // DATA Wali
+    // ========================
+    Route::get('/data-wali', [DataWaliController::class, 'index'])->name('data-wali');
+    Route::delete('/data-wali/{id}', [DataWaliController::class, 'destroy'])->name('hapus-wali');
 
-Route::get('/data-penjemputan', function () {
-    return view('admin.data-penjemputan');
-})->name('data-penjemputan');
+    // ========================
+    // DATA Guru & Kelas
+    // ========================
+    Route::get('/guru', [GuruKelasController::class, 'guru'])->name('guru');
+    Route::get('/kelas', [GuruKelasController::class, 'kelas'])->name('kelas');
 
-Route::get('/status-perangkat', function () {
-    return view('admin.status-perangkat');
-})->name('status-perangkat');
+    // ========================
+    // DATA Relasi
+    // ========================
+    Route::get('/admin/relasi', [RelasiController::class, 'index'])->name('relasi.index');
+    Route::get('/admin/relasi/create', [RelasiController::class, 'create'])->name('relasi.create');
+    Route::post('/admin/relasi', [RelasiController::class, 'store'])->name('relasi.store');
+    Route::delete('/admin/relasi/{id_siswa}/{id_wali}', [RelasiController::class, 'destroy'])->name('relasi.destroy');
 
-Route::get('/tambah-siswa', function () {
-    return view('admin.tambah-siswa');
-})->name('tambah-siswa');
+    // ========================
+    // PERANGKAT
+    // ========================
 
-Route::get('/siswa-kelas', function () {
-    return view('admin.siswa-kelas');
-})->name('siswa-kelas');
+    // Halaman RFID / Sidik-jari
+    Route::get('/iot/{tab?}', [IoTController::class, 'index'])->name('iot.index');
+
+    // Tambah UID
+    Route::post('/iot/{tab}', [IoTController::class, 'store'])->name('iot.store');
+
+    // Hapus UID
+    Route::delete('/iot/{tab}/{id}', [IoTController::class, 'destroy'])->name('iot.destroy');
+
+    // Status perangkat
+    Route::get('/iot/status-perangkat', [IoTController::class, 'statusPerangkat'])->name('status-perangkat');
+
+    // ========================
+    // PENJEMPUTAN
+    // ========================
+   Route::get('/data-penjemputan', [DataPenjemputanController::class, 'index'])->name('data-penjemputan');
+});

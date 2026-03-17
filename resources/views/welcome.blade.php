@@ -118,10 +118,10 @@ padding:40px 0;
 
 <div class="row align-items-center">
 
-<div class="col-md-6">
+<div class="col-md-6">--------
 
 <p>TK Manhajul Husna</p>
-
+                                
 <h1>
 Sistem Absensi dan Penjemputan Anak
 Berbasis RFID dan Fingerprint

@@ -19,7 +19,7 @@
             <div class="card mb-3 p-3">
                 <div class="d-flex align-items-center gap-3">
                     <div style="min-width:140px;">
-                        Total wali : <strong>501</strong>
+                        <strong>{{ $total }}</strong>
                     </div>
 
                     <div style="width:200px;">
@@ -58,104 +58,37 @@
                         </thead>
 
                         <tbody>
+                            @forelse($wali as $row)
                             <tr>
-                                <td>1</td>
-                                <td>Arif Nasution</td>
-                                <td>08723459238</td>
-                                <td>Laki-laki</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $row->nama_wali }}</td>
+                                <td>{{ $row->no_hp }}</td>
+                                <td>-</td>
                                 <td>
                                     <button class="btn btn-warning btn-sm">
                                         <i class="fa fa-pencil"></i>
                                     </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
 
-                            <tr>
-                                <td>2</td>
-                                <td>Radita Nabila</td>
-                                <td>08293640899</td>
-                                <td>Perempuan</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fa fa-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                    <form action="{{ route('hapus-wali', ['id' => $row->id_wali]) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
-
+                            @empty
                             <tr>
-                                <td>3</td>
-                                <td>Arif Rahman</td>
-                                <td>08906665833</td>
-                                <td>Laki-laki</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fa fa-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </td>
+                                <td colspan="5" class="text-center">Tidak ada data</td>
                             </tr>
-
-                            <tr>
-                                <td>4</td>
-                                <td>Ismatul Hawa</td>
-                                <td>08128776909</td>
-                                <td>Perempuan</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fa fa-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>5</td>
-                                <td>Ilham Basudara</td>
-                                <td>08996052933</td>
-                                <td>Laki-laki</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fa fa-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
 
                 <div class="d-flex justify-content-end p-3">
-                    <nav>
-                        <ul class="pagination pagination-sm mb-0">
-                            <li class="page-item disabled">
-                                <a class="page-link">‹</a>
-                            </li>
-                            <li class="page-item active">
-                                <a class="page-link">1</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link">2</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link">3</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link">›</a>
-                            </li>
-                        </ul>
-                    </nav>
+                    {{ $wali->links() }}
                 </div>
             </div>
 

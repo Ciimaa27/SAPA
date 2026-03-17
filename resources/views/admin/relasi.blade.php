@@ -34,7 +34,7 @@
                         </select>
                     </div>
 
-                    <a href="#" class="btn btn-primary btn-sm btn-tambah">
+                    <a href="{{ route('relasi.create') }}" class="btn btn-primary btn-sm btn-tambah">
                         <i class="fa fa-plus"></i> Tambah
                     </a>
                 </div>
@@ -55,85 +55,32 @@
                         </thead>
 
                         <tbody>
+                            @forelse($relasi as $item)
                             <tr>
-                                <td>1</td>
-                                <td>Arif Nasution</td>
-                                <td>Raditya Dika</td>
-                                <td>08723459238</td>
-                                <td>Ayah</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->siswa->nama }}</td>
+                                <td>{{ $item->wali->nama }}</td>
+                                <td>{{ $item->wali->no_hp }}</td>
+                                <td>{{ ucfirst($item->hubungan) }}</td>
                                 <td>
                                     <button class="btn btn-warning btn-sm">
                                         <i class="fa fa-pencil"></i>
                                     </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
 
-                            <tr>
-                                <td>2</td>
-                                <td>Radita Nabila</td>
-                                <td>Jefri Nichol</td>
-                                <td>08293640899</td>
-                                <td>Ayah</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fa fa-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                    <form action="{{ route('relasi.destroy', [$item->id_siswa, $item->id_wali]) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger btn-sm">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
-
+                            @empty
                             <tr>
-                                <td>3</td>
-                                <td>Arif Rahman</td>
-                                <td>Natasha Wilona</td>
-                                <td>08906665833</td>
-                                <td>Ibu</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fa fa-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </td>
+                                <td colspan="6" class="text-center">Data tidak ada</td>
                             </tr>
-
-                            <tr>
-                                <td>4</td>
-                                <td>Ismatul Hawa</td>
-                                <td>Syifa Hadju</td>
-                                <td>08128776909</td>
-                                <td>Ibu</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fa fa-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>5</td>
-                                <td>Ilham Basudara</td>
-                                <td>Anya Geraldine</td>
-                                <td>08996052933</td>
-                                <td>Wali</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fa fa-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

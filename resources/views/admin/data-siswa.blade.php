@@ -20,7 +20,7 @@
                 <div class="d-flex align-items-center gap-3">
 
                     <div style="min-width:140px;">
-                        Total Siswa : <strong>501</strong>
+                        Total Siswa : <strong>{{ $total }}</strong>
                     </div>
 
                     <div style="width:200px;">
@@ -61,89 +61,43 @@
                         </thead>
 
                         <tbody>
+                            @forelse($siswa as $row)
                             <tr>
-                                <td>00987643</td>
-                                <td>Arif Nasution</td>
-                                <td>1-A</td>
-                                <td>Laki-laki</td>
-                                <td>Banjarmasin, 02-10-2010</td>
+                                <td>{{ $row->nis }}</td>
+                                <td>{{ $row->nama_siswa }}</td>
+                                <td>{{ $row->id_kelas }}</td>
+                                <td>-</td>
+                                <td>-</td>
                                 <td>
                                     <button class="btn btn-info btn-sm">
                                         <i class="fa fa-eye"></i>
                                     </button>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fa fa-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
 
-                            <tr>
-                                <td>00985651</td>
-                                <td>Radita Nabila</td>
-                                <td>1-A</td>
-                                <td>Perempuan</td>
-                                <td>Banjarmasin, 15-02-2010</td>
-                                <td>
-                                    <button class="btn btn-info btn-sm">
-                                        <i class="fa fa-eye"></i>
-                                    </button>
                                     <button class="btn btn-warning btn-sm">
                                         <i class="fa fa-pencil"></i>
                                     </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
 
-                            <tr>
-                                <td>00952763</td>
-                                <td>Arif Rahman</td>
-                                <td>1-B</td>
-                                <td>Laki-laki</td>
-                                <td>Banjarbaru, 24-03-2010</td>
-                                <td>
-                                    <button class="btn btn-info btn-sm">
-                                        <i class="fa fa-eye"></i>
-                                    </button>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fa fa-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                    <form action="{{ route('hapus-siswa', ['id' => $row->id_siswa]) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
+                            @empty
+                            <tr>
+                                <td colspan="6" class="text-center">Tidak ada data</td>
+                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
-
                 <div class="d-flex justify-content-end p-3">
-                    <nav>
-                        <ul class="pagination pagination-sm mb-0">
-                            <li class="page-item disabled">
-                                <a class="page-link">‹</a>
-                            </li>
-                            <li class="page-item active">
-                                <a class="page-link">1</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link">2</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link">3</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link">›</a>
-                            </li>
-                        </ul>
-                    </nav>
+                    {{ $siswa->links() }}
                 </div>
             </div>
-
         </div>
     </div>
 

@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Relasi;
+use App\Models\Siswa;
+use App\Models\Wali;
+
+class RelasiController extends Controller
+{
+    // Tampilkan data relasi
+    public function index()
+    {
+        $relasi = Relasi::with(['siswa', 'wali'])->get();
+        return view('admin.relasi', compact('relasi'));
+    }
+
+    // Form tambah
+    public function create()
+    {
+        $siswa = Siswa::all();
+        $wali = Wali::all();
+        return view('admin.relasi.create', compact('siswa','wali'));
+    }
+
+    // Simpan data
+    public function store(Request $request)
+    {
+        $request->validate([
+            'id_siswa' => 'required',
+            'id_wali' => 'required',
+            'hubungan' => 'required',
+        ]);
+
+        Relasi::create($request->all());
+
+        return redirect()->route('relasi.index')->with('success', 'Data berhasil ditambah');
+    }
+
+    // Hapus data
+    public function destroy($id_siswa, $id_wali)
+    {
+        Relasi::where('id_siswa', $id_siswa)
+              ->where('id_wali', $id_wali)
+              ->delete();
+
+        return redirect()->route('relasi.index')->with('success', 'Data berhasil dihapus');
+    }
+}
