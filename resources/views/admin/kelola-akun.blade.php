@@ -17,13 +17,14 @@
         </div>
 
         <div class="card mb-3 p-3">
-            <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center gap-3 flex-wrap">
 
                 <div style="min-width:140px;">
                     Total akun : <strong>{{ $total }}</strong>
                 </div>
 
-                <div style="width:200px;">
+                <div style="width:180px;">
+                    <label class="form-label mb-0 small text-muted">Tampilkan</label>
                     <select class="form-select form-select-sm">
                         <option>Semua</option>
                         <option>Admin</option>
@@ -32,11 +33,11 @@
                     </select>
                 </div>
 
-                <a href="{{ route('tambah-akun') }}" class="btn btn-primary btn-sm btn-tambah">
+                <a href="{{ route('kelola-akun.create') }}" class="btn btn-primary btn-sm btn-tambah">
                     <i class="fa fa-plus"></i> Tambah
                 </a>
 
-                <div class="input-group input-group-sm search-flex">
+                <div class="input-group input-group-sm search-flex ms-auto" style="min-width:260px;">
                     <span class="input-group-text bg-white">
                         <i class="fa fa-search"></i>
                     </span>
@@ -51,10 +52,10 @@
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th>No</th>
-                            <th>Username</th>
-                            <th>Role</th>
-                            <th>Status</th>
+                            <th>Nama pengguna</th>
+                            <th>Nama lengkap</th>
+                            <th>Peran</th>
+                            <th>Email</th>
                             <th width="120">Aksi</th>
                         </tr>
                     </thead>
@@ -62,16 +63,16 @@
                     <tbody>
                         @forelse($users as $user)
                         <tr>
-                            <td>{{ $loop->iteration + ($users->currentPage()-1)*$users->perPage() }}</td>
                             <td>{{ $user->username }}</td>
+                            <td>{{ $user->name ?? $user->nama_lengkap ?? '-' }}</td>
                             <td>{{ ucfirst($user->nama_role ?? '-') }}</td>
-                            <td>{{ ucfirst($user->status) }}</td>
+                            <td>{{ $user->email ?? '-' }}</td>
                             <td>
                                 <button class="btn btn-warning btn-sm">
                                     <i class="fa fa-pencil"></i>
                                 </button>
 
-                                <form action="{{ route('hapus-akun', $user->id_user) }}" method="POST" style="display:inline;">
+                                <form action="{{ route('kelola-akun.destroy', $user->id_user) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')">

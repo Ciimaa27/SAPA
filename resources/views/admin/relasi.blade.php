@@ -58,9 +58,9 @@
                             @forelse($relasi as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->siswa->nama }}</td>
-                                <td>{{ $item->wali->nama }}</td>
-                                <td>{{ $item->wali->no_hp }}</td>
+                                <td>{{ $item->siswa->nama_siswa ?? '-' }}</td>
+                                <td>{{ $item->wali->nama_wali ?? '-' }}</td>
+                                <td>{{ $item->wali->no_hp ?? '-' }}</td>
                                 <td>{{ ucfirst($item->hubungan) }}</td>
                                 <td>
                                     <button class="btn btn-warning btn-sm">

@@ -11,15 +11,15 @@
     <!-- Menu -->
     <ul class="menu-list">
 
-        <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-            <a href="{{ route('dashboard') }}">
+        <li class="menu-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+            <a href="{{ route('admin.dashboard') }}">
                 <i class="fas fa-th-large"></i>
                 Dashboard
             </a>
         </li>
 
-        <li class="menu-item {{ request()->routeIs('kelola-akun') ? 'active' : '' }}">
-            <a href="{{ route('kelola-akun') }}">
+        <li class="menu-item {{ request()->routeIs('kelola-akun.index') ? 'active' : '' }}">
+            <a href="{{ route('kelola-akun.index') }}">
                 <i class="fas fa-user"></i>
                 Kelola akun
             </a>
@@ -73,8 +73,8 @@
             </a>
         </li>
 
-        <li class="menu-item">
-            <a href="#">
+        <li class="menu-item {{ request()->routeIs('jadwal-pulang') ? 'active' : '' }}">
+            <a href="{{ route('jadwal-pulang') }}">
                 <i class="fas fa-clock"></i>
                 Jadwal pulang
             </a>

@@ -63,7 +63,9 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $row->nama_wali }}</td>
                                 <td>{{ $row->no_hp }}</td>
-                                <td>-</td>
+                                <td class="text-capitalize">
+                                    {{ $row->jenis_kelamin ?? '-' }}
+                                </td>
                                 <td>
                                     <button class="btn btn-warning btn-sm">
                                         <i class="fa fa-pencil"></i>
