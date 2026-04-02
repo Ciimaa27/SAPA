@@ -55,7 +55,7 @@
                             <th>No</th>
                             <th>Nama Wali</th>
                             <th>ID Fingerprint</th>
-                            <th width="120">Aksi</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
 

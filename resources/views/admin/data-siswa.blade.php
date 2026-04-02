@@ -20,6 +20,10 @@
         background: #f8f9fa;
         z-index: 2;
     }
+
+    .col-aksi {
+        width: 150px;
+    }
 </style>
 
 @include('layouts.sidebar-admin')
@@ -75,7 +79,7 @@
                             <th>Kelas</th>
                             <th>Jenis Kelamin</th>
                             <th>Tempat/Tanggal lahir</th>
-                            <th width="150">Aksi</th>
+                            <th >Aksi</th>
                         </tr>
                     </thead>
 
