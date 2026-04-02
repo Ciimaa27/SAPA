@@ -44,7 +44,8 @@
 
         <div class="card">
             @if($data->count())
-            <div class="table-responsive">
+
+            <div class="table-container">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
@@ -70,6 +71,7 @@
                     </tbody>
                 </table>
             </div>
+
             @else
             <div class="card p-5 text-center text-muted">
                 Tidak ada data penjemputan

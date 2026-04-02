@@ -6,6 +6,22 @@
 
 <link rel="stylesheet" href="{{ asset('css/admin/guru.css') }}">
 
+<style>
+    /* Scroll hanya tabel */
+    .table-container {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    /* Header sticky */
+    .table thead th {
+        position: sticky;
+        top: 0;
+        background: #f8f9fa;
+        z-index: 2;
+    }
+</style>
+
 @include('layouts.sidebar-admin')
 @include('layouts.topbar')
 
@@ -18,6 +34,7 @@
 
         <div class="card mb-3 p-3">
             <div class="d-flex align-items-center gap-3">
+
                 <a href="{{ route('guru') }}" class="btn btn-tab">
                     Guru
                 </a>
@@ -32,6 +49,7 @@
                     </span>
                     <input type="text" class="form-control" placeholder="Pencarian">
                 </div>
+
             </div>
         </div>
 
@@ -42,7 +60,8 @@
                 </a>
             </div>
 
-            <div class="table-responsive">
+            <!-- TABLE -->
+            <div class="table-container">
                 <table class="table table-hover align-middle mb-0">
 
                     <thead class="table-light">
@@ -66,6 +85,7 @@
                                 </a>
                             </td>
                         </tr>
+
                         @empty
                         <tr>
                             <td colspan="4" class="text-center">Tidak ada data</td>
@@ -74,11 +94,6 @@
                     </tbody>
 
                 </table>
-            </div>
-
-            {{-- Pagination Laravel --}}
-            <div class="p-3">
-                {{ $kelas->links() }}
             </div>
 
         </div>

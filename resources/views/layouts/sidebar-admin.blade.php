@@ -54,7 +54,7 @@
                 Relasi siswa dan wali
             </a>
         </li>
-         
+
         <p class="menu-title">Pendaftaran IoT</p>
 
          <li class="menu-item {{ request()->routeIs('iot.index') ? 'active' : '' }}">
@@ -73,12 +73,12 @@
             </a>
         </li>
 
-        <li class="menu-item {{ request()->routeIs('jadwal-pulang') ? 'active' : '' }}">
-            <a href="{{ route('jadwal-pulang') }}">
-                <i class="fas fa-clock"></i>
-                Jadwal pulang
-            </a>
-        </li>
+        <li class="menu-item {{ request()->routeIs('admin.jadwal-pulang') ? 'active' : '' }}">
+        <a href="{{ route('admin.jadwal-pulang') }}">
+            <i class="fas fa-clock"></i>
+            Jadwal pulang
+        </a>
+         </li>
 
         <li class="menu-item">
             <a href="#">

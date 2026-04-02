@@ -6,6 +6,22 @@
 
 <link rel="stylesheet" href="{{ asset('css/admin/data-siswa.css') }}">
 
+<style>
+    /* Scroll hanya di tabel */
+    .table-container {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    /* Header tetap di atas */
+    .table thead th {
+        position: sticky;
+        top: 0;
+        background: #f8f9fa;
+        z-index: 2;
+    }
+</style>
+
 @include('layouts.sidebar-admin')
 @include('layouts.topbar')
 
@@ -50,7 +66,7 @@
 
         <!-- TABLE -->
         <div class="card">
-            <div class="table-responsive">
+            <div class="table-container">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
@@ -68,25 +84,20 @@
                         <tr>
                             <td>{{ $row->nis }}</td>
                             <td>{{ $row->nama_siswa }}</td>
-
-                            <!-- sementara masih pakai id_kelas -->
                             <td>{{ $row->id_kelas }}</td>
 
-                            <!-- ✅ JENIS KELAMIN -->
                             <td class="text-capitalize">
                                 {{ $row->jenis_kelamin ?? '-' }}
                             </td>
 
-                            <!-- ✅ TTL -->
                             <td>
                                 {{ $row->tempat_lahir ?? '-' }},
-                                {{ $row->tanggal_lahir 
-                                    ? \Carbon\Carbon::parse($row->tanggal_lahir)->format('d-m-Y') 
-                                    : '-' 
+                                {{ $row->tanggal_lahir
+                                    ? \Carbon\Carbon::parse($row->tanggal_lahir)->format('d-m-Y')
+                                    : '-'
                                 }}
                             </td>
 
-                            <!-- AKSI -->
                             <td>
                                 <button class="btn btn-info btn-sm">
                                     <i class="fa fa-eye"></i>
@@ -113,11 +124,6 @@
                         @endforelse
                     </tbody>
                 </table>
-            </div>
-
-            <!-- PAGINATION -->
-            <div class="d-flex justify-content-end p-3">
-                {{ $siswa->links() }}
             </div>
         </div>
 

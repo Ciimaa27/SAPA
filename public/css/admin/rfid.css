@@ -44,6 +44,20 @@
     font-weight:600;
 }
 
+/* Scroll hanya tabel */
+    .table-container {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    /* Header sticky */
+    .table thead th {
+        position: sticky;
+        top: 0;
+        background: #f8f9fa;
+        z-index: 2;
+    }
+
 .content{
     margin-left:230px;
     padding-top:60px;

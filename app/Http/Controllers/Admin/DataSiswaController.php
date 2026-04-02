@@ -10,8 +10,9 @@ class DataSiswaController extends Controller
 {
     public function index()
     {
-        $siswa = Siswa::paginate(10)->appends(request()->query());
-        $total = Siswa::count();
+        // UBAH DI SINI
+        $siswa = Siswa::all();
+        $total = $siswa->count();
 
         return view('admin.data-siswa', compact('siswa', 'total'));
     }

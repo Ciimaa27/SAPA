@@ -4,6 +4,20 @@
 
 <link rel="stylesheet" href="{{ asset('css/admin/kelola-akun.css') }}">
 
+<style>
+    .table-container {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .table thead th {
+        position: sticky;
+        top: 0;
+        background: #f8f9fa;
+        z-index: 2;
+    }
+</style>
+
 @include('layouts.sidebar-admin')
 @include('layouts.topbar')
 
@@ -24,7 +38,6 @@
                 </div>
 
                 <div style="width:180px;">
-                    <label class="form-label mb-0 small text-muted">Tampilkan</label>
                     <select class="form-select form-select-sm">
                         <option>Semua</option>
                         <option>Admin</option>
@@ -33,7 +46,7 @@
                     </select>
                 </div>
 
-                <a href="{{ route('kelola-akun.create') }}" class="btn btn-primary btn-sm btn-tambah">
+                <a href="/admin/kelola-akun/create" class="btn btn-primary btn-sm">
                     <i class="fa fa-plus"></i> Tambah
                 </a>
 
@@ -48,7 +61,7 @@
         </div>
 
         <div class="card">
-            <div class="table-responsive">
+            <div class="table-container">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
@@ -88,10 +101,6 @@
                         @endforelse
                     </tbody>
                 </table>
-            </div>
-
-            <div class="d-flex justify-content-end p-3">
-                {{ $users->links() }}
             </div>
         </div>
 

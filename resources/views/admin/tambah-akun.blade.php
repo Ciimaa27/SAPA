@@ -18,7 +18,7 @@
 
             <div class="card p-4">
 
-                <a href="{{ route('kelola-akun') }}" class="btn btn-kembali mb-3">
+               <a href="{{ route('kelola-akun.index') }}" class="btn btn-kembali mb-3">
                     <i class="fas fa-arrow-left"></i> Kembali
                 </a>
 

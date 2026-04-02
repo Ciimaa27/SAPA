@@ -6,6 +6,22 @@
 
 <link rel="stylesheet" href="{{ asset('css/admin/rfid.css') }}">
 
+<style>
+    /* Scroll hanya tabel */
+    .table-container {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    /* Header sticky */
+    .table thead th {
+        position: sticky;
+        top: 0;
+        background: #f8f9fa;
+        z-index: 2;
+    }
+</style>
+
 @include('layouts.sidebar-admin')
 @include('layouts.topbar')
 
@@ -16,14 +32,16 @@
             <h5 class="mb-0">RFID dan Sidik jari</h5>
         </div>
 
-        <!-- Tombol Tab -->
+        <!-- TAB -->
         <div class="card mb-3 p-3">
             <div class="d-flex align-items-center gap-3">
-                <a href="{{ route('iot.index', ['tab'=>'rfid']) }}" 
+
+                <a href="{{ route('iot.index', ['tab'=>'rfid']) }}"
                    class="btn btn-tab {{ ($tab ?? 'rfid') === 'rfid' ? 'active' : '' }}">
                    RFID
                 </a>
-                <a href="{{ route('iot.index', ['tab'=>'sidik-jari']) }}" 
+
+                <a href="{{ route('iot.index', ['tab'=>'sidik-jari']) }}"
                    class="btn btn-tab {{ ($tab ?? 'rfid') === 'sidik-jari' ? 'active' : '' }}">
                    Sidik jari
                 </a>
@@ -34,10 +52,11 @@
                     </span>
                     <input type="text" class="form-control" placeholder="Pencarian">
                 </div>
+
             </div>
         </div>
 
-        <!-- Tabel Data RFID -->
+        <!-- TABLE -->
         <div class="card">
             <div class="d-flex justify-content-end p-3">
                 <a href="{{ route('iot.store', ['tab'=>'rfid']) }}" class="btn btn-primary btn-sm btn-tambah">
@@ -45,7 +64,7 @@
                 </a>
             </div>
 
-            <div class="table-responsive">
+            <div class="table-container">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
@@ -55,6 +74,7 @@
                             <th width="120">Aksi</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         @foreach($data as $item)
                         <tr>
@@ -70,6 +90,7 @@
                             </td>
                         </tr>
                         @endforeach
+
                         @if(count($data) === 0)
                         <tr>
                             <td colspan="4" class="text-center">Tidak ada data RFID</td>
@@ -78,6 +99,7 @@
                     </tbody>
                 </table>
             </div>
+
         </div>
 
     </div>
