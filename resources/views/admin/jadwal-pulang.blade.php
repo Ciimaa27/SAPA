@@ -12,10 +12,12 @@
 <div class="container mt-4">
 
     <!-- Header -->
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3 class="fw-bold">Jadwal Pulang</h3>
-        <button class="btn btn-outline-dark btn-sm">Edit</button>
-    </div>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="fw-bold">Jadwal Pulang</h3>
+     <a href="{{ route('edit-jadwal-pulang.edit') }}" class="btn btn-outline-dark btn-sm">
+        Edit
+    </a>
+</div>
 
     <!-- Tabs -->
     <ul class="nav nav-pills mb-3">

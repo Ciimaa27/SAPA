@@ -115,6 +115,14 @@ Route::prefix('admin')->group(function () {
         return back()->withInput();
     })->name('admin.jadwal-pulang.store');
 
+    Route::get('/jadwal-pulang', function () {
+        return view('admin.jadwal-pulang');
+    })->name('jadwal_pulang');
+
+    Route::get('/jadwal-pulang/edit', function () {
+        return view('admin.edit-jadwal-pulang');
+    })->name('jadwal_pulang.edit');
+
     // DATA PENJEMPUTAN
     Route::get('/data-penjemputan', [DataPenjemputanController::class, 'index'])->name('data-penjemputan');
 
