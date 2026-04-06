@@ -29,7 +29,8 @@
                     <option value="2-B" {{ (isset($kelas) && $kelas=='2-B')?'selected':'' }}>2-B</option>
                 </select>
 
-                <input type="text" name="cari" value="{{ $cari ?? '' }}" class="form-control form-control-sm" placeholder="cari..." style="width:150px">
+                <!-- 🔍 TAMBAH ID -->
+                <input type="text" id="searchInputPenjemputan" name="cari" value="{{ $cari ?? '' }}" class="form-control form-control-sm" placeholder="cari..." style="width:150px">
 
                 <button type="submit" class="btn btn-primary btn-sm">
                     <i class="fa fa-search"></i>
@@ -46,7 +47,8 @@
             @if($data->count())
 
             <div class="table-container">
-                <table class="table table-hover align-middle mb-0">
+                <!-- 🔥 TAMBAH ID -->
+                <table class="table table-hover align-middle mb-0" id="dataTablePenjemputan">
                     <thead class="table-light">
                         <tr>
                             <th>No</th>
@@ -81,5 +83,27 @@
 
     </div>
 </div>
+
+<!-- 🔥 SCRIPT SEARCH REALTIME -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let input = document.getElementById("searchInputPenjemputan");
+
+    input.addEventListener("keyup", function() {
+        let keyword = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#dataTablePenjemputan tbody tr");
+
+        rows.forEach(function(row) {
+            let text = row.textContent.toLowerCase();
+
+            if (text.includes(keyword)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
+});
+</script>
 
 @endsection

@@ -4,21 +4,24 @@
 
 @section('content')
 
-<link rel="stylesheet" href="{{ asset('css/jadwal_pulang.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/edit-jadwal-pulang.css') }}">
+
 @include('layouts.sidebar-admin')
 @include('layouts.topbar')
 
 <div class="container mt-4">
 
-    <!-- Header -->
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="fw-bold">Jadwal Pulang</h4>
-    <a href="{{ route('jadwal-pulang') }}" class="btn btn-warning btn-sm">
-        ← Kembali
-    </a>
+    <!-- HEADER -->
+    <div class="mb-3">
+        <h2 class="judul-halaman">Jadwal Pulang</h2>
 
-    <!-- Card -->
-    <div class="card shadow-sm p-4">
+        <a href="{{ route('jadwal-pulang') }}" class="btn-kembali">
+            ← Kembali
+        </a>
+    </div>
+
+    <!-- CARD -->
+    <div class="card-jadwal">
 
         @php
             $hari = [
@@ -26,7 +29,7 @@
                 ['Selasa', '10:30'],
                 ['Rabu', '10:30'],
                 ['Kamis', '10:30'],
-                ['Jumat', '09:30'],
+                ['Jumat', '09:30'], // sekarang tidak otomatis libur
                 ['Sabtu', '10:30'],
             ];
         @endphp
@@ -34,40 +37,37 @@
         @foreach($hari as $item)
 
         @php
-            $isLibur = $item[0] == 'Jumat'; // default Jumat libur
+            $isLibur = false; // ✅ semua hari default tidak libur
         @endphp
 
-        <div class="row align-items-center mb-3 jadwal-row">
+        <div class="jadwal-row">
 
-            <!-- Hari -->
-            <div class="col-md-2">
-                <div class="badge-hari">
-                    {{ $item[0] }}
-                </div>
+            <!-- HARI -->
+            <div class="hari-box">
+                {{ $item[0] }}
             </div>
 
-            <!-- Input Jam -->
-            <div class="col-md-7">
-                <input type="time"
-                       class="form-control custom-input jam-input"
-                       value="{{ $item[1] }}"
-                       {{ $isLibur ? 'disabled' : '' }}>
-            </div>
+            <!-- JAM -->
+            <input type="time"
+                   class="jam-input"
+                   value="{{ $item[1] }}"
+                   min="07:00"
+                   max="17:00"
+                   step="1800">
 
-            <!-- Tombol Libur -->
-            <div class="col-md-3">
-                <button type="button"
-                        class="btn btn-libur w-100 toggle-libur {{ $isLibur ? 'aktif' : '' }}">
-                    Libur
-                </button>
-            </div>
+            <!-- LIBUR -->
+            <button type="button"
+                    class="btn-libur toggle-libur">
+                Libur
+            </button>
 
         </div>
+
         @endforeach
 
-        <!-- Button Simpan -->
+        <!-- SIMPAN -->
         <div class="text-end mt-4">
-            <button class="btn btn-success px-4">Simpan</button>
+            <button class="btn-simpan">Simpan</button>
         </div>
 
     </div>
@@ -89,16 +89,24 @@ document.addEventListener('DOMContentLoaded', function () {
             btn.classList.toggle('aktif');
 
             if (btn.classList.contains('aktif')) {
-                // simpan nilai lama
-                input.dataset.oldValue = input.value;
-
+                // 🔒 kunci input
                 input.disabled = true;
-                input.value = '';
-            } else {
-                input.disabled = false;
 
-                // kembalikan nilai lama
-                input.value = input.dataset.oldValue || '';
+                // kasih style libur
+                input.classList.add('libur-mode');
+
+                // ubah warna tombol (opsional biar merah)
+                btn.style.backgroundColor = '#f8d7da';
+                btn.style.color = '#842029';
+
+            } else {
+                // buka kembali input
+                input.disabled = false;
+                input.classList.remove('libur-mode');
+
+                // balikin style tombol
+                btn.style.backgroundColor = '';
+                btn.style.color = '';
             }
 
         });

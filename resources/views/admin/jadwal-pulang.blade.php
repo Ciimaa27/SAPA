@@ -14,7 +14,7 @@
     <!-- Header -->
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3 class="fw-bold">Jadwal Pulang</h3>
-     <a href="{{ route('edit-jadwal-pulang.edit') }}" class="btn btn-outline-dark btn-sm">
+     <a href="{{ route('jadwal-pulang.edit') }}" class="btn btn-outline-dark btn-sm">
         Edit
     </a>
 </div>

@@ -58,11 +58,12 @@
                     <i class="fa fa-plus"></i> Tambah
                 </a>
 
+                <!-- 🔍 SEARCH (DITAMBAH ID SAJA) -->
                 <div class="input-group input-group-sm search-flex">
                     <span class="input-group-text bg-white">
                         <i class="fa fa-search"></i>
                     </span>
-                    <input type="text" class="form-control" placeholder="Pencarian">
+                    <input type="text" id="searchInput" class="form-control" placeholder="Pencarian">
                 </div>
 
             </div>
@@ -71,7 +72,8 @@
         <!-- TABLE -->
         <div class="card">
             <div class="table-container">
-                <table class="table table-hover align-middle mb-0">
+                <!-- 🔥 TAMBAH ID DI SINI -->
+                <table class="table table-hover align-middle mb-0" id="dataTable">
                     <thead class="table-light">
                         <tr>
                             <th>NIS</th>
@@ -79,7 +81,7 @@
                             <th>Kelas</th>
                             <th>Jenis Kelamin</th>
                             <th>Tempat/Tanggal lahir</th>
-                            <th >Aksi</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
 
@@ -133,5 +135,27 @@
 
     </div>
 </div>
+
+<!-- 🔥 SCRIPT SEARCH (DITAMBAH SAJA) -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let input = document.getElementById("searchInput");
+
+    input.addEventListener("keyup", function() {
+        let keyword = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#dataTable tbody tr");
+
+        rows.forEach(function(row) {
+            let text = row.textContent.toLowerCase();
+
+            if (text.includes(keyword)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
+});
+</script>
 
 @endsection

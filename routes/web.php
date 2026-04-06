@@ -56,6 +56,10 @@ Route::prefix('admin')->group(function () {
     Route::post('/kelola-akun', [KelolaAkunController::class, 'store'])->name('kelola-akun.store');
     Route::delete('/kelola-akun/{id}', [KelolaAkunController::class, 'destroy'])->name('kelola-akun.destroy');
 
+    Route::get('/edit-kelola-akun/edit', function () {
+    return view('admin.edit-kelola-akun');
+    })->name('kelola-akun.edit');
+
     // ========================
     // DATA SISWA
     // ========================
@@ -107,7 +111,7 @@ Route::prefix('admin')->group(function () {
     // ========================
 
     // ✅ JADWAL PULANG (SUDAH FIX)
-    Route::get('/jadwal-pulang', function(){
+    Route::get('/admin.jadwal-pulang', function(){
         return view('admin.jadwal-pulang');
     })->name('admin.jadwal-pulang');
 
@@ -115,13 +119,14 @@ Route::prefix('admin')->group(function () {
         return back()->withInput();
     })->name('admin.jadwal-pulang.store');
 
+
     Route::get('/jadwal-pulang', function () {
         return view('admin.jadwal-pulang');
-    })->name('jadwal_pulang');
+    })->name('jadwal-pulang');
 
     Route::get('/jadwal-pulang/edit', function () {
         return view('admin.edit-jadwal-pulang');
-    })->name('jadwal_pulang.edit');
+    })->name('jadwal-pulang.edit');
 
     // DATA PENJEMPUTAN
     Route::get('/data-penjemputan', [DataPenjemputanController::class, 'index'])->name('data-penjemputan');

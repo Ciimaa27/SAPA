@@ -43,11 +43,12 @@
                     Kelas
                 </a>
 
+                <!-- 🔍 SEARCH (DITAMBAH ID) -->
                 <div class="input-group input-group-sm search-flex">
                     <span class="input-group-text bg-white">
                         <i class="fa fa-search"></i>
                     </span>
-                    <input type="text" class="form-control" placeholder="Pencarian">
+                    <input type="text" id="searchInputGuru" class="form-control" placeholder="Pencarian">
                 </div>
 
             </div>
@@ -62,7 +63,8 @@
 
             <!-- TABLE -->
             <div class="table-container">
-                <table class="table table-hover align-middle mb-0">
+                <!-- 🔥 TAMBAH ID DI TABEL -->
+                <table class="table table-hover align-middle mb-0" id="dataTableGuru">
 
                     <thead class="table-light">
                         <tr>
@@ -102,5 +104,27 @@
 
     </div>
 </div>
+
+<!-- 🔥 SCRIPT SEARCH -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let input = document.getElementById("searchInputGuru");
+
+    input.addEventListener("keyup", function() {
+        let keyword = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#dataTableGuru tbody tr");
+
+        rows.forEach(function(row) {
+            let text = row.textContent.toLowerCase();
+
+            if (text.includes(keyword)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
+});
+</script>
 
 @endsection

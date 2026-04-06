@@ -1,0 +1,153 @@
+/* ================== BODY ================== */
+body {
+    background: #f5f7fb;
+}
+
+/* ================== CONTAINER ================== */
+.container {
+    max-width: 1050px;   /* 🔥 diperlebar dari 900 */
+    margin: auto;
+}
+
+/* ================== JUDUL ================== */
+.judul-halaman {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: #111827;
+}
+
+/* ================== BUTTON KEMBALI ================== */
+.btn-kembali {
+    background: rgba(250, 204, 21, 0.2);
+    color: #ca8a04;
+    padding: 7px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 13px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(250, 204, 21, 0.5);
+}
+
+.btn-kembali:hover {
+    background: rgba(250, 204, 21, 0.35);
+    color: #a16207;
+}
+
+/* ================== CARD ================== */
+.card-jadwal {
+    background: #ffffff;
+    padding: 32px;  /* 🔥 sedikit diperbesar */
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+}
+
+/* ================== ROW ================== */
+.jadwal-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+/* ================== HARI ================== */
+.hari-box {
+    background: #ede9fe;
+    color: #5b21b6;
+    padding: 13px 20px;
+    min-width: 120px; /* 🔥 lebih lebar dikit */
+    text-align: center;
+    font-weight: 500;
+    border: 1px solid #c4b5fd;
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+}
+
+/* ================== INPUT JAM ================== */
+.jam-input {
+    flex: 1;
+    height: 50px; /* 🔥 sedikit lebih tinggi */
+    border: 1px solid #c4b5fd;
+    border-left: none;
+    border-right: none;
+    padding: 0 16px;
+    outline: none;
+    font-size: 14px;
+    background: #fff;
+}
+
+/* DISABLED */
+.jam-input:disabled {
+    background: #f1f5f9;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* ================== BUTTON LIBUR ================== */
+.btn-libur {
+    height: 50px;
+    padding: 0 24px;
+    border: 1px solid #d1d5db;
+    background: #e5e7eb;
+    color: #374151;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-libur:hover {
+    background: #d1d5db;
+}
+
+/* AKTIF */
+.btn-libur.aktif {
+    background: #fecaca;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+}
+
+/* ================== BUTTON SIMPAN ================== */
+.btn-simpan {
+    background: #16a34a;
+    color: white;
+    border: none;
+    padding: 11px 32px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-simpan:hover {
+    background: #15803d;
+}
+
+/* ================== RESPONSIVE ================== */
+@media (max-width: 768px) {
+    .container {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+
+    .jadwal-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hari-box {
+        border-radius: 8px 8px 0 0;
+        border-right: 1px solid #c4b5fd;
+        margin-bottom: 5px;
+    }
+
+    .jam-input {
+        border-radius: 0;
+        margin-bottom: 5px;
+    }
+
+    .btn-libur {
+        border-radius: 0 0 8px 8px;
+    }
+}

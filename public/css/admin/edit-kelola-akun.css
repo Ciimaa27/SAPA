@@ -1,0 +1,145 @@
+/* ===== CONTENT AREA ===== */
+.main-content {
+    padding: 20px 25px;
+    background: #f6f7fb;
+}
+
+/* ===== TITLE ===== */
+.page-title-box {
+    background: #fff;
+    padding: 14px 18px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    border: 1px solid #e5e7eb;
+}
+
+/* ===== CARD ===== */
+.card-form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+/* ===== BUTTON KEMBALI ===== */
+.btn-kembali {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: #eef2ff;
+    color: #6366f1;
+    border-radius: 6px;
+    font-size: 13px;
+    text-decoration: none;
+    margin-bottom: 18px;
+    border: 1px solid #e0e7ff;
+    transition: all 0.2s ease;
+}
+
+.btn-kembali i {
+    font-size: 11px;
+}
+
+.btn-kembali:hover {
+    background: #e0e7ff;
+}
+
+/* ===== FORM ROW ===== */
+.form-row {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 16px;
+}
+
+/* ===== FORM GROUP ===== */
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+/* ===== LABEL ===== */
+.form-group label {
+    margin-bottom: 5px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+}
+
+/* ===== INPUT ===== */
+input,
+select {
+    height: 38px;
+    padding: 6px 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 13px;
+    background: #fff;
+}
+
+/* ===== FOCUS ===== */
+input:focus,
+select:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 1px rgba(99,102,241,0.2);
+    outline: none;
+}
+
+/* ===== TEXT KECIL ===== */
+.form-text {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 4px;
+}
+
+/* ===== GARIS PEMBATAS ===== */
+.form-group.full:not(:last-child) {
+    border-bottom: 1px solid #f1f1f1;
+    padding-bottom: 14px;
+}
+
+/* ===== BUTTON AREA ===== */
+.form-action {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+/* ===== BUTTON BATAL ===== */
+.btn-batal {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 7px 16px;
+    border-radius: 6px;
+    border: none;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.btn-batal:hover {
+    background: #fecaca;
+}
+
+/* ===== BUTTON SIMPAN ===== */
+.btn-simpan {
+    background: #34d399;
+    color: #fff;
+    padding: 7px 18px;
+    border-radius: 6px;
+    border: none;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.btn-simpan:hover {
+    background: #10b981;
+}

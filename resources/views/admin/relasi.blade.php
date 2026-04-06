@@ -35,11 +35,12 @@
         <div class="card mb-3 p-3">
             <div class="d-flex align-items-center gap-3">
 
+                <!-- 🔍 SEARCH (DITAMBAH ID) -->
                 <div class="input-group input-group-sm search-flex">
                     <span class="input-group-text bg-white">
                         <i class="fa fa-search"></i>
                     </span>
-                    <input type="text" class="form-control" placeholder="Pencarian">
+                    <input type="text" id="searchInputRelasi" class="form-control" placeholder="Pencarian">
                 </div>
 
                 <div style="width:170px;">
@@ -60,7 +61,8 @@
 
         <div class="card">
             <div class="table-container">
-                <table class="table table-hover align-middle mb-0">
+                <!-- 🔥 TAMBAH ID DI TABEL -->
+                <table class="table table-hover align-middle mb-0" id="dataTableRelasi">
                     <thead class="table-light">
                         <tr>
                             <th>No</th>
@@ -107,5 +109,27 @@
 
     </div>
 </div>
+
+<!-- 🔥 SCRIPT SEARCH -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let input = document.getElementById("searchInputRelasi");
+
+    input.addEventListener("keyup", function() {
+        let keyword = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#dataTableRelasi tbody tr");
+
+        rows.forEach(function(row) {
+            let text = row.textContent.toLowerCase();
+
+            if (text.includes(keyword)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
+});
+</script>
 
 @endsection
