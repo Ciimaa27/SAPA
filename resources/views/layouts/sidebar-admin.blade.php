@@ -73,8 +73,8 @@
             </a>
         </li>
 
-        <li class="menu-item {{ request()->routeIs('admin.jadwal-pulang') ? 'active' : '' }}">
-        <a href="{{ route('admin.jadwal-pulang') }}">
+        <li class="menu-item {{ request()->routeIs('jadwal-pulang') ? 'active' : '' }}">
+        <a href="{{ route('jadwal-pulang') }}">
             <i class="fas fa-clock"></i>
             Jadwal pulang
         </a>
@@ -96,10 +96,10 @@
             </a>
         </li>
 
-        <li class="menu-item">
-            <a href="#">
+        <li class="menu-item {{ request()->routeIs('laporan') ? 'active' : '' }}">
+            <a href="{{ route('laporan') }}">
                 <i class="fas fa-archive"></i>
-                Arsip
+                Laporan
             </a>
         </li>
 

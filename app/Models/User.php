@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Role;
+use App\Models\Wali;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -31,5 +33,11 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class, 'id_role');
+    }
+
+    // Relasi ke wali
+    public function wali()
+    {
+        return $this->hasOne(Wali::class, 'id_user', 'id_user');
     }
 }

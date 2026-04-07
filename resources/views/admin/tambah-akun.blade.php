@@ -22,38 +22,56 @@
                     <i class="fas fa-arrow-left"></i> Kembali
                 </a>
 
-                <form>
+                <form action="{{ route('kelola-akun.store') }}" method="POST">
+                    @csrf
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger mb-4">
+                            <h5>Terjadi Kesalahan!</h5>
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label">Nama Lengkap</label>
-                            <input type="text" class="form-control" placeholder="Masukkan nama lengkap...">
+                            <input type="text" name="nama_lengkap" class="form-control @error('nama_lengkap') is-invalid @enderror" value="{{ old('nama_lengkap') }}" placeholder="Masukkan nama lengkap..." required>
+                            @error('nama_lengkap')<small class="text-danger">{{ $message }}</small>@enderror
                         </div>
 
                         <div class="col-md-6">
                             <label class="form-label">Nama Pengguna</label>
-                            <input type="text" class="form-control" placeholder="Buatlah nama pengguna...">
+                            <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}" placeholder="Buatlah nama pengguna..." required>
+                            @error('username')<small class="text-danger">{{ $message }}</small>@enderror
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Peran</label>
-                        <select class="form-select">
-                            <option>Pilih peran</option>
-                            <option>Admin</option>
-                            <option>Orangtua / Wali</option>
-                            <option>Kepala Sekolah</option>
+                        <select name="peran" class="form-select @error('peran') is-invalid @enderror" required>
+                            <option value="">Pilih peran</option>
+                            <option value="Admin" {{ old('peran') == 'Admin' ? 'selected' : '' }}>Admin</option>
+                            <option value="Guru" {{ old('peran') == 'Guru' ? 'selected' : '' }}>Guru</option>
+                            <option value="Orangtua/Wali" {{ old('peran') == 'Orangtua/Wali' ? 'selected' : '' }}>Orangtua / Wali</option>
+                            <option value="Kepala Sekolah" {{ old('peran') == 'Kepala Sekolah' ? 'selected' : '' }}>Kepala Sekolah</option>
                         </select>
-                        <small class="text-muted">
+                        <small class="text-muted d-block mt-1">
                             *Pilih peran sesuai kebutuhan user, pastikan dengan benar
                         </small>
+                        @error('peran')<small class="text-danger d-block">{{ $message }}</small>@enderror
                     </div>
 
                     <div class="mb-4">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" placeholder="Masukkan email ...">
-                        <small class="text-muted">
+                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Masukkan email ..." required>
+                        <small class="text-muted d-block mt-1">
                             *Pastikan memasukkan nama email dengan benar
                         </small>
+                        @error('email')<small class="text-danger d-block">{{ $message }}</small>@enderror
                     </div>
 
                     <div class="d-flex justify-content-end gap-2">
