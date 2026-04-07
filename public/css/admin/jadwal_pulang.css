@@ -1,103 +1,130 @@
-body {
-    background-color: #f6f7fb;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.container-dashboard{
+    max-width:1160px;
+    margin:0 auto;
 }
 
-h3 {
-    font-weight: 600;
-    color: #333;
+.main-dashboard{
+    padding:18px 24px 28px;
 }
 
-.nav-pills .nav-link {
-    border-radius: 8px;
-    background: #f3f3f3;
-    color: #666;
-    margin-right: 8px;
-    padding: 6px 14px;
-    font-size: 14px;
-    transition: 0.2s;
+/* TITLE */
+.page-title-card{
+    background:#fff;
+    border-radius:10px;
+    padding:20px 24px;
+    margin-bottom:20px;
+    border:1px solid rgba(222,221,236,.8);
+    box-shadow:none;
 }
 
-.nav-pills .nav-link:hover {
-    background: #eaeaea;
+.page-title-card h5{
+    margin:0;
+    font-size:22px;
+    font-weight:700;
+    color:#2c214d;
 }
 
-.nav-pills .nav-link.active {
-    background: #ffe8cc;
-    color: #ff8800;
-    border: 1px solid #ff8800;
-    font-weight: 500;
+/* CLASS */
+.class-card{
+    background:#fff;
+    border-radius:10px;
+    padding:18px 22px;
+    margin-bottom:22px;
+    border:1px solid rgba(222,221,236,.8);
+    box-shadow:none;
 }
 
-.card {
-    border-radius: 12px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.04);
-    background: #fff;
+.class-tabs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
 }
 
-.btn-outline-dark {
-    border-radius: 6px;
-    font-size: 14px;
+.btn-kelas{
+    border:1px solid rgba(139,128,255,.28);
+    padding:10px 20px;
+    border-radius:10px;
+    font-size:14px;
+    color:#4a3c91;
+    background:#fff;
+    cursor:pointer;
+    transition:all .15s ease;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
 }
 
-.jadwal-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
+.btn-kelas:hover{
+    border-color:rgba(139,128,255,.56);
 }
 
-.hari {
-    background: #dcd0f7;
-    color: #5a3ea1;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-weight: 500;
-    min-width: 110px;
-    text-align: center;
+.btn-kelas.active{
+    background:#ffc952;
+    color:#392b11;
+    border-color:transparent;
+    box-shadow:none;
 }
 
-.jam {
-    border-radius: 8px;
-    border: 1px solid #b8a5eb;
-    padding: 10px 14px;
-    width: 100%;
-    color: #5a3ea1;
-    background: #fff;
-    transition: 0.2s;
+/* SCHEDULE */
+.schedule-card{
+    background:#f6f5ff;
+    border-radius:10px;
+    padding:26px;
+    border:1px solid rgba(152,122,255,.22);
 }
 
-.jam::placeholder {
-    color: #aaa;
+.schedule-card-top{
+    display:flex;
+    justify-content:flex-end;
+    margin-bottom:22px;
 }
 
-.jam:focus {
-    outline: none;
-    border-color: #8b6edb;
-    box-shadow: 0 0 0 3px rgba(139,110,219,0.15);
+.btn-edit{
+    background:#f7f7fb;
+    border:1px solid rgba(192,192,206,.6);
+    color:#5f5f6f;
+    padding:10px 18px;
+    font-size:13px;
+    border-radius:10px;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
 }
 
-.btn-dark {
-    border-radius: 8px;
-    padding: 10px;
-    font-weight: 500;
-    background: #1f1f1f;
-    border: none;
-    transition: 0.2s;
+/* LIST */
+.jadwal-list{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
 }
 
-.btn-dark:hover {
-    background: #333;
+.jadwal-row{
+    display:flex;
+    border:1px solid rgba(142,99,255,.28);
+    border-radius:10px;
+    overflow:hidden;
+    background:#fff;
 }
 
-@media (max-width: 768px) {
-    .jadwal-row {
-        flex-direction: column;
-        align-items: stretch;
-    }
+.jadwal-hari{
+    width:140px;
+    background:linear-gradient(180deg, #d7cffc 0%, #eadbff 100%);
+    color:#4b368f;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:16px 18px;
+    border-radius:0;
+}
 
-    .hari {
-        width: 100%;
-    }
+.jadwal-jam{
+    flex:1;
+    padding:14px 20px;
+    color:#5a3ec8;
+    font-weight:600;
+    display:flex;
+    align-items:center;
 }

@@ -44,6 +44,45 @@ body {
     border: 1px solid #e5e7eb;
 }
 
+/* ================== CLASS TABS ================== */
+.class-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+}
+
+.class-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.btn-kelas {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    border: 1px solid rgba(139, 128, 255, 0.28);
+    border-radius: 8px;
+    background: #fff;
+    color: #4a3c91;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.15s ease;
+}
+
+.btn-kelas.active {
+    background: #ffc952;
+    color: #392b11;
+    border-color: transparent;
+}
+
+.btn-kelas:hover {
+    border-color: rgba(139, 128, 255, 0.56);
+}
+
 /* ================== ROW ================== */
 .jadwal-row {
     display: flex;

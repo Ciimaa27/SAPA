@@ -25,38 +25,41 @@
                 Kembali
                 </a>
 
-            <form>
+            <form action="{{ route('kelola-akun.update', $user->id_user) }}" method="POST">
+                @csrf
+                @method('PUT')
 
                 <!-- ROW 1 -->
                 <div class="form-row">
                     <div class="form-group">
-                <label>Nama Lengkap</label>
-            <input type="text">
-            </div>
+                        <label>Nama Lengkap</label>
+                        <input type="text" name="nama_lengkap" value="{{ old('nama_lengkap', $user->nama_lengkap ?? '') }}">
+                    </div>
 
                     <div class="form-group">
-                <label>Nama Pengguna</label>
-                <input type="text">
-            </div>
-            </div>
+                        <label>Nama Pengguna</label>
+                        <input type="text" name="username" value="{{ old('username', $user->username ?? '') }}">
+                    </div>
+                </div>
 
                 <!-- PERAN -->
-            <div class="form-group full">
-            <label>Peran</label>
-                <select>
-                <option>Admin</option>
-                <option>Guru</option>
-                <option>Orangtua / Wali</option>
-                </select>
-                <small class="form-text">
-                *Pilih peran sesuai kebutuhan user, pastikan dengan benar
-            </small>
-            </div>
+                <div class="form-group full">
+                    <label>Peran</label>
+                    <select name="peran">
+                        <option value="Admin" {{ old('peran', $user->role->nama_role ?? '') === 'Admin' ? 'selected' : '' }}>Admin</option>
+                        <option value="Guru" {{ old('peran', $user->role->nama_role ?? '') === 'Guru' ? 'selected' : '' }}>Guru</option>
+                        <option value="Orangtua/Wali" {{ old('peran', $user->role->nama_role ?? '') === 'Orangtua/Wali' ? 'selected' : '' }}>Orangtua / Wali</option>
+                        <option value="Kepala Sekolah" {{ old('peran', $user->role->nama_role ?? '') === 'Kepala Sekolah' ? 'selected' : '' }}>Kepala Sekolah</option>
+                    </select>
+                    <small class="form-text">
+                        *Pilih peran sesuai kebutuhan user, pastikan dengan benar
+                    </small>
+                </div>
 
                 <!-- EMAIL -->
                 <div class="form-group full">
                     <label>Email</label>
-                    <input type="email" value="admin01@sekolah.id">
+                    <input type="email" name="email" value="{{ old('email', $user->email ?? '') }}">
                     <small class="form-text">
                         *Pastikan memasukkan nama email dengan benar
                     </small>

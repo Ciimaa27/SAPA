@@ -4,41 +4,31 @@
 
 <link rel="stylesheet" href="{{ asset('css/admin/kelola-akun.css') }}">
 
-<style>
-    .table-container {
-        max-height: 400px;
-        overflow-y: auto;
-    }
-
-    .table thead th {
-        position: sticky;
-        top: 0;
-        background: #f8f9fa;
-        z-index: 2;
-    }
-</style>
-
 @include('layouts.sidebar-admin')
 @include('layouts.topbar')
 
 <div class="main-dashboard">
     <div class="container-dashboard">
 
+        <!-- HEADER -->
         <div class="card mb-3 p-3">
             <div class="d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Kelola akun pengguna</h5>
             </div>
         </div>
 
+        <!-- TOOLBAR -->
         <div class="card mb-3 p-3">
-            <div class="d-flex align-items-center gap-3 flex-wrap">
+            <div class="d-flex align-items-center gap-3">
 
-                <div style="min-width:140px;">
+                <div style="min-width:auto;">
                     Total akun : <strong>{{ $total }}</strong>
                 </div>
 
+                <!-- FILTER DROPDOWN -->
                 <div style="width:180px;">
                     <select class="form-select form-select-sm">
+                        <option>Tamplikan</option>
                         <option>Semua</option>
                         <option>Admin</option>
                         <option>Orangtua / Wali</option>
@@ -46,25 +36,33 @@
                     </select>
                 </div>
 
-                <a href="/kelola-akun/create" class="btn btn-primary btn-sm">
+                <!-- BUTTON TAMBAH -->
+                <a href="{{ route('kelola-akun.create') }}" class="btn btn-sm" style="border: 1px solid #dee2e6; background: transparent; color: #333;">
                     <i class="fa fa-plus"></i> Tambah
                 </a>
 
-                <!-- 🔍 TAMBAH ID -->
-                <div class="input-group input-group-sm search-flex ms-auto" style="min-width:260px;">
-                    <span class="input-group-text bg-white">
-                        <i class="fa fa-search"></i>
-                    </span>
-                    <input type="text" id="searchInputAkun" class="form-control" placeholder="Pencarian">
-                </div>
+                <!-- SEARCH BACKEND -->
+                <form method="GET" action="{{ route('kelola-akun.index') }}" style="flex: 1; max-width: 500px;">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-white border">
+                            <i class="fa fa-search"></i>
+                        </span>
+                        <input 
+                            type="text" 
+                            name="search" 
+                            value="{{ request('search') }}" 
+                            class="form-control" 
+                            placeholder="Pencarian">
+                    </div>
+                </form>
 
             </div>
         </div>
 
+        <!-- TABLE -->
         <div class="card">
             <div class="table-container">
-                <!-- 🔥 TAMBAH ID -->
-                <table class="table table-hover align-middle mb-0" id="dataTableAkun">
+                <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
                             <th>Nama pengguna</th>
@@ -79,20 +77,26 @@
                         @forelse($users as $user)
                         <tr>
                             <td>{{ $user->username }}</td>
-                            <td>{{ $user->name ?? $user->nama_lengkap ?? '-' }}</td>
+                            <td>{{ $user->nama_lengkap ?? '-' }}</td>
                             <td>{{ ucfirst($user->nama_role ?? '-') }}</td>
                             <td>{{ $user->email ?? '-' }}</td>
                             <td>
 
-                                <!-- ✅ EDIT (SUDAH BISA PINDAH) -->
-                               <a href="{{ route('kelola-akun.edit') }}" class="btn btn-warning btn-sm">
-                                 <i class="fa fa-pencil"></i>
-                                    </a>
+                                <!-- EDIT -->
+                                <a href="{{ route('kelola-akun.edit', $user->id_user) }}" 
+                                   class="btn btn-warning btn-sm">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
 
-                                <form action="{{ route('kelola-akun.destroy', $user->id_user) }}" method="POST" style="display:inline;">
+                                <!-- DELETE -->
+                                <form action="{{ route('kelola-akun.destroy', $user->id_user) }}" 
+                                      method="POST" 
+                                      style="display:inline;" 
+                                      class="delete-form">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')">
+
+                                    <button type="button" class="btn btn-danger btn-sm btn-delete">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
@@ -107,29 +111,68 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- 🔥 PAGINATION -->
+            <div class="p-3 d-flex justify-content-end">
+                {{ $users->links() }}
+            </div>
+
         </div>
 
     </div>
 </div>
 
-<!-- 🔥 SCRIPT SEARCH -->
+<!-- MODAL DELETE -->
+<div class="confirm-modal" id="confirmModal">
+    <div class="confirm-modal-backdrop"></div>
+    <div class="confirm-modal-dialog">
+        <div class="confirm-modal-content">
+            <div class="confirm-modal-header">
+                <h5>Hapus</h5>
+            </div>
+            <div class="confirm-modal-body">
+                <p>Yakin ingin menghapus data? Data tidak dapat dikembalikan.</p>
+            </div>
+            <div class="confirm-modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm btn-cancel">Batal</button>
+                <button type="button" class="btn btn-danger btn-sm btn-confirm">Hapus</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SCRIPT DELETE SAJA -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    let input = document.getElementById("searchInputAkun");
 
-    input.addEventListener("keyup", function() {
-        let keyword = this.value.toLowerCase();
-        let rows = document.querySelectorAll("#dataTableAkun tbody tr");
+    const confirmModal = document.getElementById('confirmModal');
+    const confirmButton = document.querySelector('.btn-confirm');
+    const cancelButton = document.querySelector('.btn-cancel');
+    let activeDeleteForm = null;
 
-        rows.forEach(function(row) {
-            let text = row.textContent.toLowerCase();
-
-            if (text.includes(keyword)) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
+    document.querySelectorAll('.btn-delete').forEach(function(button) {
+        button.addEventListener('click', function() {
+            activeDeleteForm = button.closest('.delete-form');
+            confirmModal.classList.add('show');
         });
+    });
+
+    confirmButton.addEventListener('click', function() {
+        if (activeDeleteForm) {
+            activeDeleteForm.submit();
+        }
+    });
+
+    cancelButton.addEventListener('click', function() {
+        confirmModal.classList.remove('show');
+        activeDeleteForm = null;
+    });
+
+    confirmModal.addEventListener('click', function(event) {
+        if (event.target === confirmModal || event.target.classList.contains('confirm-modal-backdrop')) {
+            confirmModal.classList.remove('show');
+            activeDeleteForm = null;
+        }
     });
 });
 </script>

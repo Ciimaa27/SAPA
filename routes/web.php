@@ -7,8 +7,11 @@ use App\Http\Controllers\Admin\DataSiswaController;
 use App\Http\Controllers\Admin\DataWaliController;
 use App\Http\Controllers\Admin\GuruKelasController;
 use App\Http\Controllers\Admin\RelasiController;
+use App\Http\Controllers\Admin\RFIDController;
 use App\Http\Controllers\Admin\IoTController;
 use App\Http\Controllers\Admin\DataPenjemputanController;
+use App\Http\Controllers\Admin\LaporanController;
+use App\Http\Controllers\Admin\JadwalPulangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,11 +57,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/kelola-akun', [KelolaAkunController::class, 'index'])->name('kelola-akun.index');
     Route::get('/kelola-akun/create', [KelolaAkunController::class, 'create'])->name('kelola-akun.create');
     Route::post('/kelola-akun', [KelolaAkunController::class, 'store'])->name('kelola-akun.store');
+    Route::get('/kelola-akun/{id}/edit', [KelolaAkunController::class, 'edit'])->name('kelola-akun.edit');
+    Route::put('/kelola-akun/{id}', [KelolaAkunController::class, 'update'])->name('kelola-akun.update');
     Route::delete('/kelola-akun/{id}', [KelolaAkunController::class, 'destroy'])->name('kelola-akun.destroy');
-
-    Route::get('/edit-kelola-akun/edit', function () {
-    return view('admin.edit-kelola-akun');
-    })->name('kelola-akun.edit');
 
     // ========================
     // DATA SISWA
@@ -97,41 +98,36 @@ Route::prefix('admin')->group(function () {
     // ========================
     // PERANGKAT (IOT)
     // ========================
+    Route::get('/status-perangkat', [IoTController::class, 'statusPerangkat'])
+        ->name('status-perangkat');
 
-    // ✅ TARUH DI ATAS (biar nggak ketimpa {tab})
-    Route::get('/iot/status-perangkat', [IoTController::class, 'statusPerangkat'])->name('status-perangkat');
+    // RFID
+    Route::get('/iot/{tab?}', [RFIDController::class, 'index'])
+        ->name('iot.index');
 
-    // RFID & SIDIK JARI
-    Route::get('/iot/{tab?}', [IoTController::class, 'index'])->name('iot.index');
-    Route::post('/iot/{tab}', [IoTController::class, 'store'])->name('iot.store');
-    Route::delete('/iot/{tab}/{id}', [IoTController::class, 'destroy'])->name('iot.destroy');
+    Route::delete('/iot/{tab}/{id}', [RFIDController::class, 'destroy'])
+        ->name('iot.destroy');
 
     // ========================
     // JADWAL & PENJEMPUTAN
     // ========================
-
-    // ✅ JADWAL PULANG (SUDAH FIX)
-    Route::get('/admin.jadwal-pulang', function(){
-        return view('admin.jadwal-pulang');
-    })->name('admin.jadwal-pulang');
-
-    Route::post('/jadwal-pulang', function(){
-        return back()->withInput();
-    })->name('admin.jadwal-pulang.store');
-
-
-    Route::get('/jadwal-pulang', function () {
-        return view('admin.jadwal-pulang');
-    })->name('jadwal-pulang');
-
-    Route::get('/jadwal-pulang/edit', function () {
-        return view('admin.edit-jadwal-pulang');
-    })->name('jadwal-pulang.edit');
+    Route::get('/jadwal-pulang', [JadwalPulangController::class, 'index'])
+        ->name('jadwal-pulang');
+    Route::get('/jadwal-pulang/edit', [JadwalPulangController::class, 'edit'])
+        ->name('jadwal-pulang.edit');
+    Route::post('/jadwal-pulang/{kelas}/update', [JadwalPulangController::class, 'update'])
+        ->name('jadwal-pulang.update');
 
     // DATA PENJEMPUTAN
     Route::get('/data-penjemputan', [DataPenjemputanController::class, 'index'])->name('data-penjemputan');
 
+  // Laporan
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
+
 });
+
+    
+
 
 
 /*

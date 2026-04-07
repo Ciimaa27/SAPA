@@ -15,17 +15,29 @@ class KelolaAkunController extends Controller
     // ========================
     // Tampilkan daftar akun
     // ========================
-    public function index()
-    {
-        $users = DB::table('users')
-            ->leftJoin('role', 'users.id_role', '=', 'role.id_role')
-            ->select('users.*', 'role.nama_role')
-            ->paginate(10);
+    public function index(Request $request)
+{
+    $query = DB::table('users')
+        ->leftJoin('role', 'users.id_role', '=', 'role.id_role')
+        ->select('users.*', 'role.nama_role');
 
-        $total = DB::table('users')->count();
-
-        return view('admin.kelola-akun', compact('users', 'total'));
+    // SEARCH
+    if ($request->search) {
+        $query->where(function ($q) use ($request) {
+            $q->where('users.username', 'like', '%' . $request->search . '%')
+              ->orWhere('users.nama_lengkap', 'like', '%' . $request->search . '%')
+              ->orWhere('users.email', 'like', '%' . $request->search . '%');
+        });
     }
+
+    $users = $query->orderBy('users.id_user', 'desc')
+                   ->paginate(10)
+                   ->withQueryString();
+
+    $total = DB::table('users')->count();
+
+    return view('admin.kelola-akun', compact('users', 'total'));
+}
 
     // ========================
     // Form tambah akun
@@ -33,6 +45,16 @@ class KelolaAkunController extends Controller
     public function create()
     {
         return view('admin.tambah-akun');
+    }
+
+    // ========================
+    // Form edit akun
+    // ========================
+    public function edit($id)
+    {
+        $user = User::findOrFail($id);
+
+        return view('admin.edit-kelola-akun', compact('user'));
     }
 
     // ========================
@@ -44,11 +66,10 @@ class KelolaAkunController extends Controller
             'nama_lengkap' => 'required|string|max:100',
             'username'     => 'required|string|max:50|unique:users,username',
             'email'        => 'required|email|unique:users,email',
-            'peran'        => ['required', Rule::in(['Admin', 'Orangtua/Wali', 'Kepala Sekolah'])],
+            'peran'        => ['required', Rule::in(['Admin', 'Guru', 'Kepala Sekolah', 'Orangtua/Wali'])],
             'password'     => 'nullable|string|min:6',
         ]);
 
-        // ✅ Tentukan role
         $id_role = match($request->peran) {
             'Admin' => 1,
             'Guru' => 2,
@@ -57,7 +78,6 @@ class KelolaAkunController extends Controller
             default => 4,
         };
 
-        // ✅ Simpan user
         $user = User::create([
             'id_role'       => $id_role,
             'username'      => $request->username,
@@ -67,19 +87,76 @@ class KelolaAkunController extends Controller
             'status'        => 'aktif',
         ]);
 
-        // ✅ Jika wali
+        // 🔥 auto insert ke tabel wali jika role wali
         if ($id_role == 4) {
             Wali::create([
-                'id_user'       => $user->id_user,
-                'nama_wali'     => $request->nama_lengkap,
-                'fingerprint_id'=> null,
-                'no_wa'         => null,
-                'no_hp'         => null,
-                'is_active'     => 1
+                'id_user'        => $user->id_user,
+                'nama_wali'      => $request->nama_lengkap,
+                'fingerprint_id' => null,
+                'no_wa'          => null,
+                'no_hp'          => null,
+                'is_active'      => 1
             ]);
         }
 
         return redirect()->route('kelola-akun.index')
             ->with('success', 'Akun pengguna berhasil ditambahkan!');
+    }
+
+    // ========================
+    // Update akun
+    // ========================
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'nama_lengkap' => 'required|string|max:100',
+            'username'     => 'required|string|max:50|unique:users,username,' . $user->id_user . ',id_user',
+            'email'        => 'required|email|unique:users,email,' . $user->id_user . ',id_user',
+            'peran'        => ['required', Rule::in(['Admin', 'Guru', 'Kepala Sekolah', 'Orangtua/Wali'])],
+        ]);
+
+        $id_role = match($request->peran) {
+            'Admin' => 1,
+            'Guru' => 2,
+            'Kepala Sekolah' => 3,
+            'Orangtua/Wali' => 4,
+            default => 4,
+        };
+
+        $user->update([
+            'id_role'      => $id_role,
+            'username'     => $request->username,
+            'nama_lengkap' => $request->nama_lengkap,
+            'email'        => $request->email,
+        ]);
+
+        // 🔥 jika berubah jadi wali
+        if ($id_role == 4 && !$user->wali) {
+            Wali::create([
+                'id_user'        => $user->id_user,
+                'nama_wali'      => $user->nama_lengkap,
+                'fingerprint_id' => null,
+                'no_wa'          => null,
+                'no_hp'          => null,
+                'is_active'      => 1
+            ]);
+        }
+
+        return redirect()->route('kelola-akun.index')
+            ->with('success', 'Akun pengguna berhasil diperbarui!');
+    }
+
+    // ========================
+    // Hapus akun
+    // ========================
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('kelola-akun.index')
+            ->with('success', 'Akun pengguna berhasil dihapus!');
     }
 }

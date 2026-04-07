@@ -1,3 +1,4 @@
+/* ===== LAYOUT ===== */
 .container-dashboard{
     max-width:1100px;
     margin:0 auto;
@@ -5,10 +6,6 @@
 
 .main-dashboard{
     padding:5px 30px 20px 20px;
-}
-
-.card{
-    border-radius:10px;
 }
 
 .content{
@@ -22,14 +19,174 @@ body{
     overflow-x:hidden;
 }
 
-.table-container{
-    max-height:400px;
-    overflow-y:auto;
+/* ===== CARD ===== */
+.card{
+    border-radius:10px;
+    border:1px solid #e9ecef;
+    box-shadow:none;
 }
 
-.table thead th{
-    position:sticky;
-    top:0;
+/* ===== BUTTON & SEARCH ===== */
+.btn-tambah{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 14px;
+    font-weight:500;
+}
+
+.search-flex{
+    flex:1;
+}
+
+/* ===== TABLE ===== */
+.table{
+    margin-bottom:0;
+    font-size:13px;
+}
+
+.table th{
+    font-size:13px;
+    font-weight:600;
     background:#f8f9fa;
-    z-index:2;
+}
+
+.table td{
+    font-size:13px;
+    vertical-align:middle;
+}
+
+/* 🔥 NO SCROLL TABLE */
+.table-container{
+    max-height:none;
+    overflow:visible;
+}
+
+/* ❌ disable sticky */
+.table thead th{
+    position:static;
+}
+
+/* hover effect */
+.table tbody tr:hover{
+    background:#f8f9fa;
+}
+
+/* ===== BUTTON WARNA ===== */
+.btn-warning,
+.btn-danger,
+.btn-info{
+    color:#fff;
+}
+
+/* ===== PAGINATION ===== */
+.pagination {
+    margin: 0;
+    gap: 6px;
+}
+
+.pagination .page-item .page-link {
+    border-radius: 6px !important;
+    padding: 6px 12px;
+    font-size: 13px;
+    border: none;
+    background: #f1f3f5;
+    color: #6c757d;
+}
+
+.pagination .page-item .page-link:hover {
+    background: #e2e6ea;
+}
+
+.pagination .page-item.active .page-link {
+    background: #6f42c1;
+    color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+    background: #e9ecef;
+    color: #adb5bd;
+}
+
+.pagination .page-link svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* ===================================================== */
+/* 🔥 POPUP DELETE */
+/* ===================================================== */
+
+.confirm-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirm-modal.show {
+    display: flex;
+}
+
+.confirm-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.confirm-modal-dialog {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 350px;
+}
+
+.confirm-modal-content {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.confirm-modal-header {
+    padding: 16px;
+    text-align: center;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+}
+
+.confirm-modal-body {
+    padding: 16px;
+    text-align: center;
+    color: #555;
+}
+
+.confirm-modal-footer {
+    padding: 12px;
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid #eee;
+}
+
+.confirm-modal-footer .btn {
+    flex: 1;
+    border-radius: 8px;
+}
+
+/* animasi */
+.confirm-modal.show .confirm-modal-content {
+    animation: popup 0.25s ease;
+}
+
+@keyframes popup {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }

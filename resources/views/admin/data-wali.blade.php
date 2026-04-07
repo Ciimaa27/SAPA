@@ -82,7 +82,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $row->nama_wali }}</td>
-                            <td>{{ $row->no_hp }}</td>
+                            <td>{{ $row->no_hp ?? '-' }}</td>
                             <td class="text-capitalize">
                                 {{ $row->jenis_kelamin ?? '-' }}
                             </td>
@@ -91,13 +91,19 @@
                                     <i class="fa fa-pencil"></i>
                                 </button>
 
-                                <form action="{{ route('hapus-wali', ['id' => $row->id_wali]) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')">
+                                @if($row->id_wali)
+                                    <form action="{{ route('hapus-wali', ['id' => $row->id_wali]) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                @else
+                                    <button class="btn btn-danger btn-sm" disabled>
                                         <i class="fa fa-trash"></i>
                                     </button>
-                                </form>
+                                @endif
                             </td>
                         </tr>
 
