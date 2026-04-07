@@ -16,6 +16,62 @@
         background: #f8f9fa;
         z-index: 2;
     }
+
+    /* 🔥 POPUP STYLE */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.45);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .modal-box {
+        background: #fff;
+        padding: 25px;
+        width: 380px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        animation: fadeIn 0.2s ease-in-out;
+    }
+
+    .modal-box h4 {
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+
+    .modal-box p {
+        font-size: 14px;
+        color: #555;
+    }
+
+    .modal-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .modal-actions .btn {
+        width: 48%;
+        border-radius: 8px;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
 </style>
 
 @include('layouts.sidebar-admin')
@@ -50,7 +106,6 @@
                     <i class="fa fa-plus"></i> Tambah
                 </a>
 
-                <!-- 🔍 TAMBAH ID -->
                 <div class="input-group input-group-sm search-flex ms-auto" style="min-width:260px;">
                     <span class="input-group-text bg-white">
                         <i class="fa fa-search"></i>
@@ -63,7 +118,6 @@
 
         <div class="card">
             <div class="table-container">
-                <!-- 🔥 TAMBAH ID -->
                 <table class="table table-hover align-middle mb-0" id="dataTableAkun">
                     <thead class="table-light">
                         <tr>
@@ -84,15 +138,15 @@
                             <td>{{ $user->email ?? '-' }}</td>
                             <td>
 
-                                <!-- ✅ EDIT (SUDAH BISA PINDAH) -->
-                               <a href="{{ route('kelola-akun.edit') }}" class="btn btn-warning btn-sm">
-                                 <i class="fa fa-pencil"></i>
-                                    </a>
+                                <a href="{{ route('kelola-akun.edit') }}" class="btn btn-warning btn-sm">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
 
+                                <!-- ✅ DELETE -->
                                 <form action="{{ route('kelola-akun.destroy', $user->id_user) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')">
+                                    <button type="button" class="btn btn-danger btn-sm btn-delete">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
@@ -112,7 +166,22 @@
     </div>
 </div>
 
-<!-- 🔥 SCRIPT SEARCH -->
+<!-- 🔥 POPUP -->
+<div id="deleteModal" class="modal-overlay">
+    <div class="modal-box">
+        <h4>Hapus</h4>
+        <p>
+            Yakin ingin menghapus data? data yang di hapus tidak dapat di kembalikan atau di batalkan
+        </p>
+
+        <div class="modal-actions">
+            <button id="confirmDelete" class="btn btn-danger">Hapus</button>
+            <button id="cancelDelete" class="btn btn-secondary">Batal</button>
+        </div>
+    </div>
+</div>
+
+<!-- 🔍 SEARCH -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     let input = document.getElementById("searchInputAkun");
@@ -131,6 +200,28 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+});
+</script>
+
+<!-- 🔥 POPUP SCRIPT -->
+<script>
+let selectedForm = null;
+
+document.querySelectorAll(".btn-delete").forEach(function(btn){
+    btn.addEventListener("click", function(){
+        selectedForm = this.closest("form");
+        document.getElementById("deleteModal").style.display = "flex";
+    });
+});
+
+document.getElementById("cancelDelete").addEventListener("click", function(){
+    document.getElementById("deleteModal").style.display = "none";
+});
+
+document.getElementById("confirmDelete").addEventListener("click", function(){
+    if(selectedForm){
+        selectedForm.submit();
+    }
 });
 </script>
 
