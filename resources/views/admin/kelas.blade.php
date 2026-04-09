@@ -56,8 +56,9 @@
 
         <div class="card">
             <div class="d-flex justify-content-end p-3">
-                <a href="#" class="btn btn-primary btn-sm btn-tambah">
-                    <i class="fa fa-plus"></i> Tambah kelas
+                <a href="{{ route('tambah-data-kelas') }}" class="btn-tambah-kelas">
+                    Tambah
+                    <span class="icon-plus">+</span>
                 </a>
             </div>
 

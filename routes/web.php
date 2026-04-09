@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\IoTController;
 use App\Http\Controllers\Admin\DataPenjemputanController;
 use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\JadwalPulangController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,14 +24,33 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Login
+// FORM LOGIN
 Route::get('/login', function () {
     return view('login');
 })->name('login');
 
-Route::post('/login', function () {
-    return redirect()->route('admin.dashboard');
-});
+// PROSES LOGIN
+Route::post('/login', [AuthController::class, 'login']);
+
+// ADMIN
+Route::get('/admin/dashboard', function () {
+    return view('admin.dashboard');
+})->name('admin.dashboard');
+
+// GURU
+Route::get('/guru/dashboard', function () {
+    return view('guru.dashboard');
+})->name('guru.dashboard');
+
+// WALI
+Route::get('/wali/dashboard', function () {
+    return view('wali.dashboard');
+})->name('wali.dashboard');
+
+// KEPSEK
+Route::get('/kepsek/dashboard', function () {
+    return view('kepsek.dashboard');
+})->name('kepsek.dashboard');
 
 // Lupa Sandi
 Route::get('/lupasandi', function () {
@@ -66,34 +86,41 @@ Route::prefix('admin')->group(function () {
     // ========================
     Route::get('/data-siswa', [DataSiswaController::class, 'index'])->name('data-siswa');
     Route::delete('/data-siswa/{id}', [DataSiswaController::class, 'destroy'])->name('hapus-siswa');
+    Route::get('/tambah-siswa', [DataSiswaController::class, 'create'])->name('tambah-siswa');
+    Route::post('/tambah-siswa', [DataSiswaController::class, 'store'])->name('store-siswa');
+    Route::get('/siswa-kelas', function () {return view('admin.siswa-kelas');})->name('siswa-kelas');
+    Route::view('/edit-data-siswa', 'admin.edit-data-siswa')->name('edit-data-siswa');
+    Route::get('/data-siswa/{id}', [DataSiswaController::class, 'show'])->name('data-siswa.show');
 
-    Route::get('/tambah-siswa', function () {
-        return view('admin.tambah-siswa');
-    })->name('tambah-siswa');
-
-    Route::get('/siswa-kelas', function () {
-        return view('admin.siswa-kelas');
-    })->name('siswa-kelas');
 
     // ========================
     // DATA WALI
     // ========================
     Route::get('/data-wali', [DataWaliController::class, 'index'])->name('data-wali');
+    Route::get('/tambah-data-wali', [DataWaliController::class, 'create'])->name('wali.create');
+    Route::post('/tambah-data-wali', [DataWaliController::class, 'store'])->name('wali.store');
     Route::delete('/data-wali/{id}', [DataWaliController::class, 'destroy'])->name('hapus-wali');
+    Route::get('/edit-data-wali/{id}', function ($id) { return view('admin.edit-data-wali');})->name('edit-data-wali');
+
 
     // ========================
     // DATA GURU & KELAS
     // ========================
     Route::get('/guru', [GuruKelasController::class, 'guru'])->name('guru');
     Route::get('/kelas', [GuruKelasController::class, 'kelas'])->name('kelas');
+    Route::view('/admin/tambah-data-guru', 'admin.tambah-data-guru')
+    ->name('tambah-data-guru');
+    Route::view('/admin/tambah-data-kelas', 'admin.tambah-data-kelas')
+    ->name('tambah-data-kelas');
 
     // ========================
     // DATA RELASI
     // ========================
     Route::get('/relasi', [RelasiController::class, 'index'])->name('relasi.index');
-    Route::get('/relasi/create', [RelasiController::class, 'create'])->name('relasi.create');
+    Route::get('/relasi/create', [RelasiController::class, 'create'])->name('relasi.tambah');
     Route::post('/relasi', [RelasiController::class, 'store'])->name('relasi.store');
     Route::delete('/relasi/{id_siswa}/{id_wali}', [RelasiController::class, 'destroy'])->name('relasi.destroy');
+    
 
     // ========================
     // PERANGKAT (IOT)
@@ -107,6 +134,9 @@ Route::prefix('admin')->group(function () {
 
     Route::delete('/iot/{tab}/{id}', [RFIDController::class, 'destroy'])
         ->name('iot.destroy');
+
+    Route::view('/admin/tambah-data-rfid', 'admin.tambah-data-rfid')
+    ->name('tambah-data-rfid');
 
     // ========================
     // JADWAL & PENJEMPUTAN

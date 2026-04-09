@@ -13,8 +13,8 @@
     border-radius:10px;
     padding:20px 24px;
     margin-bottom:20px;
-    border:1px solid rgba(222,221,236,.8);
-    box-shadow:none;
+    border:1px solid #e5e7eb; /* FIX: lebih solid */
+    box-shadow:0 2px 6px rgba(0,0,0,0.03); /* FIX: tambah shadow */
 }
 
 .page-title-card h5{
@@ -30,8 +30,8 @@
     border-radius:10px;
     padding:18px 22px;
     margin-bottom:22px;
-    border:1px solid rgba(222,221,236,.8);
-    box-shadow:none;
+    border:1px solid #e5e7eb; /* FIX */
+    box-shadow:0 2px 6px rgba(0,0,0,0.03); /* FIX */
 }
 
 .class-tabs{
@@ -41,11 +41,11 @@
 }
 
 .btn-kelas{
-    border:1px solid rgba(139,128,255,.28);
-    padding:10px 20px;
-    border-radius:10px;
-    font-size:14px;
-    color:#4a3c91;
+    border:1px solid #e5e7eb; /* FIX: lebih clean */
+    padding:8px 16px; /* FIX: lebih kecil */
+    border-radius:8px; /* FIX: lebih sesuai figma */
+    font-size:13px;
+    color:#374151; /* FIX */
     background:#fff;
     cursor:pointer;
     transition:all .15s ease;
@@ -56,22 +56,23 @@
 }
 
 .btn-kelas:hover{
-    border-color:rgba(139,128,255,.56);
+    border-color:#c4b5fd; /* FIX */
 }
 
 .btn-kelas.active{
-    background:#ffc952;
-    color:#392b11;
+    background:#fbbf24; /* FIX: warna figma */
+    color:#000;
     border-color:transparent;
     box-shadow:none;
 }
 
 /* SCHEDULE */
 .schedule-card{
-    background:#f6f5ff;
+    background:#ffffff; /* FIX: dari ungu jadi putih */
     border-radius:10px;
-    padding:26px;
-    border:1px solid rgba(152,122,255,.22);
+    padding:22px; /* FIX: sedikit lebih compact */
+    border:1px solid #e5e7eb; /* FIX */
+    box-shadow:0 2px 6px rgba(0,0,0,0.03); /* FIX */
 }
 
 .schedule-card-top{
@@ -82,11 +83,11 @@
 
 .btn-edit{
     background:#f7f7fb;
-    border:1px solid rgba(192,192,206,.6);
+    border:1px solid #d1d5db; /* FIX */
     color:#5f5f6f;
-    padding:10px 18px;
+    padding:8px 16px; /* FIX */
     font-size:13px;
-    border-radius:10px;
+    border-radius:8px; /* FIX */
     text-decoration:none;
     display:inline-flex;
     align-items:center;
@@ -97,34 +98,34 @@
 .jadwal-list{
     display:flex;
     flex-direction:column;
-    gap:14px;
+    gap:12px; /* FIX: lebih rapat */
 }
 
 .jadwal-row{
     display:flex;
-    border:1px solid rgba(142,99,255,.28);
-    border-radius:10px;
+    border:1.5px solid #7c3aed; /* FIX: ungu tegas */
+    border-radius:8px; /* FIX */
     overflow:hidden;
     background:#fff;
 }
 
 .jadwal-hari{
-    width:140px;
-    background:linear-gradient(180deg, #d7cffc 0%, #eadbff 100%);
-    color:#4b368f;
-    font-weight:700;
+    width:120px; /* FIX: lebih proporsional */
+    background:#ede9fe; /* FIX: hilangkan gradient */
+    color:#5b21b6; /* FIX */
+    font-weight:600; /* FIX */
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:16px 18px;
+    padding:12px; /* FIX */
     border-radius:0;
 }
 
 .jadwal-jam{
     flex:1;
-    padding:14px 20px;
-    color:#5a3ec8;
-    font-weight:600;
+    padding:12px 16px; /* FIX */
+    color:#4c1d95; /* FIX */
+    font-weight:500; /* FIX */
     display:flex;
     align-items:center;
 }

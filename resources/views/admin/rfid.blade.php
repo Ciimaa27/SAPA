@@ -59,9 +59,11 @@
         <div class="card">
 
             <div class="d-flex justify-content-end p-3">
-                <a href="#" class="btn btn-primary btn-sm">
-                    <i class="fa fa-plus"></i> Tambah
+                <a href="{{ route('tambah-data-rfid') }}" class="btn-tambah-rfid">
+                    Tambah
+                    <span class="icon-plus">+</span>
                 </a>
+            </div>
             </div>
 
             <div class="table-container">

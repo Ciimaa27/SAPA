@@ -52,7 +52,7 @@
                     </select>
                 </div>
 
-                <a href="{{ route('relasi.create') }}" class="btn btn-primary btn-sm btn-tambah">
+                <a href="{{ route('relasi.tambah') }}" class="btn btn-primary btn-sm btn-tambah">
                     <i class="fa fa-plus"></i> Tambah
                 </a>
 
