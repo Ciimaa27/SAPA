@@ -1,48 +1,175 @@
-.container-dashboard{
-    max-width:1100px;
-    margin:0 auto;
+/* =========================
+   GLOBAL
+========================= */
+body{
+    background:#f5f3ff !important;
+    font-family: 'Poppins', sans-serif;
+    overflow-x:hidden;
 }
 
-.main-dashboard{
-    padding:5px 30px 20px 20px;
+/* =========================
+   CONTENT LAYOUT
+========================= */
+.content{
+    margin-left:230px;
+    padding-top:70px;
+    padding-left:20px;
+    padding-right:20px;
 }
 
-.search-flex{
-    flex:1;
+/* =========================
+   CARD
+========================= */
+.card{
+    border:1px solid #ede9fe !important;
+    border-radius:14px !important;
+    box-shadow:0 4px 12px rgba(0,0,0,0.05) !important;
+    background:#ffffff !important;
+    padding:15px;
 }
 
+/* =========================
+   TITLE
+========================= */
+h4, h5{
+    font-weight:600;
+    color:#1f2937;
+}
+
+/* =========================
+   BUTTON TAMBAH (UNGU)
+========================= */
 .btn-tambah{
     display:flex;
     align-items:center;
     gap:6px;
     padding:6px 14px;
+
+    background:#ede9fe !important;
+    color:#6d28d9 !important;
+    border:1px solid #ddd6fe !important;
+
+    border-radius:10px !important;
+    font-size:13px;
     font-weight:500;
+}
+
+.btn-tambah:hover{
+    background:#ddd6fe !important;
+}
+
+/* =========================
+   TAB GURU / KELAS
+========================= */
+.tab-btn{
+    padding:6px 14px;
+    border-radius:10px;
+    border:none;
+    background:#f3f4f6;
+    font-size:13px;
+    color:#6b7280;
+    margin-right:5px;
+}
+
+.tab-btn.active{
+    background:#ede9fe !important;
+    color:#6d28d9 !important;
+    font-weight:500;
+}
+
+/* =========================
+   SEARCH
+========================= */
+.search-box{
+    border:1px solid #e5e7eb !important;
+    border-radius:10px !important;
+    padding:6px 12px;
+    font-size:13px;
+    width:100%;
+}
+
+/* =========================
+   TABLE
+========================= */
+.table{
+    margin-bottom:0;
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.table th{
+    font-size:12.5px !important;
+    font-weight:600 !important;
+    color:#6b7280 !important;
+    background:#f9fafb !important;
+    padding:12px !important;
 }
 
 .table td{
     font-size:13px;
+    color:#374151;
+    padding:12px !important;
 }
 
-.table th{
-    font-size:13px;
-    font-weight:600;
+/* garis halus */
+.table tbody tr{
+    border-bottom:1px solid #f1f5f9;
 }
 
+/* hover */
+.table tbody tr:hover{
+    background:#fafafa;
+}
+
+/* =========================
+   BUTTON AKSI
+========================= */
+
+/* VIEW */
+.btn-info{
+    background: rgba(59,130,246,0.15) !important;
+    color:#2563eb !important;
+    border:1px solid rgba(59,130,246,0.3) !important;
+}
+
+/* EDIT */
 .btn-warning{
-    color:white;
+    background: rgba(250,204,21,0.2) !important;
+    color:#ca8a04 !important;
+    border:1px solid rgba(250,204,21,0.4) !important;
 }
 
+/* DELETE */
 .btn-danger{
-    color:white;
+    background: rgba(239,68,68,0.15) !important;
+    color:#dc2626 !important;
+    border:1px solid rgba(239,68,68,0.3) !important;
 }
 
-body{
-    overflow-x:hidden;
+/* semua tombol aksi */
+.btn-info,
+.btn-warning,
+.btn-danger{
+    border-radius:8px !important;
+    width:32px;
+    height:32px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:0 !important;
 }
 
-.content{
-    margin-left:230px;
-    padding-top:60px;
-    padding-left:10px;
-    padding-right:10px;
+/* =========================
+   FIX BOOTSTRAP OVERRIDE
+========================= */
+.btn{
+    box-shadow:none !important;
+}
+
+/* =========================
+   SPACING HEADER ATAS
+========================= */
+.d-flex{
+    gap:10px;
 }

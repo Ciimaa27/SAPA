@@ -1,48 +1,188 @@
-.container-dashboard{
-    max-width:1100px;
-    margin:0 auto;
-}
-
-.main-dashboard{
-    padding:5px 30px 20px 20px;
-}
-
-.btn-tambah{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    padding:6px 14px;
-    font-weight:500;
-    }
-
-.search-flex{
-    flex:1;
-}
-
-.table td{
-    font-size:13px;
-}
-
-.table th{
-    font-size:13px;
-    font-weight:600;
-}
-
-.btn-warning{
-    color:white;
-}
-
-.btn-danger{
-    color:white;
-}
-
+/* =========================
+   GLOBAL
+========================= */
 body{
+    background:#f5f3ff;
+    font-family:'Poppins', sans-serif;
     overflow-x:hidden;
 }
 
 .content{
     margin-left:230px;
-    padding-top:60px;
-    padding-left:10px;
-    padding-right:10px;
+    padding:70px 20px 20px 20px;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+.container-dashboard{
+    max-width:1100px;
+    margin:auto;
+}
+
+.main-dashboard{
+    padding:10px 20px;
+}
+
+/* =========================
+   CARD
+========================= */
+.card{
+    border:1px solid #ede9fe;
+    border-radius:14px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.04);
+    background:#fff;
+}
+
+/* =========================
+   HEADER
+========================= */
+.card h5{
+    font-weight:600;
+    font-size:15px;
+    color:#1f2937;
+}
+
+/* =========================
+   BUTTON TAMBAH (PUTIH CLEAN)
+========================= */
+.btn-tambah{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:5px 12px;
+
+    background:#ffffff;
+    color:#374151;
+    border:1px solid #e5e7eb;
+
+    border-radius:8px;
+    font-size:12.5px;
+    font-weight:500;
+    transition:0.2s;
+}
+
+.btn-tambah:hover{
+    background:#f9fafb;
+}
+
+.btn-tambah:focus,
+.btn-tambah:active{
+    outline:none !important;
+    box-shadow:none !important;
+    background:#ffffff !important;
+    border:1px solid #e5e7eb !important;
+}
+
+/* icon kecil */
+.btn-tambah i{
+    font-size:11px;
+}
+
+/* =========================
+   SEARCH
+========================= */
+.search-flex{
+    flex:1;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.search-box{
+    width:100%;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    padding:6px 12px;
+    font-size:13px;
+}
+
+/* =========================
+   TOTAL BOX (KOTAK KECIL)
+========================= */
+.total-box{
+    border:1px solid #e5e7eb;
+    border-radius:8px;
+    padding:5px 10px;
+    font-size:12.5px;
+    color:#374151;
+    background:#ffffff;
+
+    display:flex;
+    align-items:center;
+    height:32px;
+}
+
+.total-box strong{
+    margin-left:4px;
+    font-weight:600;
+    color:#111827;
+}
+
+/* =========================
+   SELECT
+========================= */
+.form-select{
+    border-radius:10px;
+    font-size:13px;
+    border:1px solid #e5e7eb;
+}
+
+/* =========================
+   TABLE
+========================= */
+.table{
+    margin-bottom:0;
+}
+
+.table th{
+    font-size:12.5px;
+    font-weight:600;
+    color:#6b7280;
+    background:#f9fafb;
+    padding:12px;
+}
+
+.table td{
+    font-size:13px;
+    color:#374151;
+    padding:12px;
+}
+
+.table tbody tr{
+    border-bottom:1px solid #f1f5f9;
+}
+
+.table tbody tr:hover{
+    background:#fafafa;
+}
+
+/* =========================
+   BUTTON AKSI (PASTEL)
+========================= */
+
+/* EDIT */
+.btn-warning{
+    background: rgba(250,204,21,0.2) !important;
+    color:#ca8a04 !important;
+    border:1px solid rgba(250,204,21,0.4) !important;
+}
+
+/* DELETE */
+.btn-danger{
+    background: rgba(239,68,68,0.15) !important;
+    color:#dc2626 !important;
+    border:1px solid rgba(239,68,68,0.3) !important;
+}
+
+/* ukuran tombol */
+.btn-warning,
+.btn-danger{
+    border-radius:8px;
+    width:32px;
+    height:32px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
 }

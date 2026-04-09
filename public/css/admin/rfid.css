@@ -1,66 +1,115 @@
-.container-dashboard{
-    max-width:1100px;
-    margin:0 auto;
+/* CONTAINER */
+.container-dashboard {
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
-.main-dashboard{
-    padding:5px 30px 20px 20px;
+.main-dashboard {
+    padding: 5px 30px 20px 20px;
 }
 
-.search-flex{
-    flex:1;
+/* SEARCH */
+.search-flex {
+    flex: 1;
 }
 
-.btn-tab{
-    background:#f1f1f1;
-    border:1px solid #ddd;
-    font-size:13px;
-    padding:5px 14px;
-    border-radius:6px;
-    text-decoration:none;
-    color:#444;
+/* TAB BUTTON */
+.btn-tab {
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #6b7280;
+    transition: 0.2s;
 }
 
-.btn-tab.active{
-    background:#e9e1ff;
-    color:#6f42c1;
-    border:1px solid #d6c8ff;
+/* ACTIVE TAB (UNGU) */
+.btn-tab.active {
+    background: #ede9fe;
+    color: #7c3aed;
+    border: 1px solid #ddd6fe;
 }
 
-.btn-tambah{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    padding:6px 14px;
-    font-weight:500;
+/* ✅ BUTTON TAMBAH (UNGU TRANSPARAN) */
+.btn-tambah {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    font-weight: 500;
+    background: rgba(139, 92, 246, 0.15); /* ungu transparan */
+    color: #7c3aed;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 8px;
+    font-size: 13px;
+    transition: 0.2s;
 }
 
-.table td{
-    font-size:13px;
+/* hover biar halus */
+.btn-tambah:hover {
+    background: rgba(139, 92, 246, 0.25);
 }
 
-.table th{
-    font-size:13px;
-    font-weight:600;
+/* TABLE */
+.table {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-/* Scroll hanya tabel */
-    .table-container {
-        max-height: 400px;
-        overflow-y: auto;
-    }
+/* TEXT */
+.table td {
+    font-size: 13px;
+    color: #374151;
+}
 
-    /* Header sticky */
-    .table thead th {
-        position: sticky;
-        top: 0;
-        background: #f8f9fa;
-        z-index: 2;
-    }
+.table th {
+    font-size: 13px;
+    font-weight: 600;
+    color: #6b7280;
+    background: #f9fafb;
+}
 
-.content{
-    margin-left:230px;
-    padding-top:60px;
-    padding-left:10px;
-    padding-right:10px;
+/* SCROLL */
+.table-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* STICKY HEADER */
+.table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+/* ROW BORDER */
+.table tbody tr {
+    border-bottom: 1px solid #f1f5f9;
+}
+
+/* HOVER */
+.table tbody tr:hover {
+    background: #f9fafb;
+}
+
+/* BUTTON HAPUS (TIDAK DIUBAH) */
+.btn-danger,
+button.btn-danger {
+    background: #fee2e2;
+    color: #dc2626;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+/* CONTENT */
+.content {
+    margin-left: 230px;
+    padding-top: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
 }

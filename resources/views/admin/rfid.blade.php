@@ -59,9 +59,9 @@
         <div class="card">
 
             <div class="d-flex justify-content-end p-3">
-                <a href="#" class="btn btn-primary btn-sm">
-                    <i class="fa fa-plus"></i> Tambah
-                </a>
+            <button class="btn btn-tambah">
+                <i class="fa fa-plus"></i> Tambah
+        </button>
             </div>
 
             <div class="table-container">
