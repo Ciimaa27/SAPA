@@ -58,3 +58,89 @@ body{
     padding-left:10px;
     padding-right:10px;
 }
+
+.btn-tambah-guru {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    background: #f3f0ff;        /* ungu soft */
+    color: #6f42c1;             /* ungu teks */
+    border: 1px solid #d6c9ff;
+
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+/* ICON PLUS */
+.btn-tambah-guru .icon-plus {
+    background: #6f42c1;
+    color: white;
+    font-size: 12px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+/* HOVER */
+.btn-tambah-guru:hover {
+    background: #e5dbff;
+    color: #5a32a3;
+}
+
+/* CLICK */
+.btn-tambah-guru:active {
+    transform: scale(0.97);
+}
+
+
+.btn-tambah-kelas {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    background: #f3f0ff;        /* ungu soft */
+    color: #6f42c1;             /* ungu teks */
+    border: 1px solid #d6c9ff;
+
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+/* ICON PLUS */
+.btn-tambah-kelas .icon-plus {
+    background: #6f42c1;
+    color: white;
+    font-size: 12px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+/* HOVER */
+.btn-tambah-kelas:hover {
+    background: #e5dbff;
+    color: #5a32a3;
+}
+
+/* CLICK */
+.btn-tambah-kelas:active {
+    transform: scale(0.97);
+}
+

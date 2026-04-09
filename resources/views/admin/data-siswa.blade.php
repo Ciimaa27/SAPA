@@ -7,13 +7,11 @@
 <link rel="stylesheet" href="{{ asset('css/admin/data-siswa.css') }}">
 
 <style>
-    /* Scroll hanya di tabel */
     .table-container {
         max-height: 400px;
         overflow-y: auto;
     }
 
-    /* Header tetap di atas */
     .table thead th {
         position: sticky;
         top: 0;
@@ -23,6 +21,10 @@
 
     .col-aksi {
         width: 150px;
+    }
+
+    .alert {
+        margin-bottom: 15px;
     }
 </style>
 
@@ -58,7 +60,6 @@
                     <i class="fa fa-plus"></i> Tambah
                 </a>
 
-                <!-- 🔍 SEARCH (DITAMBAH ID SAJA) -->
                 <div class="input-group input-group-sm search-flex">
                     <span class="input-group-text bg-white">
                         <i class="fa fa-search"></i>
@@ -69,10 +70,18 @@
             </div>
         </div>
 
+        <!-- ✅ ALERT -->
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        @endif
+
         <!-- TABLE -->
         <div class="card">
             <div class="table-container">
-                <!-- 🔥 TAMBAH ID DI SINI -->
+
                 <table class="table table-hover align-middle mb-0" id="dataTable">
                     <thead class="table-light">
                         <tr>
@@ -81,62 +90,51 @@
                             <th>Kelas</th>
                             <th>Jenis Kelamin</th>
                             <th>Tempat/Tanggal lahir</th>
-                            <th>Aksi</th>
+                            <th class="col-aksi">Aksi</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @forelse($siswa as $row)
+                        @foreach ($siswa as $item)
                         <tr>
-                            <td>{{ $row->nis }}</td>
-                            <td>{{ $row->nama_siswa }}</td>
-                            <td>{{ $row->id_kelas }}</td>
-
-                            <td class="text-capitalize">
-                                {{ $row->jenis_kelamin ?? '-' }}
-                            </td>
+                            <td>{{ $item->nis }}</td>
+                            <td>{{ $item->nama_siswa }}</td>
+                            <td>{{ $item->id_kelas }}</td>
+                            <td>{{ $item->jenis_kelamin }}</td>
+                            <td>{{ $item->tempat_lahir }}, {{ $item->tanggal_lahir }}</td>
 
                             <td>
-                                {{ $row->tempat_lahir ?? '-' }},
-                                {{ $row->tanggal_lahir
-                                    ? \Carbon\Carbon::parse($row->tanggal_lahir)->format('d-m-Y')
-                                    : '-'
-                                }}
-                            </td>
-
-                            <td>
-                                <button class="btn btn-info btn-sm">
+                                <!-- LIHAT -->
+                                <a href="{{ route('data-siswa.show', $item->id_siswa) }}" class="btn btn-info btn-sm">
                                     <i class="fa fa-eye"></i>
-                                </button>
+                                </a>
 
-                                <button class="btn btn-warning btn-sm">
+                                <!-- EDIT -->
+                                <a href="#" class="btn btn-warning btn-sm">
                                     <i class="fa fa-pencil"></i>
-                                </button>
+                                </a>
 
-                                <form action="{{ route('hapus-siswa', ['id' => $row->id_siswa]) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </form>
+                                <!-- HAPUS -->
+                                <form action="{{ route('hapus-siswa', $item->id_siswa) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </form>
                             </td>
                         </tr>
-
-                        @empty
-                        <tr>
-                            <td colspan="6" class="text-center">Tidak ada data</td>
-                        </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
+
             </div>
         </div>
 
     </div>
 </div>
 
-<!-- 🔥 SCRIPT SEARCH (DITAMBAH SAJA) -->
+<!-- SEARCH -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     let input = document.getElementById("searchInput");
@@ -147,12 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         rows.forEach(function(row) {
             let text = row.textContent.toLowerCase();
-
-            if (text.includes(keyword)) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
+            row.style.display = text.includes(keyword) ? "" : "none";
         });
     });
 });

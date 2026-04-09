@@ -29,6 +29,12 @@ class User extends Authenticatable
         'password',
     ];
 
+    // 🔥 WAJIB (biar auth pakai id_user)
+    public function username()
+    {
+        return 'username';
+    }
+
     // Relasi ke role
     public function role()
     {

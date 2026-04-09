@@ -113,3 +113,34 @@ button.btn-danger {
     padding-left: 10px;
     padding-right: 10px;
 }
+
+.btn-tambah-rfid {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    background: #f3f0ff;        /* ungu soft */
+    color: #6f42c1;             /* ungu teks */
+    border: 1px solid #d6c9ff;
+
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+/* ICON PLUS */
+.btn-tambah-rfid .icon-plus {
+    background: #6f42c1;
+    color: white;
+    font-size: 12px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}

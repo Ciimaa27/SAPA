@@ -22,7 +22,7 @@ class RelasiController extends Controller
     {
         $siswa = Siswa::all();
         $wali = Wali::all();
-        return view('admin.relasi.create', compact('siswa','wali'));
+        return view('admin.tambah-relasi', compact('siswa','wali'));
     }
 
     // Simpan data

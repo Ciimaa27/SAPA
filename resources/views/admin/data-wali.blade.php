@@ -7,13 +7,11 @@
 <link rel="stylesheet" href="{{ asset('css/admin/data-wali.css') }}">
 
 <style>
-    /* Scroll hanya tabel */
     .table-container {
         max-height: 400px;
         overflow-y: auto;
     }
 
-    /* Header sticky */
     .table thead th {
         position: sticky;
         top: 0;
@@ -28,31 +26,24 @@
 <div class="main-dashboard">
     <div class="container-dashboard">
 
+        <!-- HEADER -->
         <div class="card mb-3 p-3">
             <h5 class="mb-0">Data wali</h5>
         </div>
 
+        <!-- INFO + ACTION -->
         <div class="card mb-3 p-3">
-            <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center gap-3 flex-wrap">
 
                 <div style="min-width:140px;">
                     Total : <strong>{{ $total }}</strong>
                 </div>
 
-                <div style="width:200px;">
-                    <select class="form-select form-select-sm">
-                        <option>Tampilkan</option>
-                        <option>10</option>
-                        <option>25</option>
-                        <option>50</option>
-                    </select>
-                </div>
-
-                <a href="#" class="btn btn-primary btn-sm btn-tambah">
+                <a href="{{ route('wali.create') }}" class="btn btn-primary btn-sm">
                     <i class="fa fa-plus"></i> Tambah
                 </a>
 
-                <!-- 🔍 SEARCH (DITAMBAH ID) -->
+                <!-- SEARCH -->
                 <div class="input-group input-group-sm search-flex">
                     <span class="input-group-text bg-white">
                         <i class="fa fa-search"></i>
@@ -63,9 +54,9 @@
             </div>
         </div>
 
+        <!-- TABLE -->
         <div class="card">
             <div class="table-container">
-                <!-- 🔥 TAMBAH ID DI TABEL -->
                 <table class="table table-hover align-middle mb-0" id="dataTableWali">
                     <thead class="table-light">
                         <tr>
@@ -80,30 +71,29 @@
                     <tbody>
                         @forelse($wali as $row)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
+                            <!-- 🔥 NOMOR TIDAK RESET -->
+                            <td>
+                                {{ ($wali->currentPage() - 1) * $wali->perPage() + $loop->iteration }}
+                            </td>
+
                             <td>{{ $row->nama_wali }}</td>
                             <td>{{ $row->no_hp ?? '-' }}</td>
                             <td class="text-capitalize">
                                 {{ $row->jenis_kelamin ?? '-' }}
                             </td>
-                            <td>
-                                <button class="btn btn-warning btn-sm">
-                                    <i class="fa fa-pencil"></i>
-                                </button>
 
-                                @if($row->id_wali)
-                                    <form action="{{ route('hapus-wali', ['id' => $row->id_wali]) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </form>
-                                @else
-                                    <button class="btn btn-danger btn-sm" disabled>
+                            <td>
+                                <a href="{{ route('edit-data-wali', $row->id_wali) }}" class="btn btn-warning btn-sm">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+
+                                <form action="{{ route('hapus-wali', ['id' => $row->id_wali]) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')">
                                         <i class="fa fa-trash"></i>
                                     </button>
-                                @endif
+                                </form>
                             </td>
                         </tr>
 
@@ -115,12 +105,18 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- 🔥 PAGINATION (INI YANG PENTING BANGET) -->
+            <div class="p-3">
+                {{ $wali->links() }}
+            </div>
+
         </div>
 
     </div>
 </div>
 
-<!-- 🔥 SCRIPT SEARCH -->
+<!-- SEARCH SCRIPT -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     let input = document.getElementById("searchInputWali");

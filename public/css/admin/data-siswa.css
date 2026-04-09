@@ -1,191 +1,133 @@
-/* =========================
-   GLOBAL
-========================= */
+.container-dashboard{
+    max-width:1100px;
+    margin:0 auto;
+}
+
+.main-dashboard{
+    padding:5px 30px 20px 20px;
+}
+
+.btn-tambah {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    background: #f1f3f5; /* abu muda */
+    color: #333;         /* teks gelap */
+    border: 1px solid #dcdcdc;
+
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-decoration: none;
+
+    transition: 0.2s;
+}
+
+.btn-tambah {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    background: #f1f3f5;
+    color: #333;
+    border: 1px solid #dee2e6;
+
+    padding: 4px 10px;     /* 🔥 lebih kecil */
+    font-size: 13px;       /* 🔥 kecilkan font */
+    border-radius: 6px;    /* sedikit lebih kecil */
+
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+/* ICON lebih kecil */
+.btn-tambah i {
+    font-size: 12px;
+}
+
+/* HOVER */
+.btn-tambah:hover {
+    background: #e9ecef;
+    color: #333;
+}
+
+.btn-tambah {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    background: #f1f3f5;
+    color: #333;
+    border: 1px solid #dee2e6;
+
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+/* ICON */
+.btn-tambah i {
+    font-size: 12px;
+}
+
+/* HOVER */
+.btn-tambah:hover {
+    background: #e9ecef;
+    color: #333;
+}
+
+/* 🔥 INI KUNCI NYA (hilangkan biru) */
+.btn-tambah:focus,
+.btn-tambah:active {
+    background: #f1f3f5 !important;
+    color: #333 !important;
+    border-color: #dee2e6 !important;
+
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* efek klik ringan */
+.btn-tambah:active {
+    transform: scale(0.97);
+}
+
+.search-flex{
+    flex:1;
+}
+
+.table td{
+    font-size:13px;
+}
+
+.table th{
+    font-size:13px;
+    font-weight:600;
+}
+
+.btn-warning{
+    color:white;
+}
+
+.btn-danger{
+    color:white;
+}
+
+.btn-info{
+    color:white;
+}
+
 body{
-    background:#f5f3ff;
-    font-family:'Poppins', sans-serif;
     overflow-x:hidden;
 }
 
 .content{
     margin-left:230px;
-    padding:70px 20px 20px 20px;
-}
-
-/* =========================
-   CONTAINER
-========================= */
-.container-dashboard{
-    max-width:1100px;
-    margin:auto;
-}
-
-.main-dashboard{
-    padding:10px 20px;
-}
-
-/* =========================
-   CARD
-========================= */
-.card{
-    border:1px solid #ede9fe;
-    border-radius:14px;
-    box-shadow:0 4px 10px rgba(0,0,0,0.04);
-    background:#fff;
-}
-
-/* =========================
-   HEADER
-========================= */
-.card h5{
-    font-weight:600;
-    font-size:15px;
-    color:#1f2937;
-}
-
-/* =========================
-   FILTER BOX (TOTAL)
-========================= */
-.total-box{
-    border:1px solid #e5e7eb;
-    border-radius:8px;
-    padding:5px 10px;
-    font-size:12.5px;
-    background:#fff;
-    display:flex;
-    align-items:center;
-    height:32px;
-}
-
-/* =========================
-   BUTTON TAMBAH (PUTIH)
-========================= */
-.btn-tambah{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    padding:5px 12px;
-
-    background:#ffffff;
-    color:#374151;
-    border:1px solid #e5e7eb;
-
-    border-radius:8px;
-    font-size:12.5px;
-}
-
-.btn-tambah:hover{
-    background:#f9fafb;
-}
-
-.btn-tambah i{
-    font-size:11px;
-}
-
-/* =========================
-   SEARCH
-========================= */
-.search-flex{
-    flex:1;
-    display:flex;
-    align-items:center;
-    gap:8px;
-}
-
-.search-box{
-    width:100%;
-    border:1px solid #e5e7eb;
-    border-radius:10px;
-    padding:6px 12px;
-    font-size:13px;
-}
-
-/* =========================
-   SELECT
-========================= */
-.form-select{
-    border-radius:8px;
-    font-size:12.5px;
-    border:1px solid #e5e7eb;
-    height:32px;
-}
-
-/* =========================
-   TABLE
-========================= */
-.table{
-    margin-bottom:0;
-}
-
-.table th{
-    font-size:12.5px;
-    font-weight:600;
-    color:#6b7280;
-    background:#f9fafb;
-    padding:12px;
-}
-
-.table td{
-    font-size:13px;
-    color:#374151;
-    padding:12px;
-}
-
-.table tbody tr{
-    border-bottom:1px solid #f1f5f9;
-}
-
-.table tbody tr:hover{
-    background:#fafafa;
-}
-
-/* =========================
-   BUTTON AKSI
-========================= */
-
-/* VIEW */
-.btn-info{
-    background: rgba(59,130,246,0.15) !important;
-    color:#2563eb !important;
-    border:1px solid rgba(59,130,246,0.3) !important;
-}
-
-/* EDIT */
-.btn-warning{
-    background: rgba(250,204,21,0.2) !important;
-    color:#ca8a04 !important;
-    border:1px solid rgba(250,204,21,0.4) !important;
-}
-
-/* DELETE */
-.btn-danger{
-    background: rgba(239,68,68,0.15) !important;
-    color:#dc2626 !important;
-    border:1px solid rgba(239,68,68,0.3) !important;
-}
-
-.btn-info,
-.btn-warning,
-.btn-danger{
-    border-radius:8px;
-    width:32px;
-    height:32px;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding:0;
-}
-
-/* =========================
-   PAGINATION
-========================= */
-.pagination{
-    justify-content:flex-end;
-    padding:10px;
-}
-
-.page-link{
-    font-size:12px;
-    border-radius:6px;
-    margin:0 2px;
+    padding-top:60px;
+    padding-left:10px;
+    padding-right:10px;
 }
