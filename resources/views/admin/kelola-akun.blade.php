@@ -186,6 +186,23 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
+<!-- SEARCH -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let input = document.getElementById("searchInput");
+
+    input.addEventListener("keyup", function() {
+        let keyword = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#dataTable tbody tr");
+
+        rows.forEach(function(row) {
+            let text = row.textContent.toLowerCase();
+            row.style.display = text.includes(keyword) ? "" : "none";
+        });
+    });
+});
+</script>
+
 
 @endsection
 

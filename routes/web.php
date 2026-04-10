@@ -92,6 +92,11 @@ Route::prefix('admin')->group(function () {
     Route::view('/edit-data-siswa', 'admin.edit-data-siswa')->name('edit-data-siswa');
     Route::get('/data-siswa/{id}', [DataSiswaController::class, 'show'])->name('data-siswa.show');
 
+    Route::get('/detail-siswa/{id}', [DataSiswaController::class, 'show'])
+    ->name('detail-siswa');
+
+
+
 
     // ========================
     // DATA WALI
@@ -113,6 +118,11 @@ Route::prefix('admin')->group(function () {
     Route::view('/admin/tambah-data-kelas', 'admin.tambah-data-kelas')
     ->name('tambah-data-kelas');
 
+    Route::get('/edit-data-guru', function () {
+        return view('admin.edit-data-guru');
+    })->name('edit-data-guru');
+
+
     // ========================
     // DATA RELASI
     // ========================
@@ -120,7 +130,11 @@ Route::prefix('admin')->group(function () {
     Route::get('/relasi/create', [RelasiController::class, 'create'])->name('relasi.tambah');
     Route::post('/relasi', [RelasiController::class, 'store'])->name('relasi.store');
     Route::delete('/relasi/{id_siswa}/{id_wali}', [RelasiController::class, 'destroy'])->name('relasi.destroy');
-    
+
+ Route::get('/edit-relasi', function () {
+    return view('admin.edit-relasi');
+})->name('edit-relasi');
+
 
     // ========================
     // PERANGKAT (IOT)
@@ -156,7 +170,7 @@ Route::prefix('admin')->group(function () {
 
 });
 
-    
+
 
 
 

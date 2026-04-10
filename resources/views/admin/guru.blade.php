@@ -82,9 +82,9 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $row->nama_guru }}</td>
                             <td>
-                                <button class="btn btn-warning btn-sm">
+                                <a href="{{ route('edit-data-guru') }}" class="btn btn-warning btn-sm">
                                     <i class="fa fa-pencil"></i>
-                                </button>
+                                </a>
 
                                 <button class="btn btn-danger btn-sm">
                                     <i class="fa fa-trash"></i>

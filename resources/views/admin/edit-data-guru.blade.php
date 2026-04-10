@@ -4,7 +4,7 @@
 
 @section('content')
 
-<link rel="stylesheet" href="{{ asset('css/admin/tambah-data-guru.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/edit-data-guru.css') }}">
 
 @include('layouts.sidebar-admin')
 @include('layouts.topbar')
@@ -14,7 +14,7 @@
 
         <!-- HEADER -->
         <div class="page-title-box">
-            Tambah data guru
+            Guru dan Kelas
         </div>
 
         <!-- CARD -->

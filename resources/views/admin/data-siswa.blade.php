@@ -110,7 +110,7 @@
                                 </a>
 
                                 <!-- EDIT -->
-                                <a href="#" class="btn btn-warning btn-sm">
+                                <a href="{{ route('edit-data-siswa') }}" class="btn btn-warning btn-sm">
                                     <i class="fa fa-pencil"></i>
                                 </a>
 
@@ -147,6 +147,61 @@ document.addEventListener("DOMContentLoaded", function () {
             let text = row.textContent.toLowerCase();
             row.style.display = text.includes(keyword) ? "" : "none";
         });
+    });
+});
+</script>
+
+<!-- MODAL DELETE -->
+<div class="confirm-modal" id="confirmModal">
+    <div class="confirm-modal-backdrop"></div>
+    <div class="confirm-modal-dialog">
+        <div class="confirm-modal-content">
+            <div class="confirm-modal-header">
+                <h5>Hapus</h5>
+            </div>
+            <div class="confirm-modal-body">
+                <p>Yakin ingin menghapus data? Data tidak dapat dikembalikan.</p>
+            </div>
+            <div class="confirm-modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm btn-cancel">Batal</button>
+                <button type="button" class="btn btn-danger btn-sm btn-confirm">Hapus</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SCRIPT DELETE SAJA -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const confirmModal = document.getElementById('confirmModal');
+    const confirmButton = document.querySelector('.btn-confirm');
+    const cancelButton = document.querySelector('.btn-cancel');
+    let activeDeleteForm = null;
+
+    document.querySelectorAll('.btn-delete').forEach(function(button) {
+        button.addEventListener('click', function() {
+            activeDeleteForm = button.closest('.delete-form');
+            confirmModal.classList.add('show');
+        });
+    });
+
+    confirmButton.addEventListener('click', function() {
+        if (activeDeleteForm) {
+            activeDeleteForm.submit();
+        }
+    });
+
+    cancelButton.addEventListener('click', function() {
+        confirmModal.classList.remove('show');
+        activeDeleteForm = null;
+    });
+
+    confirmModal.addEventListener('click', function(event) {
+        if (event.target === confirmModal || event.target.classList.contains('confirm-modal-backdrop')) {
+            confirmModal.classList.remove('show');
+            activeDeleteForm = null;
+        }
     });
 });
 </script>

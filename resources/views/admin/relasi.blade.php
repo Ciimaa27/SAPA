@@ -83,9 +83,9 @@
                             <td>{{ $item->wali->no_hp ?? '-' }}</td>
                             <td>{{ ucfirst($item->hubungan) }}</td>
                             <td>
-                                <button class="btn btn-warning btn-sm">
+                                 <a href="{{ route('edit-relasi') }}" class="btn btn-warning btn-sm">
                                     <i class="fa fa-pencil"></i>
-                                </button>
+                                </a>
 
                                 <form action="{{ route('relasi.destroy', [$item->id_siswa, $item->id_wali]) }}" method="POST" style="display:inline;">
                                     @csrf
