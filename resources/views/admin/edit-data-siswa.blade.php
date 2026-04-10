@@ -26,25 +26,25 @@
                 Kembali
             </a>
 
-            <form action="#" method="POST">
+            <form action="{{ route('update-siswa', $siswa->id_siswa) }}" method="POST">
                 @csrf
+                @method('PUT')
 
                 <!-- ROW 1 -->
                 <div class="form-row">
                     <div class="form-group">
                         <label>NIS Siswa</label>
-                        <input type="text" name="nis" value="00987643">
+                        <input type="text" name="nis" value="{{ $siswa->nis }}">
                     </div>
 
                     <div class="form-group">
                         <label>Kelas</label>
-                        <select name="kelas">
-                            <option value="">-- Pilih Kelas --</option>
-                            <option value="1-A">1-A</option>
-                            <option value="1-B" selected>1-B</option>
-                            <option value="1-C">1-C</option>
-                            <option value="2-A">2-A</option>
-                            <option value="2-B">2-B</option>
+                        <select name="id_kelas">
+                            <option value="1" {{ $siswa->id_kelas == 1 ? 'selected' : '' }}>Kelas 1</option>
+                            <option value="2" {{ $siswa->id_kelas == 2 ? 'selected' : '' }}>Kelas 2</option>
+                            <option value="3" {{ $siswa->id_kelas == 3 ? 'selected' : '' }}>Kelas 3</option>
+                            <option value="4" {{ $siswa->id_kelas == 4 ? 'selected' : '' }}>Kelas 4</option>
+                            <option value="5" {{ $siswa->id_kelas == 5 ? 'selected' : '' }}>Kelas 5</option>
                         </select>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                 <!-- NAMA -->
                 <div class="form-group full">
                     <label>Nama lengkap siswa</label>
-                    <input type="text" name="nama" value="Arif Nasution">
+                    <input type="text" name="nama_siswa" value="{{ $siswa->nama_siswa }}">
                     <small class="form-text">
                         *Pastikan penulisan nama siswa, agar tidak ada kesalahan pendataan
                     </small>
@@ -61,9 +61,9 @@
                 <!-- JENIS KELAMIN -->
                 <div class="form-group full">
                     <label>Jenis kelamin</label>
-                    <select name="jk">
-                        <option value="laki-laki" selected>Laki-laki</option>
-                        <option value="perempuan">Perempuan</option>
+                    <select name="jenis_kelamin">
+                        <option value="Laki-laki" {{ $siswa->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                        <option value="Perempuan" {{ $siswa->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
                     </select>
                 </div>
 
@@ -71,12 +71,12 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label>Tempat lahir</label>
-                        <input type="text" name="tempat_lahir" value="Banjarmasin">
+                        <input type="text" name="tempat_lahir" value="{{ $siswa->tempat_lahir }}">
                     </div>
 
                     <div class="form-group">
                         <label>Tanggal lahir</label>
-                        <input type="date" name="tanggal_lahir" value="2010-02-15">
+                        <input type="date" name="tanggal_lahir" value="{{ $siswa->tanggal_lahir }}">
                     </div>
                 </div>
 

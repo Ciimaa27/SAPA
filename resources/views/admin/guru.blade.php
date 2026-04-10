@@ -7,13 +7,11 @@
 <link rel="stylesheet" href="{{ asset('css/admin/guru.css') }}">
 
 <style>
-    /* Scroll hanya tabel */
     .table-container {
         max-height: 400px;
         overflow-y: auto;
     }
 
-    /* Header sticky */
     .table thead th {
         position: sticky;
         top: 0;
@@ -27,6 +25,13 @@
 
 <div class="main-dashboard">
     <div class="container-dashboard">
+
+        <!-- 🔥 ALERT SUCCESS -->
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
         <div class="card mb-3 p-3">
             <h5 class="mb-0">Guru dan Kelas</h5>
@@ -43,7 +48,7 @@
                     Kelas
                 </a>
 
-                <!-- 🔍 SEARCH (DITAMBAH ID) -->
+                <!-- SEARCH -->
                 <div class="input-group input-group-sm search-flex">
                     <span class="input-group-text bg-white">
                         <i class="fa fa-search"></i>
@@ -65,41 +70,78 @@
 
             <!-- TABLE -->
             <div class="table-container">
-                <!-- 🔥 TAMBAH ID DI TABEL -->
                 <table class="table table-hover align-middle mb-0" id="dataTableGuru">
 
                     <thead class="table-light">
                         <tr>
                             <th>No</th>
+                            <th>NIP</th>
                             <th>Nama guru</th>
-                            <th width="140">Aksi</th>
+                            <th>No. HP</th>
+                            <th>Tempat/Tanggal lahir</th>
+                            <th width="150">Aksi</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         @forelse($guru as $row)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $row->nama_guru }}</td>
                             <td>
-                                <a href="{{ route('edit-data-guru') }}" class="btn btn-warning btn-sm">
+                                {{ ($guru->currentPage() - 1) * $guru->perPage() + $loop->iteration }}
+                            </td>
+                            <td>{{ $row->nip ?? '-' }}</td>
+                            <td>{{ $row->nama_guru }}</td>
+                            <td>{{ $row->no_hp ?? '-' }}</td>
+                            <td>
+                                {{ $row->tempat_lahir ?? '-' }},
+                                {{ $row->tanggal_lahir 
+                                    ? \Carbon\Carbon::parse($row->tanggal_lahir)->format('d-m-Y') 
+                                    : '-' }}
+                            </td>
+
+                            <td class="text-center">
+                                <!-- DETAIL -->
+                                <a href="{{ route('detail-guru', $row->id_guru) }}" 
+                                   class="btn btn-info btn-sm" title="Lihat">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+
+                                <!-- EDIT -->
+                                <a href="{{ route('edit-data-guru', $row->id_guru) }}" 
+                                   class="btn btn-warning btn-sm" title="Edit">
                                     <i class="fa fa-pencil"></i>
                                 </a>
 
-                                <button class="btn btn-danger btn-sm">
-                                    <i class="fa fa-trash"></i>
-                                </button>
+                                <!-- DELETE -->
+                                <form action="{{ route('hapus-guru', $row->id_guru) }}" 
+                                      method="POST" 
+                                      class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" 
+                                            class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Yakin ingin menghapus data guru ini?')">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
 
                         @empty
                         <tr>
-                            <td colspan="3" class="text-center">Tidak ada data</td>
+                            <td colspan="6" class="text-center">
+                                Tidak ada data
+                            </td>
                         </tr>
                         @endforelse
                     </tbody>
 
                 </table>
+            </div>
+
+            <!-- PAGINATION -->
+            <div class="p-3">
+                {{ $guru->links() }}
             </div>
 
         </div>
@@ -121,6 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (text.includes(keyword)) {
                 row.style.display = "";
+                row.style.backgroundColor = "#fff3cd"; // highlight
             } else {
                 row.style.display = "none";
             }

@@ -88,15 +88,12 @@ Route::prefix('admin')->group(function () {
     Route::delete('/data-siswa/{id}', [DataSiswaController::class, 'destroy'])->name('hapus-siswa');
     Route::get('/tambah-siswa', [DataSiswaController::class, 'create'])->name('tambah-siswa');
     Route::post('/tambah-siswa', [DataSiswaController::class, 'store'])->name('store-siswa');
-    Route::get('/siswa-kelas', function () {return view('admin.siswa-kelas');})->name('siswa-kelas');
-    Route::view('/edit-data-siswa', 'admin.edit-data-siswa')->name('edit-data-siswa');
+    Route::get('/siswa-kelas/{id}', [GuruKelasController::class, 'siswaKelas'])->name('siswa-kelas');
+    Route::post('/siswa-kelas/{id}/update-kehadiran', [GuruKelasController::class, 'updateKehadiranKelas'])->name('update-kehadiran-kelas');
     Route::get('/data-siswa/{id}', [DataSiswaController::class, 'show'])->name('data-siswa.show');
-
-    Route::get('/detail-siswa/{id}', [DataSiswaController::class, 'show'])
-    ->name('detail-siswa');
-
-
-
+    Route::get('/edit-data-siswa/{id}', [DataSiswaController::class, 'edit'])->name('edit-siswa');
+    Route::put('/update-data-siswa/{id}', [DataSiswaController::class, 'update'])->name('update-siswa');
+    Route::get('/detail-siswa/{id}', [DataSiswaController::class, 'show']) ->name('detail-siswa');
 
     // ========================
     // DATA WALI
@@ -104,8 +101,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/data-wali', [DataWaliController::class, 'index'])->name('data-wali');
     Route::get('/tambah-data-wali', [DataWaliController::class, 'create'])->name('wali.create');
     Route::post('/tambah-data-wali', [DataWaliController::class, 'store'])->name('wali.store');
+    Route::get('/edit-data-wali/{id}', [DataWaliController::class, 'edit'])->name('edit-data-wali');
+    Route::put('/update-data-wali/{id}', [DataWaliController::class, 'update'])->name('update-wali');
     Route::delete('/data-wali/{id}', [DataWaliController::class, 'destroy'])->name('hapus-wali');
-    Route::get('/edit-data-wali/{id}', function ($id) { return view('admin.edit-data-wali');})->name('edit-data-wali');
 
 
     // ========================
@@ -113,14 +111,13 @@ Route::prefix('admin')->group(function () {
     // ========================
     Route::get('/guru', [GuruKelasController::class, 'guru'])->name('guru');
     Route::get('/kelas', [GuruKelasController::class, 'kelas'])->name('kelas');
-    Route::view('/admin/tambah-data-guru', 'admin.tambah-data-guru')
-    ->name('tambah-data-guru');
-    Route::view('/admin/tambah-data-kelas', 'admin.tambah-data-kelas')
-    ->name('tambah-data-kelas');
-
-    Route::get('/edit-data-guru', function () {
-        return view('admin.edit-data-guru');
-    })->name('edit-data-guru');
+    Route::get('/detail-guru/{id}', [GuruKelasController::class, 'detailGuru'])->name('detail-guru');
+    Route::get('/edit-data-guru/{id}', [GuruKelasController::class, 'editGuru'])->name('edit-data-guru');
+    Route::put('/update-guru/{id}', [GuruKelasController::class, 'updateGuru'])->name('update-guru');
+    Route::delete('/hapus-guru/{id}', [GuruKelasController::class, 'destroyGuru'])->name('hapus-guru');
+    Route::view('/tambah-data-guru', 'admin.tambah-data-guru')->name('tambah-data-guru');
+    Route::view('/tambah-data-kelas', 'admin.tambah-data-kelas')->name('tambah-data-kelas');
+    Route::post('/simpan-guru', [GuruKelasController::class, 'storeGuru'])->name('store-guru');
 
 
     // ========================

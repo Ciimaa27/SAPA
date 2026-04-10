@@ -25,40 +25,30 @@
                 <i class="fas fa-arrow-left"></i> Kembali
             </a>
 
-            <form action="#" method="POST">
+            <form action="{{ route('store-guru') }}" method="POST">
                 @csrf
 
                 <!-- ROW 1 -->
                 <div class="form-row">
                     <div class="form-group">
                         <label>NIP</label>
-                        <input type="text" name="nip" placeholder="Masukkan NIP guru">
+                        <input type="text" name="nip" value="{{ old('nip') }}" placeholder="Masukkan NIP guru">
                         <small class="form-text">*Pastikan memasukkan NIP yang benar</small>
                     </div>
 
                     <div class="form-group">
                         <label>Nomor HP</label>
-                        <input type="text" name="no_hp" placeholder="Masukkan nomor HP">
+                        <input type="text" name="no_hp" value="{{ old('no_hp') }}" placeholder="Masukkan nomor HP">
                     </div>
                 </div>
 
                 <!-- NAMA -->
                 <div class="form-group full">
                     <label>Nama lengkap guru</label>
-                    <input type="text" name="nama" placeholder="Masukkan nama lengkap guru...">
+                    <input type="text" name="nama_guru" value="{{ old('nama_guru') }}" placeholder="Masukkan nama lengkap guru...">
                     <small class="form-text">
                         *Perhatikan penulisan nama, agar tidak ada kesalahan pendataan
                     </small>
-                </div>
-
-                <!-- JENIS KELAMIN -->
-                <div class="form-group full">
-                    <label>Jenis kelamin</label>
-                    <select name="jk">
-                        <option value="">-- Pilih jenis kelamin --</option>
-                        <option value="laki-laki">Laki-laki</option>
-                        <option value="perempuan">Perempuan</option>
-                    </select>
                 </div>
 
                 <!-- ROW 2 -->

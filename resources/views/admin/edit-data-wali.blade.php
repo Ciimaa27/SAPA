@@ -20,13 +20,14 @@
         <!-- CARD -->
         <div class="card-form">
 
-            <form action="#" method="POST">
+            <form action="{{ route('update-wali', $wali->id_wali) }}" method="POST">
                 @csrf
+                @method('PUT')
 
                 <!-- NAMA -->
                 <div class="form-group full">
                     <label>Nama orangtua/wali</label>
-                    <input type="text" name="nama">
+                    <input type="text" name="nama_wali" value="{{ $wali->nama_wali }}">
                     <small class="form-text">
                         *Perhatikan penulisan nama, agar tidak ada kesalahan pendataan
                     </small>
@@ -35,7 +36,7 @@
                 <!-- NOMOR HP -->
                 <div class="form-group full">
                     <label>Nomor HP</label>
-                    <input type="text" name="no_hp">
+                    <input type="text" name="no_hp" value="{{ $wali->no_hp }}">
                     <small class="form-text">
                         *Nomor yang dimasukkan wajib terdaftar di WhatsApp
                     </small>
@@ -44,11 +45,11 @@
                 <!-- JENIS KELAMIN -->
                 <div class="form-group full">
                     <label>Jenis kelamin</label>
-                    <select name="jk">
+                    <select name="jenis_kelamin">
                         <option value="">-- Pilih jenis kelamin --</option>
-                        <option value="laki-laki">Laki-laki</option>
-                    <option value="perempuan">Perempuan</option>
-                </select>
+                        <option value="Laki-laki" {{ $wali->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                        <option value="Perempuan" {{ $wali->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                    </select>
                 </div>
 
                 <!-- BUTTON -->

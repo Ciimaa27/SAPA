@@ -64,7 +64,6 @@
 
             <!-- TABLE -->
             <div class="table-container">
-                <!-- 🔥 TAMBAH ID DI TABEL -->
                 <table class="table table-hover align-middle mb-0" id="dataTableKelas">
 
                     <thead class="table-light">
@@ -72,18 +71,20 @@
                             <th>No</th>
                             <th>Kelas</th>
                             <th>Wali kelas</th>
-                            <th width="120">Aksi</th>
+                            <th>Jumlah siswa</th>
+                            <th width="140">Aksi</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         @forelse($kelas as $row)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ ($kelas->currentPage() - 1) * $kelas->perPage() + $loop->iteration }}</td>
                             <td>{{ $row->nama_kelas }}</td>
                             <td>{{ $row->nama_guru ?? '-' }}</td>
+                            <td>{{ $row->jumlah_siswa }}</td>
                             <td>
-                                <a href="{{ route('siswa-kelas') }}" class="btn btn-success btn-sm">
+                                <a href="{{ route('siswa-kelas', $row->id_kelas) }}" class="btn btn-success btn-sm">
                                     Lihat siswa
                                 </a>
                             </td>
@@ -91,7 +92,7 @@
 
                         @empty
                         <tr>
-                            <td colspan="4" class="text-center">Tidak ada data</td>
+                            <td colspan="5" class="text-center">Tidak ada data</td>
                         </tr>
                         @endforelse
                     </tbody>

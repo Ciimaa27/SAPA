@@ -1,0 +1,96 @@
+/* ===== LAYOUT (KONSISTEN KELOLA AKUN) ===== */
+.container-dashboard{
+    max-width:1100px;
+    margin:0 auto;
+}
+
+.main-dashboard{
+    padding:5px 30px 20px 20px;
+}
+
+.content{
+    margin-left:230px;
+    padding-top:60px;
+    padding-left:10px;
+    padding-right:10px;
+}
+
+/* ===== HEADER ===== */
+.page-title-box {
+    background: #fff;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* ===== CARD ===== */
+.card-detail {
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* ===== BUTTON KEMBALI ===== */
+.btn-kembali {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    background: #eeeaff;
+    color: #6f42c1;
+    border: 1px solid #d6c9ff;
+
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+
+    text-decoration: none;
+    margin-bottom: 15px;
+    transition: 0.2s;
+}
+
+.btn-kembali:hover {
+    background: #ddd6ff;
+}
+
+/* ===== DETAIL ===== */
+.detail-wrapper {
+    margin-top: 10px;
+}
+
+.detail-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.label {
+    width: 150px;
+    font-size: 13px;
+    color: #555;
+}
+
+.separator {
+    width: 20px;
+    text-align: center;
+}
+
+.value {
+    font-size: 13px;
+    color: #333;
+}
+
+/* ?? warna biru seperti contoh */
+.value.highlight {
+    color: #6f42c1;
+    font-weight: 500;
+}
+
+/* ===== BODY ===== */
+body{
+    overflow-x:hidden;
+}

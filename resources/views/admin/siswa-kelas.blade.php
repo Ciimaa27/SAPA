@@ -27,19 +27,37 @@
                 <div class="info-row">
                     <label>Kelas</label>
                     <span>:</span>
-                    <input type="text" class="form-control" value="1-A" readonly>
+                    <input type="text" class="form-control" value="{{ $kelas->nama_kelas ?? '-' }}" readonly>
                 </div>
 
                 <div class="info-row">
                     <label>Wali kelas</label>
                     <span>:</span>
-                    <input type="text" class="form-control" value="Arif Nasution" readonly>
+                    <input type="text" class="form-control" value="{{ $kelas->nama_guru ?? '-' }}" readonly>
                 </div>
 
                 <div class="info-row">
                     <label>Tanggal</label>
                     <span>:</span>
-                    <input type="date" class="form-control">
+                    <form method="GET" action="{{ route('siswa-kelas', $kelas->id_kelas) }}" style="margin: 0;">
+                        <input type="date" name="tanggal" class="form-control" value="{{ $tanggal }}" onchange="this.form.submit()">
+                    </form>
+                </div>
+                <div class="info-row">
+                    <label>Tgl DB</label>
+                    <span>:</span>
+                    <select class="form-control" onchange="window.location.href=this.value">
+                        <option value="">Pilih tanggal dari DB</option>
+                        @foreach($availableDates as $availableDate)
+                            <option value="{{ route('siswa-kelas', $kelas->id_kelas) . '?tanggal=' . $availableDate }}" {{ $availableDate === $tanggal ? 'selected' : '' }}>{{ \Carbon\Carbon::parse($availableDate)->format('d/m/Y') }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="info-row">
+                    <label>Jumlah siswa</label>
+                    <span>:</span>
+                    <input type="text" class="form-control" value="{{ $siswa->count() }}" readonly>
                 </div>
 
             </div>
@@ -47,97 +65,58 @@
         </div>
 
         <div class="card">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th>NIS</th>
-                            <th>Nama lengkap</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
+            <form method="POST" action="{{ route('update-kehadiran-kelas', $kelas->id_kelas) }}">
+                @csrf
+                <input type="hidden" name="tanggal" value="{{ $tanggal }}">
+                
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>No</th>
+                                <th>NIS</th>
+                                <th>Nama lengkap</th>
+                                <th>Status</th>
+                                <th>Keterangan</th>
+                            </tr>
+                        </thead>
 
-                    <tbody>
-                        <tr>
-                            <td>00987643</td>
-                            <td>Arif Nasution</td>
-                            <td>
-                                <div class="status-group">
-                                    <span class="status-btn active">H</span>
-                                    <span class="status-btn">I</span>
-                                    <span class="status-btn">S</span>
-                                    <span class="status-btn">A</span>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>00985651</td>
-                            <td>Radita Nabila</td>
-                            <td>
-                                <div class="status-group">
-                                    <span class="status-btn active">H</span>
-                                    <span class="status-btn">I</span>
-                                    <span class="status-btn">S</span>
-                                    <span class="status-btn">A</span>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>00952763</td>
-                            <td>Arif Rahman</td>
-                            <td>
-                                <div class="status-group">
-                                    <span class="status-btn active">H</span>
-                                    <span class="status-btn">I</span>
-                                    <span class="status-btn">S</span>
-                                    <span class="status-btn">A</span>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>00936121</td>
-                            <td>Ismatul Hawa</td>
-                            <td>
-                                <div class="status-group">
-                                    <span class="status-btn active">H</span>
-                                    <span class="status-btn">I</span>
-                                    <span class="status-btn">S</span>
-                                    <span class="status-btn">A</span>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>00864041</td>
-                            <td>Ilham Basudara</td>
-                            <td>
-                                <div class="status-group">
-                                    <span class="status-btn active">H</span>
-                                    <span class="status-btn">I</span>
-                                    <span class="status-btn">S</span>
-                                    <span class="status-btn">A</span>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            </table>
+                        <tbody>
+                            @forelse($siswa as $row)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $row->nis ?? '-' }}</td>
+                                <td>{{ $row->nama_siswa ?? '-' }}</td>
+                                <td>
+                                    <div class="status-group" data-siswa-id="{{ $row->id_siswa }}">
+                                        @php $statusValue = strtolower($row->status_hadir ?? ''); @endphp
+                                        <button type="button" class="status-btn btn btn-sm {{ $statusValue === 'hadir' ? 'active' : '' }}" data-status="hadir" title="Hadir">H</button>
+                                        <button type="button" class="status-btn btn btn-sm {{ $statusValue === 'izin' ? 'active' : '' }}" data-status="izin" title="Izin">I</button>
+                                        <button type="button" class="status-btn btn btn-sm {{ $statusValue === 'sakit' ? 'active' : '' }}" data-status="sakit" title="Sakit">S</button>
+                                        <button type="button" class="status-btn btn btn-sm {{ $statusValue === 'alpa' ? 'active' : '' }}" data-status="alpa" title="Alpa">A</button>
+                                        <input type="hidden" name="status[{{ $row->id_siswa }}]" class="status-input" value="{{ $statusValue }}">
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="text" name="keterangan[{{ $row->id_siswa }}]" class="form-control form-control-sm" value="{{ $row->keterangan ?? '' }}" placeholder="Keterangan">
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="5" class="text-center">Tidak ada siswa di kelas ini</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
-
-                <div class="card-footer-absen">
-
-                    <button class="btn btn-success btn-sm">
+                
+                <div class="d-flex gap-2 mt-3">
+                    <button type="submit" class="btn btn-success">
                         <i class="fas fa-save"></i> Simpan
                     </button>
-
+                    <a href="{{ route('kelas') }}" class="btn btn-secondary">Batal</a>
                 </div>
-
-                </div>
-
+            </form>
         </div>
 
     </div>
@@ -146,14 +125,31 @@
 <script>
     document.querySelectorAll('.status-group').forEach(group => {
         const buttons = group.querySelectorAll('.status-btn');
+        const statusInput = group.querySelector('.status-input');
+
+        // Set initial value from currently active button
+        const activeButton = Array.from(buttons).find(btn => btn.classList.contains('active'));
+        if (activeButton && statusInput && !statusInput.value) {
+            statusInput.value = activeButton.dataset.status;
+        }
 
         buttons.forEach(btn => {
             btn.addEventListener('click', () => {
                 buttons.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
+                if (statusInput) {
+                    statusInput.value = btn.dataset.status;
+                }
             });
         });
     });
 </script>
+
+@if(session('success'))
+<script>
+    var message = @json(session('success'));
+    alert(message);
+</script>
+@endif
 
 @endsection

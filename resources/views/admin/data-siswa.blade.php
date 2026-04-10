@@ -110,8 +110,8 @@
                                 </a>
 
                                 <!-- EDIT -->
-                                <a href="{{ route('edit-data-siswa') }}" class="btn btn-warning btn-sm">
-                                    <i class="fa fa-pencil"></i>
+                                <a href="{{ route('edit-siswa', $item->id_siswa) }}" class="btn-edit">
+                                    Edit
                                 </a>
 
                                 <!-- HAPUS -->
@@ -150,26 +150,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
-
-<!-- MODAL DELETE -->
-<div class="confirm-modal" id="confirmModal">
-    <div class="confirm-modal-backdrop"></div>
-    <div class="confirm-modal-dialog">
-        <div class="confirm-modal-content">
-            <div class="confirm-modal-header">
-                <h5>Hapus</h5>
-            </div>
-            <div class="confirm-modal-body">
-                <p>Yakin ingin menghapus data? Data tidak dapat dikembalikan.</p>
-            </div>
-            <div class="confirm-modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm btn-cancel">Batal</button>
-                <button type="button" class="btn btn-danger btn-sm btn-confirm">Hapus</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- SCRIPT DELETE SAJA -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {

@@ -55,12 +55,44 @@ class DataWaliController extends Controller
 
         return redirect()->route('data-wali')->with('success', 'Data wali berhasil ditambahkan'); 
     }
+
+    // ========================
+    // FORM EDIT
+    // ========================
+    public function edit($id)
+    {
+        $wali = Wali::findOrFail($id);
+        return view('admin.edit-data-wali', compact('wali'));
+    }
+
+    // ========================
+    // UPDATE DATA
+    // ========================
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama_wali' => 'required|unique:wali,nama_wali,'.$id.',id_wali',
+            'no_hp' => 'required|unique:wali,no_hp,'.$id.',id_wali',
+            'jenis_kelamin' => 'required',
+        ]);
+
+        $wali = Wali::findOrFail($id);
+        $wali->update([
+            'nama_wali' => $request->nama_wali,
+            'no_hp' => $request->no_hp,
+            'jenis_kelamin' => $request->jenis_kelamin,
+        ]);
+
+        return redirect()->route('data-wali')->with('success', 'Data wali berhasil diupdate');
+    }
+
     // ========================
     // HAPUS
     // ========================
     public function destroy($id)
     {
-        DB::table('wali')->where('id_wali', $id)->delete();
+        $wali = Wali::findOrFail($id);
+        $wali->delete();
 
         return redirect()->back()->with('success', 'Data wali berhasil dihapus');
     }
