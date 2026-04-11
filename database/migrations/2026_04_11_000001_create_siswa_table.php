@@ -11,14 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('siswa', function (Blueprint $table) {
+       Schema::create('siswa', function (Blueprint $table) {
             $table->id('id_siswa');
-            $table->string('nis')->unique();
+            $table->unsignedBigInteger('id_kelas')->nullable();
+            $table->string('nis')->nullable();
             $table->string('nama_siswa');
-            $table->unsignedBigInteger('id_kelas');
-            $table->timestamps();
+            $table->string('tempat_lahir')->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->string('jenis_kelamin')->nullable();
 
-            $table->foreign('id_kelas')->references('id_kelas')->on('kelas');
+            $table->string('rfid_uid')->nullable(); // ✅ WAJIB TAMBAH
+
+            $table->string('status')->default('aktif');
+            $table->boolean('is_active')->default(1);
         });
     }
 

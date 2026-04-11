@@ -19,7 +19,7 @@ class DataPenjemputanController extends Controller
         ->join('wali', 'penjemputan.id_wali', '=', 'wali.id_wali')
         ->leftJoin('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas') // join ke tabel kelas
         ->select(
-            'penjemputan.id_jemput',
+            'penjemputan.id',
             'siswa.nama_siswa',
             'kelas.nama_kelas as kelas', // alias 'kelas' agar sesuai dengan Blade
             'wali.nama_wali',

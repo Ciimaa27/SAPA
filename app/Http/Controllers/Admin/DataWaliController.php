@@ -12,10 +12,10 @@ class DataWaliController extends Controller
     public function index()
     {
         $wali = DB::table('wali')
-            ->leftJoin('users', 'wali.id_user', '=', 'users.id_user')
+            ->leftJoin('users', 'wali.id_user', '=', 'users.id')
             ->select(
                 'wali.id_wali',
-                'wali.nama_wali', // 🔥 FIX DI SINI
+                'wali.nama_wali', 
                 'wali.no_hp',
                 'wali.jenis_kelamin'
             )

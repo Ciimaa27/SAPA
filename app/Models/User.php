@@ -13,8 +13,6 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $table = 'users';
-    protected $primaryKey = 'id_user';
-    public $timestamps = false;
 
     protected $fillable = [
         'id_role',
@@ -29,21 +27,21 @@ class User extends Authenticatable
         'password',
     ];
 
-    // 🔥 WAJIB (biar auth pakai id_user)
+    // login pakai username
     public function username()
     {
         return 'username';
     }
 
-    // Relasi ke role
+    // relasi role
     public function role()
     {
         return $this->belongsTo(Role::class, 'id_role');
     }
 
-    // Relasi ke wali
+    // relasi wali
     public function wali()
     {
-        return $this->hasOne(Wali::class, 'id_user', 'id_user');
+        return $this->hasOne(Wali::class, 'id_user', 'id'); // ✅ FIX
     }
 }
