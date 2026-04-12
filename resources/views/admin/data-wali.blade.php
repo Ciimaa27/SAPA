@@ -33,22 +33,35 @@
 
         <!-- INFO + ACTION -->
         <div class="card mb-3 p-3">
-            <div class="d-flex align-items-center gap-3 flex-wrap">
+            <div class="d-flex align-items-center gap-3">
 
-                <div style="min-width:140px;">
+                <div style="min-width:auto; padding: 8px 16px; border: 1px solid #ddd; border-radius: 8px; background: #fff;">
                     Total : <strong>{{ $total }}</strong>
                 </div>
 
-                <a href="{{ route('wali.create') }}" class="btn btn-primary btn-sm">
+                <!-- FILTER DROPDOWN -->
+                <div style="width:180px;">
+                    <select class="form-select form-select-sm">
+                        <option>Tampilkan</option>
+                        <option>10</option>
+                        <option>25</option>
+                        <option>50</option>
+                    </select>
+                </div>
+
+                <!-- BUTTON TAMBAH -->
+                <a href="{{ route('wali.create') }}" class="btn btn-sm" style="border: 1px solid #dee2e6; background: transparent; color: #333;">
                     <i class="fa fa-plus"></i> Tambah
                 </a>
 
-                <!-- SEARCH -->
-                <div class="input-group input-group-sm search-flex">
-                    <span class="input-group-text bg-white">
-                        <i class="fa fa-search"></i>
-                    </span>
-                    <input type="text" id="searchInputWali" class="form-control" placeholder="Pencarian">
+                <!-- SEARCH BACKEND -->
+                <div style="flex: 1; max-width: 500px;">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-white border">
+                            <i class="fa fa-search"></i>
+                        </span>
+                        <input type="text" id="searchInputWali" class="form-control" placeholder="Pencarian">
+                    </div>
                 </div>
 
             </div>
@@ -77,10 +90,10 @@
                             </td>
 
                             <td>{{ $row->nama_wali }}</td>
+                            <td>{{ $row->username ?? '-' }}</td> 
+                            <td>{{ $row->email ?? '-' }}</td>   
                             <td>{{ $row->no_hp ?? '-' }}</td>
-                            <td class="text-capitalize">
-                                {{ $row->jenis_kelamin ?? '-' }}
-                            </td>
+                            <td class="text-capitalize">{{ $row->jenis_kelamin ?? '-' }}</td>
 
                             <td>
                                 <a href="{{ route('edit-data-wali', $row->id_wali) }}" class="btn btn-warning btn-sm">
@@ -107,7 +120,7 @@
             </div>
 
             <!-- 🔥 PAGINATION (INI YANG PENTING BANGET) -->
-            <div class="p-3">
+            <div class="p-3 d-flex justify-content-end">
                 {{ $wali->links() }}
             </div>
 

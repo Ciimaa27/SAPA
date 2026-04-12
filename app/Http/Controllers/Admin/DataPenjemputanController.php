@@ -39,7 +39,9 @@ class DataPenjemputanController extends Controller
             $query->where('siswa.nama_siswa', 'like', "%{$cari}%");
         }
 
-        $data = $query->orderBy('penjemputan.tanggal', 'desc')->get();
+        $data = $query->orderBy('penjemputan.tanggal', 'desc')
+            ->paginate(10)
+            ->withQueryString();
 
         return view('admin.data-penjemputan', compact('data', 'tanggal', 'kelas', 'cari'));
     }

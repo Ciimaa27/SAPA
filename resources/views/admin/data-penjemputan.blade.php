@@ -62,7 +62,7 @@
                     <tbody>
                         @foreach($data as $item)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}</td>
                             <td>{{ $item->nama_siswa }}</td>
                             <td>{{ $item->kelas }}</td>
                             <td>{{ $item->nama_wali }}</td>
@@ -72,7 +72,11 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div>
+                </div>
+
+                <div class="p-3 d-flex justify-content-end">
+                    {{ $data->links() }}
+                </div>
 
             @else
             <div class="card p-5 text-center text-muted">

@@ -40,3 +40,37 @@
 body{
     overflow-x:hidden;
 }
+
+/* ===== PAGINATION ===== */
+.pagination {
+    margin: 0;
+    gap: 6px;
+}
+
+.pagination .page-item .page-link {
+    border-radius: 6px !important;
+    padding: 6px 12px;
+    font-size: 13px;
+    border: none;
+    background: #f1f3f5;
+    color: #6c757d;
+}
+
+.pagination .page-item .page-link:hover {
+    background: #e2e6ea;
+}
+
+.pagination .page-item.active .page-link {
+    background: #6f42c1;
+    color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+    background: #e9ecef;
+    color: #adb5bd;
+}
+
+.pagination .page-link svg {
+    width: 14px;
+    height: 14px;
+}

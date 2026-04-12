@@ -144,3 +144,42 @@ body{
     transform: scale(0.97);
 }
 
+/* ===== PAGINATION ===== */
+.pagination {
+    margin: 0;
+    gap: 6px;
+}
+
+.pagination .page-item .page-link {
+    border-radius: 6px !important;
+    padding: 6px 12px !important;
+    font-size: 13px !important;
+    border: none !important;
+    background: #f1f3f5 !important;
+    color: #6c757d !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.pagination .page-item .page-link:hover,
+.pagination .page-item .page-link:focus {
+    background: #e2e6ea !important;
+    color: #6c757d !important;
+}
+
+.pagination .page-item.active .page-link {
+    background: #6f42c1 !important;
+    color: #fff !important;
+}
+
+.pagination .page-item.disabled .page-link {
+    background: #e9ecef !important;
+    color: #adb5bd !important;
+}
+
+.pagination .page-link svg {
+    width: 14px;
+    height: 14px;
+}
+

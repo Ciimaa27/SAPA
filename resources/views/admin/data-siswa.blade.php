@@ -56,16 +56,18 @@
                     </select>
                 </div>
 
-                <a href="{{ route('tambah-siswa') }}" class="btn btn-primary btn-sm btn-tambah">
+                <a href="{{ route('tambah-siswa') }}" class="btn btn-sm" style="border: 1px solid #dee2e6; background: transparent; color: #333;">
                     <i class="fa fa-plus"></i> Tambah
                 </a>
 
-                <div class="input-group input-group-sm search-flex">
-                    <span class="input-group-text bg-white">
-                        <i class="fa fa-search"></i>
-                    </span>
-                    <input type="text" id="searchInput" class="form-control" placeholder="Pencarian">
-                </div>
+                <form method="GET" action="{{ route('data-siswa') }}" style="flex: 1; max-width: 500px;">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-white border">
+                            <i class="fa fa-search"></i>
+                        </span>
+                        <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Pencarian">
+                    </div>
+                </form>
 
             </div>
         </div>
@@ -110,8 +112,8 @@
                                 </a>
 
                                 <!-- EDIT -->
-                                <a href="{{ route('edit-siswa', $item->id_siswa) }}" class="btn-edit">
-                                    Edit
+                                <a href="{{ route('edit-siswa', $item->id_siswa) }}" class="btn btn-warning btn-sm mx-1" title="Edit">
+                                    <i class="fa fa-pencil"></i>
                                 </a>
 
                                 <!-- HAPUS -->
@@ -129,27 +131,17 @@
                 </table>
 
             </div>
+
+            <!-- 🔥 PAGINATION -->
+            <div class="p-3 d-flex justify-content-end">
+                {{ $siswa->links() }}
+            </div>
+
         </div>
 
     </div>
 </div>
 
-<!-- SEARCH -->
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    let input = document.getElementById("searchInput");
-
-    input.addEventListener("keyup", function() {
-        let keyword = this.value.toLowerCase();
-        let rows = document.querySelectorAll("#dataTable tbody tr");
-
-        rows.forEach(function(row) {
-            let text = row.textContent.toLowerCase();
-            row.style.display = text.includes(keyword) ? "" : "none";
-        });
-    });
-});
-</script>
 <!-- SCRIPT DELETE SAJA -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
