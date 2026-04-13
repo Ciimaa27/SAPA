@@ -1,0 +1,75 @@
+body{
+    background:#f5f5f5;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Navbar */
+.navbar{
+    background:#ffffff;
+}
+
+.navbar-brand{
+    color:#6b4fa3 !important;
+    font-weight:bold;
+}
+
+/* Hero */
+.hero{
+    background:#e8ddf5;
+    padding: 80px 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.hero h1{
+    color:#ff8c00;
+    font-weight:700;
+}
+
+.hero p{
+    color:#6b4fa3;
+}
+
+/* Section umum */
+section{
+    border-radius:20px;
+}
+
+/* Tentang */
+.tentang{
+    background:#ffffff;
+    padding:80px 0;
+}
+
+.tentang h3{
+    color:#6b4fa3;
+    font-weight:700;
+}
+
+/* Guru */
+.guru{
+    background:#e8ddf5;
+    padding:80px 0;
+}
+
+.guru h3{
+    font-weight:700;
+}
+
+/* Tim */
+.tim img{
+    border-radius:15px;
+}
+
+/* Footer */
+.footer{
+    background:#ffffff;
+    padding:40px 0;
+}
+
+/* Button */
+.btn-warning{
+    background:#ff8c00;
+    border:none;
+}
