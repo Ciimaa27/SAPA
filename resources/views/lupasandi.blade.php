@@ -34,10 +34,6 @@
                 </form>
             </div>
 
-            <div class="col-md-4 text-center">
-                <img src="{{ asset('foto/sapa.png') }}" alt="Logo" class="img-fluid logo-tangan">
-            </div>
-
         </div>
     </div>
 

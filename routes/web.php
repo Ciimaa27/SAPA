@@ -116,7 +116,7 @@ Route::prefix('admin')->group(function () {
     Route::put('/update-guru/{id}', [GuruKelasController::class, 'updateGuru'])->name('update-guru');
     Route::delete('/hapus-guru/{id}', [GuruKelasController::class, 'destroyGuru'])->name('hapus-guru');
     Route::view('/tambah-data-guru', 'admin.tambah-data-guru')->name('tambah-data-guru');
-    Route::view('/tambah-data-kelas', 'admin.tambah-data-kelas')->name('tambah-data-kelas');
+    Route::get('/tambah-data-kelas', [GuruKelasController::class, 'createKelas'])->name('tambah-data-kelas');
     Route::post('/simpan-guru', [GuruKelasController::class, 'storeGuru'])->name('store-guru');
 
 

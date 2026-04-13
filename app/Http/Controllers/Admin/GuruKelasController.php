@@ -45,11 +45,53 @@ class GuruKelasController extends Controller
     }
 
     // ========================
+    // FORM TAMBAH KELAS
+    // ========================
+    public function createKelas()
+    {
+        $guru = Guru::all();
+
+        return view('admin.tambah-data-kelas', compact('guru'));
+    }
+
+    // ========================
+    // SIMPAN KELAS
+    // ========================
+    public function storeKelas(Request $request)
+    {
+        $request->validate([
+            'tingkat' => 'required',
+            'sub_kelas' => 'required',
+            'id_guru' => 'required',
+        ]);
+
+        $namaKelas = 'Kelas '.$request->tingkat.'-'.$request->sub_kelas;
+
+        // 🚫 CEK DUPLIKAT
+        $cek = DB::table('kelas')
+            ->where('nama_kelas', $namaKelas)
+            ->exists();
+
+        if ($cek) {
+            return back()->withErrors('Kelas sudah ada!')->withInput();
+        }
+
+        DB::table('kelas')->insert([
+            'nama_kelas' => $namaKelas,
+            'id_guru' => $request->id_guru
+        ]);
+
+        return redirect()->route('kelas')
+            ->with('success','Kelas berhasil ditambahkan');
+    }
+
+    // ========================
     // DATA SISWA PER KELAS
     // ========================
     public function siswaKelas(Request $request, $id)
     {
         $tanggal = $request->query('tanggal', null);
+
         if ($tanggal) {
             $tanggal = date('Y-m-d', strtotime($tanggal));
         }
@@ -102,7 +144,7 @@ class GuruKelasController extends Controller
     }
 
     // ========================
-    // UPDATE KEHADIRAN KELAS
+    // UPDATE KEHADIRAN
     // ========================
     public function updateKehadiranKelas(Request $request, $id)
     {
@@ -111,6 +153,7 @@ class GuruKelasController extends Controller
         $keterangan = $request->input('keterangan', []);
 
         foreach ($status as $id_siswa => $status_hadir) {
+
             $status_hadir = strtolower(trim($status_hadir));
             $keteranganText = $keterangan[$id_siswa] ?? null;
 
@@ -122,9 +165,11 @@ class GuruKelasController extends Controller
 
             if ($kehadiran) {
                 $updateData = [];
+
                 if ($status_hadir !== '') {
                     $updateData['status_hadir'] = $status_hadir;
                 }
+
                 if ($keteranganText !== null) {
                     $updateData['keterangan'] = $keteranganText;
                 }
@@ -132,10 +177,12 @@ class GuruKelasController extends Controller
                 if (!empty($updateData)) {
                     $query->update($updateData);
                 }
+
             } elseif ($status_hadir !== '') {
+
                 DB::table('kehadiran')->insert([
                     'id_siswa' => $id_siswa,
-                    'id_device' => 1, // Default device
+                    'id_device' => 1,
                     'tanggal' => $tanggal,
                     'metode' => 'manual',
                     'status_hadir' => $status_hadir,
@@ -148,6 +195,9 @@ class GuruKelasController extends Controller
             ->with('success', 'Data kehadiran berhasil disimpan');
     }
 
+    // ========================
+    // DETAIL GURU
+    // ========================
     public function detailGuru($id)
     {
         $guru = Guru::findOrFail($id);
@@ -155,7 +205,7 @@ class GuruKelasController extends Controller
     }
 
     // ========================
-    // FORM EDIT GURU
+    // EDIT GURU
     // ========================
     public function editGuru($id)
     {
@@ -168,7 +218,6 @@ class GuruKelasController extends Controller
     // ========================
     public function updateGuru(Request $request, $id)
     {
-        // VALIDASI
         $request->validate([
             'nama_guru' => 'required',
             'nip' => 'required',
@@ -177,10 +226,8 @@ class GuruKelasController extends Controller
             'tanggal_lahir' => 'required|date',
         ]);
 
-        // AMBIL DATA
         $guru = Guru::findOrFail($id);
 
-        // UPDATE
         $guru->update([
             'nama_guru' => $request->nama_guru,
             'nip' => $request->nip,
@@ -194,11 +241,10 @@ class GuruKelasController extends Controller
     }
 
     // ========================
-    // SIMPAN DATA GURU
+    // SIMPAN GURU
     // ========================
     public function storeGuru(Request $request)
     {
-        // VALIDASI
         $request->validate([
             'nama_guru' => 'required',
             'nip' => 'required|unique:guru,nip',
@@ -207,9 +253,8 @@ class GuruKelasController extends Controller
             'tanggal_lahir' => 'required|date',
         ]);
 
-        // SIMPAN DATA
         Guru::create([
-            'id_user' => auth()->user()->id_user,
+            'id_user' => auth()->user()->id,
             'nama_guru' => $request->nama_guru,
             'nip' => $request->nip,
             'no_hp' => $request->no_hp,

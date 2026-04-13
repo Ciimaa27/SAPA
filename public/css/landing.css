@@ -1,75 +1,280 @@
-body{
-    background:#f5f5f5;
+body {
+    background: #f5f5f5;
     font-family: 'Segoe UI', sans-serif;
 }
 
-/* Navbar */
-.navbar{
-    background:#ffffff;
+/* NAVBAR */
+.navbar-custom {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
 }
 
-.navbar-brand{
-    color:#6b4fa3 !important;
-    font-weight:bold;
+.navbar-brand {
+    color: #6b4fa3 !important;
+    font-weight: 700;
+    font-size: 20px;
 }
 
-/* Hero */
-.hero{
-    background:#e8ddf5;
-    padding: 80px 0;
+.nav-link {
+    color: #333 !important;
+    font-weight: 500;
+    margin: 0 8px;
+    transition: 0.3s;
+}
+
+.nav-link:hover {
+    color: #ff8c00 !important;
+}
+
+.btn-masuk {
+    background: #ff8c00;
+    color: white;
+    border-radius: 20px;
+    padding: 6px 18px;
+    transition: 0.3s;
+}
+
+.btn-masuk:hover {
+    background: #e67600;
+}
+
+/* HERO SECTION */
+.hero {
+    position: relative;
     min-height: 100vh;
     display: flex;
     align-items: center;
 }
 
-.hero h1{
-    color:#ff8c00;
-    font-weight:700;
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(107, 79, 163, 0.85) 0%,
+        rgba(107, 79, 163, 0.6) 40%,
+        rgba(107, 79, 163, 0.2) 70%,
+        rgba(107, 79, 163, 0) 100%
+    );
+    backdrop-filter: blur(1.6px);
 }
 
-.hero p{
-    color:#6b4fa3;
+.hero .container {
+    position: relative;
+    z-index: 2;
 }
 
-/* Section umum */
-section{
-    border-radius:20px;
+.hero h1 {
+    color: #ff8c00;
+    font-weight: 700;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
 }
 
-/* Tentang */
-.tentang{
-    background:#ffffff;
-    padding:80px 0;
+.hero p {
+    color: #ffffff;
 }
 
-.tentang h3{
-    color:#6b4fa3;
-    font-weight:700;
+/* GENERAL SECTION */
+section {
+    padding: 60px 0;
 }
 
-/* Guru */
-.guru{
-    background:#e8ddf5;
-    padding:80px 0;
+.judul-tentang {
+    color: #6f42c1; /* ungu soft, cocok sama tema kamu */
+    font-weight: 700;
 }
 
-.guru h3{
-    font-weight:700;
+.role {
+    color: #6b4fa3;
+    font-weight: 600;
+    font-size: 14px;
 }
 
-/* Tim */
-.tim img{
+/* TENTANG SECTION */
+.tentang-modern {
+    position: relative;
+    padding: 100px 0;
+}
+
+.tentang-modern::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 500px;
+
+    background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0) 5%,
+        rgba(111,66,193,0.15) 100%
+    );
+
+    pointer-events: none;
+}
+
+.tentang-text {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500; /* semi-bold (medium, gak terlalu tebal) */
+    font-size: 16px;
+    line-height: 1.8;
+    color: #6f42c1;
+    margin-bottom: 15px;
+}
+
+/* optional biar lebih premium */
+.tentang-modern {
+    position: relative;
+    padding:100px 0;
+    background: url('/foto/bg1.png') center/cover no-repeat;
+    overflow:hidden;
+    letter-spacing: 0.3px;
+}
+
+.posisi-gambar {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.img-main{
+    width:220px;
     border-radius:15px;
+    position: relative;
+    z-index:2;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    margin-left:140px;   /* 🔥 geser lebih kanan */
 }
 
-/* Footer */
-.footer{
-    background:#ffffff;
-    padding:40px 0;
+.img-back{
+    width:220px;
+    border-radius:15px;
+    position: absolute;
+    top:30px;
+    left:80px;   /* 🔥 ikut geser */
+    z-index:1;
+    opacity:0.7;
+}
+/* GURU SECTION */
+.guru {
+    min-height: 100vh; /* 🔥 FULL SCREEN */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    background: linear-gradient(
+        to bottom,
+        rgba(111,66,193,0.15),
+        rgba(232,221,245,1)
+    );
 }
 
-/* Button */
-.btn-warning{
-    background:#ff8c00;
-    border:none;
+.guru .container {
+    width: 100%;
+}
+
+/* SCROLL */
+.guru-scroll {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scroll-snap-type: x mandatory;
+}
+
+/* SCROLLBAR */
+.guru-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+.guru-scroll::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+/* CARD */
+.guru-card {
+    flex: 0 0 auto;
+    width: 160px; /* 🔥 ramping */
+    border-radius: 20px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: 0.3s;
+    scroll-snap-align: center;
+}
+
+.guru-card:hover {
+    transform: translateY(-8px);
+}
+
+/* FOTO 5:7 */
+.guru-img {
+    width: 100%;
+    aspect-ratio: 5 / 7;
+    object-fit: cover;
+}
+
+/* TEXT */
+.guru-card h5 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.guru-card .card-body {
+    padding: 10px;
+}
+
+.guru-card .badge {
+    font-size: 11px;
+}
+
+/* TIM SECTION */
+.tim-section {
+    background: #e8ddf5;
+    padding: 80px 0;
+}
+
+.tim-card {
+    border: none;
+    border-radius: 20px;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    transform-style: preserve-3d;
+}
+
+.tim-card:hover {
+    transform: translateY(-10px);
+}
+
+.tim-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.tim-card h5 {
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.tim-card p {
+    font-size: 14px;
+}
+
+/* FOOTER & BUTTONS */
+.footer {
+    background: #ffffff;
+    padding: 40px 0;
+}
+
+.btn-warning {
+    background: #ff8c00;
+    border: none;
 }

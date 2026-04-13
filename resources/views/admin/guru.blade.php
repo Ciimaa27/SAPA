@@ -140,8 +140,16 @@
             </div>
 
             <!-- PAGINATION -->
-            <div class="p-3">
-                {{ $guru->links() }}
+            <div class="p-3 d-flex justify-content-end">
+                @if ($guru->hasPages())
+                    {{ $guru->links() }}
+                @else
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination mb-0">
+                            <li class="page-item active"><span class="page-link">1</span></li>
+                        </ul>
+                    </nav>
+                @endif
             </div>
 
         </div>

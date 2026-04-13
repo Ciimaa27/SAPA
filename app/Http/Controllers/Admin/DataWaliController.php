@@ -12,12 +12,14 @@ class DataWaliController extends Controller
     public function index()
     {
         $wali = DB::table('wali')
-            ->leftJoin('users', 'wali.id_user', '=', 'users.id_user')
+            ->leftJoin('users', 'wali.id_user', '=', 'users.id')
             ->select(
                 'wali.id_wali',
-                'wali.nama_wali', // 🔥 FIX DI SINI
+                'wali.nama_wali',
                 'wali.no_hp',
-                'wali.jenis_kelamin'
+                'wali.jenis_kelamin',
+                'users.username',
+                'users.email'
             )
             ->orderByDesc('wali.id_wali')
             ->paginate(10);
@@ -47,7 +49,7 @@ class DataWaliController extends Controller
         ]);
 
         Wali::create([
-            'id_user' => auth()->user()->id_user, // 🔥 FIX
+            'id_user' => auth()->user()->id,
             'nama_wali' => $request->nama_wali,
             'no_hp' => $request->no_hp,
             'jenis_kelamin' => $request->jenis_kelamin,

@@ -88,7 +88,7 @@
                     <tbody>
                         @forelse($data as $item)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}</td>
 
                             @if($tab == 'rfid')
                                 <td>{{ $item->nama_siswa }}</td>
@@ -120,6 +120,12 @@
                 </table>
 
             </div>
+
+            <!-- PAGINATION -->
+            <div class="p-3 d-flex justify-content-end">
+                {{ $data->links() }}
+            </div>
+
         </div>
 
     </div>

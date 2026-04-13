@@ -105,6 +105,12 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- PAGINATION -->
+            <div class="p-3 d-flex justify-content-end">
+                {{ $relasi->links() }}
+            </div>
+
         </div>
 
     </div>

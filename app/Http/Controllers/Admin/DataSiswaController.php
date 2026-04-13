@@ -11,10 +11,23 @@ class DataSiswaController extends Controller
     // ========================
     // TAMPIL DATA
     // ========================
-    public function index()
+    public function index(Request $request)
     {
-        $siswa = Siswa::all();
-        $total = $siswa->count();
+        $query = Siswa::query();
+
+        // SEARCH
+        if ($request->search) {
+            $query->where(function ($q) use ($request) {
+                $q->where('nis', 'like', '%' . $request->search . '%')
+                  ->orWhere('nama_siswa', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        $siswa = $query->orderBy('id_siswa', 'asc')
+                       ->paginate(10)
+                       ->withQueryString();
+
+        $total = Siswa::count();
 
         return view('admin.data-siswa', compact('siswa', 'total'));
     }

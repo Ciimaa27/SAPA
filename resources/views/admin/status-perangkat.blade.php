@@ -129,6 +129,10 @@
 
                 </table>
             </div>
+
+            <div class="p-3 d-flex justify-content-end">
+                {{ $logs->links() }}
+            </div>
         </div>
 
     </div>

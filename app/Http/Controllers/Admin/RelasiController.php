@@ -13,7 +13,10 @@ class RelasiController extends Controller
     // Tampilkan data relasi
     public function index()
     {
-        $relasi = Relasi::with(['siswa', 'wali'])->get();
+        $relasi = Relasi::with(['siswa', 'wali'])
+            ->orderBy('id_siswa', 'asc')
+            ->paginate(10);
+
         return view('admin.relasi', compact('relasi'));
     }
 

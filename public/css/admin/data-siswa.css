@@ -104,6 +104,20 @@
     font-size:13px;
 }
 
+.table td .btn-sm {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.table td .btn-sm i {
+    font-size: 14px;
+}
+
 .table th{
     font-size:13px;
     font-weight:600;
@@ -123,6 +137,40 @@
 
 body{
     overflow-x:hidden;
+}
+
+/* ===== PAGINATION ===== */
+.pagination {
+    margin: 0;
+    gap: 6px;
+}
+
+.pagination .page-item .page-link {
+    border-radius: 6px !important;
+    padding: 6px 12px;
+    font-size: 13px;
+    border: none;
+    background: #f1f3f5;
+    color: #6c757d;
+}
+
+.pagination .page-item .page-link:hover {
+    background: #e2e6ea;
+}
+
+.pagination .page-item.active .page-link {
+    background: #6f42c1;
+    color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+    background: #e9ecef;
+    color: #adb5bd;
+}
+
+.pagination .page-link svg {
+    width: 14px;
+    height: 14px;
 }
 
 .content{

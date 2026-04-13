@@ -4,11 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login SAPA</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- ICON -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>
+
 <body>
+
+    <!-- BACK BUTTON -->
+    <a href="/" class="back-btn">
+        <i class="bi bi-arrow-left"></i>
+    </a>
 
     <div class="container">
         <div class="row h-100 align-items-center justify-content-center">
@@ -21,14 +32,21 @@
 
                 <form action="/login" method="POST">
                     @csrf
+
                     <div class="mb-3">
                         <label class="custom-label">Nama Pengguna</label>
                         <input type="text" class="form-control custom-input" name="username" placeholder="Masukkan Username" required>
                     </div>
 
+                    <!-- PASSWORD -->
                     <div class="mb-2">
                         <label class="custom-label">Kata sandi</label>
-                        <input type="password" class="form-control custom-input" name="password" placeholder="******" required>
+
+                        <div class="position-relative">
+                            <input type="password" id="password" class="form-control custom-input pe-5" name="password" placeholder="******" required>
+
+                            <i class="bi bi-eye toggle-password" onclick="togglePassword()"></i>
+                        </div>
                     </div>
 
                     <div class="text-end mb-4">
@@ -39,12 +57,25 @@
                 </form>
             </div>
 
-            <div class="col-md-4 text-center">
-                <img src="{{ asset('foto/sapa.png') }}" alt="Logo" class="img-fluid logo-tangan">
-            </div>
-
         </div>
     </div>
+
+    <script>
+        function togglePassword() {
+            const input = document.getElementById("password");
+            const icon = document.querySelector(".toggle-password");
+
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("bi-eye");
+                icon.classList.add("bi-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.remove("bi-eye-slash");
+                icon.classList.add("bi-eye");
+            }
+        }
+    </script>
 
 </body>
 </html>
