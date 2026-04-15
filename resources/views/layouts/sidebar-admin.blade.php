@@ -1,114 +1,109 @@
-<link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
-
 <div class="sidebar-admin">
 
-    <!-- Logo -->
     <div class="logo-area">
         <h2>SAPA</h2>
         <p>Absensi & Penjemputan</p>
     </div>
 
-    <!-- Menu -->
     <ul class="menu-list">
 
         <li class="menu-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
             <a href="{{ route('admin.dashboard') }}">
-                <i class="fas fa-th-large"></i>
+                <i class="fa-solid fa-th-large"></i>
                 Dashboard
             </a>
         </li>
 
         <li class="menu-item {{ request()->routeIs('kelola-akun.index') ? 'active' : '' }}">
             <a href="{{ route('kelola-akun.index') }}">
-                <i class="fas fa-user"></i>
+                <i class="fa-solid fa-user"></i>
                 Kelola akun
             </a>
         </li>
 
         <p class="menu-title">Data Master</p>
 
-        <li class="menu-item {{ request()->routeIs('data-siswa') ? 'active' : '' }}">
+        <li class="menu-item">
             <a href="{{ route('data-siswa') }}">
-                <i class="fas fa-users"></i>
+                <i class="fa-solid fa-users"></i>
                 Data siswa
             </a>
         </li>
 
-        <li class="menu-item {{ request()->routeIs('data-wali') ? 'active' : '' }}">
+        <li class="menu-item">
             <a href="{{ route('data-wali') }}">
-                <i class="fas fa-user-friends"></i>
+                <i class="fa-solid fa-user-group"></i>
                 Data wali
             </a>
         </li>
 
-        <li class="menu-item {{ request()->routeIs('guru') ? 'active' : '' }}">
+        <li class="menu-item">
             <a href="{{ route('guru') }}">
-                <i class="fas fa-chalkboard-teacher"></i>
+                <i class="fa-solid fa-chalkboard-user"></i>
                 Guru & kelas
             </a>
         </li>
 
-        <li class="menu-item {{ request()->routeIs('relasi.*') ? 'active' : '' }}">
+        <li class="menu-item">
             <a href="{{ route('relasi.index') }}">
-                <i class="fas fa-link"></i>
+                <i class="fa-solid fa-link"></i>
                 Relasi siswa dan wali
             </a>
         </li>
 
         <p class="menu-title">Pendaftaran IoT</p>
 
-         <li class="menu-item {{ request()->routeIs('iot.index') ? 'active' : '' }}">
+        <li class="menu-item">
             <a href="{{ route('iot.index', ['tab'=>'rfid']) }}">
-                <i class="fas fa-wifi"></i>
+                <i class="fa-solid fa-wifi"></i>
                 RFID dan Sidik Jari
             </a>
         </li>
 
         <p class="menu-title">Operasional</p>
 
-        <li class="menu-item {{ request()->routeIs('data-penjemputan') ? 'active' : '' }}">
+        <li class="menu-item">
             <a href="{{ route('data-penjemputan') }}">
-                <i class="fas fa-download"></i>
+                <i class="fa-solid fa-download"></i>
                 Data penjemputan
             </a>
         </li>
 
-        <li class="menu-item {{ request()->routeIs('jadwal-pulang') ? 'active' : '' }}">
-        <a href="{{ route('jadwal-pulang') }}">
-            <i class="fas fa-clock"></i>
-            Jadwal pulang
-        </a>
-         </li>
+        <li class="menu-item">
+            <a href="{{ route('jadwal-pulang') }}">
+                <i class="fa-solid fa-clock"></i>
+                Jadwal pulang
+            </a>
+        </li>
 
         <li class="menu-item">
             <a href="#">
-                <i class="fas fa-graduation-cap"></i>
+                <i class="fa-solid fa-graduation-cap"></i>
                 Kenaikan kelas
             </a>
         </li>
 
         <p class="menu-title">Monitoring IoT</p>
 
-         <li class="menu-item {{ request()->routeIs('status-perangkat') ? 'active' : '' }}">
+        <li class="menu-item">
             <a href="{{ route('status-perangkat') }}">
-                <i class="fas fa-exclamation-circle"></i>
-                Status perangkat dan log aktivitas
+                <i class="fa-solid fa-circle-exclamation"></i>
+                Status perangkat
             </a>
         </li>
 
-        <li class="menu-item {{ request()->routeIs('laporan') ? 'active' : '' }}">
+        <li class="menu-item">
             <a href="{{ route('laporan') }}">
-                <i class="fas fa-archive"></i>
+                <i class="fa-solid fa-box-archive"></i>
                 Laporan
             </a>
         </li>
 
     </ul>
 
-    <!-- Logout -->
     <div class="logout">
         <a href="#">
-            <i class="fas fa-sign-out-alt"></i>
+            <i class="fa-solid fa-right-from-bracket"></i>
             Keluar
         </a>
     </div>

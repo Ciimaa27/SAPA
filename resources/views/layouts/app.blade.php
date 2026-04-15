@@ -3,32 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>SAPA - @yield('title')</title>
 
-    <!-- Bootstrap -->
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Fontawesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    <!-- CSS Sidebar -->
-    <link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
+    <!-- GLOBAL CSS (MINIMAL AJA) -->
     <link rel="stylesheet" href="{{ asset('css/topbar.css') }}">
 
+    {{-- CSS KHUSUS HALAMAN --}}
+    @stack('styles')
 </head>
 
 <body>
 
-<!-- Sidebar -->
-@include('layouts.sidebar-admin')
+<div class="layout">
 
-<!-- Content -->
-<div class="content">
-    @yield('content')
+    {{-- SIDEBAR --}}
+    @yield('sidebar')
+
+    <div class="content">
+
+        {{-- TOPBAR --}}
+        @include('layouts.topbar')
+
+        {{-- CONTENT --}}
+        @yield('content')
+
+    </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+@stack('scripts')
 
 </body>
 </html>

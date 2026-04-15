@@ -1,0 +1,201 @@
+body {
+    background: #f5f6fa;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* SIDEBAR */
+.sidebar-guru {
+    width: 230px;
+    height: 100vh;
+    background: #f7f7f7;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 12px;
+    border-right: 1px solid #ddd;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    box-shadow: 2px 0 6px rgba(0,0,0,0.05);
+}
+
+/* LOGO */
+.logo {
+    font-size: 20px;
+    font-weight: 800;
+    color: #7b5cff;
+}
+
+.sub-logo {
+    font-size: 10px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+/* MENU */
+.menu a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    text-decoration: none;
+    color: #555;
+    border-radius: 6px;
+    font-size: 12px;
+    transition: 0.2s;
+}
+
+.menu a:hover {
+    background: #ece6ff;
+}
+
+.menu a.active {
+    background: #e5dcff;
+    color: #6f42c1;
+    font-weight: 600;
+}
+
+/* LOGOUT */
+.logout {
+    font-size: 12px;
+    display: flex;
+    gap: 6px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+/* TOPBAR (FINAL) */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* TITLE */
+.title-box {
+    background: #fff;
+    padding: 12px 16px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    color: #555;
+    border: 1px solid #eee;
+}
+
+/* CARDS */
+.cards {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.card {
+    flex: 1;
+    background: #fff;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.card h4 {
+    font-size: 12px;
+    color: #777;
+}
+
+.card h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #6a4bc4;
+}
+
+.card i {
+    color: #6a4bc4;
+    font-size: 16px;
+}
+
+/* PICKUP */
+.pickup {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.pickup-card {
+    flex: 1;
+    background: #fff;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pickup-card h4 {
+    font-size: 12px;
+    color: #777;
+}
+
+.pickup-card h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #6a4bc4;
+}
+
+.check {
+    color: #2ec4b6;
+}
+
+.cross {
+    color: #ff6b6b;
+}
+
+/* TABLE */
+.table-box {
+    background: #fff;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+}
+
+.table-box h4 {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #6a4bc4;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+th {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+td {
+    font-size: 12px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}

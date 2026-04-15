@@ -10,40 +10,45 @@
 
         <span id="jam"></span>
 
-        <i class="fas fa-bell"></i>
-        <i class="fas fa-user-circle"></i>
+        <i class="fa-solid fa-bell"></i>
+        <i class="fa-solid fa-user-circle"></i>
 
     </div>
 
 </div>
 
+@push('scripts')
 <script>
+document.addEventListener("DOMContentLoaded", function() {
 
-function updateDateTime(){
+    function updateDateTime(){
 
-    const now = new Date();
+        const now = new Date();
 
-    const hari = now.toLocaleDateString('id-ID',{
-        weekday:'long'
-    });
+        const hari = now.toLocaleDateString('id-ID',{
+            weekday:'long'
+        });
 
-    const tanggal = now.toLocaleDateString('id-ID',{
-        day:'numeric',
-        month:'long',
-        year:'numeric'
-    });
+        const tanggal = now.toLocaleDateString('id-ID',{
+            day:'numeric',
+            month:'long',
+            year:'numeric'
+        });
 
-    const jam = now.toLocaleTimeString('id-ID',{
-        hour:'2-digit',
-        minute:'2-digit',
-    });
+        const jam = now.toLocaleTimeString('id-ID',{
+            hour:'2-digit',
+            minute:'2-digit',
+        });
 
-    document.getElementById("tanggal").innerHTML = hari + ", " + tanggal;
-    document.getElementById("jam").innerHTML = jam;
+        if(document.getElementById("tanggal") && document.getElementById("jam")){
+            document.getElementById("tanggal").innerHTML = hari + ", " + tanggal;
+            document.getElementById("jam").innerHTML = jam;
+        }
+    }
 
-}
+    updateDateTime();
+    setInterval(updateDateTime,1000);
 
-setInterval(updateDateTime,1000);
-updateDateTime();
-
+});
 </script>
+@endpush

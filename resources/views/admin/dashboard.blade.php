@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="{{ asset('css/admin/dashboard.css') }}">
 
 @include('layouts.sidebar-admin')
-@include('layouts.topbar')
 
 <div class="main-dashboard">
 
@@ -177,7 +176,7 @@
                                 @elseif($log->fingerprint_id) Orang Tua
                                 @else - @endif
                             </td>
-            
+
                             {{-- Status --}}
                             <td>
                                 @if($log->uid_rfid)

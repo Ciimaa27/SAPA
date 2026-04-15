@@ -68,7 +68,7 @@
             <form method="POST" action="{{ route('update-kehadiran-kelas', $kelas->id_kelas) }}">
                 @csrf
                 <input type="hidden" name="tanggal" value="{{ $tanggal }}">
-                
+
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
                         <thead class="table-light">
@@ -109,7 +109,7 @@
                         </tbody>
                     </table>
                 </div>
-                
+
                 <div class="d-flex gap-2 mt-3">
                     <button type="submit" class="btn btn-success">
                         <i class="fas fa-save"></i> Simpan

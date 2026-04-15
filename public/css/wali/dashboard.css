@@ -1,0 +1,133 @@
+body {
+    background: #f5f6fa;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* SIDEBAR WALI (MATCH ADMIN) */
+.sidebar {
+    width: 230px;
+    height: 100vh;
+    background: #f7f7f7;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 12px;
+    border-right: 1px solid #ddd;
+
+    display: flex;
+    flex-direction: column;
+
+    box-shadow: 2px 0 6px rgba(0,0,0,0.05);
+}
+
+/* LOGO */
+.logo {
+    font-weight: 800;
+    color: #7b5cff;
+    font-size: 20px;
+    margin: 0;
+}
+
+.sub-logo {
+    font-size: 10px;
+    color: #666;
+    margin: 0;
+}
+
+/* MENU */
+.menu {
+    margin-top: 10px;
+    flex: 1;
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    margin-bottom: 2px;
+    text-decoration: none;
+    color: #555;
+    border-radius: 8px;
+    font-size: 12.5px;
+    transition: 0.2s;
+}
+
+.menu a i {
+    font-size: 12px;
+    width: 14px;
+}
+
+/* HOVER */
+.menu a:hover {
+    background: #ece6ff;
+}
+
+/* ACTIVE */
+.menu a.active {
+    background: #e5dcff;
+    color: #6f42c1;
+    font-weight: 600;
+}
+
+/* LOGOUT */
+.logout-btn {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    padding: 6px 8px;
+    color: #555;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background: #ece6ff;
+    border-radius: 6px;
+}
+/* CARD */
+.card-box {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    border: 1px solid #eee;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* WELCOME */
+.welcome {
+    font-weight: 600;
+    color: #6a4bc4;
+    background: #f3f0ff;
+}
+
+/* TITLE */
+.title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+}
+
+/* TABLE */
+.row-item {
+    display: grid;
+    grid-template-columns: 150px auto;
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+    font-size: 12px;
+}
+
+.row-item:last-child {
+    border-bottom: none;
+}
+
+.row-item span {
+    color: #777;
+}
+
+.row-item strong {
+    color: #e68600;
+    font-weight: 500;
+}
