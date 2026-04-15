@@ -2,8 +2,14 @@
 
 @section('title', 'Data Wali')
 
-@section('content')
+{{-- 🔥 SIDEBAR --}}
+@section('sidebar')
+    @include('layouts.sidebar-admin')
+@endsection
 
+{{-- 🔥 CSS --}}
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
 <link rel="stylesheet" href="{{ asset('css/admin/data-wali.css') }}">
 
 <style>
@@ -19,9 +25,10 @@
         z-index: 2;
     }
 </style>
+@endpush
 
-@include('layouts.sidebar-admin')
-@include('layouts.topbar')
+{{-- 🔥 CONTENT --}}
+@section('content')
 
 <div class="main-dashboard">
     <div class="container-dashboard">
@@ -90,8 +97,8 @@
                             </td>
 
                             <td>{{ $row->nama_wali }}</td>
-                            <td>{{ $row->username ?? '-' }}</td> 
-                            <td>{{ $row->email ?? '-' }}</td>   
+                            <td>{{ $row->username ?? '-' }}</td>
+                            <td>{{ $row->email ?? '-' }}</td>
                             <td>{{ $row->no_hp ?? '-' }}</td>
                             <td class="text-capitalize">{{ $row->jenis_kelamin ?? '-' }}</td>
 

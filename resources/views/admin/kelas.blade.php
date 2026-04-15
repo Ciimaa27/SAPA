@@ -2,8 +2,14 @@
 
 @section('title', 'Guru dan Kelas')
 
-@section('content')
+{{-- 🔥 SIDEBAR --}}
+@section('sidebar')
+    @include('layouts.sidebar-admin')
+@endsection
 
+{{-- 🔥 CSS --}}
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
 <link rel="stylesheet" href="{{ asset('css/admin/guru.css') }}">
 
 <style>
@@ -21,9 +27,10 @@
         z-index: 2;
     }
 </style>
+@endpush
 
-@include('layouts.sidebar-admin')
-@include('layouts.topbar')
+{{-- 🔥 CONTENT --}}
+@section('content')
 
 <div class="main-dashboard">
     <div class="container-dashboard">

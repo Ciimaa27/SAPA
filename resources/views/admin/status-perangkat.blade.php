@@ -2,13 +2,18 @@
 
 @section('title','Status perangkat dan log aktivitas')
 
+@section('sidebar')
+    @include('layouts.sidebar-admin')
+@endsection
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/status-perangkat.css') }}">
+@endpush
+
 @section('content')
 
-<link rel="stylesheet" href="{{ asset('css/admin/status-perangkat.css') }}">
 @php use Carbon\Carbon; @endphp
-
-@include('layouts.sidebar-admin')
-@include('layouts.topbar')
 
 <div class="main-dashboard">
     <div class="container-dashboard">
@@ -97,7 +102,7 @@
                                     {{ $log->nama_wali ?? '-' }}
                                 @endif
                             </td>
-                            
+
                             <!-- JENIS -->
                             <td>
                                 {{ $log->uid_rfid ? 'RFID' : 'Fingerprint' }}
@@ -110,9 +115,9 @@
 
                             <!-- STATUS -->
                             <td>
-                                <span class="badge 
+                                <span class="badge
                                     {{ $log->status == 'gagal' ? 'bg-danger' : 'bg-success' }}">
-                                    
+
                                     {{ ucfirst($log->status ?? 'berhasil') }}
                                 </span>
                             </td>

@@ -2,12 +2,16 @@
 
 @section('title', 'Kelola Akun')
 
-@section('content')
-
-    <link rel="stylesheet" href="{{ asset('css/admin/tambah-akun.css') }}">
-
+@section('sidebar')
     @include('layouts.sidebar-admin')
-    @include('layouts.topbar')
+@endsection
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/tambah-akun.css') }}">
+@endpush
+
+@section('content')
 
     <div class="main-dashboard">
         <div class="container-fluid">

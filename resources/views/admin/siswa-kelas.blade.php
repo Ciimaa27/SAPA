@@ -2,12 +2,16 @@
 
 @section('title','Data siswa kelas')
 
-@section('content')
-
-    <link rel="stylesheet" href="{{ asset('css/admin/siswa-kelas.css') }}">
-
+@section('sidebar')
     @include('layouts.sidebar-admin')
-    @include('layouts.topbar')
+@endsection
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/siswa-kelas.css') }}">
+@endpush
+
+@section('content')
 
     <div class="main-dashboard">
     <div class="container-dashboard">

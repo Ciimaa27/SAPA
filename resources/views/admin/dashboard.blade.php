@@ -1,13 +1,20 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', 'Dashboard Admin')
 
-@section('content')
+{{-- 🔥 SIDEBAR --}}
+@section('sidebar')
+    @include('layouts.sidebar-admin')
+@endsection
 
+{{-- 🔥 CSS --}}
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
 <link rel="stylesheet" href="{{ asset('css/admin/dashboard.css') }}">
+@endpush
 
-@include('layouts.sidebar-admin')
-
+{{-- 🔥 CONTENT --}}
+@section('content')
 <div class="main-dashboard">
 
     <!-- ================= DATA AKUN ================= -->

@@ -11,10 +11,10 @@
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- GLOBAL CSS (MINIMAL AJA) -->
+    <!-- GLOBAL CSS -->
     <link rel="stylesheet" href="{{ asset('css/topbar.css') }}">
 
-    {{-- CSS KHUSUS HALAMAN --}}
+    {{-- CSS PER HALAMAN --}}
     @stack('styles')
 </head>
 

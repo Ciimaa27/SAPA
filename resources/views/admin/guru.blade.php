@@ -2,8 +2,14 @@
 
 @section('title', 'Guru dan Kelas')
 
-@section('content')
+{{-- 🔥 SIDEBAR --}}
+@section('sidebar')
+    @include('layouts.sidebar-admin')
+@endsection
 
+{{-- 🔥 CSS --}}
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
 <link rel="stylesheet" href="{{ asset('css/admin/guru.css') }}">
 
 <style>
@@ -19,9 +25,10 @@
         z-index: 2;
     }
 </style>
+@endpush
 
-@include('layouts.sidebar-admin')
-@include('layouts.topbar')
+{{-- 🔥 CONTENT --}}
+@section('content')
 
 <div class="main-dashboard">
     <div class="container-dashboard">
@@ -94,31 +101,31 @@
                             <td>{{ $row->no_hp ?? '-' }}</td>
                             <td>
                                 {{ $row->tempat_lahir ?? '-' }},
-                                {{ $row->tanggal_lahir 
-                                    ? \Carbon\Carbon::parse($row->tanggal_lahir)->format('d-m-Y') 
+                                {{ $row->tanggal_lahir
+                                    ? \Carbon\Carbon::parse($row->tanggal_lahir)->format('d-m-Y')
                                     : '-' }}
                             </td>
 
                             <td class="text-center">
                                 <!-- DETAIL -->
-                                <a href="{{ route('detail-guru', $row->id_guru) }}" 
+                                <a href="{{ route('detail-guru', $row->id_guru) }}"
                                    class="btn btn-info btn-sm" title="Lihat">
                                     <i class="fa fa-eye"></i>
                                 </a>
 
                                 <!-- EDIT -->
-                                <a href="{{ route('edit-data-guru', $row->id_guru) }}" 
+                                <a href="{{ route('edit-data-guru', $row->id_guru) }}"
                                    class="btn btn-warning btn-sm" title="Edit">
                                     <i class="fa fa-pencil"></i>
                                 </a>
 
                                 <!-- DELETE -->
-                                <form action="{{ route('hapus-guru', $row->id_guru) }}" 
-                                      method="POST" 
+                                <form action="{{ route('hapus-guru', $row->id_guru) }}"
+                                      method="POST"
                                       class="d-inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" 
+                                    <button type="submit"
                                             class="btn btn-danger btn-sm"
                                             onclick="return confirm('Yakin ingin menghapus data guru ini?')">
                                         <i class="fa fa-trash"></i>

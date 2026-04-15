@@ -1,12 +1,20 @@
 @extends('layouts.app')
+
 @section('title', 'Edit Kelola Akun')
 
-@section('content')
+{{-- 🔥 SIDEBAR --}}
+@section('sidebar')
+    @include('layouts.sidebar-admin')
+@endsection
 
+{{-- 🔥 CSS --}}
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
 <link rel="stylesheet" href="{{ asset('css/admin/edit-kelola-akun.css') }}">
+@endpush
 
-@include('layouts.sidebar-admin')
-@include('layouts.topbar')
+{{-- 🔥 CONTENT --}}
+@section('content')
 
 <div class="main-dashboard">
     <div class="container-dashboard">
