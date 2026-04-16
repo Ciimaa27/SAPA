@@ -1,0 +1,94 @@
+/* ===== CONTAINER ===== */
+.container-dashboard{
+    max-width:1100px;
+    margin:0 auto;
+}
+
+.main-dashboard{
+    padding:5px 30px 20px 20px;
+}
+
+/* ===== CARD ===== */
+.card-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 18px; /* 🔥 sebelumnya 20px (ini penyebab beda) */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* ===== TITLE ===== */
+.page-title {
+    font-weight: 600;
+    font-size: 15px; /* 🔥 biar sama */
+    margin-bottom: 10px;
+}
+
+/* ===== SEARCH ===== */
+.input-group {
+    margin-bottom: 10px;
+}
+
+.input-group input {
+    font-size: 13px;
+    height: 32px; /* 🔥 samain tinggi */
+}
+
+/* ===== TABLE ===== */
+.table-container {
+    margin-top: 5px;
+}
+
+.table-custom {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* HEADER */
+.table-custom th {
+    font-size: 13px;
+    font-weight: 600;
+    color: #888;
+    padding: 8px 12px; /* 🔥 lebih kecil dikit */
+    text-align: left;
+}
+
+/* ROW */
+.table-custom td {
+    font-size: 13px;
+    padding: 9px 12px; /* 🔥 ini kunci biar sama */
+    border-top: 1px solid #eee;
+}
+
+/* HEADER LINE */
+.table-custom thead tr {
+    border-bottom: 1px solid #eee;
+}
+
+/* HOVER */
+.table-custom tr:hover {
+    background: #fafafa;
+}
+
+/* ===== BUTTON LIHAT ===== */
+.btn-lihat {
+    background: #d1f5ec;
+    color: #00a884;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-lihat:hover {
+    opacity: 0.85;
+}
+
+/* ===== CONTENT FIX ===== */
+.content{
+    margin-left:230px;
+    padding-top:60px;
+    padding-left:10px;
+    padding-right:10px;
+}

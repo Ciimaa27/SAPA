@@ -54,3 +54,61 @@
     padding:25px;
     padding-top:80px;
 }
+
+/* =========================
+   USER DROPDOWN (TAMBAHAN)
+========================= */
+
+.user-menu {
+    position: relative;
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    display: none;
+    z-index: 2000;
+}
+
+.user-card {
+    width: 260px;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 18px 20px;
+
+    /* 🔥 outer shadow halus */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+
+    /* 🔥 inner shadow tipis */
+    box-shadow:
+        inset 0 1px 3px rgba(0,0,0,0.06),
+        0 8px 20px rgba(0,0,0,0.08);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-info h5 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.user-info span {
+    font-size: 13px;
+    color: #888;
+}
+
+.user-card i {
+    font-size: 18px;
+    color: #ff8c00;
+    transition: 0.2s;
+}
+
+.user-card i:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}

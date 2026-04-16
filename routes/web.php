@@ -47,6 +47,14 @@ Route::get('/guru/dashboard', function () {
     return view('guru.dashboard');
 })->name('guru.dashboard');
 
+Route::get('/guru/kehadiran', function () {
+    return view('guru.kehadiran');
+})->name('guru.kehadiran');
+
+Route::get('/guru/dashboard', function () {
+    return view('guru.dashboard');
+});
+
 // WALI
 Route::get('/wali/dashboard', function () {
     return view('wali.dashboard');
@@ -57,17 +65,22 @@ Route::get('/wali/dashboard', function () {
 // ========================
 Route::prefix('kepsek')->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('kepsek.dashboard');
-    })->name('kepsek.dashboard');
+    Route::get('/guru/dashboard', function () {
+    return view('guru.dashboard');
+})->name('guru.dashboard');
 
-    Route::get('/statistik', function () {
-        return view('kepsek.statistik');
-    })->name('kepsek.statistik');
+Route::get('/guru/kehadiran', function () {
+    return view('guru.kehadiran');
+})->name('guru.kehadiran');
 
-    Route::get('/laporan', function () {
-        return view('kepsek.laporan');
-    })->name('kepsek.laporan');
+Route::view('/guru/detail-kehadiran', 'guru.detail-kehadiran')
+    ->name('guru.detail-kehadiran');
+
+Route::view('/guru/riwayat-penjemputan', 'guru.riwayat-penjemputan')
+    ->name('guru.riwayat');
+
+Route::view('/guru/data-penjemputan', 'guru.data-penjemputan')
+    ->name('guru.data-penjemputan');
 
 });
 

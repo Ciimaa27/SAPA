@@ -1,0 +1,118 @@
+
+/* ===== CONTAINER ===== */
+.container-dashboard{
+    max-width:1100px;
+    margin:0 auto;
+}
+
+.main-dashboard{
+    padding:5px 30px 20px 20px;
+}
+
+/* ===== CARD ===== */
+.card-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* ===== TITLE ===== */
+.page-title {
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+/* ===== TABLE ===== */
+.table-container {
+    margin-top: 10px;
+}
+
+.table-custom {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* HEADER */
+.table-custom th {
+    font-size: 13px;
+    font-weight: 600;
+    color: #888;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+/* ROW */
+.table-custom td {
+    font-size: 13px;
+    padding: 10px 12px;
+    border-top: 1px solid #eee;
+}
+
+/* HOVER */
+.table-custom tr:hover {
+    background: #fafafa;
+}
+
+/* ===== STATUS ===== */
+.badge-status {
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+/* BERHASIL */
+.badge-status.success {
+    background: #d1f5ec;
+    color: #00a884;
+}
+
+/* GAGAL */
+.badge-status.danger {
+    background: #fde2e2;
+    color: #e74c3c;
+}
+
+/* ===== BUTTON DETAIL ===== */
+.btn-detail {
+    border: none;
+    background: #eef4ff;
+    color: #3b82f6;
+
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+/* HOVER */
+.btn-detail:hover {
+    background: #dbeafe;
+    transform: scale(1.05);
+}
+
+/* ICON */
+.btn-detail i {
+    font-size: 12px;
+}
+
+/* ===== SEARCH ===== */
+.input-group input {
+    font-size: 13px;
+}
+
+/* ===== CONTENT FIX ===== */
+.content{
+    margin-left:230px;
+    padding-top:60px;
+    padding-left:10px;
+    padding-right:10px;
+}

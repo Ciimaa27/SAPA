@@ -55,7 +55,7 @@ class DataWaliController extends Controller
             'jenis_kelamin' => $request->jenis_kelamin,
         ]);
 
-        return redirect()->route('data-wali')->with('success', 'Data wali berhasil ditambahkan'); 
+        return redirect()->route('data-wali')->with('success', 'Data wali berhasil ditambahkan');
     }
 
     // ========================

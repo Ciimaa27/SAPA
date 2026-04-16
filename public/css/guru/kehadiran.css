@@ -1,0 +1,56 @@
+.container-dashboard {
+    background: #f5f6fa;
+}
+
+/* CARD */
+.card-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* HEADER */
+.page-title {
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+/* TABLE */
+.table-container {
+    margin-top: 10px;
+}
+
+.table-custom {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-custom th {
+    font-size: 13px;
+    color: #888;
+    font-weight: 500;
+    padding: 10px;
+    text-align: left;
+}
+
+.table-custom td {
+    padding: 12px 10px;
+    border-top: 1px solid #eee;
+    font-size: 14px;
+}
+
+/* BUTTON */
+.btn-lihat {
+    background: #d1f5ec;
+    color: #00a884;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.btn-lihat:hover {
+    opacity: 0.8;
+}

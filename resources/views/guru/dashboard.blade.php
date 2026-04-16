@@ -14,78 +14,63 @@
 
 <div class="main-guru">
 
-    <!-- RINGKASAN -->
-    <div class="title-box">Ringkasan Hari Ini</div>
+    <!-- 🔥 WELCOME -->
+    <div class="welcome-box">
+        Selamat Datang, Guru Andini
+    </div>
 
-    <div class="cards">
-        <div class="card">
-            <div>
-                <h4>Total Siswa</h4>
-                <h2>30</h2>
-            </div>
-            <i class="fa-solid fa-users"></i>
-        </div>
+    <!-- 🔥 STATISTIK -->
+    <div class="section">
+        <div class="section-title">Statistik ringkas</div>
 
-        <div class="card">
-            <div>
-                <h4>Hadir</h4>
-                <h2>25</h2>
+        <div class="cards">
+            <div class="card-dashboard">
+                <p>Total siswa</p>
+                <h3>450</h3>
+                <i class="fa-solid fa-users icon-orange"></i>
             </div>
-            <i class="fa-solid fa-circle-check"></i>
-        </div>
 
-        <div class="card">
-            <div>
-                <h4>Tidak Hadir</h4>
-                <h2>5</h2>
+            <div class="card-dashboard">
+                <p>Total akun wali</p>
+                <h3>478</h3>
+                <i class="fa-solid fa-user-group icon-orange"></i>
             </div>
-            <i class="fa-solid fa-circle-xmark"></i>
+
+            <div class="card-dashboard">
+                <p>Total kehadiran siswa</p>
+                <h3>21</h3>
+                <i class="fa-solid fa-chart-line icon-orange"></i>
+            </div>
+
+            <div class="card-dashboard">
+                <p>Siswa tidak hadir</p>
+                <h3>2</h3>
+                <i class="fa-solid fa-user icon-orange"></i>
+            </div>
         </div>
     </div>
 
-    <!-- PENJEMPUTAN -->
-    <div class="title-box">Data Penjemputan Hari Ini</div>
+    <!-- 🔥 PENJEMPUTAN -->
+    <div class="section">
+        <div class="section-title">Data penjemputan hari ini</div>
 
-    <div class="pickup">
-        <div class="pickup-card">
-            <div>
-                <h4>Sudah dijemput</h4>
-                <h2>20</h2>
+        <div class="cards">
+            <div class="card-dashboard">
+                <p>Sudah dijemput</p>
+                <h3>206</h3>
+                <div class="badge-icon success">
+                    <i class="fa fa-check"></i>
+                </div>
             </div>
-            <i class="fa-solid fa-circle-check check"></i>
-        </div>
 
-        <div class="pickup-card">
-            <div>
-                <h4>Belum dijemput</h4>
-                <h2>10</h2>
+            <div class="card-dashboard">
+                <p>Belum dijemput</p>
+                <h3>244</h3>
+                <div class="badge-icon danger">
+                    <i class="fa fa-times"></i>
+                </div>
             </div>
-            <i class="fa-solid fa-circle-xmark cross"></i>
         </div>
-    </div>
-
-    <!-- TABEL -->
-    <div class="table-box">
-        <h4>Data Kehadiran Siswa</h4>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Nama</th>
-                    <th>Kelas</th>
-                    <th>Status</th>
-                    <th>Jam Masuk</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Ahmad</td>
-                    <td>1A</td>
-                    <td>Hadir</td>
-                    <td>07:30</td>
-                </tr>
-            </tbody>
-        </table>
     </div>
 
 </div>
