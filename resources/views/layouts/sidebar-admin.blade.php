@@ -101,11 +101,16 @@
 
     </ul>
 
+    <!-- 🔥 LOGOUT -->
     <div class="logout">
-        <a href="#">
+        <a href="#" onclick="confirmLogout()" style="text-decoration:none; color:inherit;">
             <i class="fa-solid fa-right-from-bracket"></i>
             Keluar
         </a>
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
+            @csrf
+        </form>
     </div>
 
 </div>

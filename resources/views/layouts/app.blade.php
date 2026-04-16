@@ -37,8 +37,32 @@
 
 </div>
 
+<!-- BOOTSTRAP -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+<!-- 🔥 SWEET ALERT (LOGOUT POPUP) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+function confirmLogout() {
+    Swal.fire({
+        title: 'Yakin mau keluar?',
+        text: "Kamu akan logout dari sistem",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#6a4bc4',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, keluar!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('logout-form').submit();
+        }
+    })
+}
+</script>
+
+{{-- SCRIPT PER HALAMAN --}}
 @stack('scripts')
 
 </body>

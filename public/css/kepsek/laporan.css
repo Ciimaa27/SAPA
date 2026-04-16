@@ -1,0 +1,40 @@
+/* TAB */
+.tab-wrapper {
+    display: flex;
+    gap: 8px;
+}
+
+.tab-btn {
+    border: 1px solid #ddd;
+    background: #f8f9fa;
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.tab-btn.active {
+    background: #e5dcff;
+    color: #6a4bc4;
+    border-color: #cfc3ff;
+}
+
+/* FILTER */
+.filter-box {
+    display: flex;
+    gap: 10px;
+}
+
+/* BUTTON */
+.btn-unduh {
+    background: #e5dcff;
+    color: #6a4bc4;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.btn-unduh:hover {
+    background: #d6ccff;
+}

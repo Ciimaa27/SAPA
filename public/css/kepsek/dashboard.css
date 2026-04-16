@@ -1,0 +1,163 @@
+body {
+    background: #f5f6fa;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* SIDEBAR */
+.sidebar-kepsek {
+    width: 230px;
+    height: 100vh;
+    background: #f7f7f7;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 12px;
+    border-right: 1px solid #ddd;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    box-shadow: 2px 0 6px rgba(0,0,0,0.05);
+}
+
+/* LOGO */
+.logo {
+    font-size: 20px;
+    font-weight: 800;
+    color: #7b5cff;
+}
+
+.sub-logo {
+    font-size: 10px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+/* MENU */
+.menu a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    text-decoration: none;
+    color: #555;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.menu a:hover {
+    background: #ece6ff;
+}
+
+.menu a.active {
+    background: #e5dcff;
+    color: #6f42c1;
+    font-weight: 600;
+}
+
+/* SECTION */
+.section {
+    margin-bottom: 18px;
+}
+
+.section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* CARDS */
+.cards {
+    display: flex;
+    gap: 12px;
+}
+
+/* CARD */
+.card-dashboard {
+    flex: 1;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 12px 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+    position: relative;
+    transition: 0.2s;
+}
+
+.card-dashboard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.card-dashboard p {
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 3px;
+}
+
+.card-dashboard h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #6a4bc4;
+}
+
+/* CHART DASHBOARD */
+.chart-container {
+    max-width: 500px; 
+    height: 250px;
+}
+
+/* ICON */
+.icon-orange {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    color: #f2b177;
+}
+
+/* BADGE */
+.badge-icon {
+    position: absolute;
+    right: 12px;
+    bottom: 10px;
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.badge-icon.success {
+    background: #e4fff5;
+    color: #2ec4b6;
+}
+
+.badge-icon.danger {
+    background: #ffe5e5;
+    color: #ff6b6b;
+}
+
+/* LOGOUT */
+.logout a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 8px 10px;
+    border-radius: 6px;
+
+    font-size: 12px;
+    color: #555;
+    text-decoration: none;
+
+    transition: 0.2s;
+}
+
+.logout a:hover {
+    background: #ece6ff;
+    color: #6f42c1;
+}

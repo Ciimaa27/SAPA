@@ -32,6 +32,11 @@ Route::get('/login', function () {
 // PROSES LOGIN
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::post('/logout', function () {
+    \Illuminate\Support\Facades\Auth::logout();
+    return redirect('/');
+})->name('logout');
+
 // ADMIN
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
@@ -47,10 +52,24 @@ Route::get('/wali/dashboard', function () {
     return view('wali.dashboard');
 })->name('wali.dashboard');
 
+// ========================
 // KEPSEK
-Route::get('/kepsek/dashboard', function () {
-    return view('kepsek.dashboard');
-})->name('kepsek.dashboard');
+// ========================
+Route::prefix('kepsek')->group(function () {
+
+    Route::get('/dashboard', function () {
+        return view('kepsek.dashboard');
+    })->name('kepsek.dashboard');
+
+    Route::get('/statistik', function () {
+        return view('kepsek.statistik');
+    })->name('kepsek.statistik');
+
+    Route::get('/laporan', function () {
+        return view('kepsek.laporan');
+    })->name('kepsek.laporan');
+
+});
 
 // Lupa Sandi
 Route::get('/lupasandi', function () {

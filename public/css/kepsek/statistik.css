@@ -1,0 +1,70 @@
+/* INFO BOX - WARNING */
+.info-box {
+    background: #fff1f1;
+    color: #d63031;
+    font-size: 13px;
+
+    padding: 10px 14px;
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    width: 100%;
+
+    border: 1px solid #ffb3b3;
+    border-left: 4px solid #d63031;
+}
+
+.info-box i {
+    font-size: 13px;
+}
+
+
+/* FILTER */
+.filter-box {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 18px;
+}
+
+.filter-box input,
+.filter-box select {
+    width: 150px;
+}
+
+
+/* CHART TITLE */
+.chart-title {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+
+/* PROGRESS BAR */
+.progress-item {
+    margin-bottom: 14px;
+}
+
+.progress-item span {
+    font-size: 12px;
+    color: #555;
+}
+
+/* background bar */
+.progress-bar {
+    height: 6px;
+    background: #e9edf5;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 4px;
+}
+
+/* isi bar */
+.progress-bar div {
+    height: 100%;
+    background: #245edc;  
+    border-radius: 10px;
+}

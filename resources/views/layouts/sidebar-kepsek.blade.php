@@ -1,4 +1,4 @@
-<div class="sidebar">
+<div class="sidebar-kepsek">
 
     <div>
         <div class="logo">SAPA</div>
@@ -6,32 +6,20 @@
 
         <div class="menu">
 
-            <a href="{{ route('wali.dashboard') }}" class="{{ request()->routeIs('wali.dashboard') ? 'active' : '' }}">
+            <a href="{{ route('kepsek.dashboard') }}"
+               class="{{ request()->routeIs('kepsek.dashboard') ? 'active' : '' }}">
                 <i class="fa-solid fa-th-large"></i>
                 Dashboard
             </a>
 
-            <a href="#">
-                <i class="fa-solid fa-calendar-check"></i>
-                Kehadiran anak
+            <a href="{{ route('kepsek.statistik') }}"
+               class="{{ request()->routeIs('kepsek.statistik') ? 'active' : '' }}">
+                <i class="fa-solid fa-chart-line"></i>
+                Statistik Kehadiran
             </a>
 
-            <a href="#">
-                <i class="fa-solid fa-truck"></i>
-                Status penjemputan
-            </a>
-
-            <a href="#">
-                <i class="fa-solid fa-clock"></i>
-                Jadwal pulang
-            </a>
-
-            <a href="#">
-                <i class="fa-solid fa-bell"></i>
-                Notifikasi
-            </a>
-
-            <a href="#">
+            <a href="{{ route('kepsek.laporan') }}"
+               class="{{ request()->routeIs('kepsek.laporan') ? 'active' : '' }}">
                 <i class="fa-solid fa-box-archive"></i>
                 Laporan
             </a>
@@ -39,8 +27,8 @@
         </div>
     </div>
 
-   <!-- 🔥 LOGOUT -->
-    <div class="logout-btn">
+    <!-- 🔥 LOGOUT -->
+    <div class="logout">
         <a href="#" onclick="confirmLogout()" style="text-decoration:none; color:inherit;">
             <i class="fa-solid fa-right-from-bracket"></i>
             Keluar

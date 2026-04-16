@@ -219,7 +219,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card tim-card">
-                    <img src="{{ asset('foto/isma.png') }}" class="tim-img">
+                    <img src="{{ asset('foto/isma1.png') }}" class="tim-img">
                     <div class="card-body">
                         <h5>Ismatul Hawa</h5>
                         <p>
@@ -235,7 +235,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card tim-card">
-                    <img src="{{ asset('foto/imau.png') }}" class="tim-img">
+                    <img src="{{ asset('foto/imau1.png') }}" class="tim-img">
                     <div class="card-body">
                         <h5>Noor Maulida</h5>
                         <p>
