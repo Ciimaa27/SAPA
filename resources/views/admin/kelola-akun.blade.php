@@ -99,13 +99,13 @@
                                 <td class="d-flex gap-2">
 
                                     <!-- EDIT -->
-                                    <a href="{{ route('kelola-akun.edit', $user->id_user) }}"
+                                    <a href="{{ route('kelola-akun.edit', $user->id) }}"
                                        class="btn btn-warning btn-sm">
                                         <i class="fa fa-pencil"></i>
                                     </a>
 
                                     <!-- DELETE -->
-                                    <form action="{{ route('kelola-akun.destroy', $user->id_user) }}"
+                                    <form action="{{ route('kelola-akun.destroy', $user->id) }}"
                                           method="POST"
                                           class="delete-form">
                                         @csrf

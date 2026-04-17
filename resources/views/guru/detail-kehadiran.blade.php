@@ -32,19 +32,19 @@
             <div class="info-row">
                 <label>Kelas</label>
                 <span>:</span>
-                <input type="text" class="form-control" value="1-A" readonly>
+                <input type="text" class="form-control" value="{{ $kelas->nama_kelas }}" readonly>
             </div>
 
             <div class="info-row">
                 <label>Wali kelas</label>
                 <span>:</span>
-                <input type="text" class="form-control" value="Arif Nasution" readonly>
+                <input type="text" class="form-control" value="{{ $kelas->guru ? $kelas->guru->nama_guru : 'N/A' }}" readonly>
             </div>
 
             <div class="info-row">
                 <label>Tanggal</label>
                 <span>:</span>
-                <input type="date" class="form-control">
+                <input type="date" class="form-control" value="{{ $tanggal }}">
             </div>
 
         </div>
@@ -66,20 +66,11 @@
 
             <tbody>
 
-                @php
-                $siswa = [
-                    ['nis'=>'00987643','nama'=>'Arif Nasution'],
-                    ['nis'=>'00985651','nama'=>'Radita Nabila'],
-                    ['nis'=>'00952763','nama'=>'Arif Rahman'],
-                    ['nis'=>'00936121','nama'=>'Ismatul Hawa'],
-                ];
-                @endphp
-
-                @foreach($siswa as $i => $row)
+                @forelse($siswas as $i => $row)
                 <tr>
                     <td>{{ $i+1 }}</td>
-                    <td>{{ $row['nis'] }}</td>
-                    <td>{{ $row['nama'] }}</td>
+                    <td>{{ $row->nis }}</td>
+                    <td>{{ $row->nama_siswa }}</td>
                     <td>
                         <div class="status-group">
                             <span class="status-btn active">H</span>
@@ -89,7 +80,11 @@
                         </div>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="4" class="text-center text-muted">Tidak ada siswa dalam kelas ini</td>
+                </tr>
+                @endforelse
 
             </tbody>
 

@@ -53,29 +53,23 @@
 
                     <tbody>
 
-                        {{-- 🔥 DATA DUMMY (SUDAH ADA ID) --}}
-                        @php
-                            $data = [
-                                ['id_kelas'=>1,'kelas'=>'1-A','wali'=>'Arif Nasution','jumlah'=>25],
-                                ['id_kelas'=>2,'kelas'=>'1-B','wali'=>'Radita Nabila','jumlah'=>21],
-                                ['id_kelas'=>3,'kelas'=>'1-C','wali'=>'Arif Rahman','jumlah'=>21],
-                                ['id_kelas'=>4,'kelas'=>'1-D','wali'=>'Ismatul Hawa','jumlah'=>22],
-                            ];
-                        @endphp
-
-                        @foreach($data as $i => $row)
+                        @forelse($data as $i => $row)
                         <tr>
                             <td>{{ $i+1 }}</td>
                             <td>{{ $row['kelas'] }}</td>
                             <td>{{ $row['wali'] }}</td>
                             <td>{{ $row['jumlah'] }}</td>
                             <td>
-                                <a href="{{ route('guru.detail-kehadiran') }}" class="btn btn-success btn-sm">
+                                <a href="{{ route('guru.detail-kehadiran', $row['id_kelas']) }}" class="btn btn-success btn-sm">
                                     Lihat siswa
                                 </a>
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">Tidak ada data kelas</td>
+                        </tr>
+                        @endforelse
 
                     </tbody>
 

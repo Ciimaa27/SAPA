@@ -23,11 +23,11 @@
     <div class="card-box table-box">
         <div class="row-item">
             <span>Anak</span>
-            <strong>Arif Nasution</strong>
+            <strong>{{ $siswa ? $siswa->nama_siswa : 'Tidak ada data anak' }}</strong>
         </div>
         <div class="row-item">
             <span>Kelas</span>
-            <strong>4-B</strong>
+            <strong>{{ $siswa && $siswa->kelas ? $siswa->kelas->nama_kelas : 'Tidak ada data kelas' }}</strong>
         </div>
     </div>
 
@@ -37,15 +37,15 @@
     <div class="card-box table-box">
         <div class="row-item">
             <span>Kehadiran</span>
-            <strong>07:12</strong>
+            <strong>{{ $kehadiran ? \Carbon\Carbon::parse($kehadiran->jam_masuk)->format('H:i') : 'Belum hadir' }}</strong>
         </div>
         <div class="row-item">
             <span>Penjemputan</span>
-            <strong>11.23</strong>
+            <strong>{{ $penjemputan ? \Carbon\Carbon::parse($penjemputan->jam_jemput)->format('H.i') : 'Belum dijemput' }}</strong>
         </div>
         <div class="row-item">
             <span>Jadwal pulang</span>
-            <strong>13.00</strong>
+            <strong>{{ $jadwal_pulang ? $jadwal_pulang->jam : 'Tidak ada jadwal' }}</strong>
         </div>
     </div>
 

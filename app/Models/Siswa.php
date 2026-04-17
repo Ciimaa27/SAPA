@@ -23,4 +23,9 @@ class Siswa extends Model
         'status',
         'is_active'
     ];
+
+    public function kelas()
+{
+    return $this->belongsTo(Kelas::class, 'id_kelas');
+}
 }

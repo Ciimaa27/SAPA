@@ -50,40 +50,29 @@
 
                     <tbody>
 
-                        @php
-                        $data = [
-                            ['waktu'=>'07:01:22','id'=>'03HGU98','nama'=>'Arif Nasution','alat'=>'RFID','peran'=>'Siswa','status'=>'Berhasil'],
-                            ['waktu'=>'07:15:08','id'=>'09HH7XE','nama'=>'Radita Nabila','alat'=>'RFID','peran'=>'Siswa','status'=>'Berhasil'],
-                            ['waktu'=>'10:35:44','id'=>'014KMNL','nama'=>'Indah Permatasari','alat'=>'Fingerprint','peran'=>'Orangtua/wali','status'=>'Gagal'],
-                        ];
-                        @endphp
-
-                        @foreach($data as $row)
+                        @forelse($logs as $row)
                         <tr>
                             <td>{{ $row['waktu'] }}</td>
-                            <td>{{ $row['id'] }}</td>
-
-                            <!-- 🔥 FIX: nama bukan link -->
+                            <td>{{ $row['id_scan'] }}</td>
                             <td>{{ $row['nama'] }}</td>
-
                             <td>{{ $row['alat'] }}</td>
                             <td>{{ $row['peran'] }}</td>
-
                             <td>
                                 <span class="badge-status {{ $row['status'] == 'Berhasil' ? 'success' : 'danger' }}">
                                     {{ $row['status'] }}
                                 </span>
                             </td>
-
-                            <!-- 🔥 DETAIL BUTTON -->
                             <td>
                                 <button class="btn-detail">
                                     <i class="fa fa-eye"></i>
                                 </button>
                             </td>
-
                         </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="7" class="text-center text-muted">Tidak ada riwayat penjemputan</td>
+                        </tr>
+                        @endforelse
 
                     </tbody>
 

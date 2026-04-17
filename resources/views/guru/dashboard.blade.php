@@ -16,7 +16,7 @@
 
     <!-- 🔥 WELCOME -->
     <div class="welcome-box">
-        Selamat Datang, Guru Andini
+        Selamat Datang, Guru {{ auth()->user()->name ?? 'Andini' }}
     </div>
 
     <!-- 🔥 STATISTIK -->
@@ -26,25 +26,25 @@
         <div class="cards">
             <div class="card-dashboard">
                 <p>Total siswa</p>
-                <h3>450</h3>
+                <h3>{{ $totalSiswa }}</h3>
                 <i class="fa-solid fa-users icon-orange"></i>
             </div>
 
             <div class="card-dashboard">
                 <p>Total akun wali</p>
-                <h3>478</h3>
+                <h3>{{ $totalWali }}</h3>
                 <i class="fa-solid fa-user-group icon-orange"></i>
             </div>
 
             <div class="card-dashboard">
                 <p>Total kehadiran siswa</p>
-                <h3>21</h3>
+                <h3>{{ $hadirHariIni }}</h3>
                 <i class="fa-solid fa-chart-line icon-orange"></i>
             </div>
 
             <div class="card-dashboard">
                 <p>Siswa tidak hadir</p>
-                <h3>2</h3>
+                <h3>{{ $tidakHadir }}</h3>
                 <i class="fa-solid fa-user icon-orange"></i>
             </div>
         </div>
@@ -57,7 +57,7 @@
         <div class="cards">
             <div class="card-dashboard">
                 <p>Sudah dijemput</p>
-                <h3>206</h3>
+                <h3>{{ $sudahJemput }}</h3>
                 <div class="badge-icon success">
                     <i class="fa fa-check"></i>
                 </div>
@@ -65,7 +65,7 @@
 
             <div class="card-dashboard">
                 <p>Belum dijemput</p>
-                <h3>244</h3>
+                <h3>{{ $belumJemput }}</h3>
                 <div class="badge-icon danger">
                     <i class="fa fa-times"></i>
                 </div>

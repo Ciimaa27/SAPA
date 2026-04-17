@@ -32,7 +32,7 @@ class KelolaAkunController extends Controller
 
         // 🔥 FIX DI SINI (pakai id_user)
         $users = $query
-            ->orderBy('users.id_user', 'asc')
+            ->orderBy('users.id', 'asc')
             ->paginate(10)
             ->withQueryString();
 

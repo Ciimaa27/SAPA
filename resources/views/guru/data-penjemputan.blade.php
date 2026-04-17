@@ -48,20 +48,7 @@
 
                     <tbody>
 
-                        @php
-                        $data = [
-                            ['kelas'=>'1-A','wali'=>'Arif Nasution','jumlah'=>25],
-                            ['kelas'=>'1-B','wali'=>'Radita Nabila','jumlah'=>21],
-                            ['kelas'=>'1-C','wali'=>'Arif Rahman','jumlah'=>21],
-                            ['kelas'=>'1-D','wali'=>'Ismatul Hawa','jumlah'=>22],
-                            ['kelas'=>'2-A','wali'=>'Ilham Basudara','jumlah'=>25],
-                            ['kelas'=>'2-B','wali'=>'Indah Permatasari','jumlah'=>24],
-                            ['kelas'=>'2-C','wali'=>'Noor Maulida','jumlah'=>23],
-                            ['kelas'=>'3-A','wali'=>'Radita Nabila','jumlah'=>30],
-                        ];
-                        @endphp
-
-                        @foreach($data as $i => $row)
+                        @forelse($data as $i => $row)
                         <tr>
                             <td>{{ $i+1 }}</td>
                             <td>{{ $row['kelas'] }}</td>
@@ -73,7 +60,11 @@
                                 </button>
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">Tidak ada data kelas</td>
+                        </tr>
+                        @endforelse
 
                     </tbody>
 

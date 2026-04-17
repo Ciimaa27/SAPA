@@ -42,6 +42,6 @@ class User extends Authenticatable
     // relasi wali
     public function wali()
     {
-        return $this->hasOne(Wali::class, 'id_user', 'id'); // ✅ FIX
+        return $this->hasOne(Wali::class, 'id_user', 'id'); 
     }
 }
