@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\wali;
+namespace App\Http\Controllers\Wali;
 
 use App\Http\Controllers\Controller;
 use App\Models\Wali;

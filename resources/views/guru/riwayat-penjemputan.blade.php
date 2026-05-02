@@ -79,6 +79,76 @@
                 </table>
             </div>
 
+            <!-- PAGINATION -->
+            <div class="p-3 d-flex justify-content-end">
+                <nav>
+                    <ul class="pagination pagination-sm mb-0">
+
+                        {{-- Previous --}}
+                        @if ($logs->onFirstPage())
+                            <li class="page-item disabled">
+                                <span class="page-link">‹</span>
+                            </li>
+                        @else
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $logs->previousPageUrl() }}">‹</a>
+                            </li>
+                        @endif
+
+                        {{-- Numbers --}}
+                        @php
+                            $current = $logs->currentPage();
+                            $last = $logs->lastPage();
+                        @endphp
+
+                        {{-- First page --}}
+                        @if ($current > 3)
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $logs->url(1) }}">1</a>
+                            </li>
+
+                            @if ($current > 4)
+                                <li class="page-item disabled">
+                                    <span class="page-link">...</span>
+                                </li>
+                            @endif
+                        @endif
+
+                        {{-- Middle pages --}}
+                        @for ($i = max(1, $current - 1); $i <= min($last, $current + 1); $i++)
+                            <li class="page-item {{ $i == $current ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $logs->url($i) }}">{{ $i }}</a>
+                            </li>
+                        @endfor
+
+                        {{-- Last page --}}
+                        @if ($current < $last - 2)
+                            @if ($current < $last - 3)
+                                <li class="page-item disabled">
+                                    <span class="page-link">...</span>
+                                </li>
+                            @endif
+
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $logs->url($last) }}">{{ $last }}</a>
+                            </li>
+                        @endif
+
+                        {{-- Next --}}
+                        @if ($logs->hasMorePages())
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $logs->nextPageUrl() }}">›</a>
+                            </li>
+                        @else
+                            <li class="page-item disabled">
+                                <span class="page-link">›</span>
+                            </li>
+                        @endif
+
+                    </ul>
+                </nav>
+            </div>
+
         </div>
 
     </div>

@@ -126,9 +126,74 @@
                 </table>
             </div>
 
-            <!-- 🔥 PAGINATION (INI YANG PENTING BANGET) -->
+            <!-- PAGINATION -->
             <div class="p-3 d-flex justify-content-end">
-                {{ $wali->links() }}
+                <nav>
+                    <ul class="pagination pagination-sm mb-0">
+
+                        {{-- Previous --}}
+                        @if ($wali->onFirstPage())
+                            <li class="page-item disabled">
+                                <span class="page-link">‹</span>
+                            </li>
+                        @else
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $wali->previousPageUrl() }}">‹</a>
+                            </li>
+                        @endif
+
+                        {{-- Numbers --}}
+                        @php
+                            $current = $wali->currentPage();
+                            $last = $wali->lastPage();
+                        @endphp
+
+                        {{-- First page --}}
+                        @if ($current > 3)
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $wali->url(1) }}">1</a>
+                            </li>
+
+                            @if ($current > 4)
+                                <li class="page-item disabled">
+                                    <span class="page-link">...</span>
+                                </li>
+                            @endif
+                        @endif
+
+                        {{-- Middle pages --}}
+                        @for ($i = max(1, $current - 1); $i <= min($last, $current + 1); $i++)
+                            <li class="page-item {{ $i == $current ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $wali->url($i) }}">{{ $i }}</a>
+                            </li>
+                        @endfor
+
+                        {{-- Last page --}}
+                        @if ($current < $last - 2)
+                            @if ($current < $last - 3)
+                                <li class="page-item disabled">
+                                    <span class="page-link">...</span>
+                                </li>
+                            @endif
+
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $wali->url($last) }}">{{ $last }}</a>
+                            </li>
+                        @endif
+
+                        {{-- Next --}}
+                        @if ($wali->hasMorePages())
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $wali->nextPageUrl() }}">›</a>
+                            </li>
+                        @else
+                            <li class="page-item disabled">
+                                <span class="page-link">›</span>
+                            </li>
+                        @endif
+
+                    </ul>
+                </nav>
             </div>
 
         </div>

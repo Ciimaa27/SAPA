@@ -199,7 +199,22 @@
                     </tbody>
                 </table>
 
-                {{-- Paginasi --}}
+                <hr>
+                    <h6 class="mt-3">Absensi Real-Time</h6>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nama Siswa</th>
+                                <th>Tanggal</th>
+                                <th>Jam Masuk</th>
+                            </tr>
+                        </thead>
+                        <tbody id="absenTable">
+                            <!-- data akan masuk otomatis -->
+                        </tbody>
+                    </table>
+                                    {{-- Paginasi --}}
                 {{-- <div class="mt-2">
                     {{ $logs->links('pagination::bootstrap-5') }}
                 </div> --}}
@@ -249,3 +264,24 @@
 </script>
 
 @endsection
+
+<script>
+function loadData(){
+  fetch('/admin/data-absen')
+    .then(res => res.json())
+    .then(data => {
+      let html = '';
+      data.forEach(item => {
+        html += `<tr>
+          <td>${item.nama_siswa}</td>
+          <td>${item.tanggal}</td>
+          <td>${item.jam_masuk}</td>
+        </tr>`;
+      });
+      document.getElementById('absenTable').innerHTML = html;
+    });
+}
+
+setInterval(loadData, 3000);
+loadData();
+</script>

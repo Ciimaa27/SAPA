@@ -54,6 +54,7 @@ Route::get('/lupasandi', function () {
 Route::prefix('admin')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/data-absen', [DashboardController::class, 'dataAbsen']);
 
     // KELOLA AKUN
     Route::get('/kelola-akun', [KelolaAkunController::class, 'index'])->name('kelola-akun.index');

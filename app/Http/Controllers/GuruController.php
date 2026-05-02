@@ -121,8 +121,8 @@ class GuruController extends Controller
         $logs = Penjemputan::with('siswa', 'siswa.kelas')
             ->orderByDesc('tanggal')
             ->orderByDesc('jam_jemput')
-            ->get()
-            ->map(function ($penjemputan) {
+            ->paginate(10)
+            ->through(function ($penjemputan) {
                 return [
                     'waktu' => $penjemputan->jam_jemput,
                     'id_scan' => $penjemputan->siswa ? 'FP-'.$penjemputan->siswa->id_siswa : '-',

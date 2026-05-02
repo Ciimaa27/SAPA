@@ -94,4 +94,21 @@ class DashboardController extends Controller
             'logs'
         ));
     }
-}
+
+    public function dataAbsen()
+    {
+        return response()->json(
+            \DB::table('kehadiran')
+                ->join('siswa', 'kehadiran.id_siswa', '=', 'siswa.id_siswa')
+                ->select(
+                    'siswa.nama_siswa',
+                    'kehadiran.tanggal',
+                    'kehadiran.jam_masuk'
+                )
+                ->orderByDesc('kehadiran.tanggal')
+                ->orderByDesc('kehadiran.jam_masuk')
+                ->limit(20)
+                ->get()
+        );
+    }
+    }

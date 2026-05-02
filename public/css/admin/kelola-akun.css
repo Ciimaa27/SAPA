@@ -68,27 +68,36 @@
     gap: 6px;
 }
 
-.pagination .page-item .page-link {
-    border-radius: 6px !important;
-    padding: 6px 12px;
-    font-size: 13px;
-    border: none;
-    background: #f1f3f5;
-    color: #6c757d;
+.pagination .page-item {
+    list-style: none;
 }
 
-.pagination .page-item .page-link:hover {
-    background: #e2e6ea;
+.pagination .page-link {
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 13px;
+    border: 1px solid #dee2e6;   /* 🔥 kasih border */
+    background: #fff;            /* 🔥 putih */
+    color: #495057;
+    transition: all 0.2s ease;
+}
+
+.pagination .page-link:hover {
+    background: #f1f3f5;
+    transform: translateY(-1px); /* 🔥 efek naik dikit */
 }
 
 .pagination .page-item.active .page-link {
     background: #6f42c1;
+    border-color: #6f42c1;
     color: #fff;
+    font-weight: 500;
 }
 
 .pagination .page-item.disabled .page-link {
     background: #e9ecef;
     color: #adb5bd;
+    border-color: #dee2e6;
 }
 
 .pagination .page-link svg {
