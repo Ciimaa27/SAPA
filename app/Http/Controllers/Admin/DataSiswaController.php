@@ -13,7 +13,7 @@ class DataSiswaController extends Controller
     // ========================
     public function index(Request $request)
     {
-        $query = Siswa::query();
+        $query = Siswa::with('kelas');
 
         // SEARCH
         if ($request->search) {

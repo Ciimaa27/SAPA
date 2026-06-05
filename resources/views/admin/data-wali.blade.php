@@ -97,8 +97,6 @@
                             </td>
 
                             <td>{{ $row->nama_wali }}</td>
-                            <td>{{ $row->username ?? '-' }}</td>
-                            <td>{{ $row->email ?? '-' }}</td>
                             <td>{{ $row->no_hp ?? '-' }}</td>
                             <td class="text-capitalize">{{ $row->jenis_kelamin ?? '-' }}</td>
 

@@ -108,7 +108,7 @@
                         <tr>
                             <td>{{ $item->nis }}</td>
                             <td>{{ $item->nama_siswa }}</td>
-                            <td>{{ $item->id_kelas }}</td>
+                            <td>{{ $item->kelas->nama_kelas ?? '-' }}</td>
                             <td>{{ $item->jenis_kelamin }}</td>
                             <td>{{ $item->tempat_lahir }}, {{ $item->tanggal_lahir }}</td>
 
