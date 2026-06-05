@@ -46,10 +46,9 @@
                         <label>Kelas</label>
                         <select name="id_kelas" class="form-select">
                             <option value="">Pilih kelas</option>
-                            <option value="1">1-A</option>
-                            <option value="2">1-B</option>
-                            <option value="3">2-A</option>
-                            <option value="4">2-B</option>
+                            @foreach($kelas as $k)
+                                <option value="{{ $k->id_kelas }}">{{ $k->nama_kelas }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

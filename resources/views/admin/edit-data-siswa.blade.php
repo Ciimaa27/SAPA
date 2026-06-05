@@ -46,12 +46,13 @@
 
                     <div class="form-group">
                         <label>Kelas</label>
-                        <select name="id_kelas">
-                            <option value="1" {{ $siswa->id_kelas == 1 ? 'selected' : '' }}>Kelas 1</option>
-                            <option value="2" {{ $siswa->id_kelas == 2 ? 'selected' : '' }}>Kelas 2</option>
-                            <option value="3" {{ $siswa->id_kelas == 3 ? 'selected' : '' }}>Kelas 3</option>
-                            <option value="4" {{ $siswa->id_kelas == 4 ? 'selected' : '' }}>Kelas 4</option>
-                            <option value="5" {{ $siswa->id_kelas == 5 ? 'selected' : '' }}>Kelas 5</option>
+                        <select name="id_kelas" class="form-select">
+                            <option value="">Pilih kelas</option>
+                            @foreach($kelas as $k)
+                                <option value="{{ $k->id_kelas }}" {{ $siswa->id_kelas == $k->id_kelas ? 'selected' : '' }}>
+                                    {{ $k->nama_kelas }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

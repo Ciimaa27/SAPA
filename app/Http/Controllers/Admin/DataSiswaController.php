@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Siswa;
-
+use App\Models\Kelas;
+use Illuminate\Support\Facades\DB;
+use App\Models\ArsipSiswa;
 class DataSiswaController extends Controller
 {
     // ========================
@@ -37,7 +39,8 @@ class DataSiswaController extends Controller
     // ========================
     public function create()
     {
-        return view('admin.tambah-siswa');
+        $kelas = Kelas::orderBy('nama_kelas')->get();
+        return view('admin.tambah-siswa', compact('kelas'));
     }
 
     // ========================
@@ -79,7 +82,8 @@ class DataSiswaController extends Controller
 public function edit($id)
 {
     $siswa = Siswa::findOrFail($id);
-    return view('admin.edit-data-siswa', compact('siswa'));
+    $kelas = Kelas::orderBy('nama_kelas')->get();
+    return view('admin.edit-data-siswa', compact('siswa', 'kelas'));
 }
 
 // ========================
@@ -130,5 +134,172 @@ public function update(Request $request, $id)
     {
         $siswa = Siswa::findOrFail($id);
         return view('admin.detail-siswa', compact('siswa'));
+    }
+
+    public function kenaikanKelas()
+    {
+        DB::beginTransaction();
+
+        try {
+
+            // ==========================
+            // ARSIPKAN SEMUA KELAS 6
+            // ==========================
+            $kelas6 = Kelas::where('nama_kelas', 'like', '6%')
+                ->pluck('id_kelas');
+
+            $siswaLulus = Siswa::whereIn('id_kelas', $kelas6)->get();
+
+            foreach ($siswaLulus as $siswa) {
+
+                $kelasTerakhir = Kelas::find($siswa->id_kelas);
+
+                ArsipSiswa::create([
+                    'id_siswa_lama' => $siswa->id_siswa,
+                    'id_kelas' => $siswa->id_kelas,
+                    'nis' => $siswa->nis,
+                    'nama_siswa' => $siswa->nama_siswa,
+                    'tempat_lahir' => $siswa->tempat_lahir,
+                    'tanggal_lahir' => $siswa->tanggal_lahir,
+                    'jenis_kelamin' => $siswa->jenis_kelamin,
+                    'rfid_uid' => $siswa->rfid_uid,
+                    'status' => 'lulus',
+                    'tahun_lulus' => date('Y'),
+                    'kelas_terakhir' => $kelasTerakhir->nama_kelas,
+                ]);
+            }
+
+// Hapus dari tabel siswa
+Siswa::whereIn('id_kelas', $kelas6)->delete();
+            // ==========================
+            // SIMPAN SISWA 2D DULU
+            // ==========================
+            $kelas2D = Kelas::where('nama_kelas', '2D')->first();
+
+            $siswa2D = collect();
+
+            if ($kelas2D) {
+                $siswa2D = Siswa::where('id_kelas', $kelas2D->id_kelas)->get();
+            }
+
+            // ==========================
+            // KENAIKAN KELAS NORMAL
+            // ==========================
+            $mapping = [
+
+                // kelas 5 -> 6
+                '5A' => '6A',
+                '5B' => '6B',
+                '5C' => '6C',
+
+                // kelas 4 -> 5
+                '4A' => '5A',
+                '4B' => '5B',
+                '4C' => '5C',
+
+                // kelas 3 -> 4
+                '3A' => '4A',
+                '3B' => '4B',
+                '3C' => '4C',
+
+                // kelas 2 -> 3
+                '2A' => '3A',
+                '2B' => '3B',
+                '2C' => '3C',
+
+                // kelas 1 -> 2
+                '1A' => '2A',
+                '1B' => '2B',
+                '1C' => '2C',
+            ];
+
+            // Simpan snapshot siswa sebelum kenaikan
+            $dataKenaikan = [];
+
+            foreach ($mapping as $asal => $tujuan) {
+
+                $kelasAsal = Kelas::where('nama_kelas', $asal)->first();
+                $kelasTujuan = Kelas::where('nama_kelas', $tujuan)->first();
+
+                if (!$kelasAsal || !$kelasTujuan) {
+                    continue;
+                }
+
+                $dataKenaikan[] = [
+                    'siswa_ids' => Siswa::where('id_kelas', $kelasAsal->id_kelas)
+                                        ->pluck('id_siswa'),
+                    'tujuan' => $kelasTujuan->id_kelas
+                ];
+            }
+
+            // Baru lakukan update
+            foreach ($dataKenaikan as $data) {
+
+                Siswa::whereIn('id_siswa', $data['siswa_ids'])
+                    ->update([
+                        'id_kelas' => $data['tujuan']
+                    ]);
+            }
+
+            // ==========================
+            // KHUSUS 2D -> 3A,3B,3C
+            // ==========================
+            if ($siswa2D->count() > 0) {
+
+                $kelas3A = Kelas::where('nama_kelas', '3A')->first();
+                $kelas3B = Kelas::where('nama_kelas', '3B')->first();
+                $kelas3C = Kelas::where('nama_kelas', '3C')->first();
+
+                $tujuan = [
+                    $kelas3A->id_kelas,
+                    $kelas3B->id_kelas,
+                    $kelas3C->id_kelas,
+                ];
+
+                $index = 0;
+
+                foreach ($siswa2D as $siswa) {
+
+                    Siswa::where('id_siswa', $siswa->id_siswa)
+                        ->update([
+                            'id_kelas' => $tujuan[$index]
+                        ]);
+
+                    $index++;
+
+                    if ($index >= count($tujuan)) {
+                        $index = 0;
+                    }
+                }
+            }
+
+            DB::commit();
+
+            return redirect()
+                ->route('data-siswa')
+                ->with('success', 'Kenaikan kelas berhasil diproses.');
+
+        } catch (\Exception $e) {
+
+            DB::rollback();
+
+            return redirect()
+                ->route('data-siswa')
+                ->with('error', $e->getMessage());
+        }
+    }
+
+    public function arsipSiswa(Request $request)
+    {
+        $query = ArsipSiswa::query();
+
+        if ($request->search) {
+            $query->where('nama_siswa', 'like', '%' . $request->search . '%')
+                ->orWhere('nis', 'like', '%' . $request->search . '%');
+        }
+
+        $arsip = $query->paginate(10);
+
+        return view('admin.arsip-siswa', compact('arsip'));
     }
 }

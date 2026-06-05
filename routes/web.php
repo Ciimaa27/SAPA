@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\RFIDController;
 use App\Http\Controllers\Admin\IoTController;
 use App\Http\Controllers\Admin\DataPenjemputanController;
 use App\Http\Controllers\Admin\LaporanController;
+use App\Http\Controllers\Admin\ArsipSiswaController;
 use App\Http\Controllers\Admin\JadwalPulangController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GuruController;
@@ -75,6 +76,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/edit-data-siswa/{id}', [DataSiswaController::class, 'edit'])->name('edit-siswa');
     Route::put('/update-data-siswa/{id}', [DataSiswaController::class, 'update'])->name('update-siswa');
     Route::get('/detail-siswa/{id}', [DataSiswaController::class, 'show'])->name('detail-siswa');
+    Route::post('/kenaikan-kelas', [DataSiswaController::class, 'kenaikanKelas'])->name('kenaikan-kelas');
 
     // DATA WALI
     Route::get('/data-wali', [DataWaliController::class, 'index'])->name('data-wali');
@@ -109,6 +111,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/iot/{tab?}', [RFIDController::class, 'index'])->name('iot.index');
     Route::delete('/iot/{tab}/{id}', [RFIDController::class, 'destroy'])->name('iot.destroy');
     Route::view('/admin/tambah-data-rfid', 'admin.tambah-data-rfid')->name('tambah-data-rfid');
+    Route::get('/admin/latest-rfid', [RFIDController::class, 'latestRFID']);
 
     // JADWAL & PENJEMPUTAN
     Route::get('/jadwal-pulang', [JadwalPulangController::class, 'index'])->name('jadwal-pulang');
@@ -119,6 +122,8 @@ Route::prefix('admin')->group(function () {
     // LAPORAN
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
 
+   // Arsip Siswa
+   Route::get('/arsip-siswa', [ArsipSiswaController::class, 'index'])->name('arsip-siswa');
 });
 
 

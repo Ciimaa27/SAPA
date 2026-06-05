@@ -36,6 +36,8 @@ class MQTTListen extends Command
                 ->first();
 
             if ($siswa) {
+
+                // ✅ simpan ke kehadiran (ABSEN)
                 DB::table('kehadiran')->insert([
                     'id_siswa' => $siswa->id_siswa,
                     'id_device' => 1,
@@ -45,9 +47,16 @@ class MQTTListen extends Command
                     'status_hadir' => 'hadir'
                 ]);
 
+                // 🔥 TAMBAHAN (INI YANG PENTING)
+                DB::table('log_tap')->insert([
+                    'uid_rfid' => $uid,
+                    'id_device' => 1,
+                    'keterangan' => 'scan rfid',
+                    'status' => 'berhasil',
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
                 echo "ABSEN: ".$siswa->nama_siswa."\n";
-            } else {
-                echo "UID tidak dikenal\n";
             }
 
         }, 0);

@@ -67,6 +67,14 @@
                     <i class="fa fa-plus"></i> Tambah
                 </a>
 
+                <button type="button"
+                        class="btn btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalKenaikan"
+                        style="border: 1px solid #dee2e6; background: transparent; color: #333;">
+                    <i class="fa fa-arrow-up"></i> Kenaikan Kelas
+                </button>
+
                 <form method="GET" action="{{ route('data-siswa') }}" style="flex: 1; max-width: 500px;">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text bg-white border">
@@ -211,6 +219,41 @@
 
         </div>
 
+    </div>
+</div>
+
+<div class="modal fade" id="modalKenaikan" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Proses Kenaikan Kelas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                Apakah Anda yakin ingin memproses kenaikan kelas seluruh siswa?
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                    Batal
+                </button>
+
+                <form action="{{ route('kenaikan-kelas') }}" method="POST">
+                    @csrf
+
+                    <button type="submit" class="btn btn-warning">
+                        Proses
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
     </div>
 </div>
 

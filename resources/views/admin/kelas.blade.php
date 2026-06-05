@@ -107,6 +107,10 @@
                 </table>
             </div>
 
+            <div class="p-3 d-flex justify-content-end">
+                {{ $kelas->links('pagination::bootstrap-5') }}
+            </div>
+
         </div>
 
     </div>

@@ -55,7 +55,7 @@ class KelolaAkunController extends Controller
     public function edit($id)
     {
         // 🔥 FIX: pakai id_user
-        $user = User::where('id_user', $id)->firstOrFail();
+        $user = User::where('id', $id)->firstOrFail();
 
         return view('admin.edit-kelola-akun', compact('user'));
     }
@@ -112,7 +112,7 @@ class KelolaAkunController extends Controller
     public function update(Request $request, $id)
     {
         // 🔥 FIX: pakai id_user
-        $user = User::where('id_user', $id)->firstOrFail();
+        $user = User::where('id', $id)->firstOrFail();
 
         $request->validate([
             'nama_lengkap' => 'required|string|max:100',
@@ -157,7 +157,7 @@ class KelolaAkunController extends Controller
     public function destroy($id)
     {
         // 🔥 FIX: pakai id_user
-        $user = User::where('id_user', $id)->firstOrFail();
+        $user = User::where('id', $id)->firstOrFail();
         $user->delete();
 
         return redirect()->route('kelola-akun.index')

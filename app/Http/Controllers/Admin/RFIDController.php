@@ -49,4 +49,14 @@ class RFIDController extends Controller
 
         return back()->with('success','Data berhasil dihapus');
     }
+
+    public function latestRFID()
+    {
+        $data = DB::table('log_tap')
+            ->whereNotNull('uid_rfid')
+            ->latest('created_at')
+            ->first();
+
+        return response()->json($data);
+    }
 }

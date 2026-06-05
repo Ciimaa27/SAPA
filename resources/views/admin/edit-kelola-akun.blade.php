@@ -33,7 +33,7 @@
                 Kembali
                 </a>
 
-            <form action="{{ route('kelola-akun.update', $user->id_user) }}" method="POST">
+            <form action="{{ route('kelola-akun.update', $user->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 

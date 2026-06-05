@@ -76,13 +76,6 @@
             </a>
         </li>
 
-        <li class="menu-item">
-            <a href="#">
-                <i class="fa-solid fa-graduation-cap"></i>
-                Kenaikan kelas
-            </a>
-        </li>
-
         <p class="menu-title">Monitoring IoT</p>
 
         <li class="menu-item {{ request()->routeIs('status-perangkat') ? 'active' : '' }}">
@@ -96,6 +89,13 @@
             <a href="{{ route('laporan') }}">
                 <i class="fa-solid fa-box-archive"></i>
                 Laporan
+            </a>
+        </li>
+
+        <li class="menu-item {{ request()->routeIs('arsip-siswa') ? 'active' : '' }}">
+            <a href="{{ route('arsip-siswa') }}">
+                <i class="fa-solid fa-box-archive"></i>
+                Arsip siswa
             </a>
         </li>
 
