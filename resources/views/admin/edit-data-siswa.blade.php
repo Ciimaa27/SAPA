@@ -28,9 +28,8 @@
         <div class="card-form">
 
             <!-- BUTTON KEMBALI -->
-            <a href="/admin/data-siswa" class="btn-kembali">
-                <i class="fas fa-arrow-left"></i>
-                Kembali
+            <a href="/admin/data-siswa" class="btn btn-kembali mb-3">
+                ← Kembali
             </a>
 
             <form action="{{ route('update-siswa', $siswa->id_siswa) }}" method="POST">

@@ -123,7 +123,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
 
    // Arsip Siswa
-   Route::get('/arsip-siswa', [ArsipSiswaController::class, 'index'])->name('arsip-siswa');
+   Route::get('/admin/arsip-siswa', [ArsipSiswaController::class, 'index'])->name('arsip-siswa');
+   Route::get('/admin/arsip-siswa/{tahun}', [ArsipSiswaController::class, 'showByYear'])->name('arsip-siswa.tahun');
 });
 
 
@@ -147,6 +148,7 @@ Route::get('/guru/riwayat-penjemputan', [GuruController::class, 'riwayatPenjempu
 */
 
 Route::get('/wali/dashboard', [App\Http\Controllers\wali\DashboardController::class, 'index'])->name('wali.dashboard');
+Route::get('/wali/kehadiran', [App\Http\Controllers\wali\DashboardController::class, 'kehadiran'])->name('wali.kehadiran');
 
 
 /*

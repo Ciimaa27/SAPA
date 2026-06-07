@@ -8,6 +8,9 @@ use App\Models\Siswa;
 use App\Models\Kelas;
 use Illuminate\Support\Facades\DB;
 use App\Models\ArsipSiswa;
+use App\Models\Wali;
+use App\Models\SiswaWali;
+use App\Models\User;
 class DataSiswaController extends Controller
 {
     // ========================
@@ -15,21 +18,21 @@ class DataSiswaController extends Controller
     // ========================
     public function index(Request $request)
     {
-        $query = Siswa::with('kelas');
+        $query = Siswa::with('kelas')
+            ->where('is_active', 1);
 
-        // SEARCH
         if ($request->search) {
             $query->where(function ($q) use ($request) {
                 $q->where('nis', 'like', '%' . $request->search . '%')
-                  ->orWhere('nama_siswa', 'like', '%' . $request->search . '%');
+                ->orWhere('nama_siswa', 'like', '%' . $request->search . '%');
             });
         }
 
         $siswa = $query->orderBy('id_siswa', 'asc')
-                       ->paginate(10)
-                       ->withQueryString();
+                    ->paginate(10)
+                    ->withQueryString();
 
-        $total = Siswa::count();
+        $total = Siswa::where('is_active', 1)->count();
 
         return view('admin.data-siswa', compact('siswa', 'total'));
     }
@@ -169,8 +172,48 @@ public function update(Request $request, $id)
                 ]);
             }
 
-// Hapus dari tabel siswa
-Siswa::whereIn('id_kelas', $kelas6)->delete();
+    foreach ($siswaLulus as $siswa) {
+
+        $relasi = SiswaWali::where('id_siswa', $siswa->id_siswa)->first();
+
+        if ($relasi) {
+
+            $masihAdaSiswaAktif = SiswaWali::join(
+                    'siswa',
+                    'siswa.id_siswa',
+                    '=',
+                    'siswa_wali.id_siswa'
+                )
+                ->where('siswa_wali.id_wali', $relasi->id_wali)
+                ->where('siswa.is_active', 1)
+                ->where('siswa.id_siswa', '!=', $siswa->id_siswa)
+                ->exists();
+
+            if (!$masihAdaSiswaAktif) {
+
+                Wali::where('id_wali', $relasi->id_wali)
+                    ->update([
+                        'is_active' => 0
+                    ]);
+
+                $userId = Wali::where('id_wali', $relasi->id_wali)
+                    ->value('id_user');
+
+                User::where('id', $userId)
+                    ->update([
+                        'status' => 'nonaktif'
+                    ]);
+            }
+        }
+    }
+
+    // Hapus siswa kelas 6
+    Siswa::whereIn('id_kelas', $kelas6)
+        ->update([
+            'status' => 'lulus',
+            'is_active' => 0
+        ]);
+
             // ==========================
             // SIMPAN SISWA 2D DULU
             // ==========================

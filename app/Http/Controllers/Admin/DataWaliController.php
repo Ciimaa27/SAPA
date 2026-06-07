@@ -21,10 +21,12 @@ class DataWaliController extends Controller
                 'users.username',
                 'users.email'
             )
+            ->where('wali.is_active', 1)
+            ->where('users.status', 'aktif')
             ->orderByDesc('wali.id_wali')
             ->paginate(10);
 
-        $total = DB::table('wali')->count();
+        $total = DB::table('wali')->where('is_active', 1)->count();
 
         return view('admin.data-wali', compact('wali', 'total'));
     }

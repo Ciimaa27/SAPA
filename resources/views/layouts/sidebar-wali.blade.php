@@ -11,7 +11,7 @@
                 Dashboard
             </a>
 
-            <a href="#">
+            <a href="{{ route('wali.kehadiran') }}" class="{{ request()->routeIs('wali.kehadiran') ? 'active' : '' }}">
                 <i class="fa-solid fa-calendar-check"></i>
                 Kehadiran anak
             </a>

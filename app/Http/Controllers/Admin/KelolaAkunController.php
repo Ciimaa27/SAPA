@@ -19,7 +19,16 @@ class KelolaAkunController extends Controller
     {
         $query = DB::table('users')
             ->leftJoin('role', 'users.id_role', '=', 'role.id_role')
-            ->select('users.*', 'role.nama_role');
+            ->leftJoin('wali', 'wali.id_user', '=', 'users.id')
+            ->select('users.*', 'role.nama_role')
+            ->where('users.status', 'aktif')
+            ->where(function ($q) {
+                $q->where('users.id_role', '!=', 4)
+                  ->orWhere(function ($q2) {
+                      $q2->where('users.id_role', 4)
+                         ->where('wali.is_active', 1);
+                  });
+            });
 
         // SEARCH
         if ($request->search) {
@@ -30,13 +39,12 @@ class KelolaAkunController extends Controller
             });
         }
 
-        // 🔥 FIX DI SINI (pakai id_user)
+        $total = $query->count();
+
         $users = $query
             ->orderBy('users.id', 'asc')
             ->paginate(10)
             ->withQueryString();
-
-        $total = DB::table('users')->count();
 
         return view('admin.kelola-akun', compact('users', 'total'));
     }
@@ -93,7 +101,7 @@ class KelolaAkunController extends Controller
         // 🔥 FIX: pakai id_user
         if ($id_role == 4) {
             Wali::create([
-                'id_user'        => $user->id_user,
+                'id_user'        => $user->id,
                 'nama_wali'      => $request->nama_lengkap,
                 'fingerprint_id' => null,
                 'no_wa'          => null,
@@ -116,8 +124,8 @@ class KelolaAkunController extends Controller
 
         $request->validate([
             'nama_lengkap' => 'required|string|max:100',
-            'username' => 'required|string|max:50|unique:users,username,' . $user->id_user . ',id_user',
-            'email'    => 'required|email|unique:users,email,' . $user->id_user . ',id_user',
+            'username' => 'required|string|max:50|unique:users,username,' . $user->id . ',id',
+            'email'    => 'required|email|unique:users,email,' . $user->id . ',id',
             'peran'    => ['required', Rule::in(['Admin', 'Guru', 'Kepala Sekolah', 'Orangtua/Wali'])],
         ]);
 
@@ -138,7 +146,7 @@ class KelolaAkunController extends Controller
 
         if ($id_role == 4 && !$user->wali) {
             Wali::create([
-                'id_user'        => $user->id_user,
+                'id_user'        => $user->id,
                 'nama_wali'      => $user->nama_lengkap,
                 'fingerprint_id' => null,
                 'no_wa'          => null,

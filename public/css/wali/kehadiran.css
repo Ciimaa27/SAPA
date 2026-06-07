@@ -1,0 +1,235 @@
+/* =======================
+   KEHADIRAN LAYOUT
+======================= */
+
+.main {
+    padding: 20px 30px;
+}
+
+/* =======================
+   SUMMARY CARD
+======================= */
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.summary-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border: 1px solid #f2efff;
+    min-height: 105px;
+}
+
+.summary-card h6 {
+    font-size: 12px;
+    font-weight: 600;
+    color: #5a48b4;
+    margin-bottom: 10px;
+}
+
+.summary-card p {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: #2a2a2a;
+}
+
+/* =======================
+   LAYOUT
+======================= */
+
+.calendar-layout {
+    display: grid;
+    grid-template-columns: 1.9fr 0.9fr;
+    gap: 18px;
+}
+
+.calendar-panel {
+    background: #fff;
+    border-radius: 14px;
+    padding: 22px;
+    border: 1px solid #f2efff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* =======================
+   CALENDAR HEADER
+======================= */
+
+.calendar-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-title h5 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* =======================
+   WEEK DAYS
+======================= */
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: #777;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* =======================
+   CALENDAR GRID
+======================= */
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+
+.calendar-cell {
+    min-height: 88px;
+    border-radius: 14px;
+    background: #f8f8fb;
+    padding: 10px;
+    color: #4b4b4b;
+    position: relative;
+    transition: 0.2s;
+}
+
+.calendar-cell:hover {
+    transform: translateY(-2px);
+    cursor: pointer;
+}
+
+.calendar-cell--muted {
+    opacity: 0.35;
+}
+
+.calendar-day {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* =======================
+   DOT STATUS
+======================= */
+
+.calendar-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+/* =======================
+   STATUS COLORS
+======================= */
+
+/* HADIR */
+.calendar-cell.status-hadir {
+    background: #d3f5e8 !important;
+    border: 1px solid #8fd4b7 !important;
+}
+
+.calendar-cell.status-hadir .calendar-dot {
+    background: #1fa46a;
+    box-shadow: 0 0 0 4px rgba(31,164,106,0.15);
+}
+
+/* SAKIT */
+.calendar-cell.status-sakit {
+    background: #fff4d8 !important;
+    border: 1px solid #f0bc5d !important;
+}
+
+.calendar-cell.status-sakit .calendar-dot {
+    background: #f0a500;
+    box-shadow: 0 0 0 4px rgba(240,165,0,0.15);
+}
+
+/* IZIN */
+.calendar-cell.status-izin {
+    background: #e6f1ff !important;
+    border: 1px solid #92b7ff !important;
+}
+
+.calendar-cell.status-izin .calendar-dot {
+    background: #2f7df6;
+    box-shadow: 0 0 0 4px rgba(47,125,246,0.15);
+}
+
+/* ALPA */
+.calendar-cell.status-alpa {
+    background: #ffe4e4 !important;
+    border: 1px solid #ff9e9e !important;
+}
+
+.calendar-cell.status-alpa .calendar-dot {
+    background: #e03b3b;
+    box-shadow: 0 0 0 4px rgba(224,59,59,0.15);
+}
+
+/* =======================
+   STATUS SUMMARY
+======================= */
+
+.status-summary {
+    display: grid;
+    gap: 14px;
+}
+
+.status-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f8fb;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid #f0efff;
+    font-size: 14px;
+}
+
+.status-item strong {
+    color: #3b3b3b;
+}
+
+/* =======================
+   LEGEND
+======================= */
+
+.legend {
+    display: grid;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.legend-item {
+    display: grid;
+    grid-template-columns: 12px auto;
+    gap: 10px;
+    align-items: center;
+    font-size: 13px;
+    color: #5d5d5d;
+}
+
+.legend-marker {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
