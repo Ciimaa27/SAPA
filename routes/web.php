@@ -14,7 +14,7 @@ use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\ArsipSiswaController;
 use App\Http\Controllers\Admin\JadwalPulangController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\GuruController;
+use App\Http\Controllers\Guru\GuruController;
 use App\Http\Controllers\KepsekController;
 
 /*

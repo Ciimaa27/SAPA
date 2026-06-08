@@ -1,0 +1,89 @@
+.main{
+    padding:20px 30px;
+}
+
+/* CARD TITLE */
+
+.page-title{
+    background:#fff;
+    padding:15px 20px;
+    border-radius:10px;
+    border:1px solid #e8e8e8;
+    font-size:18px;
+    font-weight:600;
+    margin-bottom:12px;
+}
+
+/* ALERT */
+
+.status-alert{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:12px 16px;
+    border-radius:6px;
+
+    margin-bottom:20px;
+    font-size:14px;
+}
+
+.status-alert span{
+    font-weight:bold;
+}
+
+.status-alert.success{
+    background:#bde8d8;
+    border:1px solid #33a58a;
+    color:#187c63;
+}
+
+/* TIMELINE */
+
+.timeline{
+    position:relative;
+    margin-top:20px;
+}
+
+.timeline::before{
+    content:"";
+    position:absolute;
+    left:6px;
+    top:10px;
+    bottom:10px;
+    width:2px;
+    background:#d9d9d9;
+}
+
+.timeline-item{
+    position:relative;
+    display:flex;
+    align-items:flex-start;
+    gap:15px;
+    margin-bottom:22px;
+}
+
+.timeline-dot{
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:#cfd3d8;
+    z-index:1;
+}
+
+.timeline-item.active .timeline-dot{
+    background:#4b4b4b;
+}
+
+.timeline-content{
+    color:#999;
+    font-size:14px;
+}
+
+.timeline-item.active .timeline-content{
+    color:#333;
+}
+
+.timeline-content strong{
+    margin-right:5px;
+}
