@@ -93,7 +93,7 @@
                                 <th>ID Fingerprint</th>
                             @endif
 
-                            <th width="120">Aksi</th>
+                            <th class="col-aksi">Aksi</th>
                         </tr>
                     </thead>
 

@@ -125,6 +125,7 @@ Route::prefix('admin')->group(function () {
    // Arsip Siswa
    Route::get('/admin/arsip-siswa', [ArsipSiswaController::class, 'index'])->name('arsip-siswa');
    Route::get('/admin/arsip-siswa/{tahun}', [ArsipSiswaController::class, 'showByYear'])->name('arsip-siswa.tahun');
+    Route::get('/admin/arsip-siswa/{tahun}/export', [ArsipSiswaController::class, 'exportByYear'])->name('arsip-siswa.export');
 });
 
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ArsipSiswa;
+use App\Exports\ArsipSiswaExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ArsipSiswaController extends Controller
 {
@@ -26,5 +28,10 @@ class ArsipSiswaController extends Controller
             ->paginate(10);
 
         return view('admin.arsip-siswa-detail', compact('arsip', 'tahun'));
+    }
+
+    public function exportByYear($tahun)
+    {
+        return Excel::download(new ArsipSiswaExport($tahun), "arsip-siswa-{$tahun}.xlsx");
     }
 }

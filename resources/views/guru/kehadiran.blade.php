@@ -47,7 +47,7 @@
                             <th>Kelas</th>
                             <th>Wali kelas</th>
                             <th>Jumlah siswa</th>
-                            <th>Aksi</th>
+                            <th class="col-aksi">Aksi</th>
                         </tr>
                     </thead>
 

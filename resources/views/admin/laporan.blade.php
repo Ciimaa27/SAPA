@@ -47,12 +47,12 @@
                 <div class="table-responsive">
                     <table class="table align-middle">
                         <thead>
-                            <tr>
+                                <tr>
                                 <th>Judul</th>
                                 <th>Kelas</th>
                                 <th>Tanggal</th>
                                 <th>Jenis laporan</th>
-                                <th>Aksi</th>
+                                <th class="col-aksi">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -87,7 +87,7 @@
                                 <th>Kelas</th>
                                 <th>Tanggal</th>
                                 <th>Jenis laporan</th>
-                                <th>Aksi</th>
+                                <th class="col-aksi">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>

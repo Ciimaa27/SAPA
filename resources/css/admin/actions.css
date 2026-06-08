@@ -1,0 +1,67 @@
+.col-aksi {
+    width: 150px;
+    max-width: 150px;
+    text-align: center;
+}
+
+/* Small spacing between action buttons */
+.table td .btn {
+    margin-right: 6px;
+}
+.table td .btn:last-child {
+    margin-right: 0;
+}
+
+/* Ensure table headers stay visible (used on several pages) */
+.table thead th {
+    position: sticky;
+    top: 0;
+    background: #f8f9fa;
+    z-index: 2;
+}
+
+.table-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Action button visual style (view / edit / delete) */
+.col-aksi .btn {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    color: #fff !important;
+    border: none !important;
+    box-shadow: none;
+    font-size: 16px;
+}
+
+.col-aksi .btn i {
+    font-size: 18px;
+    line-height: 1;
+}
+
+/* Ensure small buttons keep fixed size */
+.col-aksi .btn.btn-sm {
+    width: 44px;
+    height: 44px;
+}
+
+/* Color variants to match screenshot */
+.col-aksi .btn.btn-info { background: #16c6df; }
+.col-aksi .btn.btn-warning { background: #ffc107; color: #fff; }
+.col-aksi .btn.btn-danger  { background: #e03137; }
+.col-aksi .btn.btn-success { background: #28a745; }
+
+/* Spacing between buttons */
+.col-aksi .btn + .btn { margin-left: 8px; }
+
+/* Hover / focus */
+.col-aksi .btn:hover, .col-aksi .btn:focus {
+    filter: brightness(0.95);
+    transform: translateY(-1px);
+}

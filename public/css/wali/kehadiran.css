@@ -1,9 +1,23 @@
 /* =======================
-   KEHADIRAN LAYOUT
+   MAIN
 ======================= */
 
 .main {
     padding: 20px 30px;
+}
+
+/* =======================
+   TITLE
+======================= */
+
+.title {
+    background: #fff;
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 600;
+    border: 1px solid #ececec;
 }
 
 /* =======================
@@ -12,82 +26,112 @@
 
 .summary-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
     margin-bottom: 20px;
 }
 
 .summary-card {
     background: #fff;
-    border-radius: 14px;
-    padding: 18px 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    border: 1px solid #f2efff;
-    min-height: 105px;
+    border-radius: 12px;
+    padding: 18px;
+    border: 1px solid #ececec;
 }
 
 .summary-card h6 {
-    font-size: 12px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: #666;
     font-weight: 600;
-    color: #5a48b4;
-    margin-bottom: 10px;
 }
 
 .summary-card p {
     margin: 0;
-    font-size: 22px;
-    font-weight: 700;
-    color: #2a2a2a;
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
 }
 
 /* =======================
    LAYOUT
 ======================= */
 
-.calendar-layout {
+.attendance-wrapper {
     display: grid;
-    grid-template-columns: 1.9fr 0.9fr;
-    gap: 18px;
+    grid-template-columns: 120px 1fr 120px;
+    gap: 12px;
+    align-items: start;
 }
 
-.calendar-panel {
+.legend-box,
+.calendar-panel,
+.report-box {
     background: #fff;
-    border-radius: 14px;
-    padding: 22px;
-    border: 1px solid #f2efff;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border-radius: 12px;
+    border: 1px solid #ececec;
+    padding: 14px;
 }
 
 /* =======================
-   CALENDAR HEADER
+   LEFT & RIGHT PANEL
+======================= */
+
+.legend-box h6,
+.report-box h6 {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.legend-item,
+.report-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-size: 13px;
+}
+
+.report-item span:last-child {
+    font-weight: 600;
+    color: #6f42c1;
+}
+
+/* =======================
+   CALENDAR TITLE
 ======================= */
 
 .calendar-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 }
 
 .calendar-title h5 {
     margin: 0;
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 /* =======================
-   WEEK DAYS
+   WEEK HEADER
 ======================= */
 
 .calendar-weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
-    margin-bottom: 10px;
-    font-size: 12px;
-    color: #777;
+    background: #e9e9e9;
+}
+
+.calendar-weekdays div {
     text-align: center;
-    font-weight: 600;
+    padding: 8px;
+    font-size: 12px;
+    color: #666;
+    border-right: 1px solid #dcdcdc;
+}
+
+.calendar-weekdays div:last-child {
+    border-right: none;
 }
 
 /* =======================
@@ -97,139 +141,109 @@
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
 }
 
 .calendar-cell {
-    min-height: 88px;
-    border-radius: 14px;
-    background: #f8f8fb;
-    padding: 10px;
-    color: #4b4b4b;
+    min-height: 62px;
+    border-right: 1px solid #dcdcdc;
+    border-bottom: 1px solid #dcdcdc;
+    background: #fff;
+    padding: 8px;
     position: relative;
-    transition: 0.2s;
-}
-
-.calendar-cell:hover {
-    transform: translateY(-2px);
-    cursor: pointer;
-}
-
-.calendar-cell--muted {
-    opacity: 0.35;
 }
 
 .calendar-day {
+    text-align: right;
     font-size: 13px;
-    font-weight: 700;
+    color: #444;
 }
 
-/* =======================
-   DOT STATUS
-======================= */
-
-.calendar-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
+.calendar-cell--muted {
+    opacity: .45;
 }
 
 /* =======================
    STATUS COLORS
 ======================= */
 
-/* HADIR */
-.calendar-cell.status-hadir {
-    background: #d3f5e8 !important;
-    border: 1px solid #8fd4b7 !important;
+.status-hadir {
+    background: #bde8d8 !important;
 }
 
-.calendar-cell.status-hadir .calendar-dot {
-    background: #1fa46a;
-    box-shadow: 0 0 0 4px rgba(31,164,106,0.15);
+.status-sakit {
+    background: #f3e4be !important;
 }
 
-/* SAKIT */
-.calendar-cell.status-sakit {
-    background: #fff4d8 !important;
-    border: 1px solid #f0bc5d !important;
+.status-izin {
+    background: #d7c8f0 !important;
 }
 
-.calendar-cell.status-sakit .calendar-dot {
-    background: #f0a500;
-    box-shadow: 0 0 0 4px rgba(240,165,0,0.15);
-}
-
-/* IZIN */
-.calendar-cell.status-izin {
-    background: #e6f1ff !important;
-    border: 1px solid #92b7ff !important;
-}
-
-.calendar-cell.status-izin .calendar-dot {
-    background: #2f7df6;
-    box-shadow: 0 0 0 4px rgba(47,125,246,0.15);
-}
-
-/* ALPA */
-.calendar-cell.status-alpa {
-    background: #ffe4e4 !important;
-    border: 1px solid #ff9e9e !important;
-}
-
-.calendar-cell.status-alpa .calendar-dot {
-    background: #e03b3b;
-    box-shadow: 0 0 0 4px rgba(224,59,59,0.15);
+.status-alpa {
+    background: #f4c2c2 !important;
 }
 
 /* =======================
-   STATUS SUMMARY
+   LEGEND COLORS
 ======================= */
-
-.status-summary {
-    display: grid;
-    gap: 14px;
-}
-
-.status-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #f8f8fb;
-    padding: 14px 16px;
-    border-radius: 12px;
-    border: 1px solid #f0efff;
-    font-size: 14px;
-}
-
-.status-item strong {
-    color: #3b3b3b;
-}
-
-/* =======================
-   LEGEND
-======================= */
-
-.legend {
-    display: grid;
-    gap: 10px;
-    margin-top: 18px;
-}
-
-.legend-item {
-    display: grid;
-    grid-template-columns: 12px auto;
-    gap: 10px;
-    align-items: center;
-    font-size: 13px;
-    color: #5d5d5d;
-}
 
 .legend-marker {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.legend-marker.hadir {
+    background: #bde8d8;
+}
+
+.legend-marker.sakit {
+    background: #f3e4be;
+}
+
+.legend-marker.izin {
+    background: #d7c8f0;
+}
+
+.legend-marker.alpa {
+    background: #f4c2c2;
+}
+
+/* =======================
+   RESPONSIVE
+======================= */
+
+@media (max-width: 992px) {
+
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .attendance-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .legend-box,
+    .report-box {
+        order: 2;
+    }
+
+    .calendar-panel {
+        order: 1;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .calendar-cell {
+        min-height: 50px;
+    }
+
+    .calendar-day {
+        font-size: 12px;
+    }
 }

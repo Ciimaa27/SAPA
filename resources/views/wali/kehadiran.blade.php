@@ -38,94 +38,104 @@
         </div>
     </div>
 
-    <div class="calendar-layout">
+    <div class="attendance-wrapper">
 
-        <!-- CALENDAR -->
-        <div class="calendar-panel">
+    <!-- KETERANGAN -->
+    <div class="legend-box">
 
-            <div class="calendar-title">
-                <h5>Kehadiran Bulan {{ $today->translatedFormat('F Y') }}</h5>
-            </div>
+        <h6>Keterangan</h6>
 
-            <div class="calendar-weekdays">
-                <div>Sen</div>
-                <div>Sel</div>
-                <div>Rab</div>
-                <div>Kam</div>
-                <div>Jum</div>
-                <div>Sab</div>
-                <div>Min</div>
-            </div>
-
-            <div class="calendar-grid">
-                @foreach($calendarDays as $day)
-
-                    @php
-                        $statusClass = $day['status'] ? 'status-' . $day['status'] : '';
-                    @endphp
-
-                    <div class="calendar-cell {{ $day['currentMonth'] ? '' : 'calendar-cell--muted' }} {{ $statusClass }}">
-                        
-                        <div class="calendar-day">
-                            {{ $day['date']->format('j') }}
-                        </div>
-
-                        @if($day['status'])
-                            <div class="calendar-dot"></div>
-                        @endif
-
-                    </div>
-                @endforeach
-            </div>
-
+        <div class="legend-item">
+            <span class="legend-marker hadir"></span>
+            Hadir
         </div>
 
-        <!-- SIDEBAR -->
-        <div class="calendar-panel">
+        <div class="legend-item">
+            <span class="legend-marker sakit"></span>
+            Sakit
+        </div>
 
-            <div class="status-summary">
-                <div class="status-item">
-                    <span>Hadir</span>
-                    <strong>{{ $stats['hadir'] }}</strong>
+        <div class="legend-item">
+            <span class="legend-marker izin"></span>
+            Izin
+        </div>
+
+        <div class="legend-item">
+            <span class="legend-marker alpa"></span>
+            Alpa
+        </div>
+
+    </div>
+
+    <!-- KALENDER -->
+    <div class="calendar-panel">
+
+        <div class="calendar-title">
+            <h5>{{ $today->translatedFormat('F Y') }}</h5>
+        </div>
+
+        <div class="calendar-weekdays">
+            <div>Senin</div>
+            <div>Selasa</div>
+            <div>Rabu</div>
+            <div>Kamis</div>
+            <div>Jumat</div>
+            <div>Sabtu</div>
+            <div>Minggu</div>
+        </div>
+
+        <div class="calendar-grid">
+
+            @foreach($calendarDays as $day)
+
+                @php
+                    $statusClass = $day['status']
+                        ? 'status-' . $day['status']
+                        : '';
+                @endphp
+
+                <div class="calendar-cell {{ $statusClass }}">
+
+                    <div class="calendar-day">
+                        {{ $day['date']->format('j') }}
+                    </div>
+
                 </div>
 
-                <div class="status-item">
-                    <span>Sakit</span>
-                    <strong>{{ $stats['sakit'] }}</strong>
-                </div>
-
-                <div class="status-item">
-                    <span>Izin</span>
-                    <strong>{{ $stats['izin'] }}</strong>
-                </div>
-
-                <div class="status-item">
-                    <span>Alpa</span>
-                    <strong>{{ $stats['alpa'] }}</strong>
-                </div>
-            </div>
-
-            <div class="legend">
-                <div class="legend-item">
-                    <span class="legend-marker" style="background:#8fd4b7"></span>Hadir
-                </div>
-
-                <div class="legend-item">
-                    <span class="legend-marker" style="background:#f0bc5d"></span>Sakit
-                </div>
-
-                <div class="legend-item">
-                    <span class="legend-marker" style="background:#92b7ff"></span>Izin
-                </div>
-
-                <div class="legend-item">
-                    <span class="legend-marker" style="background:#ff9e9e"></span>Alpa
-                </div>
-            </div>
+            @endforeach
 
         </div>
 
     </div>
+
+    <!-- LAPORAN -->
+    <div class="report-box">
+
+        <h6>Laporan</h6>
+
+        <div class="report-item">
+            <span class="legend-marker hadir"></span>
+            <span>{{ $stats['hadir'] }}</span>
+        </div>
+
+        <div class="report-item">
+            <span class="legend-marker sakit"></span>
+            <span>{{ $stats['sakit'] }}</span>
+        </div>
+
+        <div class="report-item">
+            <span class="legend-marker izin"></span>
+            <span>{{ $stats['izin'] }}</span>
+        </div>
+
+        <div class="report-item">
+            <span class="legend-marker alpa"></span>
+            <span>{{ $stats['alpa'] }}</span>
+        </div>
+
+    </div>
+
+</div>
 
 </div>
 @endsection

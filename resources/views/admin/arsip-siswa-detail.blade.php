@@ -25,7 +25,13 @@
                 <a href="{{ route('arsip-siswa') }}" class="btn btn-kembali mb-3">
                     ← Kembali
                 </a>
-            </div>
+
+                 <a href="{{ route('arsip-siswa.export', $tahun) }}"
+                    class="btn btn-success">
+                        <i class="fa fa-file-excel"></i>
+                        Export Excel
+                    </a>
+                </div>
 
             <div class="table-responsive">
 

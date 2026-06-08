@@ -33,13 +33,33 @@
 
                 <!-- FILTER -->
                 <div style="width:180px;">
-                    <select class="form-select form-select-sm">
-                        <option>Tampilan</option>
-                        <option>Semua</option>
-                        <option>Admin</option>
-                        <option>Orangtua / Wali</option>
-                        <option>Kepala Sekolah</option>
-                    </select>
+                    <form method="GET" action="{{ route('kelola-akun.index') }}">
+                        <select name="role"
+                                class="form-select form-select-sm"
+                                onchange="this.form.submit()">
+
+                            <option value="Admin"
+                                {{ request('role') == 'Admin' ? 'selected' : '' }}>
+                                Admin
+                            </option>
+
+                            <option value="Guru"
+                                {{ request('role') == 'Guru' ? 'selected' : '' }}>
+                                Guru
+                            </option>
+
+                            <option value="Kepala Sekolah"
+                                {{ request('role') == 'Kepala Sekolah' ? 'selected' : '' }}>
+                                Kepala Sekolah
+                            </option>
+
+                            <option value="Orang Tua/Wali"
+                                {{ request('role') == 'Orang Tua/Wali' ? 'selected' : '' }}>
+                                Wali
+                            </option>
+
+                        </select>
+                    </form>
                 </div>
 
                 <!-- TAMBAH -->
@@ -51,9 +71,13 @@
 
                 <!-- SEARCH -->
                 <form method="GET"
-                      action="{{ route('kelola-akun.index') }}"
-                      class="ms-auto"
-                      style="max-width:400px; width:100%;">
+                    action="{{ route('kelola-akun.index') }}"
+                    class="ms-auto"
+                    style="max-width:400px; width:100%;">
+
+                    <input type="hidden"
+                        name="role"
+                        value="{{ request('role') }}">
 
                     <div class="input-group input-group-sm">
                         <span class="input-group-text bg-white border">
@@ -61,11 +85,10 @@
                         </span>
 
                         <input type="text"
-                               id="searchInput"
-                               name="search"
-                               value="{{ request('search') }}"
-                               class="form-control"
-                               placeholder="Pencarian">
+                            name="search"
+                            value="{{ request('search') }}"
+                            class="form-control"
+                            placeholder="Pencarian">
                     </div>
                 </form>
 
@@ -84,7 +107,7 @@
                             <th>Nama lengkap</th>
                             <th>Peran</th>
                             <th>Email</th>
-                            <th width="120">Aksi</th>
+                            <th class="col-aksi">Aksi</th>
                         </tr>
                     </thead>
 
@@ -255,20 +278,6 @@ document.addEventListener("DOMContentLoaded", () => {
         confirmModal.classList.remove('show');
     });
 
-    // SEARCH
-    const input = document.getElementById("searchInput");
-
-    if (input) {
-        input.addEventListener("keyup", () => {
-            const keyword = input.value.toLowerCase();
-            const rows = document.querySelectorAll("#dataTable tbody tr");
-
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                row.style.display = text.includes(keyword) ? "" : "none";
-            });
-        });
-    }
 
 });
 </script>

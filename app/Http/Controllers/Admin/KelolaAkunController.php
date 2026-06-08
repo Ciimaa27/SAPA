@@ -39,6 +39,11 @@ class KelolaAkunController extends Controller
             });
         }
 
+        // FILTER ROLE
+        if ($request->filled('role')) {
+            $query->where('role.nama_role', $request->role);
+        }
+
         $total = $query->count();
 
         $users = $query

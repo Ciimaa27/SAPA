@@ -64,7 +64,7 @@
                             <th>No</th>
                             <th>Nama Wali</th>
                             <th>ID Fingerprint</th>
-                            <th width="120">Aksi</th>
+                            <th class="col-aksi">Aksi</th>
                         </tr>
                     </thead>
 
