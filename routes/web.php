@@ -139,6 +139,7 @@ Route::get('/guru/dashboard', [GuruController::class, 'dashboard'])->name('guru.
 Route::get('/guru/kehadiran', [GuruController::class, 'kehadiran'])->name('guru.kehadiran');
 Route::get('/guru/detail-kehadiran/{id_kelas}', [GuruController::class, 'detailKehadiran'])->name('guru.detail-kehadiran');
 Route::get('/guru/data-penjemputan', [GuruController::class, 'dataPenjemputan'])->name('guru.data-penjemputan');
+Route::get('/guru/penjemputan', [GuruController::class, 'penjemputan'])->name('guru.penjemputan');
 Route::get('/guru/riwayat-penjemputan', [GuruController::class, 'riwayatPenjemputan'])->name('guru.riwayat');
 
 
