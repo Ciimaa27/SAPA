@@ -116,6 +116,11 @@ class GuruController extends Controller
         ]);
     }
 
+    public function penjemputan()
+{
+    return view('guru.penjemputan');
+}
+
     public function riwayatPenjemputan()
     {
         $logs = Penjemputan::with('siswa', 'siswa.kelas')
