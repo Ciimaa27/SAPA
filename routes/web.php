@@ -150,7 +150,7 @@ Route::get('/guru/riwayat-penjemputan', [GuruController::class, 'riwayatPenjempu
 
 Route::get('/wali/dashboard', [App\Http\Controllers\wali\DashboardController::class, 'index'])->name('wali.dashboard');
 Route::get('/wali/kehadiran', [App\Http\Controllers\wali\DashboardController::class, 'kehadiran'])->name('wali.kehadiran');
-
+Route::get('/wali/status-penjemputan', [App\Http\Controllers\wali\DashboardController::class, 'statusPenjemputan'])->name('wali.status-penjemputan');
 
 /*
 |--------------------------------------------------------------------------
