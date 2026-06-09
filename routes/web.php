@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\JadwalPulangController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\KepsekController;
+use App\Models\Wali;
 
 /*
 |--------------------------------------------------------------------------
@@ -121,6 +122,10 @@ Route::prefix('admin')->group(function () {
 
     // LAPORAN
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
+    Route::get('/laporan/kehadiran/{id_siswa}', [LaporanController::class, 'downloadKehadiran'])->name('laporan.kehadiran.download');
+    Route::get('/laporan/penjemputan/{id}', [LaporanController::class, 'downloadPenjemputan'])->name('laporan.penjemputan.download');
+    Route::get('/laporan/kehadiran/export/{id_kelas}',[LaporanController::class, 'exportKehadiran'])->name('laporan.kehadiran.export');
+    Route::get('/laporan/penjemputan/export/{id_kelas}',[LaporanController::class, 'exportPenjemputan'])->name('laporan.penjemputan.export');
 
    // Arsip Siswa
    Route::get('/arsip-siswa', [ArsipSiswaController::class, 'index'])->name('arsip-siswa');
@@ -147,7 +152,6 @@ Route::get('/guru/riwayat-penjemputan', [GuruController::class, 'riwayatPenjempu
 */
 
 Route::get('/wali/dashboard', [App\Http\Controllers\wali\DashboardController::class, 'index'])->name('wali.dashboard');
-
 
 /*
 |--------------------------------------------------------------------------

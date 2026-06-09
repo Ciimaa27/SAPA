@@ -11,10 +11,11 @@
                 Dashboard
             </a>
 
-            <a href="#">
-                <i class="fa-solid fa-calendar-check"></i>
-                Kehadiran anak
-            </a>
+            <a href="{{ route('wali.kehadiran') }}"
+                class="{{ request()->routeIs('wali.kehadiran') ? 'active' : '' }}">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    Kehadiran anak
+                </a>
 
             <a href="#">
                 <i class="fa-solid fa-truck"></i>

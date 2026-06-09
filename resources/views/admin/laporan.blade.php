@@ -19,114 +19,84 @@
 <div class="main-dashboard">
     <div class="container-dashboard">
 
+        {{-- Header --}}
         <div class="card mb-3 p-3">
             <h5 class="mb-0">Laporan</h5>
         </div>
 
-        <!-- TAB -->
-        <div class="mb-3">
-            <button class="btn-tab active" onclick="showTab('kehadiran')">Kehadiran</button>
-            <button class="btn-tab" onclick="showTab('penjemputan')">Penjemputan</button>
-        </div>
-
-        <!-- FILTER -->
+        {{-- Filter Bulan --}}
         <div class="card p-3 mb-3">
-            <div class="d-flex gap-2">
-                <input type="date" class="form-control w-auto">
-                <select class="form-select w-auto">
-                    <option>Semua</option>
-                    <option>1-A</option>
-                    <option>1-B</option>
-                </select>
-            </div>
+            <form method="GET" class="d-flex gap-2 align-items-center">
+                <input
+                    type="month"
+                    name="bulan"
+                    class="form-control w-auto"
+                    value="{{ request('bulan', now()->format('Y-m')) }}">
+
+                <button type="submit" class="btn btn-primary">
+                    Terapkan
+                </button>
+            </form>
         </div>
 
-        <!-- ================= KEHADIRAN ================= -->
-        <div id="kehadiran" class="tab-content">
-            <div class="card">
-                <div class="table-responsive">
-                    <table class="table align-middle">
-                        <thead>
-                            <tr>
-                                <th>Judul</th>
-                                <th>Kelas</th>
-                                <th>Tanggal</th>
-                                <th>Jenis laporan</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Kehadiran12022026.pdf</td>
-                                <td>1-A</td>
-                                <td>12-02-2026</td>
-                                <td>Kehadiran</td>
-                                <td><button class="btn-unduh">Unduh</button></td>
-                            </tr>
-                            <tr>
-                                <td>Kehadiran13022026.pdf</td>
-                                <td>1-B</td>
-                                <td>13-02-2026</td>
-                                <td>Kehadiran</td>
-                                <td><button class="btn-unduh">Unduh</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        {{-- Tabel Laporan --}}
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Kelas</th>
+                            <th>Bulan</th>
+                            <th>Kehadiran</th>
+                            <th>Penjemputan</th>
+                        </tr>
+                    </thead>
 
-        <!-- ================= PENJEMPUTAN ================= -->
-        <div id="penjemputan" class="tab-content" style="display:none;">
-            <div class="card">
-                <div class="table-responsive">
-                    <table class="table align-middle">
-                        <thead>
-                            <tr>
-                                <th>Judul</th>
-                                <th>Kelas</th>
-                                <th>Tanggal</th>
-                                <th>Jenis laporan</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Penjemputan12022026.pdf</td>
-                                <td>1-A</td>
-                                <td>12-02-2026</td>
-                                <td>Penjemputan</td>
-                                <td><button class="btn-unduh">Unduh</button></td>
-                            </tr>
-                            <tr>
-                                <td>Penjemputan13022026.pdf</td>
-                                <td>1-B</td>
-                                <td>13-02-2026</td>
-                                <td>Penjemputan</td>
-                                <td><button class="btn-unduh">Unduh</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <tbody>
+                        @forelse($kelas as $kls)
+                        <tr>
+                            <td>{{ $kls->nama_kelas }}</td>
+
+                            <td>
+                                {{ \Carbon\Carbon::parse(
+                                    request('bulan', now()->format('Y-m'))
+                                )->translatedFormat('F Y') }}
+                            </td>
+
+                            <td>
+                                <a href="{{ route('laporan.kehadiran.export', [
+                                    'id_kelas' => $kls->id_kelas,
+                                    'bulan' => request('bulan', now()->format('Y-m'))
+                                ]) }}"
+                                class="btn-unduh">
+                                    Export Excel
+                                </a>
+                            </td>
+
+                            <td>
+                                <a href="{{ route('laporan.penjemputan.export', [
+                                    'id_kelas' => $kls->id_kelas,
+                                    'bulan' => request('bulan', now()->format('Y-m'))
+                                ]) }}"
+                                class="btn-unduh">
+                                    Export Excel
+                                </a>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="4" class="text-center">
+                                Tidak ada data kelas.
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+
+                </table>
             </div>
         </div>
 
     </div>
 </div>
-
-<!-- SCRIPT TAB -->
-<script>
-function showTab(tab){
-    document.getElementById('kehadiran').style.display = 'none';
-    document.getElementById('penjemputan').style.display = 'none';
-
-    document.getElementById(tab).style.display = 'block';
-
-    let buttons = document.querySelectorAll('.btn-tab');
-    buttons.forEach(btn => btn.classList.remove('active'));
-
-    event.target.classList.add('active');
-}
-</script>
 
 @endsection

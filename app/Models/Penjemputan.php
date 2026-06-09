@@ -8,21 +8,16 @@ class Penjemputan extends Model
 {
     protected $table = 'penjemputan';
 
-    protected $primaryKey = 'id_penjemputan';
+    protected $primaryKey = 'id';
 
     public $timestamps = false;
 
     protected $fillable = [
         'id_siswa',
+        'id_wali',
         'tanggal',
         'status',
         'jam_jemput',
-        'keterangan'
+        'keterangan',
     ];
-
-    // relasi ke siswa (opsional tapi bagus)
-    public function siswa()
-    {
-        return $this->belongsTo(Siswa::class, 'id_siswa');
-    }
 }
