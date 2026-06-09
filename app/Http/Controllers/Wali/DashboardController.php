@@ -62,4 +62,58 @@ class DashboardController extends Controller
 
         return view('wali.dashboard', compact('siswa', 'kehadiran', 'penjemputan', 'jadwal_pulang'));
     }
+
+    public function kehadiran()
+    {
+        $wali = Wali::where('id_user', auth()->id())->first();
+
+        if (!$wali) {
+            return redirect()->route('wali.dashboard')->with('error', 'Data wali tidak ditemukan.');
+        }
+
+        $relasi = Relasi::where('id_wali', $wali->id_wali)->first();
+
+        if (!$relasi) {
+            return redirect()->route('wali.dashboard')->with('error', 'Data anak tidak ditemukan.');
+        }
+
+        $siswa = Siswa::with('kelas')->find($relasi->id_siswa);
+
+        if (!$siswa) {
+            return redirect()->route('wali.dashboard')->with('error', 'Data anak tidak ditemukan.');
+        }
+
+        $today = Carbon::today();
+        $startOfMonth = $today->copy()->startOfMonth();
+        $endOfMonth = $today->copy()->endOfMonth();
+
+        $records = Kehadiran::where('id_siswa', $siswa->id_siswa)
+            ->whereBetween('tanggal', [$startOfMonth->toDateString(), $endOfMonth->toDateString()])
+            ->get()
+            ->keyBy('tanggal');
+
+        $calendarStart = $startOfMonth->copy()->startOfWeek(Carbon::MONDAY);
+        $calendarEnd = $endOfMonth->copy()->endOfWeek(Carbon::SUNDAY);
+
+        $calendarDays = [];
+        for ($date = $calendarStart->copy(); $date->lte($calendarEnd); $date->addDay()) {
+            $record = $records->get($date->toDateString());
+            $status = $record ? strtolower(trim($record->status_hadir)) : null;
+            $calendarDays[] = [
+                'date' => $date->copy(),
+                'currentMonth' => $date->month === $today->month,
+                'status' => $status,
+            ];
+        }
+
+        // Normalize counts by lowercasing stored values to match CSS classes
+        $stats = [
+            'hadir' => $records->filter(function ($r) { return strtolower(trim($r->status_hadir)) === 'hadir'; })->count(),
+            'sakit' => $records->filter(function ($r) { return strtolower(trim($r->status_hadir)) === 'sakit'; })->count(),
+            'izin' => $records->filter(function ($r) { return strtolower(trim($r->status_hadir)) === 'izin'; })->count(),
+            'alpa' => $records->filter(function ($r) { return strtolower(trim($r->status_hadir)) === 'alpa'; })->count(),
+        ];
+
+        return view('wali.kehadiran', compact('siswa', 'today', 'calendarDays', 'stats'));
+    }
 }

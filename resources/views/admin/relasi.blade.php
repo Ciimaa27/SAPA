@@ -77,7 +77,7 @@
                             <th>Nama orangtua/wali</th>
                             <th>No. HP</th>
                             <th>Status</th>
-                            <th width="120">Aksi</th>
+                            <th class="col-aksi">Aksi</th>
                         </tr>
                     </thead>
 

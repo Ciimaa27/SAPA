@@ -5,24 +5,33 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ArsipSiswa;
+use App\Exports\ArsipSiswaExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ArsipSiswaController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $query = ArsipSiswa::query();
+        $tahunArsip = ArsipSiswa::select('tahun_lulus')
+            ->selectRaw('COUNT(*) as total')
+            ->groupBy('tahun_lulus')
+            ->orderBy('tahun_lulus', 'desc')
+            ->get();
 
-        if ($request->search) {
-            $query->where('nis', 'like', '%' . $request->search . '%')
-                  ->orWhere('nama_siswa', 'like', '%' . $request->search . '%');
-        }
+        return view('admin.arsip-siswa', compact('tahunArsip'));
+    }
 
-       $arsip = $query->orderBy('id_arsip', 'desc')
-               ->paginate(10)
-               ->withQueryString();
+    public function showByYear($tahun)
+    {
+        $arsip = ArsipSiswa::where('tahun_lulus', $tahun)
+            ->orderBy('id_arsip', 'desc')
+            ->paginate(10);
 
-        $total = ArsipSiswa::count();
+        return view('admin.arsip-siswa-detail', compact('arsip', 'tahun'));
+    }
 
-        return view('admin.arsip-siswa', compact('arsip', 'total'));
+    public function exportByYear($tahun)
+    {
+        return Excel::download(new ArsipSiswaExport($tahun), "arsip-siswa-{$tahun}.xlsx");
     }
 }

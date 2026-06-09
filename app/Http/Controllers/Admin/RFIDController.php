@@ -15,12 +15,14 @@ class RFIDController extends Controller
 
             $data = DB::table('siswa')
                 ->select('id_siswa','nama_siswa','rfid_uid')
+                ->where('is_active', 1)
                 ->paginate(10);
 
         } elseif ($tab === 'sidik-jari') {
 
             $data = DB::table('wali')
                 ->select('id_wali','nama_wali','fingerprint_id')
+                ->where('is_active', 1)
                 ->paginate(10);
 
         } else {

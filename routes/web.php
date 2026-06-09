@@ -14,7 +14,7 @@ use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\ArsipSiswaController;
 use App\Http\Controllers\Admin\JadwalPulangController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\GuruController;
+use App\Http\Controllers\Guru\GuruController;
 use App\Http\Controllers\KepsekController;
 use App\Models\Wali;
 
@@ -128,7 +128,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/laporan/penjemputan/export/{id_kelas}',[LaporanController::class, 'exportPenjemputan'])->name('laporan.penjemputan.export');
 
    // Arsip Siswa
-   Route::get('/arsip-siswa', [ArsipSiswaController::class, 'index'])->name('arsip-siswa');
+   Route::get('/admin/arsip-siswa', [ArsipSiswaController::class, 'index'])->name('arsip-siswa');
+   Route::get('/admin/arsip-siswa/{tahun}', [ArsipSiswaController::class, 'showByYear'])->name('arsip-siswa.tahun');
+    Route::get('/admin/arsip-siswa/{tahun}/export', [ArsipSiswaController::class, 'exportByYear'])->name('arsip-siswa.export');
 });
 
 
@@ -142,6 +144,7 @@ Route::get('/guru/dashboard', [GuruController::class, 'dashboard'])->name('guru.
 Route::get('/guru/kehadiran', [GuruController::class, 'kehadiran'])->name('guru.kehadiran');
 Route::get('/guru/detail-kehadiran/{id_kelas}', [GuruController::class, 'detailKehadiran'])->name('guru.detail-kehadiran');
 Route::get('/guru/data-penjemputan', [GuruController::class, 'dataPenjemputan'])->name('guru.data-penjemputan');
+Route::get('/guru/penjemputan', [GuruController::class, 'penjemputan'])->name('guru.penjemputan');
 Route::get('/guru/riwayat-penjemputan', [GuruController::class, 'riwayatPenjemputan'])->name('guru.riwayat');
 
 
@@ -152,6 +155,11 @@ Route::get('/guru/riwayat-penjemputan', [GuruController::class, 'riwayatPenjempu
 */
 
 Route::get('/wali/dashboard', [App\Http\Controllers\wali\DashboardController::class, 'index'])->name('wali.dashboard');
+<<<<<<< HEAD
+=======
+Route::get('/wali/kehadiran', [App\Http\Controllers\wali\DashboardController::class, 'kehadiran'])->name('wali.kehadiran');
+Route::get('/wali/status-penjemputan', [App\Http\Controllers\wali\DashboardController::class, 'statusPenjemputan'])->name('wali.status-penjemputan');
+>>>>>>> origin/main
 
 /*
 |--------------------------------------------------------------------------

@@ -1,0 +1,249 @@
+/* =======================
+   MAIN
+======================= */
+
+.main {
+    padding: 20px 30px;
+}
+
+/* =======================
+   TITLE
+======================= */
+
+.title {
+    background: #fff;
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 600;
+    border: 1px solid #ececec;
+}
+
+/* =======================
+   SUMMARY CARD
+======================= */
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.summary-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px;
+    border: 1px solid #ececec;
+}
+
+.summary-card h6 {
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: #666;
+    font-weight: 600;
+}
+
+.summary-card p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+}
+
+/* =======================
+   LAYOUT
+======================= */
+
+.attendance-wrapper {
+    display: grid;
+    grid-template-columns: 120px 1fr 120px;
+    gap: 12px;
+    align-items: start;
+}
+
+.legend-box,
+.calendar-panel,
+.report-box {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #ececec;
+    padding: 14px;
+}
+
+/* =======================
+   LEFT & RIGHT PANEL
+======================= */
+
+.legend-box h6,
+.report-box h6 {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.legend-item,
+.report-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-size: 13px;
+}
+
+.report-item span:last-child {
+    font-weight: 600;
+    color: #6f42c1;
+}
+
+/* =======================
+   CALENDAR TITLE
+======================= */
+
+.calendar-title {
+    margin-bottom: 12px;
+}
+
+.calendar-title h5 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* =======================
+   WEEK HEADER
+======================= */
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: #e9e9e9;
+}
+
+.calendar-weekdays div {
+    text-align: center;
+    padding: 8px;
+    font-size: 12px;
+    color: #666;
+    border-right: 1px solid #dcdcdc;
+}
+
+.calendar-weekdays div:last-child {
+    border-right: none;
+}
+
+/* =======================
+   CALENDAR GRID
+======================= */
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-cell {
+    min-height: 62px;
+    border-right: 1px solid #dcdcdc;
+    border-bottom: 1px solid #dcdcdc;
+    background: #fff;
+    padding: 8px;
+    position: relative;
+}
+
+.calendar-day {
+    text-align: right;
+    font-size: 13px;
+    color: #444;
+}
+
+.calendar-cell--muted {
+    opacity: .45;
+}
+
+/* =======================
+   STATUS COLORS
+======================= */
+
+.status-hadir {
+    background: #bde8d8 !important;
+}
+
+.status-sakit {
+    background: #f3e4be !important;
+}
+
+.status-izin {
+    background: #d7c8f0 !important;
+}
+
+.status-alpa {
+    background: #f4c2c2 !important;
+}
+
+/* =======================
+   LEGEND COLORS
+======================= */
+
+.legend-marker {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.legend-marker.hadir {
+    background: #bde8d8;
+}
+
+.legend-marker.sakit {
+    background: #f3e4be;
+}
+
+.legend-marker.izin {
+    background: #d7c8f0;
+}
+
+.legend-marker.alpa {
+    background: #f4c2c2;
+}
+
+/* =======================
+   RESPONSIVE
+======================= */
+
+@media (max-width: 992px) {
+
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .attendance-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .legend-box,
+    .report-box {
+        order: 2;
+    }
+
+    .calendar-panel {
+        order: 1;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .calendar-cell {
+        min-height: 50px;
+    }
+
+    .calendar-day {
+        font-size: 12px;
+    }
+}

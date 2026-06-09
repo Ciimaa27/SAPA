@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','RFID & Sidik Jari')
+@section('title','Sidik Jari')
 
 {{-- SIDEBAR --}}
 @section('sidebar')
@@ -22,42 +22,21 @@
 
         <!-- TITLE -->
         <div class="card mb-3 p-3">
-            <h5 class="mb-0">RFID dan Sidik jari</h5>
+            <h5 class="mb-0">Sidik Jari</h5>
         </div>
 
-        <!-- TAB -->
+        <!-- SEARCH -->
         <div class="card mb-3 p-3">
             <div class="d-flex align-items-center gap-3">
-
-                <a href="{{ route('iot.index',['tab'=>'rfid']) }}"
-                   class="btn btn-tab {{ ($tab ?? 'rfid')=='rfid' ? 'active' : '' }}">
-                   RFID
-                </a>
-
-                <a href="{{ route('iot.index',['tab'=>'sidik-jari']) }}"
-                   class="btn btn-tab {{ ($tab ?? '')=='sidik-jari' ? 'active' : '' }}">
-                   Sidik jari
-                </a>
-
                 <div class="input-group input-group-sm search-flex">
                     <span class="input-group-text bg-white">
                         <i class="fa fa-search"></i>
                     </span>
                     <input type="text" id="searchInput" class="form-control" placeholder="Pencarian">
                 </div>
-
             </div>
         </div>
 
-        <!-- 🔥 RFID REALTIME -->
-        @if($tab == 'rfid')
-        <div class="card p-3 mb-3 text-center">
-            <h5>Scan RFID Terakhir</h5>
-            <h3 id="rfidUID" style="font-weight:bold; color:#6f42c1;">
-                Menunggu scan...
-            </h3>
-        </div>
-        @else
         <!-- 🔥 FINGERPRINT REALTIME -->
         <div class="card p-3 mb-3 text-center">
             <h5>Scan Sidik Jari Terakhir</h5>
@@ -65,14 +44,13 @@
                 Menunggu scan...
             </h3>
         </div>
-        @endif
 
         <!-- TABLE -->
         <div class="card">
 
             <!-- BUTTON TAMBAH -->
             <div class="d-flex justify-content-end p-3">
-                <a href="{{ route('tambah-data-rfid') }}" class="btn-tambah-rfid">
+                <a href="{{ route('tambah-data-sidik-jari') }}" class="btn-tambah-rfid">
                     Tambah
                     <span class="icon-plus">+</span>
                 </a>
@@ -84,15 +62,8 @@
                     <thead class="table-light">
                         <tr>
                             <th>No</th>
-
-                            @if($tab == 'rfid')
-                                <th>Nama Siswa</th>
-                                <th>UID</th>
-                            @else
-                                <th>Nama Wali</th>
-                                <th>ID Fingerprint</th>
-                            @endif
-
+                            <th>Nama Wali</th>
+                            <th>ID Fingerprint</th>
                             <th class="col-aksi">Aksi</th>
                         </tr>
                     </thead>
@@ -101,27 +72,14 @@
                         @forelse($data as $item)
                         <tr>
                             <td>{{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}</td>
-
-                            @if($tab == 'rfid')
-                                <td>{{ $item->nama_siswa }}</td>
-                                <td>{{ $item->rfid_uid ?? '-' }}</td>
-                                <td>
-                                    <form action="{{ route('iot.destroy',['tab'=>'rfid','id'=>$item->id_siswa]) }}" method="POST">
-                                        @csrf @method('DELETE')
-                                        <button class="btn btn-danger btn-sm">Hapus</button>
-                                    </form>
-                                </td>
-                            @else
-                                <td>{{ $item->nama_wali }}</td>
-                                <td>{{ $item->fingerprint_id ?? '-' }}</td>
-                                <td>
-                                    <form action="{{ route('iot.destroy',['tab'=>'sidik-jari','id'=>$item->id_wali]) }}" method="POST">
-                                        @csrf @method('DELETE')
-                                        <button class="btn btn-danger btn-sm">Hapus</button>
-                                    </form>
-                                </td>
-                            @endif
-
+                            <td>{{ $item->nama_wali }}</td>
+                            <td>{{ $item->fingerprint_id ?? '-' }}</td>
+                            <td>
+                                <form action="{{ route('iot.destroy',['tab'=>'sidik-jari','id'=>$item->id_wali]) }}" method="POST">
+                                    @csrf @method('DELETE')
+                                    <button class="btn btn-danger btn-sm">Hapus</button>
+                                </form>
+                            </td>
                         </tr>
                         @empty
                         <tr>
@@ -154,18 +112,8 @@ document.getElementById("searchInput").addEventListener("keyup", function() {
 });
 </script>
 
-{{-- 🔥 RFID & FINGERPRINT REALTIME --}}
+{{-- 🔥 FINGERPRINT REALTIME --}}
 <script>
-function loadRFID(){
-    fetch('/admin/latest-rfid')
-    .then(res => res.json())
-    .then(data => {
-        if(data && data.uid_rfid){
-            document.getElementById('rfidUID').innerText = data.uid_rfid;
-        }
-    });
-}
-
 function loadFingerprint(){
     fetch('/admin/latest-fingerprint')
     .then(res => res.json())
@@ -176,13 +124,8 @@ function loadFingerprint(){
     });
 }
 
-@if($tab == 'rfid')
-    setInterval(loadRFID, 2000);
-    loadRFID();
-@else
-    setInterval(loadFingerprint, 2000);
-    loadFingerprint();
-@endif
+setInterval(loadFingerprint, 2000);
+loadFingerprint();
 </script>
 
 @endsection

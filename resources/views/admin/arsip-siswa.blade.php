@@ -19,82 +19,45 @@
             <h5 class="mb-0">Arsip Siswa Lulus</h5>
         </div>
 
-        <div class="card mb-3 p-3">
-            <div class="d-flex align-items-center gap-3">
-
-                <div>
-                    Total Arsip :
-                    <strong>{{ $total }}</strong>
-                </div>
-
-                <form method="GET"
-                      action="{{ route('arsip-siswa') }}"
-                      style="flex:1; max-width:400px;">
-
-                    <div class="input-group input-group-sm">
-
-                        <span class="input-group-text">
-                            <i class="fa fa-search"></i>
-                        </span>
-
-                        <input type="text"
-                               name="search"
-                               class="form-control"
-                               value="{{ request('search') }}"
-                               placeholder="Cari siswa...">
-
-                    </div>
-                </form>
-
-            </div>
-        </div>
-
         <div class="card">
 
-            <div class="table-responsive">
+            <div class="table-responsive p-3">
 
-                <table class="table table-hover mb-0">
+                <div class="row">
 
-                    <thead class="table-light">
-                        <tr>
-                            <th>NIS</th>
-                            <th>Nama</th>
-                            <th>Kelas Terakhir</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Tahun Lulus</th>
-                        </tr>
-                    </thead>
+                    @forelse($tahunArsip as $tahun)
 
-                    <tbody>
+                        <div class="col-md-4 mb-3">
+                            <a href="{{ route('arsip-siswa.tahun', $tahun->tahun_lulus) }}"
+                            class="text-decoration-none">
 
-                        @forelse($arsip as $item)
+                                <div class="card shadow-sm">
+                                    <div class="card-body">
 
-                        <tr>
-                            <td>{{ $item->nis }}</td>
-                            <td>{{ $item->nama_siswa }}</td>
-                            <td>{{ $item->kelas_terakhir }}</td>
-                            <td>{{ $item->jenis_kelamin }}</td>
-                            <td>{{ $item->tahun_lulus }}</td>
-                        </tr>
+                                        <h5>
+                                            📁 Tahun {{ $tahun->tahun_lulus }}
+                                        </h5>
 
-                        @empty
+                                        <small>
+                                            {{ $tahun->total }} siswa
+                                        </small>
 
-                        <tr>
-                            <td colspan="5" class="text-center">
-                                Belum ada data arsip.
-                            </td>
-                        </tr>
+                                    </div>
+                                </div>
 
-                        @endforelse
+                            </a>
+                        </div>
 
-                    </tbody>
+                    @empty
 
-                </table>
+                        <div class="text-center">
+                            Belum ada arsip.
+                        </div>
 
-            </div>
+                    @endforelse
 
-            <div class="p-3">
-                {{ $arsip->links() }}
+                </div>
+
             </div>
 
         </div>

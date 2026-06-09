@@ -42,7 +42,7 @@
                             <th>Kelas</th>
                             <th>Wali kelas</th>
                             <th>Jumlah siswa</th>
-                            <th>Aksi</th>
+                            <th class="col-aksi">Aksi</th>
                         </tr>
                     </thead>
 
@@ -55,9 +55,10 @@
                             <td>{{ $row['wali'] }}</td>
                             <td>{{ $row['jumlah'] }}</td>
                             <td>
-                                <button class="btn-lihat">
+                                <a href="{{ route('guru.penjemputan') }}"
+                                class="btn-lihat">
                                     Lihat status
-                                </button>
+                                </a>
                             </td>
                         </tr>
                         @empty

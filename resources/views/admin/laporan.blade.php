@@ -39,6 +39,7 @@
             </form>
         </div>
 
+<<<<<<< HEAD
         {{-- Tabel Laporan --}}
         <div class="card">
             <div class="table-responsive">
@@ -93,6 +94,75 @@
                     </tbody>
 
                 </table>
+=======
+        <!-- ================= KEHADIRAN ================= -->
+        <div id="kehadiran" class="tab-content">
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                                <tr>
+                                <th>Judul</th>
+                                <th>Kelas</th>
+                                <th>Tanggal</th>
+                                <th>Jenis laporan</th>
+                                <th class="col-aksi">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Kehadiran12022026.pdf</td>
+                                <td>1-A</td>
+                                <td>12-02-2026</td>
+                                <td>Kehadiran</td>
+                                <td><button class="btn-unduh">Unduh</button></td>
+                            </tr>
+                            <tr>
+                                <td>Kehadiran13022026.pdf</td>
+                                <td>1-B</td>
+                                <td>13-02-2026</td>
+                                <td>Kehadiran</td>
+                                <td><button class="btn-unduh">Unduh</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PENJEMPUTAN ================= -->
+        <div id="penjemputan" class="tab-content" style="display:none;">
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>Judul</th>
+                                <th>Kelas</th>
+                                <th>Tanggal</th>
+                                <th>Jenis laporan</th>
+                                <th class="col-aksi">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Penjemputan12022026.pdf</td>
+                                <td>1-A</td>
+                                <td>12-02-2026</td>
+                                <td>Penjemputan</td>
+                                <td><button class="btn-unduh">Unduh</button></td>
+                            </tr>
+                            <tr>
+                                <td>Penjemputan13022026.pdf</td>
+                                <td>1-B</td>
+                                <td>13-02-2026</td>
+                                <td>Penjemputan</td>
+                                <td><button class="btn-unduh">Unduh</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+>>>>>>> origin/main
             </div>
         </div>
 

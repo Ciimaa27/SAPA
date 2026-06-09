@@ -86,7 +86,7 @@
                             <th>Nama guru</th>
                             <th>No. HP</th>
                             <th>Tempat/Tanggal lahir</th>
-                            <th width="150">Aksi</th>
+                            <th class="col-aksi">Aksi</th>
                         </tr>
                     </thead>
 

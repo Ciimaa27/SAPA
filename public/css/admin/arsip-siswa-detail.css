@@ -1,0 +1,83 @@
+.page-title-box {
+    background: #fff;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-size: 18px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.card-form {
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.btn-kembali {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 15px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #6f42c1;
+    text-decoration: none;
+    background: #f3f0ff;
+    padding: 8px 14px;
+    border: 1px solid rgba(111, 66, 193, 0.15);
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(111, 66, 193, 0.08);
+    transition: all 0.2s ease;
+}
+
+.btn-kembali:hover {
+    background: #e5dbff;
+    transform: translateY(-1px);
+}
+
+.table td,
+.table th {
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.table th {
+    font-weight: 600;
+}
+
+.pagination {
+    margin: 0;
+    gap: 6px;
+}
+
+.pagination .page-item .page-link {
+    border-radius: 6px !important;
+    padding: 6px 12px;
+    font-size: 13px;
+    border: none;
+    background: #f1f3f5;
+    color: #6c757d;
+}
+
+.pagination .page-item .page-link:hover {
+    background: #e2e6ea;
+}
+
+.pagination .page-item.active .page-link {
+    background: #6f42c1;
+    color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+    background: #e9ecef;
+    color: #adb5bd;
+}
+
+.pagination .page-link svg {
+    width: 14px;
+    height: 14px;
+}

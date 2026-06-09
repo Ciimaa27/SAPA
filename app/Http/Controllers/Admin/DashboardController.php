@@ -17,8 +17,13 @@ class DashboardController extends Controller
         // ======================
         // DATA AKUN
         // ======================
-        $totalSiswa = Siswa::count();
-        $totalWali = User::where('id_role', 4)->count();
+        $totalSiswa = Siswa::where('is_active', 1)->count();
+        $totalWali = User::where('id_role', 4)
+            ->where('status', 'aktif')
+            ->whereHas('wali', function ($query) {
+                $query->where('is_active', 1);
+            })
+            ->count();
         $totalKepsek = User::where('id_role', 3)->count();
         $totalGuru = User::where('id_role', 2)->count();
 

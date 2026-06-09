@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Guru;
 
+use App\Http\Controllers\Controller;
 use App\Models\Siswa;
 use App\Models\User;
 use App\Models\Kehadiran;
@@ -11,6 +12,7 @@ use App\Models\Guru;
 use App\Models\LogTap;
 use App\Models\Wali;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class GuruController extends Controller
 {
@@ -116,6 +118,11 @@ class GuruController extends Controller
         ]);
     }
 
+    public function penjemputan()
+{
+    return view('guru.penjemputan');
+}
+
     public function riwayatPenjemputan()
     {
         $logs = Penjemputan::with('siswa', 'siswa.kelas')
@@ -136,5 +143,35 @@ class GuruController extends Controller
         return view('guru.riwayat-penjemputan', [
             'logs' => $logs,
         ]);
+    }
+
+    public function daftarPenjemputan($id_kelas)
+    {
+        $kelas = Kelas::with('guru')->findOrFail($id_kelas);
+
+        $today = Carbon::today();
+
+        $siswas = Siswa::where('id_kelas', $id_kelas)
+            ->orderBy('nama_siswa')
+            ->get()
+            ->map(function ($siswa) use ($today) {
+
+                $sudahDijemput = Penjemputan::where('id_siswa', $siswa->id_siswa)
+                    ->whereDate('tanggal', $today)
+                    ->exists();
+
+                return (object)[
+                    'id_siswa' => $siswa->id_siswa,
+                    'nis' => $siswa->nis,
+                    'nama_siswa' => $siswa->nama_siswa,
+                    'status' => $sudahDijemput ? 'Dijemput' : 'Menunggu',
+                ];
+            });
+
+        return view('guru.penjemputan', compact(
+            'kelas',
+            'siswas',
+            'today'
+        ));
     }
 }
