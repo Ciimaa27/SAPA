@@ -55,13 +55,24 @@
                     Kelas
                 </a>
 
-                <!-- SEARCH -->
-                <div class="input-group input-group-sm search-flex">
-                    <span class="input-group-text bg-white">
-                        <i class="fa fa-search"></i>
-                    </span>
-                    <input type="text" id="searchInputGuru" class="form-control" placeholder="Pencarian">
-                </div>
+                <!-- FILTER KELAS + SEARCH -->
+                <form id="filterGuruForm" action="{{ route('guru') }}" method="GET" class="d-flex align-items-center gap-2">
+                    <select name="kelas" id="filterKelas" class="form-select form-select-sm" style="width:180px">
+                        <option value="">Semua Kelas</option>
+                        @foreach($kelasOptions ?? [] as $k)
+                            <option value="{{ $k->id_kelas }}" {{ (isset($kelasId) && $kelasId == $k->id_kelas) ? 'selected' : '' }}>
+                                {{ $k->nama_kelas }}
+                            </option>
+                        @endforeach
+                    </select>
+
+                    <div class="input-group input-group-sm search-flex" style="width: 280px;">
+                        <span class="input-group-text bg-white">
+                            <i class="fa fa-search"></i>
+                        </span>
+                        <input type="text" id="searchInputGuru" class="form-control" placeholder="Pencarian">
+                    </div>
+                </form>
 
             </div>
         </div>
@@ -168,6 +179,14 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     let input = document.getElementById("searchInputGuru");
+    let filterKelas = document.getElementById('filterKelas');
+    let filterForm = document.getElementById('filterGuruForm');
+
+    if (filterKelas) {
+        filterKelas.addEventListener('change', function(){
+            filterForm.submit();
+        });
+    }
 
     input.addEventListener("keyup", function() {
         let keyword = this.value.toLowerCase();

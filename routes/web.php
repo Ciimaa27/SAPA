@@ -17,6 +17,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Guru\GuruController;
 use App\Http\Controllers\KepsekController;
 use App\Models\Wali;
+use Illuminate\Support\Facades\Http;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +48,15 @@ Route::get('/lupasandi', function () {
     return view('lupasandi');
 })->name('lupasandi');
 
+Route::get('/cek-fonnte', function () {
+
+    $token = env('FONNTE_TOKEN');
+
+    return response()->json([
+        'token' => $token,
+        'length' => strlen($token),
+    ]);
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +64,7 @@ Route::get('/lupasandi', function () {
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/data-absen', [DashboardController::class, 'dataAbsen']);
@@ -103,9 +114,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/relasi/create', [RelasiController::class, 'create'])->name('relasi.tambah');
     Route::post('/relasi', [RelasiController::class, 'store'])->name('relasi.store');
     Route::delete('/relasi/{id_siswa}/{id_wali}', [RelasiController::class, 'destroy'])->name('relasi.destroy');
-    Route::get('/edit-relasi', function () {
-        return view('admin.edit-relasi');
-    })->name('edit-relasi');
+    Route::get('/relasi/{id_siswa}/{id_wali}/edit', [RelasiController::class, 'edit'])->name('relasi.edit');
+    Route::put('/relasi/{id_siswa}/{id_wali}', [RelasiController::class, 'update'])->name('relasi.update');
 
     // IOT
     Route::get('/status-perangkat', [IoTController::class, 'statusPerangkat'])->name('status-perangkat');
@@ -155,11 +165,8 @@ Route::get('/guru/riwayat-penjemputan', [GuruController::class, 'riwayatPenjempu
 */
 
 Route::get('/wali/dashboard', [App\Http\Controllers\wali\DashboardController::class, 'index'])->name('wali.dashboard');
-<<<<<<< HEAD
-=======
 Route::get('/wali/kehadiran', [App\Http\Controllers\wali\DashboardController::class, 'kehadiran'])->name('wali.kehadiran');
 Route::get('/wali/status-penjemputan', [App\Http\Controllers\wali\DashboardController::class, 'statusPenjemputan'])->name('wali.status-penjemputan');
->>>>>>> origin/main
 
 /*
 |--------------------------------------------------------------------------
@@ -182,5 +189,4 @@ Route::prefix('kepsek')->group(function () {
     Route::get('/guru/data-penjemputan', [GuruController::class, 'dataPenjemputan'])->name('kepsek.guru.data-penjemputan');
 
     Route::get('/guru/riwayat-penjemputan', [GuruController::class, 'riwayatPenjemputan'])->name('guru.riwayat');
-
 });

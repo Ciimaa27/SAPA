@@ -2,36 +2,40 @@
 
 @section('title','Laporan')
 
-{{-- 🔥 SIDEBAR --}}
 @section('sidebar')
     @include('layouts.sidebar-admin')
 @endsection
 
-{{-- 🔥 CSS --}}
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
 <link rel="stylesheet" href="{{ asset('css/admin/laporan.css') }}">
 @endpush
 
-{{-- 🔥 CONTENT --}}
 @section('content')
 
 <div class="main-dashboard">
     <div class="container-dashboard">
 
-        {{-- Header --}}
         <div class="card mb-3 p-3">
             <h5 class="mb-0">Laporan</h5>
         </div>
 
-        {{-- Filter Bulan --}}
         <div class="card p-3 mb-3">
             <form method="GET" class="d-flex gap-2 align-items-center">
+                <select name="kelas" class="form-select w-auto">
+                    <option value="">Semua Kelas</option>
+                    @foreach($kelasOptions as $option)
+                        <option value="{{ $option->id_kelas }}" {{ isset($kelasFilter) && $kelasFilter == $option->id_kelas ? 'selected' : '' }}>
+                            {{ $option->nama_kelas }}
+                        </option>
+                    @endforeach
+                </select>
+
                 <input
                     type="month"
                     name="bulan"
                     class="form-control w-auto"
-                    value="{{ request('bulan', now()->format('Y-m')) }}">
+                    value="{{ $bulan }}">
 
                 <button type="submit" class="btn btn-primary">
                     Terapkan
@@ -39,8 +43,6 @@
             </form>
         </div>
 
-<<<<<<< HEAD
-        {{-- Tabel Laporan --}}
         <div class="card">
             <div class="table-responsive">
                 <table class="table align-middle mb-0">
@@ -48,8 +50,10 @@
                         <tr>
                             <th>Kelas</th>
                             <th>Bulan</th>
-                            <th>Kehadiran</th>
-                            <th>Penjemputan</th>
+                            <th>Total Kehadiran</th>
+                            <th>Total Penjemputan</th>
+                            <th>Aksi Kehadiran</th>
+                            <th>Aksi Penjemputan</th>
                         </tr>
                     </thead>
 
@@ -59,15 +63,21 @@
                             <td>{{ $kls->nama_kelas }}</td>
 
                             <td>
-                                {{ \Carbon\Carbon::parse(
-                                    request('bulan', now()->format('Y-m'))
-                                )->translatedFormat('F Y') }}
+                                {{ \Carbon\Carbon::parse($bulan)->translatedFormat('F Y') }}
+                            </td>
+
+                            <td>
+                                {{ $kehadiranCounts->get($kls->id_kelas, 0) }}
+                            </td>
+
+                            <td>
+                                {{ $penjemputanCounts->get($kls->id_kelas, 0) }}
                             </td>
 
                             <td>
                                 <a href="{{ route('laporan.kehadiran.export', [
                                     'id_kelas' => $kls->id_kelas,
-                                    'bulan' => request('bulan', now()->format('Y-m'))
+                                    'bulan' => $bulan
                                 ]) }}"
                                 class="btn-unduh">
                                     Export Excel
@@ -77,7 +87,7 @@
                             <td>
                                 <a href="{{ route('laporan.penjemputan.export', [
                                     'id_kelas' => $kls->id_kelas,
-                                    'bulan' => request('bulan', now()->format('Y-m'))
+                                    'bulan' => $bulan
                                 ]) }}"
                                 class="btn-unduh">
                                     Export Excel
@@ -86,7 +96,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="text-center">
+                            <td colspan="6" class="text-center">
                                 Tidak ada data kelas.
                             </td>
                         </tr>
@@ -94,75 +104,6 @@
                     </tbody>
 
                 </table>
-=======
-        <!-- ================= KEHADIRAN ================= -->
-        <div id="kehadiran" class="tab-content">
-            <div class="card">
-                <div class="table-responsive">
-                    <table class="table align-middle">
-                        <thead>
-                                <tr>
-                                <th>Judul</th>
-                                <th>Kelas</th>
-                                <th>Tanggal</th>
-                                <th>Jenis laporan</th>
-                                <th class="col-aksi">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Kehadiran12022026.pdf</td>
-                                <td>1-A</td>
-                                <td>12-02-2026</td>
-                                <td>Kehadiran</td>
-                                <td><button class="btn-unduh">Unduh</button></td>
-                            </tr>
-                            <tr>
-                                <td>Kehadiran13022026.pdf</td>
-                                <td>1-B</td>
-                                <td>13-02-2026</td>
-                                <td>Kehadiran</td>
-                                <td><button class="btn-unduh">Unduh</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= PENJEMPUTAN ================= -->
-        <div id="penjemputan" class="tab-content" style="display:none;">
-            <div class="card">
-                <div class="table-responsive">
-                    <table class="table align-middle">
-                        <thead>
-                            <tr>
-                                <th>Judul</th>
-                                <th>Kelas</th>
-                                <th>Tanggal</th>
-                                <th>Jenis laporan</th>
-                                <th class="col-aksi">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Penjemputan12022026.pdf</td>
-                                <td>1-A</td>
-                                <td>12-02-2026</td>
-                                <td>Penjemputan</td>
-                                <td><button class="btn-unduh">Unduh</button></td>
-                            </tr>
-                            <tr>
-                                <td>Penjemputan13022026.pdf</td>
-                                <td>1-B</td>
-                                <td>13-02-2026</td>
-                                <td>Penjemputan</td>
-                                <td><button class="btn-unduh">Unduh</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
->>>>>>> origin/main
             </div>
         </div>
 

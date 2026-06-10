@@ -33,41 +33,66 @@
                 Kembali
             </a>
 
-            <form action="#" method="POST">
+            <form action="{{ route('relasi.update', ['id_siswa' => $relasi->id_siswa, 'id_wali' => $relasi->id_wali]) }}" method="POST">
                 @csrf
+                @method('PUT')
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                 <!-- NAMA SISWA -->
                 <div class="form-group">
                     <label>Nama siswa</label>
-                    <input type="text" name="siswa" placeholder="Ketik nama siswa">
+                    <select name="id_siswa" class="form-select">
+                        <option value="">-- Pilih siswa --</option>
+                        @foreach($siswa as $item)
+                            <option value="{{ $item->id_siswa }}" {{ $item->id_siswa == old('id_siswa', $relasi->id_siswa) ? 'selected' : '' }}>
+                                {{ $item->nama_siswa }}
+                            </option>
+                        @endforeach
+                    </select>
                     <small class="form-text">
-                        *Ketik dan pilih nama siswa yang akan dihubungkan dengan wali
+                        *Pilih siswa yang akan dihubungkan dengan wali
                     </small>
                 </div>
 
                 <!-- NAMA WALI -->
                 <div class="form-group">
                     <label>Nama wali siswa</label>
-                    <input type="text" name="wali" placeholder="Ketik nama wali">
+                    <select name="id_wali" class="form-select">
+                        <option value="">-- Pilih wali --</option>
+                        @foreach($wali as $item)
+                            <option value="{{ $item->id_wali }}" {{ $item->id_wali == old('id_wali', $relasi->id_wali) ? 'selected' : '' }}>
+                                {{ $item->nama_wali }}
+                            </option>
+                        @endforeach
+                    </select>
                     <small class="form-text">
-                        *Ketik dan pilih nama wali siswa, dan pastikan benar dalam menghubungkan relasi
+                        *Pilih wali siswa, dan pastikan relasi sudah benar
                     </small>
                 </div>
 
                 <!-- STATUS HUBUNGAN -->
                 <div class="form-group">
                     <label>Status hubungan</label>
-                    <select name="status">
+                    <select name="hubungan" class="form-select">
                         <option value="">-- Pilih status --</option>
-                        <option value="Ayah">Ayah</option>
-                        <option value="Ibu">Ibu</option>
-                        <option value="Wali">Wali</option>
+                        <option value="Ayah" {{ old('hubungan', $relasi->hubungan) == 'Ayah' ? 'selected' : '' }}>Ayah</option>
+                        <option value="Ibu" {{ old('hubungan', $relasi->hubungan) == 'Ibu' ? 'selected' : '' }}>Ibu</option>
+                        <option value="Wali" {{ old('hubungan', $relasi->hubungan) == 'Wali' ? 'selected' : '' }}>Wali</option>
                     </select>
                 </div>
 
                 <!-- BUTTON -->
                 <div class="form-action">
-                    <button type="reset" class="btn-reset">Reset</button>
+                    <a href="{{ route('relasi.index') }}" class="btn-reset">Batal</a>
                     <button type="submit" class="btn-simpan">Simpan</button>
                 </div>
 

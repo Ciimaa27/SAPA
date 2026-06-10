@@ -13,12 +13,30 @@ class GuruKelasController extends Controller
     // ========================
     // HALAMAN GURU
     // ========================
-    public function guru()
+    public function guru(Request $request)
     {
-        $guru = Guru::paginate(10);
-        $total = Guru::count();
+        $kelasId = $request->query('kelas', null);
 
-        return view('admin.guru', compact('guru', 'total'));
+        // load kelas options for filter
+        $kelasOptions = DB::table('kelas')->select('id_kelas', 'nama_kelas', 'id_guru')->get();
+
+        if ($kelasId) {
+            // find the guru(s) assigned to selected kelas
+            $idGuru = DB::table('kelas')->where('id_kelas', $kelasId)->value('id_guru');
+
+            if ($idGuru) {
+                $guru = Guru::where('id_guru', $idGuru)->paginate(10)->appends(['kelas' => $kelasId]);
+                $total = Guru::where('id_guru', $idGuru)->count();
+            } else {
+                $guru = Guru::whereRaw('0 = 1')->paginate(10);
+                $total = 0;
+            }
+        } else {
+            $guru = Guru::paginate(10);
+            $total = Guru::count();
+        }
+
+        return view('admin.guru', compact('guru', 'total', 'kelasOptions', 'kelasId'));
     }
 
     // ========================

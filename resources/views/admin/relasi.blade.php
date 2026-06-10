@@ -90,7 +90,7 @@
                             <td>{{ $item->wali->no_hp ?? '-' }}</td>
                             <td>{{ ucfirst($item->hubungan) }}</td>
                             <td>
-                                 <a href="{{ route('edit-relasi') }}" class="btn btn-warning btn-sm">
+                                 <a href="{{ route('relasi.edit', ['id_siswa' => $item->id_siswa, 'id_wali' => $item->id_wali]) }}" class="btn btn-warning btn-sm">
                                     <i class="fa fa-pencil"></i>
                                 </a>
 

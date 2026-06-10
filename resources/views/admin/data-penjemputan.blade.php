@@ -23,16 +23,17 @@
         </div>
 
         <div class="card mb-3 p-3">
-            <form action="{{ route('data-penjemputan') }}" method="GET" class="d-flex align-items-center gap-2">
+            <form id="penjemputanFilterForm" action="{{ route('data-penjemputan') }}" method="GET" class="d-flex align-items-center gap-2">
 
-                <input type="date" name="tanggal" value="{{ $tanggal ?? '' }}" class="form-control form-control-sm" style="width:160px">
+                <input type="date" name="tanggal" id="filterTanggal" value="{{ $tanggal ?? '' }}" class="form-control form-control-sm" style="width:160px">
 
-                <select name="kelas" class="form-select form-select-sm" style="width:140px">
+                <select id="filterKelas" name="kelas" class="form-select form-select-sm" style="width:140px">
                     <option value="">Kelas</option>
-                    <option value="1-A" {{ (isset($kelas) && $kelas=='1-A')?'selected':'' }}>1-A</option>
-                    <option value="1-B" {{ (isset($kelas) && $kelas=='1-B')?'selected':'' }}>1-B</option>
-                    <option value="2-A" {{ (isset($kelas) && $kelas=='2-A')?'selected':'' }}>2-A</option>
-                    <option value="2-B" {{ (isset($kelas) && $kelas=='2-B')?'selected':'' }}>2-B</option>
+                    @foreach($kelasOptions as $option)
+                        <option value="{{ $option->id_kelas }}" {{ (isset($kelasId) && $kelasId == $option->id_kelas) ? 'selected' : '' }}>
+                            {{ $option->nama_kelas }}
+                        </option>
+                    @endforeach
                 </select>
 
                 <!-- 🔍 TAMBAH ID -->
@@ -163,6 +164,21 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     let input = document.getElementById("searchInputPenjemputan");
+    let filterForm = document.getElementById("penjemputanFilterForm");
+    let filterKelas = document.getElementById("filterKelas");
+    let filterTanggal = document.getElementById("filterTanggal");
+
+    if (filterKelas) {
+        filterKelas.addEventListener("change", function() {
+            filterForm.submit();
+        });
+    }
+
+    if (filterTanggal) {
+        filterTanggal.addEventListener("change", function() {
+            filterForm.submit();
+        });
+    }
 
     input.addEventListener("keyup", function() {
         let keyword = this.value.toLowerCase();

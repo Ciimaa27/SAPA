@@ -7,6 +7,7 @@ use App\Models\Kehadiran;
 use App\Models\Penjemputan;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Exports\KehadiranKelasExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\PenjemputanKelasExport;
@@ -14,11 +15,45 @@ use App\Exports\PenjemputanKelasExport;
 
 class LaporanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $kelas = Kelas::orderBy('nama_kelas')->get();
+        $bulan = $request->bulan ?? now()->format('Y-m');
+        [$tahun, $bulanAngka] = explode('-', $bulan);
+        $kelasFilter = $request->filled('kelas') ? $request->kelas : null;
 
-        return view('admin.laporan', compact('kelas'));
+        $kelasOptions = Kelas::orderBy('nama_kelas')->get();
+
+        $kelasQuery = Kelas::orderBy('nama_kelas');
+        if ($kelasFilter) {
+            $kelasQuery->where('id_kelas', $kelasFilter);
+        }
+
+        $kelas = $kelasQuery->get();
+
+        $kehadiranQuery = Kehadiran::join('siswa', 'kehadiran.id_siswa', '=', 'siswa.id_siswa')
+            ->whereYear('kehadiran.tanggal', $tahun)
+            ->whereMonth('kehadiran.tanggal', $bulanAngka);
+
+        $penjemputanQuery = Penjemputan::join('siswa', 'penjemputan.id_siswa', '=', 'siswa.id_siswa')
+            ->whereYear('penjemputan.tanggal', $tahun)
+            ->whereMonth('penjemputan.tanggal', $bulanAngka);
+
+        if ($kelasFilter) {
+            $kehadiranQuery->where('siswa.id_kelas', $kelasFilter);
+            $penjemputanQuery->where('siswa.id_kelas', $kelasFilter);
+        }
+
+        $kehadiranCounts = $kehadiranQuery
+            ->groupBy('siswa.id_kelas')
+            ->select('siswa.id_kelas', DB::raw('COUNT(*) as total'))
+            ->pluck('total', 'siswa.id_kelas');
+
+        $penjemputanCounts = $penjemputanQuery
+            ->groupBy('siswa.id_kelas')
+            ->select('siswa.id_kelas', DB::raw('COUNT(*) as total'))
+            ->pluck('total', 'siswa.id_kelas');
+
+        return view('admin.laporan', compact('kelas', 'kelasOptions', 'bulan', 'kelasFilter', 'kehadiranCounts', 'penjemputanCounts'));
     }
 
     public function downloadKehadiran($id_siswa)

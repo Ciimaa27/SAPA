@@ -30,31 +30,41 @@
                 Kembali
             </a>
 
-            <form action="#" method="POST">
-                @csrf
+           <form action="{{ url('/admin/relasi') }}" method="POST">
+                 @csrf
 
                 <!-- NAMA SISWA -->
                 <div class="form-group">
                     <label>Nama siswa</label>
-                    <input type="text" name="siswa" placeholder="Ketik nama siswa">
+                    <select name="id_siswa" class="form-select">
+                        <option value="">-- Pilih siswa --</option>
+                        @foreach ($siswa as $item)
+                            <option value="{{ $item->id_siswa }}">{{ $item->nama_siswa }}</option>
+                        @endforeach
+                    </select>
                     <small class="form-text">
-                        *Ketik dan pilih nama siswa yang akan dihubungkan dengan wali
+                        *Pilih siswa yang akan dihubungkan dengan wali
                     </small>
                 </div>
 
                 <!-- NAMA WALI -->
                 <div class="form-group">
                     <label>Nama wali siswa</label>
-                    <input type="text" name="wali" placeholder="Ketik nama wali">
+                    <select name="id_wali" class="form-select">
+                        <option value="">-- Pilih wali --</option>
+                        @foreach ($wali as $item)
+                            <option value="{{ $item->id_wali }}">{{ $item->nama_wali }}</option>
+                        @endforeach
+                    </select>
                     <small class="form-text">
-                        *Ketik dan pilih nama wali siswa, dan pastikan benar dalam menghubungkan relasi
+                        *Pilih wali siswa dengan benar
                     </small>
                 </div>
 
                 <!-- STATUS HUBUNGAN -->
                 <div class="form-group">
                     <label>Status hubungan</label>
-                    <select name="status">
+                    <select name="hubungan" class="form-select">
                         <option value="">-- Pilih status --</option>
                         <option value="Ayah">Ayah</option>
                         <option value="Ibu">Ibu</option>

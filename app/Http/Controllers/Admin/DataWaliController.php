@@ -45,17 +45,17 @@ class DataWaliController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_wali' => 'required|unique:wali,nama_wali',
+            'nama_wali' => 'required',
             'no_hp' => 'required|unique:wali,no_hp',
             'jenis_kelamin' => 'required',
         ]);
 
-        Wali::create([
-            'id_user' => auth()->user()->id,
-            'nama_wali' => $request->nama_wali,
-            'no_hp' => $request->no_hp,
-            'jenis_kelamin' => $request->jenis_kelamin,
-        ]);
+    Wali::create([
+       'id_user' => auth()->id(),
+        'nama_wali' => $request->nama_wali,
+        'no_hp' => $request->no_hp,
+        'jenis_kelamin' => $request->jenis_kelamin,
+    ]);
 
         return redirect()->route('data-wali')->with('success', 'Data wali berhasil ditambahkan');
     }
@@ -75,7 +75,7 @@ class DataWaliController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama_wali' => 'required|unique:wali,nama_wali,'.$id.',id_wali',
+            'nama_wali' => 'required',
             'no_hp' => 'required|unique:wali,no_hp,'.$id.',id_wali',
             'jenis_kelamin' => 'required',
         ]);

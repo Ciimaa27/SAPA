@@ -27,6 +27,19 @@
         <!-- CARD -->
         <div class="card-form">
 
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                </div>
+            @endif
+
+            <!-- BUTTON KEMBALI -->
+            <a href="{{ route('data-wali') }}" class="btn btn-kembali mb-3">
+                ← Kembali
+            </a>
+
             <form action="{{ route('update-wali', $wali->id_wali) }}" method="POST">
                 @csrf
                 @method('PUT')
@@ -34,7 +47,7 @@
                 <!-- NAMA -->
                 <div class="form-group full">
                     <label>Nama orangtua/wali</label>
-                    <input type="text" name="nama_wali" value="{{ $wali->nama_wali }}">
+                    <input type="text" name="nama_wali" value="{{ old('nama_wali', $wali->nama_wali) }}">
                     <small class="form-text">
                         *Perhatikan penulisan nama, agar tidak ada kesalahan pendataan
                     </small>
@@ -43,7 +56,7 @@
                 <!-- NOMOR HP -->
                 <div class="form-group full">
                     <label>Nomor HP</label>
-                    <input type="text" name="no_hp" value="{{ $wali->no_hp }}">
+                    <input type="text" name="no_hp" value="{{ old('no_hp', $wali->no_hp) }}">
                     <small class="form-text">
                         *Nomor yang dimasukkan wajib terdaftar di WhatsApp
                     </small>
@@ -54,14 +67,14 @@
                     <label>Jenis kelamin</label>
                     <select name="jenis_kelamin">
                         <option value="">-- Pilih jenis kelamin --</option>
-                        <option value="Laki-laki" {{ $wali->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-                        <option value="Perempuan" {{ $wali->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                        <option value="Laki-laki" {{ old('jenis_kelamin', $wali->jenis_kelamin) == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                        <option value="Perempuan" {{ old('jenis_kelamin', $wali->jenis_kelamin) == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
                     </select>
                 </div>
 
                 <!-- BUTTON -->
                 <div class="form-action">
-                    <a href="/admin/data-wali" class="btn-batal">Batal</a>
+                    <a href="{{ route('data-wali') }}" class="btn-batal">Batal</a>
                     <button type="submit" class="btn-simpan">Simpan</button>
                 </div>
 

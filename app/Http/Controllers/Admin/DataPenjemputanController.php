@@ -11,8 +11,12 @@ class DataPenjemputanController extends Controller
     public function index(Request $request)
     {
         $tanggal = $request->input('tanggal');
-        $kelas = $request->input('kelas');
+        $kelasId = $request->input('kelas');
         $cari = $request->input('cari');
+
+        $kelasOptions = DB::table('kelas')
+            ->orderBy('nama_kelas')
+            ->get();
 
         $query = DB::table('penjemputan')
         ->join('siswa', 'penjemputan.id_siswa', '=', 'siswa.id_siswa')
@@ -31,8 +35,8 @@ class DataPenjemputanController extends Controller
             $query->whereDate('penjemputan.tanggal', $tanggal);
         }
 
-        if ($kelas && $kelas !== 'Kelas') {
-            $query->where('kelas.nama_kelas', $kelas);
+        if ($kelasId) {
+            $query->where('siswa.id_kelas', $kelasId);
         }
 
         if ($cari) {
@@ -43,6 +47,6 @@ class DataPenjemputanController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.data-penjemputan', compact('data', 'tanggal', 'kelas', 'cari'));
+        return view('admin.data-penjemputan', compact('data', 'tanggal', 'kelasId', 'cari', 'kelasOptions'));
     }
 }

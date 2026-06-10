@@ -101,7 +101,7 @@
                             <td class="text-capitalize">{{ $row->jenis_kelamin ?? '-' }}</td>
 
                             <td>
-                                <a href="{{ route('edit-data-wali', $row->id_wali) }}" class="btn btn-warning btn-sm">
+                                <a href="{{ route('edit-data-wali', ['id' => $row->id_wali]) }}" class="btn btn-warning btn-sm">
                                     <i class="fa fa-pencil"></i>
                                 </a>
 
