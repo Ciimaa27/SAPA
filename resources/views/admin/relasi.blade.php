@@ -51,11 +51,11 @@
                 </div>
 
                 <div style="width:170px;">
-                    <select class="form-select form-select-sm">
-                        <option>Tampilkan</option>
-                        <option>Ibu</option>
-                        <option>Ayah</option>
-                        <option>Wali</option>
+                    <select id="filterRelasiHubungan" class="form-select form-select-sm">
+                        <option value="">Tampilkan</option>
+                        <option value="ibu">Ibu</option>
+                        <option value="ayah">Ayah</option>
+                        <option value="wali">Wali</option>
                     </select>
                 </div>
 
@@ -89,15 +89,15 @@
                             <td>{{ $item->wali->nama_wali ?? '-' }}</td>
                             <td>{{ $item->wali->no_hp ?? '-' }}</td>
                             <td>{{ ucfirst($item->hubungan) }}</td>
-                            <td>
-                                 <a href="{{ route('relasi.edit', ['id_siswa' => $item->id_siswa, 'id_wali' => $item->id_wali]) }}" class="btn btn-warning btn-sm">
+                            <td class="text-center">
+                                 <a href="{{ route('relasi.edit', ['id_siswa' => $item->id_siswa, 'id_wali' => $item->id_wali]) }}" class="btn btn-warning btn-sm" title="Edit">
                                     <i class="fa fa-pencil"></i>
                                 </a>
 
                                 <form action="{{ route('relasi.destroy', [$item->id_siswa, $item->id_wali]) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-danger btn-sm">
+                                    <button type="submit" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Yakin hapus?')">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
@@ -192,21 +192,25 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     let input = document.getElementById("searchInputRelasi");
+    let filter = document.getElementById('filterRelasiHubungan');
 
-    input.addEventListener("keyup", function() {
-        let keyword = this.value.toLowerCase();
-        let rows = document.querySelectorAll("#dataTableRelasi tbody tr");
+    function filterRows() {
+        let keyword = input.value.toLowerCase();
+        let selectedStatus = filter.value.toLowerCase();
+        let rows = document.querySelectorAll('#dataTableRelasi tbody tr');
 
         rows.forEach(function(row) {
             let text = row.textContent.toLowerCase();
+            let hubungan = row.querySelector('td:nth-child(5)')?.textContent.toLowerCase() ?? '';
+            let matchesSearch = text.includes(keyword);
+            let matchesFilter = selectedStatus === '' || hubungan === selectedStatus;
 
-            if (text.includes(keyword)) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
+            row.style.display = matchesSearch && matchesFilter ? '' : 'none';
         });
-    });
+    }
+
+    input.addEventListener('keyup', filterRows);
+    filter.addEventListener('change', filterRows);
 });
 </script>
 

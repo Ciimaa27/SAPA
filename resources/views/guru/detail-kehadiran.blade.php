@@ -24,35 +24,51 @@
         ← Kembali
     </a>
 
-    <!-- INFO -->
-    <div class="card mb-3 p-4">
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+    @if(session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
 
-        <div class="info-kelas">
+    <form method="POST" action="{{ route('guru.detail-kehadiran.save', $kelas->id_kelas) }}">
+        @csrf
 
-            <div class="info-row">
-                <label>Kelas</label>
-                <span>:</span>
-                <input type="text" class="form-control" value="{{ $kelas->nama_kelas }}" readonly>
-            </div>
+        <!-- INFO -->
+        <div class="card mb-3 p-4">
 
-            <div class="info-row">
-                <label>Wali kelas</label>
-                <span>:</span>
-                <input type="text" class="form-control" value="{{ $kelas->guru ? $kelas->guru->nama_guru : 'N/A' }}" readonly>
-            </div>
+            <div class="info-kelas">
 
-            <div class="info-row">
-                <label>Tanggal</label>
-                <span>:</span>
-                <input type="date" class="form-control" value="{{ $tanggal }}">
+                <div class="info-row">
+                    <label>Kelas</label>
+                    <span>:</span>
+                    <input type="text" class="form-control" value="{{ $kelas->nama_kelas }}" readonly>
+                </div>
+
+                <div class="info-row">
+                    <label>Wali kelas</label>
+                    <span>:</span>
+                    <input type="text" class="form-control" value="{{ $kelas->guru ? $kelas->guru->nama_guru : 'N/A' }}" readonly>
+                </div>
+
+                <div class="info-row">
+                    <label>Tanggal</label>
+                    <span>:</span>
+                    <input type="date" name="tanggal" class="form-control" value="{{ $tanggal }}">
+                </div>
+
             </div>
 
         </div>
 
-    </div>
+        <!-- TABLE -->
+        <div class="card p-3">
 
-    <!-- TABLE -->
-    <div class="card p-3">
+            <div class="d-flex justify-content-end mb-3">
+                <button type="submit" class="btn btn-success btn-sm">
+                    Simpan
+                </button>
+            </div>
 
         <table class="table table-hover align-middle mb-0">
             <thead class="table-light">
@@ -72,12 +88,13 @@
                     <td>{{ $row->nis }}</td>
                     <td>{{ $row->nama_siswa }}</td>
                     <td>
-                        <div class="status-group">
-                            <span class="status-btn active">H</span>
-                            <span class="status-btn">I</span>
-                            <span class="status-btn">S</span>
-                            <span class="status-btn">A</span>
+                        <div class="status-group" data-siswa-id="{{ $row->id_siswa }}">
+                            <span class="status-btn {{ !$row->status_hadir || $row->status_hadir === 'hadir' ? 'active' : '' }}">H</span>
+                            <span class="status-btn {{ $row->status_hadir === 'izin' ? 'active' : '' }}">I</span>
+                            <span class="status-btn {{ $row->status_hadir === 'sakit' ? 'active' : '' }}">S</span>
+                            <span class="status-btn {{ $row->status_hadir === 'alpa' ? 'active' : '' }}">A</span>
                         </div>
+                        <input type="hidden" name="status[{{ $row->id_siswa }}]" id="status-{{ $row->id_siswa }}" value="{{ $row->status_hadir ?? 'hadir' }}">
                     </td>
                 </tr>
                 @empty
@@ -90,7 +107,8 @@
 
         </table>
 
-    </div>
+        </div>
+    </form>
 
 </div>
 </div>
@@ -98,11 +116,27 @@
 <script>
 document.querySelectorAll('.status-group').forEach(group => {
     const buttons = group.querySelectorAll('.status-btn');
+    const statusInput = document.getElementById('status-' + group.dataset.siswaId);
 
     buttons.forEach(btn => {
         btn.addEventListener('click', function() {
             buttons.forEach(b => b.classList.remove('active'));
             this.classList.add('active');
+
+            if (statusInput) {
+                const code = this.textContent.trim().toLowerCase();
+                let value = 'hadir';
+
+                if (code === 'i') {
+                    value = 'izin';
+                } else if (code === 's') {
+                    value = 'sakit';
+                } else if (code === 'a') {
+                    value = 'alpa';
+                }
+
+                statusInput.value = value;
+            }
         });
     });
 });

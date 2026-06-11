@@ -91,8 +91,8 @@
                             <td>{{ $row->nama_guru ?? '-' }}</td>
                             <td>{{ $row->jumlah_siswa }}</td>
                             <td>
-                                <a href="{{ route('siswa-kelas', $row->id_kelas) }}" class="btn btn-success btn-sm">
-                                    Lihat siswa
+                                <a href="{{ route('siswa-kelas', $row->id_kelas) }}" class="btn btn-success btn-sm" title="Lihat siswa">
+                                    <i class="fa fa-eye"></i>
                                 </a>
                             </td>
                         </tr>

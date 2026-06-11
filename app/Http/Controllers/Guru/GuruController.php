@@ -12,6 +12,7 @@ use App\Models\Guru;
 use App\Models\LogTap;
 use App\Models\Wali;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class GuruController extends Controller
@@ -22,7 +23,12 @@ class GuruController extends Controller
         // DATA AKUN
         // ======================
         $totalSiswa = Siswa::count();
-        $totalWali = User::where('id_role', 4)->count();
+        $totalWali = User::where('id_role', 4)
+            ->where('status', 'aktif')
+            ->whereHas('wali', function ($query) {
+                $query->where('is_active', 1);
+            })
+            ->count();
 
         // ======================
         // HARI INI
@@ -63,10 +69,10 @@ class GuruController extends Controller
 
     public function kehadiran()
     {
-        // Get all kelas with jumlah siswa
+        // Get paginated kelas with jumlah siswa
         $kelasList = Kelas::with('guru', 'siswa')
-            ->get()
-            ->map(function($kelas) {
+            ->paginate(10)
+            ->through(function($kelas) {
                 return [
                     'id_kelas' => $kelas->id_kelas,
                     'kelas' => $kelas->nama_kelas,
@@ -89,22 +95,88 @@ class GuruController extends Controller
             abort(404, 'Kelas tidak ditemukan');
         }
 
-        // Get all siswa in this kelas
-        $siswas = Siswa::where('id_kelas', $id_kelas)->get();
+        $tanggal = now()->format('Y-m-d');
+
+        // Get all siswa in this kelas with their attendance for today
+        $siswas = Siswa::where('id_kelas', $id_kelas)
+            ->with(['kehadiran' => function($q) use ($tanggal) {
+                $q->whereDate('tanggal', $tanggal);
+            }])
+            ->get()
+            ->map(function($siswa) use ($tanggal) {
+                $kehadiran = $siswa->kehadiran->first();
+                return (object)[
+                    'id_siswa' => $siswa->id_siswa,
+                    'nis' => $siswa->nis,
+                    'nama_siswa' => $siswa->nama_siswa,
+                    'status_hadir' => $kehadiran ? $kehadiran->status_hadir : null,
+                ];
+            });
 
         return view('guru.detail-kehadiran', [
             'kelas' => $kelas,
             'siswas' => $siswas,
-            'tanggal' => now()->format('Y-m-d'),
+            'tanggal' => $tanggal,
         ]);
+    }
+
+    public function updateDetailKehadiran(Request $request, $id_kelas)
+    {
+        $request->validate([
+            'tanggal' => 'required|date',
+            'status' => 'array',
+            'status.*' => 'nullable|string',
+        ]);
+
+        $tanggal = $request->input('tanggal');
+        $statusData = $request->input('status', []);
+
+        foreach ($statusData as $id_siswa => $status_hadir) {
+            $status_hadir = strtolower(trim($status_hadir));
+
+            if ($status_hadir === '') {
+                continue;
+            }
+
+            $validStatus = 'hadir';
+            if ($status_hadir === 'i') {
+                $validStatus = 'izin';
+            } elseif ($status_hadir === 's') {
+                $validStatus = 'sakit';
+            } elseif ($status_hadir === 'a') {
+                $validStatus = 'alpa';
+            } elseif ($status_hadir === 'hadir' || $status_hadir === 'izin' || $status_hadir === 'sakit' || $status_hadir === 'alpa') {
+                $validStatus = $status_hadir;
+            }
+
+            $kehadiran = Kehadiran::where('id_siswa', $id_siswa)
+                ->where('tanggal', $tanggal)
+                ->first();
+
+            if ($kehadiran) {
+                $kehadiran->update([
+                    'status_hadir' => $validStatus,
+                ]);
+            } else {
+                Kehadiran::create([
+                    'id_siswa' => $id_siswa,
+                    'id_device' => 1,
+                    'tanggal' => $tanggal,
+                    'metode' => 'manual',
+                    'status_hadir' => $validStatus,
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Data kehadiran berhasil disimpan');
     }
 
     public function dataPenjemputan()
     {
-        // Get all kelas with jumlah siswa (same as kehadiran)
+        // Get paginated kelas with jumlah siswa
         $kelasList = Kelas::with('guru', 'siswa')
-            ->get()
-            ->map(function($kelas) {
+            ->paginate(10)
+            ->through(function($kelas) {
                 return [
                     'id_kelas' => $kelas->id_kelas,
                     'kelas' => $kelas->nama_kelas,
@@ -119,24 +191,26 @@ class GuruController extends Controller
     }
 
     public function penjemputan()
-{
-    return view('guru.penjemputan');
-}
+    {
+        return redirect()->route('guru.data-penjemputan');
+    }
 
     public function riwayatPenjemputan()
     {
+        $today = now()->format('Y-m-d');
+
         $logs = Penjemputan::with('siswa', 'siswa.kelas')
-            ->orderByDesc('tanggal')
+            ->whereDate('tanggal', $today)
             ->orderByDesc('jam_jemput')
             ->paginate(10)
             ->through(function ($penjemputan) {
                 return [
-                    'waktu' => $penjemputan->jam_jemput,
+                    'waktu' => $penjemputan->tanggal . ' ' . ($penjemputan->jam_jemput ?? ''),
                     'id_scan' => $penjemputan->siswa ? 'FP-'.$penjemputan->siswa->id_siswa : '-',
                     'nama' => $penjemputan->siswa ? $penjemputan->siswa->nama_siswa : '-',
-                    'alat' => 'Fingerprint',
-                    'peran' => 'Siswa',
-                    'status' => 'Berhasil',
+                    'alat' => $penjemputan->keterangan ?? 'Fingerprint',
+                    'peran' => $penjemputan->siswa ? 'Siswa' : 'Tidak diketahui',
+                    'status' => $penjemputan->status ?? '-',
                 ];
             });
 
@@ -153,9 +227,8 @@ class GuruController extends Controller
 
         $siswas = Siswa::where('id_kelas', $id_kelas)
             ->orderBy('nama_siswa')
-            ->get()
-            ->map(function ($siswa) use ($today) {
-
+            ->paginate(10)
+            ->through(function ($siswa) use ($today) {
                 $sudahDijemput = Penjemputan::where('id_siswa', $siswa->id_siswa)
                     ->whereDate('tanggal', $today)
                     ->exists();

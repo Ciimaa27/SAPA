@@ -84,7 +84,7 @@
                             <th>Nama orangtua/wali</th>
                             <th>No. HP</th>
                             <th>Jenis Kelamin</th>
-                            <th class="col-aksi">Aksi</th>
+                            <th class="col-aksi text-center">Aksi</th>
                         </tr>
                     </thead>
 
@@ -100,15 +100,22 @@
                             <td>{{ $row->no_hp ?? '-' }}</td>
                             <td class="text-capitalize">{{ $row->jenis_kelamin ?? '-' }}</td>
 
-                            <td>
-                                <a href="{{ route('edit-data-wali', ['id' => $row->id_wali]) }}" class="btn btn-warning btn-sm">
+                            <td class="text-center">
+                                <a href="{{ route('edit-data-wali', ['id' => $row->id_wali]) }}"
+                                class="btn btn-warning btn-sm"
+                                title="Edit">
                                     <i class="fa fa-pencil"></i>
                                 </a>
-
-                                <form action="{{ route('hapus-wali', ['id' => $row->id_wali]) }}" method="POST" style="display:inline;">
+                                <form action="{{ route('hapus-wali', ['id' => $row->id_wali]) }}"
+                                    method="POST"
+                                    style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')">
+
+                                    <button type="submit"
+                                            class="btn btn-danger btn-sm"
+                                            title="Hapus"
+                                            onclick="return confirm('Yakin hapus?')">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </form>

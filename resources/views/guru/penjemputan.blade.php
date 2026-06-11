@@ -35,19 +35,19 @@
         <div class="info-row">
             <label>Kelas</label>
             <span>:</span>
-            <input type="text" value="1-A" readonly>
+            <input type="text" value="{{ $kelas->nama_kelas }}" readonly>
         </div>
 
         <div class="info-row">
             <label>Wali kelas</label>
             <span>:</span>
-            <input type="text" value="Arif Nasution" readonly>
+            <input type="text" value="{{ $kelas->guru ? $kelas->guru->nama_guru : 'N/A' }}" readonly>
         </div>
 
         <div class="info-row">
             <label>Tanggal</label>
             <span>:</span>
-            <input type="text" value="12-02-2026" readonly>
+            <input type="text" value="{{ $today->format('d-m-Y') }}" readonly>
         </div>
 
     </div>
@@ -78,75 +78,21 @@
 
             <tbody>
 
+                @forelse($siswas as $row)
                 <tr>
-                    <td>00987643</td>
-                    <td>Arif Nasution</td>
+                    <td>{{ $row->nis }}</td>
+                    <td>{{ $row->nama_siswa }}</td>
                     <td>
-                        <span class="badge-purple">
-                            Dijemput
+                        <span class="badge-{{ $row->status == 'Dijemput' ? 'purple' : 'orange' }}">
+                            {{ $row->status }}
                         </span>
                     </td>
                 </tr>
-
+                @empty
                 <tr>
-                    <td>00985651</td>
-                    <td>Radita Nabila</td>
-                    <td>
-                        <span class="badge-purple">
-                            Dijemput
-                        </span>
-                    </td>
+                    <td colspan="3" class="text-center text-muted">Tidak ada siswa dalam kelas ini</td>
                 </tr>
-
-                <tr>
-                    <td>00952763</td>
-                    <td>Arif Rahman</td>
-                    <td>
-                        <span class="badge-orange">
-                            Menunggu
-                        </span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>00936121</td>
-                    <td>Ismatul Hawa</td>
-                    <td>
-                        <span class="badge-purple">
-                            Dijemput
-                        </span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>00864041</td>
-                    <td>Ilham Basudara</td>
-                    <td>
-                        <span class="badge-purple">
-                            Dijemput
-                        </span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>00855298</td>
-                    <td>Indah Permatasari</td>
-                    <td>
-                        <span class="badge-purple">
-                            Dijemput
-                        </span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>00839844</td>
-                    <td>Noor Maulida</td>
-                    <td>
-                        <span class="badge-orange">
-                            Menunggu
-                        </span>
-                    </td>
-                </tr>
+                @endforelse
 
             </tbody>
 
@@ -154,7 +100,77 @@
 
     </div>
 
-</div>
+    <!-- PAGINATION -->
+    <div class="p-3 d-flex justify-content-end">
+        <nav>
+            <ul class="pagination pagination-sm mb-0">
+
+                {{-- Previous --}}
+                @if ($siswas->onFirstPage())
+                    <li class="page-item disabled">
+                        <span class="page-link">‹</span>
+                    </li>
+                @else
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $siswas->previousPageUrl() }}">‹</a>
+                    </li>
+                @endif
+
+                {{-- Numbers --}}
+                @php
+                    $current = $siswas->currentPage();
+                    $last = $siswas->lastPage();
+                @endphp
+
+                {{-- First page --}}
+                @if ($current > 3)
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $siswas->url(1) }}">1</a>
+                    </li>
+
+                    @if ($current > 4)
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                    @endif
+                @endif
+
+                {{-- Middle pages --}}
+                @for ($i = max(1, $current - 1); $i <= min($last, $current + 1); $i++)
+                    <li class="page-item {{ $i == $current ? 'active' : '' }}">
+                        <a class="page-link" href="{{ $siswas->url($i) }}">{{ $i }}</a>
+                    </li>
+                @endfor
+
+                {{-- Last page --}}
+                @if ($current < $last - 2)
+                    @if ($current < $last - 3)
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                    @endif
+
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $siswas->url($last) }}">{{ $last }}</a>
+                    </li>
+                @endif
+
+                {{-- Next --}}
+                @if ($siswas->hasMorePages())
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $siswas->nextPageUrl() }}">›</a>
+                    </li>
+                @else
+                    <li class="page-item disabled">
+                        <span class="page-link">›</span>
+                    </li>
+                @endif
+
+            </ul>
+        </nav>
+    </div>
+
 </div>
 
+</div>
 @endsection

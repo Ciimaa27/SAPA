@@ -119,11 +119,12 @@
                                 <td>{{ ucfirst($user->nama_role ?? '-') }}</td>
                                 <td>{{ $user->email ?? '-' }}</td>
 
-                                <td class="d-flex gap-2">
+                                <td class="d-flex gap-2 justify-content-center">
 
                                     <!-- EDIT -->
                                     <a href="{{ route('kelola-akun.edit', $user->id) }}"
-                                       class="btn btn-warning btn-sm">
+                                       class="btn btn-warning btn-sm"
+                                       title="Edit">
                                         <i class="fa fa-pencil"></i>
                                     </a>
 
@@ -134,8 +135,10 @@
                                         @csrf
                                         @method('DELETE')
 
-                                        <button type="button"
-                                                class="btn btn-danger btn-sm btn-delete">
+                                        <button type="submit"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Yakin hapus?')"
+                                                title="Hapus">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>

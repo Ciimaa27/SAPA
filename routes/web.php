@@ -153,10 +153,11 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 Route::get('/guru/dashboard', [GuruController::class, 'dashboard'])->name('guru.dashboard');
 Route::get('/guru/kehadiran', [GuruController::class, 'kehadiran'])->name('guru.kehadiran');
 Route::get('/guru/detail-kehadiran/{id_kelas}', [GuruController::class, 'detailKehadiran'])->name('guru.detail-kehadiran');
+Route::post('/guru/detail-kehadiran/{id_kelas}', [GuruController::class, 'updateDetailKehadiran'])->name('guru.detail-kehadiran.save');
 Route::get('/guru/data-penjemputan', [GuruController::class, 'dataPenjemputan'])->name('guru.data-penjemputan');
-Route::get('/guru/penjemputan', [GuruController::class, 'penjemputan'])->name('guru.penjemputan');
+Route::get('/guru/penjemputan', [GuruController::class, 'penjemputan'])->name('guru.penjemputan.index');
 Route::get('/guru/riwayat-penjemputan', [GuruController::class, 'riwayatPenjemputan'])->name('guru.riwayat');
-
+Route::get('/guru/penjemputan/{id_kelas}', [GuruController::class, 'daftarPenjemputan'])->name('guru.penjemputan');
 
 /*
 |--------------------------------------------------------------------------

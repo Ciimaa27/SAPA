@@ -55,7 +55,11 @@
                         <td>1-A</td>
                         <td>12-02-2026</td>
                         <td>Kehadiran</td>
-                        <td><button class="btn-unduh">Unduh</button></td>
+                        <td>
+                            <button type="button" class="btn btn-info btn-sm" title="Unduh">
+                                <i class="fa fa-download"></i>
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -81,7 +85,11 @@
                         <td>1-A</td>
                         <td>12-02-2026</td>
                         <td>Penjemputan</td>
-                        <td><button class="btn-unduh">Unduh</button></td>
+                        <td>
+                            <button type="button" class="btn btn-info btn-sm" title="Unduh">
+                                <i class="fa fa-download"></i>
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>

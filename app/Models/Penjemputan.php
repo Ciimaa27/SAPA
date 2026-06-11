@@ -20,4 +20,14 @@ class Penjemputan extends Model
         'jam_jemput',
         'keterangan',
     ];
+
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class, 'id_siswa');
+    }
+
+    public function wali()
+    {
+        return $this->belongsTo(Wali::class, 'id_wali');
+    }
 }

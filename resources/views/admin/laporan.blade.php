@@ -79,8 +79,9 @@
                                     'id_kelas' => $kls->id_kelas,
                                     'bulan' => $bulan
                                 ]) }}"
-                                class="btn-unduh">
-                                    Export Excel
+                                class="btn btn-info btn-sm"
+                                title="Export Kehadiran">
+                                    <i class="fa fa-file-excel"></i>
                                 </a>
                             </td>
 
@@ -89,8 +90,9 @@
                                     'id_kelas' => $kls->id_kelas,
                                     'bulan' => $bulan
                                 ]) }}"
-                                class="btn-unduh">
-                                    Export Excel
+                                class="btn btn-info btn-sm"
+                                title="Export Penjemputan">
+                                    <i class="fa fa-file-excel"></i>
                                 </a>
                             </td>
                         </tr>
