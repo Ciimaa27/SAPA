@@ -16,9 +16,9 @@
                 Kehadiran anak
             </a>
 
-            <a href="#">
+            <a href="{{ route('wali.status-penjemputan') }}" class="{{ request()->routeIs('wali.status-penjemputan') ? 'active' : '' }}">
                 <i class="fa-solid fa-truck"></i>
-                Status penjemputan
+                Status Penjemputan
             </a>
 
             <a href="#">

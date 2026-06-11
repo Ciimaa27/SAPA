@@ -7,6 +7,7 @@
 @endsection
 
 @push('styles')
+<link rel="stylesheet" href="{{ asset('css/wali/dashboard.css') }}">
 <link rel="stylesheet" href="{{ asset('css/wali/status-penjemputan.css') }}">
 @endpush
 

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KelolaAkunController;
 use App\Http\Controllers\Admin\DataSiswaController;
@@ -44,6 +45,21 @@ Route::post('/logout', function () {
 Route::get('/lupasandi', function () {
     return view('lupasandi');
 })->name('lupasandi');
+
+Route::get('/test-wa', function () {
+
+    $response = Http::withHeaders([
+        'Authorization' => env('FONNTE_TOKEN')
+    ])->post('https://api.fonnte.com/send', [
+        'target' => '6282220216753',
+        'message' => 'Test WA Laravel'
+    ]);
+
+    return [
+        'http_status' => $response->status(),
+        'body' => $response->body(),
+    ];
+});
 
 
 /*

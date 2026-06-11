@@ -116,4 +116,23 @@ class DashboardController extends Controller
 
         return view('wali.kehadiran', compact('siswa', 'today', 'calendarDays', 'stats'));
     }
+    public function statusPenjemputan()
+{
+    $riwayat = [
+        [
+            'jam' => '13:11',
+            'status' => 'Siswa dijemput'
+        ],
+        [
+            'jam' => '13:00',
+            'status' => 'Jam pulang'
+        ],
+        [
+            'jam' => '07:00',
+            'status' => 'Siswa hadir'
+        ]
+    ];
+
+    return view('wali.status-penjemputan', compact('riwayat'));
+}
 }
