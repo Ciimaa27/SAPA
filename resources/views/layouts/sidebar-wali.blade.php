@@ -11,23 +11,16 @@
                 Dashboard
             </a>
 
-<<<<<<< HEAD
-            <a href="{{ route('wali.kehadiran') }}"
-                class="{{ request()->routeIs('wali.kehadiran') ? 'active' : '' }}">
-                    <i class="fa-solid fa-calendar-check"></i>
-                    Kehadiran anak
-                </a>
-=======
             <a href="{{ route('wali.kehadiran') }}" class="{{ request()->routeIs('wali.kehadiran') ? 'active' : '' }}">
                 <i class="fa-solid fa-calendar-check"></i>
                 Kehadiran anak
             </a>
->>>>>>> origin/main
 
-            <a href="#">
-                <i class="fa-solid fa-truck"></i>
-                Status penjemputan
-            </a>
+            <a href="{{ route('wali.status-penjemputan') }}"
+                class="{{ request()->routeIs('wali.status-penjemputan') ? 'active' : '' }}">
+                    <i class="fa-solid fa-truck"></i>
+                    Status penjemputan
+                </a>
 
             <a href="#">
                 <i class="fa-solid fa-clock"></i>
