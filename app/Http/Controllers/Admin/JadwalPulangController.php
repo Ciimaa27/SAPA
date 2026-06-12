@@ -23,14 +23,47 @@ class JadwalPulangController extends Controller
         return view('admin.jadwal_pulang', compact('jadwal', 'activeKelas'));
     }
 
-    public function edit(Request $request)
+   public function edit(Request $request)
     {
         $activeKelas = (int) $request->query('kelas', 1);
         $activeKelas = max(1, min(6, $activeKelas));
 
-        $jadwal = $this->getJadwalByKelas($activeKelas);
+        $hari = $request->query('hari', 'Senin');
 
-        return view('admin.edit-jadwal-pulang', compact('jadwal', 'activeKelas'));
+        $jadwal = JadwalPulang::where('kelas', $activeKelas)
+            ->where('hari', $hari)
+            ->first();
+
+        return view('admin.edit-jadwal-pulang', [
+            'jadwal' => $jadwal,
+            'activeKelas' => $activeKelas,
+            'hariDipilih' => $hari,
+        ]);
+    }
+
+    public function updateSatu(Request $request)
+    {
+        $request->validate([
+            'kelas' => 'required|integer|min:1|max:6',
+            'hari'  => 'required|string',
+            'jam'   => 'nullable|date_format:H:i',
+            'alasan' => 'nullable|string',
+        ]);
+
+        JadwalPulang::updateOrCreate(
+            [
+                'kelas' => $request->kelas,
+                'hari'  => $request->hari,
+            ],
+            [
+                'jam'   => $request->jam,
+                'libur' => false,
+            ]
+        );
+
+        return redirect()
+            ->route('jadwal-pulang', ['kelas' => $request->kelas])
+            ->with('success', 'Jadwal berhasil diperbarui');
     }
 
     private function getJadwalByKelas(int $kelas): array
@@ -114,7 +147,7 @@ class JadwalPulangController extends Controller
             return response()->json(['success' => true, 'message' => 'Jadwal berhasil disimpan.']);
         }
 
-        return redirect()->route('jadwal-pulang.edit', ['kelas' => $kelas])
+        return redirect()->route('jadwal-pulang', ['kelas' => $kelas])
             ->with('success', 'Jadwal berhasil disimpan.');
     }
 }

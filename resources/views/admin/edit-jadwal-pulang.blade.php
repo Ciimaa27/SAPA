@@ -1,199 +1,160 @@
 @extends('layouts.app')
 
-@section('title', 'Jadwal Pulang')
+@section('title', 'Edit Jadwal Pulang')
 
-{{-- 🔥 SIDEBAR --}}
 @section('sidebar')
     @include('layouts.sidebar-admin')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    document.getElementById('btnKirim').addEventListener('click', function() {
+
+        let kelasDipilih = [];
+
+        document.querySelectorAll('input[name="kelas_tujuan[]"]:checked')
+            .forEach(function(item){
+                kelasDipilih.push(item.value);
+            });
+
+        Swal.fire({
+            title: '📢 Kirim Notifikasi?',
+            html: `
+                <p style="text-align:left">
+                    Jadwal pulang akan diperbarui dan notifikasi WA akan dikirim ke seluruh wali kelas
+                    <b>${kelasDipilih.join(', ')}</b>.
+                </p>
+
+                <p style="text-align:left;color:#666;margin-top:15px">
+                    ⚠️ Pastikan data sudah benar.<br>
+                    Proses ini tidak dapat dibatalkan.
+                </p>
+            `,
+            showCancelButton: true,
+            confirmButtonText: 'Kirim',
+            cancelButtonText: 'Batal',
+            confirmButtonColor: '#4f8dfd',
+            cancelButtonColor: '#dc3545',
+            reverseButtons: true
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                document.getElementById('formJadwalPulang').submit();
+            }
+
+        });
+
+    });
+    </script>
 @endsection
 
-{{-- 🔥 CSS --}}
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
 <link rel="stylesheet" href="{{ asset('css/admin/edit-jadwal-pulang.css') }}">
 @endpush
 
-{{-- 🔥 CONTENT --}}
 @section('content')
 
-<div class="container mt-4">
+<div class="container">
 
-    <!-- HEADER -->
-    <div class="mb-3">
-        <h2 class="judul-halaman">Jadwal Pulang</h2>
-
-        <a href="{{ route('jadwal-pulang', ['kelas' => $activeKelas ?? 1]) }}" class="btn-kembali">
-            ← Kembali
-        </a>
+    {{-- HEADER --}}
+    <div class="judul-halaman">
+        Edit jadwal pulang
     </div>
 
-    <div class="class-card">
-        <div class="class-tabs">
-            @for($i = 1; $i <= 6; $i++)
-                <a href="{{ route('jadwal-pulang.edit', ['kelas' => $i]) }}"
-                   class="btn-kelas {{ ($activeKelas ?? 1) === $i ? 'active' : '' }}">
-                    Kelas {{ $i }}
-                </a>
-            @endfor
-        </div>
+    {{-- INFO --}}
+    <div class="info-box">
+        ! Fitur ini digunakan untuk mengirim notifikasi WhatsApp kepada wali siswa terkait perubahan jadwal pulang.
     </div>
 
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
+    {{-- FORM --}}
+   <form id="formJadwalPulang"
+      action="{{ route('jadwal-pulang.update-satu') }}"
+      method="POST">
+    @csrf
 
-    <form id="jadwalForm" action="{{ route('jadwal-pulang.update', ['kelas' => $activeKelas ?? 1]) }}" method="POST" data-kelas="{{ $activeKelas ?? 1 }}">
-        @csrf
+    <input type="hidden" name="kelas" value="{{ $activeKelas }}">
+    <input type="hidden" name="hari" value="{{ $hariDipilih }}">
 
-        <div class="card-jadwal">
+    <div class="card-jadwal">
 
-            @foreach($jadwal as $hari => $item)
-                <div class="jadwal-row">
+        <div class="form-grid">
 
-                    <!-- HARI -->
-                    <div class="hari-box">
-                        {{ $hari }}
-                    </div>
+            {{-- HARI --}}
+            <div class="field-label">Hari</div>
+            <div class="field-separator">:</div>
 
-                    <!-- JAM -->
-                    <input type="time"
-                           class="jam-input {{ $item['libur'] ? 'libur-mode' : '' }}"
-                           name="jadwal[{{ $hari }}][jam]"
-                           value="{{ $item['jam'] }}"
-                           min="07:00"
-                           max="17:00"
-                           step="1800"
-                           {{ $item['libur'] ? 'readonly' : '' }}>
+            <div class="field-control">
+                <input type="text"
+                    class="readonly-input"
+                    value="{{ $hariDipilih }}"
+                    readonly>
+            </div>
 
-                    <!-- LIBUR -->
-                    <button type="button"
-                            class="btn-libur toggle-libur {{ $item['libur'] ? 'aktif' : '' }}"
-                            data-hari="{{ $hari }}">
-                        Libur
-                    </button>
-                    <input type="hidden" name="jadwal[{{ $hari }}][libur]" value="{{ $item['libur'] ? '1' : '0' }}">
+            {{-- JAM --}}
+            <div class="field-label">Jam pulang</div>
+            <div class="field-separator">:</div>
 
+            <div class="field-control">
+                <input type="time"
+                    name="jam"
+                    class="jam-input"
+                    value="{{ $jadwal && $jadwal->jam ? \Carbon\Carbon::parse($jadwal->jam)->format('H:i') : '' }}">
+            </div>
+
+            {{-- ALASAN --}}
+            <div class="field-label">Alasan</div>
+            <div class="field-separator">:</div>
+
+            <div class="field-control">
+                <select class="select-input" name="alasan">
+                    <option value="">Pilih alasan</option>
+                    <option value="Rapat guru">Rapat guru</option>
+                    <option value="Kegiatan sekolah">Kegiatan sekolah</option>
+                    <option value="Libur khusus">Libur khusus</option>
+                    <option value="Gladi / persiapan acara">Gladi / persiapan acara</option>
+                    <option value="Kelas tambahan">Kelas tambahan</option>
+                </select>
+            </div>
+
+            {{-- PILIH KELAS --}}
+            <div class="field-label">Pilih kelas</div>
+            <div class="field-separator">:</div>
+
+            <div class="field-control">
+
+                <div class="checkbox-note">
+                    *Perhatikan dengan benar ketika memilih kelas
                 </div>
-            @endforeach
 
-            <!-- SIMPAN -->
-            <div class="text-end mt-4">
-                <button class="btn-simpan" type="submit">Simpan</button>
+                <div class="checkbox-grid">
+                    @for($i = 1; $i <= 6; $i++)
+                    <label class="checkbox-item">
+                        <input type="checkbox"
+                            name="kelas_tujuan[]"
+                            value="{{ $i }}"
+                            {{ $i == $activeKelas ? 'checked' : '' }}>
+                        Kelas {{ $i }}
+                    </label>
+                    @endfor
+                </div>
+
             </div>
 
         </div>
-    </form>
 
-</div>
+        <div class="actions-row">
 
-<!-- SCRIPT -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
+            <button type="button"
+                    class="btn-batal"
+                    onclick="window.location='{{ route('jadwal-pulang', ['kelas' => $activeKelas]) }}'">
+                Batal
+            </button>
 
-    const buttons = document.querySelectorAll('.toggle-libur');
+            <button type="button" class="btn-simpan" id="btnKirim">
+                Kirim
+            </button>
 
-    buttons.forEach((btn) => {
-        btn.addEventListener('click', function () {
+        </div>
 
-            const row = btn.closest('.jadwal-row');
-            const input = row.querySelector('.jam-input');
-            const hiddenLibur = row.querySelector('input[type="hidden"]');
+    </div>
 
-            btn.classList.toggle('aktif');
-
-            if (btn.classList.contains('aktif')) {
-                // 🔒 kunci input dan kosongkan nilai
-                input.readOnly = true;
-                input.value = '';
-
-                // kasih style libur
-                input.classList.add('libur-mode');
-
-                // ubah warna tombol (opsional biar merah)
-                btn.style.backgroundColor = '#f8d7da';
-                btn.style.color = '#842029';
-                hiddenLibur.value = '1';
-            } else {
-                // buka kembali input
-                input.readOnly = false;
-                input.classList.remove('libur-mode');
-
-                // balikin style tombol
-                btn.style.backgroundColor = '';
-                btn.style.color = '';
-                hiddenLibur.value = '0';
-            }
-
-        });
-    });
-
-    // AJAX submit form
-    const form = document.getElementById('jadwalForm');
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const formData = new FormData(form);
-
-        fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-        })
-        .then(response => response.json().then(data => ({ status: response.status, data })))
-        .then(({ status, data }) => {
-            if (status === 200 && data.success) {
-                showSuccessMessage(data.message || 'Jadwal berhasil disimpan.');
-                // Redirect ke halaman jadwal pulang setelah 1 detik
-                setTimeout(() => {
-                    const kelas = form.dataset.kelas;
-                    window.location.href = `/admin/jadwal-pulang?kelas=${kelas}`;
-                }, 1000);
-            } else if (status === 422 && data.errors) {
-                const firstError = Object.values(data.errors)[0][0];
-                showErrorMessage(firstError || 'Validasi gagal.');
-            } else {
-                showErrorMessage(data.message || 'Terjadi kesalahan saat menyimpan.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showErrorMessage('Terjadi kesalahan jaringan.');
-        });
-    });
-
-    function showSuccessMessage(message) {
-        const alertDiv = document.createElement('div');
-        alertDiv.className = 'alert alert-success';
-        alertDiv.textContent = message;
-        alertDiv.style.position = 'fixed';
-        alertDiv.style.top = '20px';
-        alertDiv.style.right = '20px';
-        alertDiv.style.zIndex = '9999';
-        document.body.appendChild(alertDiv);
-        setTimeout(() => {
-            alertDiv.remove();
-        }, 3000);
-    }
-
-    function showErrorMessage(message) {
-        const alertDiv = document.createElement('div');
-        alertDiv.className = 'alert alert-danger';
-        alertDiv.textContent = message;
-        alertDiv.style.position = 'fixed';
-        alertDiv.style.top = '20px';
-        alertDiv.style.right = '20px';
-        alertDiv.style.zIndex = '9999';
-        document.body.appendChild(alertDiv);
-        setTimeout(() => {
-            alertDiv.remove();
-        }, 3000);
-    }
-
-});
-</script>
-
-@endsection
+</form>

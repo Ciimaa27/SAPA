@@ -128,6 +128,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/jadwal-pulang', [JadwalPulangController::class, 'index'])->name('jadwal-pulang');
     Route::get('/jadwal-pulang/edit', [JadwalPulangController::class, 'edit'])->name('jadwal-pulang.edit');
     Route::post('/jadwal-pulang/{kelas}/update', [JadwalPulangController::class, 'update'])->name('jadwal-pulang.update');
+    Route::get('/admin/jadwal-pulang/edit',[JadwalPulangController::class, 'edit'])->name('jadwal-pulang.edit');
+    Route::post('/admin/jadwal-pulang/update-satu',[JadwalPulangController::class, 'updateSatu'])->name('jadwal-pulang.update-satu');
     Route::get('/data-penjemputan', [DataPenjemputanController::class, 'index'])->name('data-penjemputan');
 
     // LAPORAN
