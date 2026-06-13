@@ -170,6 +170,7 @@ Route::get('/guru/penjemputan/{id_kelas}', [GuruController::class, 'daftarPenjem
 Route::get('/wali/dashboard', [App\Http\Controllers\wali\DashboardController::class, 'index'])->name('wali.dashboard');
 Route::get('/wali/kehadiran', [App\Http\Controllers\wali\DashboardController::class, 'kehadiran'])->name('wali.kehadiran');
 Route::get('/wali/status-penjemputan', [App\Http\Controllers\wali\DashboardController::class, 'statusPenjemputan'])->name('wali.status-penjemputan');
+Route::view('/wali/jadwal-pulang', 'wali.jadwal-pulang') ->name('wali.jadwal-pulang');
 
 /*
 |--------------------------------------------------------------------------

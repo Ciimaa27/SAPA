@@ -22,7 +22,7 @@
                     Status penjemputan
                 </a>
 
-            <a href="#">
+            <a href="{{ route('wali.jadwal-pulang') }}" class="{{ request()->routeIs('wali.jadwal-pulang') ? 'active' : '' }}">
                 <i class="fa-solid fa-clock"></i>
                 Jadwal pulang
             </a>
