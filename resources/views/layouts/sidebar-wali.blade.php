@@ -27,10 +27,11 @@
                 Jadwal pulang
             </a>
 
-            <a href="#">
-                <i class="fa-solid fa-bell"></i>
-                Notifikasi
-            </a>
+            <a href="{{ route('wali.notifikasi') }}"
+                class="{{ request()->routeIs('wali.notifikasi') ? 'active' : '' }}">
+                    <i class="fa-regular fa-bell"></i>
+                    Notifikasi
+                </a>
 
             <a href="#">
                 <i class="fa-solid fa-box-archive"></i>
