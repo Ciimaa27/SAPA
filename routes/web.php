@@ -172,6 +172,7 @@ Route::get('/wali/kehadiran', [App\Http\Controllers\wali\DashboardController::cl
 Route::get('/wali/status-penjemputan', [App\Http\Controllers\wali\DashboardController::class, 'statusPenjemputan'])->name('wali.status-penjemputan');
 Route::view('/wali/jadwal-pulang', 'wali.jadwal-pulang') ->name('wali.jadwal-pulang');
 Route::get('/wali/notifikasi', function () {return view('wali.notifikasi');})->name('wali.notifikasi');
+Route::get('/wali/laporan', function () {return view('wali.laporan');})->name('wali.laporan');
 
 /*
 |--------------------------------------------------------------------------

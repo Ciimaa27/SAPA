@@ -33,10 +33,11 @@
                     Notifikasi
                 </a>
 
-            <a href="#">
-                <i class="fa-solid fa-box-archive"></i>
-                Laporan
-            </a>
+            <a href="{{ route('wali.laporan') }}"
+                class="{{ request()->routeIs('wali.laporan') ? 'active' : '' }}">
+                    <i class="fa-solid fa-file-lines"></i>
+                    Laporan
+                </a>
 
         </div>
     </div>

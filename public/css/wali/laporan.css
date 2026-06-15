@@ -1,0 +1,196 @@
+.container-dashboard{
+    max-width:1160px;
+    margin:0 auto;
+}
+
+.main-dashboard{
+    padding:20px 24px;
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.page-title-card{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    padding:18px 24px;
+    margin-bottom:18px;
+    box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+
+.page-title-card h5{
+    margin:0;
+    font-size:20px;
+    font-weight:600;
+    color:#374151;
+}
+
+/* =========================
+   STUDENT CARD
+========================= */
+
+.student-card{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    padding:18px 24px;
+    margin-bottom:20px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+
+.student-avatar{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:#ede9fe;
+    color:#7c3aed;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+}
+
+.student-info h6{
+    margin:0;
+    font-size:16px;
+    color:#374151;
+}
+
+.student-info span{
+    font-size:13px;
+    color:#6b7280;
+}
+
+/* =========================
+   REPORT CARD
+========================= */
+
+.report-card{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    padding:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+
+/* =========================
+   FILTER
+========================= */
+
+.filter-section{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.filter-input,
+.filter-select{
+    height:36px;
+    border:1px solid #d1d5db;
+    border-radius:6px;
+    padding:0 12px;
+    font-size:13px;
+}
+
+.btn-search{
+    height:36px;
+    padding:0 18px;
+    border:none;
+    border-radius:6px;
+    background:#7c3aed;
+    color:#fff;
+    cursor:pointer;
+}
+
+.btn-search:hover{
+    background:#6d28d9;
+}
+
+.btn-refresh{
+    width:36px;
+    height:36px;
+    border:none;
+    border-radius:6px;
+    background:#fee2e2;
+    color:#dc2626;
+    cursor:pointer;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:#f9fafb;
+}
+
+th{
+    text-align:left;
+    padding:14px;
+    font-size:13px;
+    color:#6b7280;
+    font-weight:600;
+}
+
+td{
+    padding:14px;
+    border-top:1px solid #e5e7eb;
+    font-size:14px;
+    color:#374151;
+}
+
+.btn-download{
+    width:90px;
+    height:34px;
+    border:1px solid #8b5cf6;
+    border-radius:6px;
+    background:#f5f3ff;
+    color:#7c3aed;
+    cursor:pointer;
+    font-weight:500;
+}
+
+.btn-download:hover{
+    background:#ede9fe;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .main-dashboard{
+        padding:16px;
+    }
+
+    .student-card{
+        padding:16px;
+    }
+
+    .filter-section{
+        flex-direction:column;
+    }
+
+    .filter-input,
+    .filter-select,
+    .btn-search{
+        width:100%;
+    }
+
+}
