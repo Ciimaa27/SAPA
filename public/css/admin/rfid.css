@@ -178,3 +178,125 @@ button.btn-danger {
     width: 14px;
     height: 14px;
 }
+
+/* ===================================== */
+/* RESPONSIVE TABLET */
+/* ===================================== */
+
+@media (max-width:768px){
+
+    .content{
+        margin-left:0;
+        padding-left:10px;
+        padding-right:10px;
+    }
+
+    .main-dashboard{
+        padding:10px;
+    }
+
+    .container-dashboard{
+        max-width:100%;
+    }
+
+    /* TAB + SEARCH */
+    .card .d-flex.align-items-center.gap-3{
+        flex-direction:column;
+        align-items:stretch !important;
+        gap:10px !important;
+    }
+
+    .btn-tab{
+        text-align:center;
+    }
+
+    .search-flex{
+        width:100%;
+    }
+
+    /* RFID CARD */
+    #rfidUID,
+    #fingerprintID{
+        font-size:22px;
+        word-break:break-all;
+    }
+
+    /* Tombol tambah */
+    .btn-tambah-rfid{
+        width:100%;
+        justify-content:center;
+    }
+
+    /* Table */
+    .table-container{
+        overflow-x:auto;
+        overflow-y:auto;
+        -webkit-overflow-scrolling:touch;
+    }
+
+    .table{
+        min-width:650px;
+    }
+
+    .table th,
+    .table td{
+        white-space:nowrap;
+        font-size:12px;
+    }
+
+    /* Pagination */
+    .pagination{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+}
+
+/* ===================================== */
+/* RESPONSIVE HP */
+/* ===================================== */
+
+@media (max-width:576px){
+
+    .main-dashboard{
+        padding:8px;
+    }
+
+    .card{
+        border-radius:8px;
+    }
+
+    .card h5{
+        font-size:15px;
+    }
+
+    #rfidUID,
+    #fingerprintID{
+        font-size:18px;
+    }
+
+    .btn-tab{
+        width:100%;
+    }
+
+    .btn-tambah-rfid{
+        font-size:12px;
+        padding:8px 12px;
+    }
+
+    .table th,
+    .table td{
+        font-size:11px;
+    }
+
+    .btn-danger{
+        font-size:11px;
+        padding:4px 8px;
+    }
+
+    .pagination .page-link{
+        padding:5px 8px;
+        font-size:11px;
+    }
+
+}

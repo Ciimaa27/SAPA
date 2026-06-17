@@ -14,7 +14,7 @@
 @endpush
 
 {{-- 🔥 CONTENT --}}
-@section('content')s
+@section('content')
 <div class="main-dashboard">
     <div class="container-dashboard">
 

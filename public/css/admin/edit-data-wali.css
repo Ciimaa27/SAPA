@@ -111,3 +111,80 @@
 body{
     overflow-x:hidden;
 }
+
+/* ===================================== */
+/* RESPONSIVE TABLET */
+/* ===================================== */
+
+@media (max-width:768px){
+
+    .content{
+        margin-left:0;
+        padding-left:10px;
+        padding-right:10px;
+    }
+
+    .main-dashboard{
+        padding:10px;
+    }
+
+    .container-dashboard{
+        max-width:100%;
+    }
+
+    .page-title-box{
+        padding:12px 15px;
+        font-size:16px;
+    }
+
+    .card-form{
+        padding:15px;
+    }
+
+}
+
+/* ===================================== */
+/* RESPONSIVE HP */
+/* ===================================== */
+
+@media (max-width:576px){
+
+    .page-title-box{
+        padding:10px 12px;
+        font-size:15px;
+        margin-bottom:12px;
+    }
+
+    .card-form{
+        padding:12px;
+        border-radius:8px;
+    }
+
+    .form-group label{
+        font-size:12px;
+    }
+
+    .form-group input,
+    .form-group select{
+        width:100%;
+        font-size:12px;
+        height:40px;
+    }
+
+    .form-text{
+        font-size:10px;
+    }
+
+    .form-action{
+        flex-direction:column;
+        gap:8px;
+    }
+
+    .btn-batal,
+    .btn-simpan{
+        width:100%;
+        text-align:center;
+        padding:10px;
+    }
+
+}

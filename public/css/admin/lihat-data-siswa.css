@@ -94,3 +94,102 @@
 body{
     overflow-x:hidden;
 }
+
+/* ===================================== */
+/* RESPONSIVE TABLET */
+/* ===================================== */
+
+@media (max-width:768px){
+
+    .content{
+        margin-left:0;
+        padding-left:10px;
+        padding-right:10px;
+    }
+
+    .main-dashboard{
+        padding:10px;
+    }
+
+    .container-dashboard{
+        max-width:100%;
+    }
+
+    .page-title-box{
+        padding:12px 15px;
+        font-size:16px;
+    }
+
+    .card-detail{
+        padding:15px;
+    }
+
+    .label{
+        width:120px;
+        font-size:12px;
+    }
+
+    .separator{
+        width:15px;
+    }
+
+    .value{
+        font-size:12px;
+    }
+
+}
+
+/* ===================================== */
+/* RESPONSIVE HP */
+/* ===================================== */
+
+@media (max-width:576px){
+
+    .page-title-box{
+        font-size:15px;
+        padding:10px 12px;
+    }
+
+    .card-detail{
+        padding:12px;
+    }
+
+    .btn-kembali{
+        width:100%;
+        justify-content:center;
+        margin-bottom:18px;
+    }
+
+    /* Detail jadi vertikal */
+    .detail-row{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:4px;
+
+        padding-bottom:10px;
+        margin-bottom:10px;
+
+        border-bottom:1px solid #f1f1f1;
+    }
+
+    .detail-row:last-child{
+        border-bottom:none;
+    }
+
+    .label{
+        width:100%;
+        font-size:12px;
+        font-weight:600;
+    }
+
+    .separator{
+        display:none;
+    }
+
+    .value{
+        width:100%;
+        font-size:12px;
+        word-break:break-word;
+    }
+
+}

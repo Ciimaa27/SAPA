@@ -18,6 +18,7 @@
 
         <div class="page-title-box">
             Arsip Siswa Tahun {{ $tahun }}
+            ({{ ucfirst(str_replace('_', ' ', $status)) }})
         </div>
 
         <div class="card-form">
@@ -43,6 +44,7 @@
                             <th>Nama</th>
                             <th>Kelas Terakhir</th>
                             <th>Jenis Kelamin</th>
+                            <th>Status</th>
                             <th>Tahun Lulus</th>
                         </tr>
                     </thead>
@@ -56,13 +58,24 @@
                             <td>{{ $item->nama_siswa }}</td>
                             <td>{{ $item->kelas_terakhir }}</td>
                             <td>{{ $item->jenis_kelamin }}</td>
+
+                            <td>
+                                @if($item->status == 'lulus')
+                                    <span class="badge bg-success">Lulus</span>
+                                @elseif($item->status == 'pindah')
+                                    <span class="badge bg-warning text-dark">Pindah</span>
+                                @elseif($item->status == 'mengundurkan_diri')
+                                    <span class="badge bg-danger">Mengundurkan Diri</span>
+                                @endif
+                            </td>
+
                             <td>{{ $item->tahun_lulus }}</td>
                         </tr>
 
                         @empty
 
                         <tr>
-                            <td colspan="5" class="text-center">
+                            <td colspan="6" class="text-center">
                                 Tidak ada data arsip.
                             </td>
                         </tr>

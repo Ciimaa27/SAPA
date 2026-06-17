@@ -21,6 +21,12 @@
 
 <body>
 
+<!-- MOBILE TOGGLE -->
+<button class="mobile-menu-btn d-md-none"
+        onclick="toggleSidebar()">
+    <i class="fa-solid fa-bars"></i>
+</button>
+
 <div class="layout">
 
     {{-- SIDEBAR --}}
@@ -60,6 +66,11 @@ function confirmLogout() {
             document.getElementById('logout-form').submit();
         }
     })
+}
+
+function toggleSidebar(){
+    document.querySelector('.sidebar-admin')
+            .classList.toggle('show-sidebar');
 }
 </script>
 

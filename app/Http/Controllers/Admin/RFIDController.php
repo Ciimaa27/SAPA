@@ -32,6 +32,11 @@ class RFIDController extends Controller
         return view('admin.rfid', compact('data','tab'));
     }
 
+    public function create()
+    {
+        return view('admin.tambah-data-rfid');
+    }
+
     // ================= HAPUS =================
     public function destroy($tab, $id)
     {
@@ -39,13 +44,13 @@ class RFIDController extends Controller
 
             DB::table('siswa')
                 ->where('id_siswa', $id)
-                ->update(['rfid_uid' => null]);
+                ->delete();
 
         } elseif ($tab === 'sidik-jari') {
 
             DB::table('wali')
                 ->where('id_wali', $id)
-                ->update(['fingerprint_id' => null]);
+                ->delete();
 
         }
 

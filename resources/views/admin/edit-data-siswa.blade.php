@@ -28,7 +28,7 @@
         <div class="card-form">
 
             <!-- BUTTON KEMBALI -->
-            <a href="/admin/data-siswa" class="btn btn-kembali mb-3">
+            <a href="{{ route('data-siswa') }}" class="btn btn-kembali mb-3">
                 ← Kembali
             </a>
 

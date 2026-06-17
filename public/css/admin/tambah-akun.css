@@ -41,3 +41,41 @@
 .btn-warning{
     color:white;
 }
+
+/* ===================================== */
+/* RESPONSIVE */
+/* ===================================== */
+
+@media (max-width:768px){
+
+    .main-dashboard{
+        padding:10px;
+    }
+
+}
+
+@media (max-width:576px){
+
+    .btn-kembali{
+        width:100%;
+        justify-content:center;
+    }
+
+    .form-label{
+        font-size:12px;
+    }
+
+    .form-control,
+    .form-select{
+        font-size:12px;
+    }
+
+    .d-flex.justify-content-end.gap-2{
+        flex-direction:column;
+    }
+
+    .d-flex.justify-content-end.gap-2 .btn{
+        width:100%;
+    }
+
+}

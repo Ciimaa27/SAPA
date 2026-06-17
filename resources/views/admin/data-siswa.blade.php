@@ -122,23 +122,28 @@
 
                             <td>
                                 <!-- LIHAT -->
-                                <a href="{{ route('data-siswa.show', $item->id_siswa) }}" class="btn btn-info btn-sm">
+                                <a href="{{ route('data-siswa.show', $item->id_siswa) }}"
+                                class="btn btn-info btn-sm">
                                     <i class="fa fa-eye"></i>
                                 </a>
 
                                 <!-- EDIT -->
-                                <a href="{{ route('edit-siswa', $item->id_siswa) }}" class="btn btn-warning btn-sm mx-1" title="Edit">
+                                <a href="{{ route('edit-siswa', $item->id_siswa) }}"
+                                class="btn btn-warning btn-sm mx-1">
                                     <i class="fa fa-pencil"></i>
                                 </a>
 
-                                <!-- HAPUS -->
-                                <form action="{{ route('hapus-siswa', $item->id_siswa) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')">
-                                    <i class="fa fa-trash"></i>
+                                <!-- ARSIP -->
+                                <button
+                                    type="button"
+                                    class="btn btn-secondary btn-sm btn-arsip"
+                                    data-id="{{ $item->id_siswa }}"
+                                    data-nama="{{ $item->nama_siswa }}"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalArsip">
+
+                                    <i class="fa fa-box-archive"></i>
                                 </button>
-                            </form>
                             </td>
                         </tr>
                         @endforeach
@@ -257,39 +262,105 @@
     </div>
 </div>
 
-<!-- SCRIPT DELETE SAJA -->
+<!-- MODAL ARSIP -->
+<div class="modal fade" id="modalArsip" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <form id="formArsip" method="POST">
+                @csrf
+
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        Arsipkan Siswa
+                    </h5>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <p>
+                        Nama siswa:
+                        <strong id="namaSiswa"></strong>
+                    </p>
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Status Arsip
+                        </label>
+
+                        <select
+                            name="status"
+                            class="form-select"
+                            required>
+
+                            <option value="lulus">
+                                Lulus
+                            </option>
+
+                            <option value="pindah">
+                                Pindah
+                            </option>
+
+                            <option value="mengundurkan_diri">
+                                Mengundurkan Diri
+                            </option>
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                        Batal
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary">
+                        Arsipkan
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    const confirmModal = document.getElementById('confirmModal');
-    const confirmButton = document.querySelector('.btn-confirm');
-    const cancelButton = document.querySelector('.btn-cancel');
-    let activeDeleteForm = null;
+    const formArsip = document.getElementById('formArsip');
+    const namaSiswa = document.getElementById('namaSiswa');
 
-    document.querySelectorAll('.btn-delete').forEach(function(button) {
-        button.addEventListener('click', function() {
-            activeDeleteForm = button.closest('.delete-form');
-            confirmModal.classList.add('show');
+    document.querySelectorAll('.btn-arsip').forEach(function(btn){
+
+        btn.addEventListener('click', function(){
+
+            const id = this.dataset.id;
+            const nama = this.dataset.nama;
+
+            namaSiswa.textContent = nama;
+
+            formArsip.action =
+                "{{ url('/admin/arsip-siswa') }}/" + id;
+
         });
+
     });
 
-    confirmButton.addEventListener('click', function() {
-        if (activeDeleteForm) {
-            activeDeleteForm.submit();
-        }
-    });
-
-    cancelButton.addEventListener('click', function() {
-        confirmModal.classList.remove('show');
-        activeDeleteForm = null;
-    });
-
-    confirmModal.addEventListener('click', function(event) {
-        if (event.target === confirmModal || event.target.classList.contains('confirm-modal-backdrop')) {
-            confirmModal.classList.remove('show');
-            activeDeleteForm = null;
-        }
-    });
 });
 </script>
 
