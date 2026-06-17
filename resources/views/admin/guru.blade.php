@@ -76,7 +76,7 @@
             </div>
 
             <!-- TABLE -->
-            <div class="table-container">
+            <div class="table-container table-responsive">
                 <table class="table table-hover align-middle mb-0" id="dataTableGuru">
 
                     <thead class="table-light">

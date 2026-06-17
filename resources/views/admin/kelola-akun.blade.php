@@ -97,7 +97,7 @@
 
         <!-- TABLE -->
         <div class="card">
-            <div class="table-container">
+            <div class="table-container table-responsive">
 
                 <table id="dataTable" class="table table-hover align-middle mb-0">
 

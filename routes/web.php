@@ -77,6 +77,7 @@ Route::prefix('admin')->group(function () {
     Route::put('/update-data-siswa/{id}', [DataSiswaController::class, 'update'])->name('update-siswa');
     Route::get('/detail-siswa/{id}', [DataSiswaController::class, 'show'])->name('detail-siswa');
     Route::post('/kenaikan-kelas', [DataSiswaController::class, 'kenaikanKelas'])->name('kenaikan-kelas');
+    Route::post('/arsip-siswa/{id}', [DataSiswaController::class, 'arsipkan'])->name('arsip-siswa.store');
 
     // DATA WALI
     Route::get('/data-wali', [DataWaliController::class, 'index'])->name('data-wali');
@@ -110,8 +111,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/status-perangkat', [IoTController::class, 'statusPerangkat'])->name('status-perangkat');
     Route::get('/iot/{tab?}', [RFIDController::class, 'index'])->name('iot.index');
     Route::delete('/iot/{tab}/{id}', [RFIDController::class, 'destroy'])->name('iot.destroy');
-    Route::view('/admin/tambah-data-rfid', 'admin.tambah-data-rfid')->name('tambah-data-rfid');
-    Route::get('/admin/latest-rfid', [RFIDController::class, 'latestRFID']);
+    Route::view('/tambah-data-rfid', 'admin.tambah-data-rfid')->name('tambah-data-rfid');
+    Route::get('/latest-rfid', [RFIDController::class, 'latestRFID']);
 
     // JADWAL & PENJEMPUTAN
     Route::get('/jadwal-pulang', [JadwalPulangController::class, 'index'])->name('jadwal-pulang');
@@ -123,9 +124,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
 
    // Arsip Siswa
-   Route::get('/admin/arsip-siswa', [ArsipSiswaController::class, 'index'])->name('arsip-siswa');
-   Route::get('/admin/arsip-siswa/{tahun}', [ArsipSiswaController::class, 'showByYear'])->name('arsip-siswa.tahun');
-    Route::get('/admin/arsip-siswa/{tahun}/export', [ArsipSiswaController::class, 'exportByYear'])->name('arsip-siswa.export');
+   Route::get('/arsip-siswa', [ArsipSiswaController::class, 'index'])->name('arsip-siswa');
+   Route::get('/arsip-siswa/{tahun}/export', [ArsipSiswaController::class, 'exportByYear'])->name('arsip-siswa.export');
+   Route::get('/arsip-siswa/{tahun}/{status}', [ArsipSiswaController::class, 'showByYear'])->name('arsip-siswa.tahun');
 });
 
 

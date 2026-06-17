@@ -110,3 +110,61 @@
     min-height:100vh;
     background:#f4f6fb;
 }
+
+/* ===================================== */
+/* MOBILE RESPONSIVE */
+/* ===================================== */
+
+.mobile-menu-btn{
+    display:none;
+}
+
+@media (max-width:768px){
+
+    .mobile-menu-btn{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+        position:fixed;
+        top:12px;
+        left:12px;
+
+        width:42px;
+        height:42px;
+
+        border:none;
+        border-radius:8px;
+
+        background:#6f42c1;
+        color:white;
+
+        z-index:9999;
+        box-shadow:0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    .sidebar-admin{
+
+        width:230px;
+        height:100vh;
+
+        position:fixed;
+        top:0;
+        left:-230px;
+
+        z-index:9998;
+
+        transition:0.3s ease;
+    }
+
+    .sidebar-admin.show-sidebar{
+        left:0;
+    }
+
+    .content{
+        margin-left:0;
+        width:100%;
+        padding-top:70px;
+    }
+
+}

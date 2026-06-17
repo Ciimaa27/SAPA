@@ -345,4 +345,51 @@ public function update(Request $request, $id)
 
         return view('admin.arsip-siswa', compact('arsip'));
     }
+
+    public function arsipkan(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required'
+        ]);
+
+        $siswa = Siswa::findOrFail($id);
+
+        $kelas = Kelas::find($siswa->id_kelas);
+
+        ArsipSiswa::create([
+            'id_siswa_lama' => $siswa->id_siswa,
+            'id_kelas' => $siswa->id_kelas,
+            'nis' => $siswa->nis,
+            'nama_siswa' => $siswa->nama_siswa,
+            'tempat_lahir' => $siswa->tempat_lahir,
+            'tanggal_lahir' => $siswa->tanggal_lahir,
+            'jenis_kelamin' => $siswa->jenis_kelamin,
+            'rfid_uid' => $siswa->rfid_uid,
+            'status' => $request->status,
+            'tahun_lulus' => date('Y'),
+            'kelas_terakhir' => $kelas->nama_kelas ?? '-',
+        ]);
+
+        // NONAKTIFKAN SISWA
+        $siswa->update([
+            'is_active' => 0
+        ]);
+
+        // CARI WALI YANG TERHUBUNG
+        $waliIds = DB::table('siswa_wali')
+            ->where('id_siswa', $siswa->id_siswa)
+            ->pluck('id_wali');
+
+        // NONAKTIFKAN DATA WALI
+        DB::table('wali')
+            ->whereIn('id_wali', $waliIds)
+            ->update([
+                'is_active' => 0
+            ]);
+
+        return back()->with(
+            'success',
+            'Data siswa berhasil diarsipkan'
+        );
+    }
 }

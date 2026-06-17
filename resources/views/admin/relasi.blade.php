@@ -67,7 +67,7 @@
         </div>
 
         <div class="card">
-            <div class="table-container">
+            <div class="table-container table-responsive">
                 <!-- 🔥 TAMBAH ID DI TABEL -->
                 <table class="table table-hover align-middle mb-0" id="dataTableRelasi">
                     <thead class="table-light">

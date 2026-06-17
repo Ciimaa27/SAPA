@@ -183,3 +183,113 @@ body{
     height: 14px;
 }
 
+/* ===================================== */
+/* RESPONSIVE TABLET */
+/* ===================================== */
+
+@media (max-width:768px){
+
+    .content{
+        margin-left:0;
+        padding-left:10px;
+        padding-right:10px;
+    }
+
+    .main-dashboard{
+        padding:10px;
+    }
+
+    .container-dashboard{
+        max-width:100%;
+    }
+
+    /* Toolbar atas */
+    .card .d-flex.align-items-center.gap-3{
+        flex-direction:column;
+        align-items:stretch !important;
+        gap:10px !important;
+    }
+
+    .btn-tab{
+        text-align:center;
+    }
+
+    .search-flex{
+        width:100%;
+    }
+
+    /* Tombol tambah */
+    .btn-tambah-guru,
+    .btn-tambah-kelas{
+        width:100%;
+        justify-content:center;
+    }
+
+    /* Table */
+    .table-container{
+        overflow-x:auto;
+        overflow-y:auto;
+        -webkit-overflow-scrolling:touch;
+    }
+
+    .table{
+        min-width:900px;
+    }
+
+    .table th,
+    .table td{
+        white-space:nowrap;
+        font-size:12px;
+    }
+
+    /* Pagination */
+    .pagination{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+}
+
+/* ===================================== */
+/* RESPONSIVE HP */
+/* ===================================== */
+
+@media (max-width:576px){
+
+    .main-dashboard{
+        padding:8px;
+    }
+
+    .card{
+        border-radius:8px;
+    }
+
+    .card h5{
+        font-size:15px;
+    }
+
+    .btn-tab{
+        width:100%;
+    }
+
+    .table th,
+    .table td{
+        font-size:11px;
+    }
+
+    .btn-sm{
+        font-size:11px;
+    }
+
+    .btn-tambah-guru,
+    .btn-tambah-kelas{
+        font-size:12px;
+        padding:8px 12px;
+    }
+
+    .pagination .page-link{
+        padding:5px 8px !important;
+        font-size:11px !important;
+    }
+
+}

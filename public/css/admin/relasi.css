@@ -110,3 +110,108 @@ body{
     width: 14px;
     height: 14px;
 }
+
+/* ===================================== */
+/* RESPONSIVE TABLET */
+/* ===================================== */
+
+@media (max-width:768px){
+
+    .content{
+        margin-left:0;
+        padding-left:10px;
+        padding-right:10px;
+    }
+
+    .main-dashboard{
+        padding:10px;
+    }
+
+    .container-dashboard{
+        max-width:100%;
+    }
+
+    /* Toolbar */
+    .card .d-flex.align-items-center.gap-3{
+        flex-direction:column;
+        align-items:stretch !important;
+        gap:10px !important;
+    }
+
+    .search-flex{
+        width:100%;
+    }
+
+    .card .d-flex.align-items-center.gap-3 > div{
+        width:100% !important;
+        max-width:100% !important;
+    }
+
+    .btn-tambah{
+        width:100%;
+        justify-content:center;
+    }
+
+    /* Table */
+    .table-container{
+        overflow-x:auto;
+        overflow-y:auto;
+        -webkit-overflow-scrolling:touch;
+    }
+
+    .table{
+        min-width:850px;
+    }
+
+    .table th,
+    .table td{
+        white-space:nowrap;
+        font-size:12px;
+    }
+
+    /* Pagination */
+    .pagination{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+}
+
+/* ===================================== */
+/* RESPONSIVE HP */
+/* ===================================== */
+
+@media (max-width:576px){
+
+    .main-dashboard{
+        padding:8px;
+    }
+
+    .card{
+        border-radius:8px;
+    }
+
+    .card h5{
+        font-size:15px;
+    }
+
+    .table th,
+    .table td{
+        font-size:11px;
+    }
+
+    .btn-sm{
+        font-size:11px;
+    }
+
+    .btn-tambah{
+        font-size:12px;
+        padding:8px 12px;
+    }
+
+    .pagination .page-link{
+        padding:5px 8px;
+        font-size:11px;
+    }
+
+}

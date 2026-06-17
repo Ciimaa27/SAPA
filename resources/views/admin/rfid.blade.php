@@ -25,6 +25,14 @@
             <h5 class="mb-0">RFID dan Sidik jari</h5>
         </div>
 
+        <!-- ✅ ALERT -->
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        @endif
+
         <!-- TAB -->
         <div class="card mb-3 p-3">
             <div class="d-flex align-items-center gap-3">
@@ -70,14 +78,6 @@
         <!-- TABLE -->
         <div class="card">
 
-            <!-- BUTTON TAMBAH -->
-            <div class="d-flex justify-content-end p-3">
-                <a href="{{ route('tambah-data-rfid') }}" class="btn-tambah-rfid">
-                    Tambah
-                    <span class="icon-plus">+</span>
-                </a>
-            </div>
-
             <!-- TABLE -->
             <div class="table-container">
                 <table class="table table-hover align-middle mb-0" id="dataTable">
@@ -106,18 +106,18 @@
                                 <td>{{ $item->nama_siswa }}</td>
                                 <td>{{ $item->rfid_uid ?? '-' }}</td>
                                 <td>
-                                    <form action="{{ route('iot.destroy',['tab'=>'rfid','id'=>$item->id_siswa]) }}" method="POST">
+                                    <form action="{{ route('iot.destroy',['tab'=>'rfid','id'=>$item->id_siswa]) }}" method="POST" style="display:inline;">
                                         @csrf @method('DELETE')
-                                        <button class="btn btn-danger btn-sm">Hapus</button>
+                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')" type="submit">Hapus</button>
                                     </form>
                                 </td>
                             @else
                                 <td>{{ $item->nama_wali }}</td>
                                 <td>{{ $item->fingerprint_id ?? '-' }}</td>
                                 <td>
-                                    <form action="{{ route('iot.destroy',['tab'=>'sidik-jari','id'=>$item->id_wali]) }}" method="POST">
+                                    <form action="{{ route('iot.destroy',['tab'=>'sidik-jari','id'=>$item->id_wali]) }}" method="POST" style="display:inline;">
                                         @csrf @method('DELETE')
-                                        <button class="btn btn-danger btn-sm">Hapus</button>
+                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')" type="submit">Hapus</button>
                                     </form>
                                 </td>
                             @endif
@@ -134,7 +134,72 @@
 
             <!-- PAGINATION -->
             <div class="p-3 d-flex justify-content-end">
-                {{ $data->links('pagination::bootstrap-5') }}
+                <nav>
+                    <ul class="pagination pagination-sm mb-0">
+
+                        {{-- Previous --}}
+                        @if ($data->onFirstPage())
+                            <li class="page-item disabled">
+                                <span class="page-link">‹</span>
+                            </li>
+                        @else
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $data->previousPageUrl() }}">‹</a>
+                            </li>
+                        @endif
+
+                        {{-- Numbers --}}
+                        @php
+                            $current = $data->currentPage();
+                            $last = $data->lastPage();
+                        @endphp
+
+                        {{-- First page --}}
+                        @if ($current > 3)
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $data->url(1) }}">1</a>
+                            </li>
+
+                            @if ($current > 4)
+                                <li class="page-item disabled">
+                                    <span class="page-link">...</span>
+                                </li>
+                            @endif
+                        @endif
+
+                        {{-- Middle pages --}}
+                        @for ($i = max(1, $current - 1); $i <= min($last, $current + 1); $i++)
+                            <li class="page-item {{ $i == $current ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $data->url($i) }}">{{ $i }}</a>
+                            </li>
+                        @endfor
+
+                        {{-- Last page --}}
+                        @if ($current < $last - 2)
+                            @if ($current < $last - 3)
+                                <li class="page-item disabled">
+                                    <span class="page-link">...</span>
+                                </li>
+                            @endif
+
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $data->url($last) }}">{{ $last }}</a>
+                            </li>
+                        @endif
+
+                        {{-- Next --}}
+                        @if ($data->hasMorePages())
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $data->nextPageUrl() }}">›</a>
+                            </li>
+                        @else
+                            <li class="page-item disabled">
+                                <span class="page-link">›</span>
+                            </li>
+                        @endif
+
+                    </ul>
+                </nav>
             </div>
 
         </div>
