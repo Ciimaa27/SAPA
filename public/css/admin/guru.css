@@ -144,6 +144,18 @@ body{
     transform: scale(0.97);
 }
 
+.btn-action {
+    border-radius: 10px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.btn-action.btn-sm {
+    padding: 5px 12px;
+}
+
 /* ===== PAGINATION ===== */
 .pagination {
     margin: 0;

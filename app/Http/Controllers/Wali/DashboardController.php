@@ -28,7 +28,7 @@ class DashboardController extends Controller
 
         if (!$relasi) {
             return view('wali.dashboard', [
-                'anak' => null,
+                'siswa' => null,
                 'kehadiran' => null,
                 'penjemputan' => null,
                 'jadwal_pulang' => null,
@@ -40,7 +40,7 @@ class DashboardController extends Controller
 
         if (!$siswa) {
             return view('wali.dashboard', [
-                'anak' => null,
+                'siswa' => null,
                 'kehadiran' => null,
                 'penjemputan' => null,
                 'jadwal_pulang' => null,
