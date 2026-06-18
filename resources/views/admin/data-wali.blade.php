@@ -106,19 +106,6 @@
                                 title="Edit">
                                     <i class="fa fa-pencil"></i>
                                 </a>
-                                <form action="{{ route('hapus-wali', ['id' => $row->id_wali]) }}"
-                                    method="POST"
-                                    style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <button type="submit"
-                                            class="btn btn-danger btn-sm"
-                                            title="Hapus"
-                                            onclick="return confirm('Yakin hapus?')">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </form>
                             </td>
                         </tr>
 
