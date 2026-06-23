@@ -22,9 +22,10 @@
 
         <div class="card p-4">
 
-            <a href="{{ route('data-siswa') }}" class="btn btn-kembali mb-3">
-                ← Kembali
-            </a>
+<a href="{{ route('data-siswa') }}" class="btn-kembali mb-3">
+    <i class="fas fa-arrow-left"></i>
+    Kembali
+</a>
 
             {{-- ERROR --}}
             @if ($errors->any())

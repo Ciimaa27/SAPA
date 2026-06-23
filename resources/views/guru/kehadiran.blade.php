@@ -59,11 +59,12 @@
                             <td>{{ $row['kelas'] }}</td>
                             <td>{{ $row['wali'] }}</td>
                             <td>{{ $row['jumlah'] }}</td>
-                            <td>
-                                <a href="{{ route('guru.detail-kehadiran', $row['id_kelas']) }}" class="btn-lihat">
-                                    Lihat siswa
+                        <td>
+                                <a href="{{ route('guru.detail-kehadiran', $row['id_kelas']) }}"
+                                class="btn-lihat">
+                                    <i class="fas fa-eye"></i>
                                 </a>
-                            </td>
+                        </td>
                         </tr>
                         @empty
                         <tr>

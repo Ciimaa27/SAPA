@@ -154,11 +154,31 @@ body{
         padding:12px;
     }
 
-    .btn-kembali{
-        width:100%;
-        justify-content:center;
-        margin-bottom:18px;
-    }
+.btn-kembali{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 8px 14px;
+
+    background: #f3f0ff;
+    color: #6f42c1;
+
+    border: 1px solid rgba(111, 66, 193, 0.15);
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 400;
+
+    text-decoration: none;
+    transition: all .2s ease;
+}
+
+.btn-kembali:hover{
+    background: #e5dbff;
+    color: #6f42c1;
+    transform: translateY(-1px);
+}
 
     /* Detail jadi vertikal */
     .detail-row{

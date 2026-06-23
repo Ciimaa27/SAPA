@@ -192,23 +192,12 @@ Route::get('/guru/penjemputan/{id_kelas}', [GuruController::class, 'daftarPenjem
 |--------------------------------------------------------------------------
 */
 
-<<<<<<< HEAD
 Route::get('/wali/dashboard', [App\Http\Controllers\wali\DashboardController::class, 'index'])->name('wali.dashboard');
 Route::get('/wali/kehadiran', [App\Http\Controllers\wali\DashboardController::class, 'kehadiran'])->name('wali.kehadiran');
 Route::get('/wali/status-penjemputan', [App\Http\Controllers\wali\DashboardController::class, 'statusPenjemputan'])->name('wali.status-penjemputan');
 Route::get('/wali/notifikasi', [App\Http\Controllers\wali\DashboardController::class, 'notifikasi'])->name('wali.notifikasi');
 Route::get('/wali/jadwal-pulang', [App\Http\Controllers\wali\DashboardController::class, 'jadwalPulang'])->name('wali.jadwal-pulang');
 Route::get('/wali/laporan', function () {return view('wali.laporan');})->name('wali.laporan');
-=======
-Route::prefix('wali')->middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\Wali\DashboardController::class, 'index'])->name('wali.dashboard');
-    Route::get('/kehadiran', [App\Http\Controllers\Wali\DashboardController::class, 'kehadiran'])->name('wali.kehadiran');
-    Route::get('/status-penjemputan', [App\Http\Controllers\Wali\DashboardController::class, 'statusPenjemputan'])->name('wali.status-penjemputan');
-    Route::view('/jadwal-pulang', 'wali.jadwal-pulang')->name('wali.jadwal-pulang');
-    Route::get('/notifikasi', function () { return view('wali.notifikasi'); })->name('wali.notifikasi');
-    Route::get('/laporan', [App\Http\Controllers\Wali\DashboardController::class, 'laporan'])->name('wali.laporan');
-});
->>>>>>> limau
 
 /*
 |--------------------------------------------------------------------------

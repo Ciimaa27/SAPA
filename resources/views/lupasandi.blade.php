@@ -20,7 +20,7 @@
             <div class="col-md-5 pe-md-5">
                 <div class="mb-4">
                     <h1 class="display-5 fw-bold text-orange">Lupa Kata sandi?</h1>
-                    <p class="text-orange fs-6">Masukkan username dan email yang terdaftar agar Anda dapat melanjutkan reset kata sandi.</p>
+                    <p class="text-orange fs-6">Masukkan email yang terdaftar agar Anda dapat melanjutkan reset kata sandi.</p>
                 </div>
 
                 @if(session('error'))
@@ -31,19 +31,6 @@
 
                 <form action="{{ route('password.verifikasi') }}" method="POST">
                     @csrf
-                    <div class="mb-4">
-                        <label class="custom-label">Username</label>
-                        <input type="text"
-                            class="form-control custom-input @error('username') is-invalid @enderror"
-                            name="username"
-                            value="{{ old('username') }}"
-                            placeholder="Masukkan Username"
-                            required>
-                        @error('username')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
                     <div class="mb-4">
                         <label class="custom-label">Email</label>
                         <input type="email"

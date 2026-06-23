@@ -29,6 +29,7 @@
     text-decoration:none;
 
     width:fit-content;
+    max-width:max-content;
 }
 
 .btn-kembali:hover{
