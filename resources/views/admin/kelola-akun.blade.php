@@ -27,9 +27,9 @@
         <div class="card mb-3 p-3">
             <div class="d-flex align-items-center gap-3 flex-wrap">
 
-                <div class="total-account-box">
-                    Total akun : <strong>{{ $total }}</strong>
-                </div>
+        <div class="total-data">
+            Total Akun : <strong>{{ $total }}</strong>
+        </div>
 
                 <!-- FILTER -->
                 <div style="width:180px;">

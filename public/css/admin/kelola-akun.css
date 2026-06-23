@@ -15,25 +15,14 @@
     padding-right:10px;
 }
 
-/* ===== STICKY HEADER & TOOLBAR ===== */
-.main-dashboard > .container-dashboard > .card:nth-of-type(1),
-.main-dashboard > .container-dashboard > .card:nth-of-type(2) {
+.sticky-toolbar{
     position: sticky;
-    top: 0;
-    z-index: 100;
-    background: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    top: 145px;
+    z-index: 1049;
+    background: #fff;
 }
 
-.main-dashboard > .container-dashboard > .card:nth-of-type(1) {
-    top: 0;
-}
-
-.main-dashboard > .container-dashboard > .card:nth-of-type(2) {
-    top: 60px;
-}
-
-/* ===== BUTTON TAMBAH ===== */
+/* ===== BUTTON & SEARCH ===== */
 .btn-tambah{
     display:inline-flex;
     align-items:center;
@@ -102,10 +91,28 @@
     font-weight:600;
 }
 
-/* 🔥 FIX: HILANGKAN SCROLL TABEL */
-.table-container {
-    max-height: none;        /* hilang batas */
-    overflow: visible;       /* tidak scroll */
+/* ===================================== */
+/* TABLE SCROLL */
+/* ===================================== */
+
+.table-container{
+    max-height:500px;
+    overflow-y:auto;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+}
+
+/* Header tabel tetap terlihat */
+.table thead th{
+    position:sticky;
+    top:0;
+    background:#f8f9fa;
+    z-index:10;
+}
+
+/* Hilangkan jarak bawah tabel */
+.table{
+    margin-bottom:0;
 }
 
 /* 🔥 OPTIONAL: kalau mau tetap rapi */
@@ -360,4 +367,49 @@ body{
         font-size:11px;
     }
 
+}
+
+.total-data{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 36px;
+    min-width: 120px;
+    padding: 0 14px;
+
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    background: #fff;
+
+    font-size: 13px;
+    font-weight: 500;
+    color: #212529;
+}
+
+.total-data strong{
+    margin-left: 4px;
+}
+
+/* ===== SAMAKAN TINGGI TOOLBAR ===== */
+
+/* ===== SAMAKAN TINGGI TOOLBAR ===== */
+
+.total-data{
+    height: 36px;
+    min-width: 120px;
+    padding: 0 14px;
+}
+
+.form-select{
+    height: 36px;
+}
+
+.btn-tambah{
+    height: 36px;
+    padding: 0 14px;
+}
+
+.search-flex .form-control{
+    height: 36px;
 }

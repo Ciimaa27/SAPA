@@ -12,16 +12,13 @@ class LupaPasswordController extends Controller
     public function verifikasi(Request $request)
     {
         $request->validate([
-            'username' => 'required',
             'email' => 'required|email',
         ]);
 
-        $user = User::where('username', $request->username)
-                    ->where('email', $request->email)
-                    ->first();
+        $user = User::where('email', $request->email)->first();
 
         if (!$user) {
-            return back()->with('error', 'Username atau email tidak sesuai.');
+            return back()->with('error', 'Email tidak sesuai.');
         }
 
         // Generate OTP

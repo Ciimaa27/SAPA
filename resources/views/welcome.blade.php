@@ -4,301 +4,372 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAPA</title>
+    <title>SAPA | Sistem Absensi dan Penjemputan Anak</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
 </head>
 
 <body>
 
-   <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="#">SAPA</a>
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+                <div>
+                    <h5 class="m-0 fw-bold">SAPA</h5>
+                    <small>Sistem Absensi & Penjemputan Anak</small>
+                </div>
+            </a>
 
-        <!-- Toggle  -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="menu">
-            <ul class="navbar-nav ms-auto align-items-center">
-                <li class="nav-item"><a class="nav-link" href="#hero">Beranda</a></li>
-                <li class="nav-item"><a class="nav-link" href="#tentang">Tentang</a></li>
-                <li class="nav-item"><a class="nav-link" href="#guru">Guru</a></li>
-                <li class="nav-item"><a class="nav-link" href="#panduan">Panduan</a></li>
-                <li class="nav-item"><a class="nav-link" href="#tim">Pengembang</a></li>
-                <li class="nav-item"><a class="nav-link" href="#kontak">Kontak</a></li>
-                <li class="nav-item ms-3">
-                    <a class="btn btn-warning btn-masuk" href="/login">Masuk</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-
-<!-- HERO -->
-<section class="hero" id="hero" style="background: url('{{ asset('foto/tk.jpg') }}') center/cover no-repeat;">
-    <div class="container position-relative text-white">
-        <div class="row align-items-center" style="min-height: 100vh;">
-            <div class="col-md-6">
-                <p>Politeknik Negeri Banjarmasin</p>
-                <h1>Sistem Absensi dan Penjemputan Anak Berbasis RFID dan Fingerprint</h1>
-
-                <a href="/login" class="btn btn-warning mt-3">Mulai Sekarang</a>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#hero">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#fitur">Fitur</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tentang">Tentang</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#panduan">Panduan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#guru">Guru</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tim">Pengembang</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-login" href="/login">Masuk</a>
+                    </li>
+                </ul>
             </div>
         </div>
-    </div>
-</section>
+    </nav>
 
+    <section class="hero-section" id="hero">
+        <div class="container">
+            <div class="row align-items-center hero-row">
+                <div class="col-lg-6">
+                    <span class="hero-badge">
+                        SDIT Nurul Fikri Banjarmasin
+                    </span>
 
-<!-- TENTANG -->
-<section class="tentang-modern" id="tentang">
-    <div class="container">
- <h3 class="text-center mb-5 judul-tentang">Tentang SAPA</h3>
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <p class="tentang-text">
-                    <p class="tentang-text">
-                        SAPA (Sistem Absensi dan Penjemputan Anak) merupakan sistem informasi berbasis web yang dirancang
-                        untuk meningkatkan keamanan dan efisiensi dalam proses absensi serta penjemputan siswa di lingkungan sekolah.
+                    <h1 class="hero-title">
+                        Sistem Absensi dan Penjemputan Anak Berbasis RFID & Fingerprint
+                    </h1>
+
+                    <p class="hero-desc">
+                        Solusi modern untuk meningkatkan keamanan, akurasi, dan transparansi proses kehadiran
+                        serta penjemputan siswa secara real-time.
                     </p>
 
-                    <p class="tentang-text">
-                        Sistem ini memanfaatkan teknologi RFID dan fingerprint untuk melakukan identifikasi
-                        secara otomatis dan akurat. Melalui sistem SAPA, data kehadiran siswa dapat tercatat secara real-time dan terintegrasi.
-                    </p>
+                    <div class="hero-btn-group">
+                        <a class="btn btn-hero-primary" href="/login">Mulai Sekarang</a>
+                        <a class="btn btn-hero-secondary" href="#tentang">Pelajari Lebih Lanjut</a>
+                    </div>
+                </div>
 
-                    <p class="tentang-text">
-                        Hal ini memudahkan pihak sekolah dalam melakukan monitoring serta memberikan informasi yang transparan
-                         kepada orang tua. Selain itu, fitur penjemputan memastikan bahwa siswa dijemput oleh pihak yang berwenang.
-                    </p>
+                <div class="col-lg-6">
+                    <div class="hero-image-wrapper">
+                        <img class="hero-image" src="{{ asset('foto/nurulfikri.png') }}" alt="SDIT Nurul Fikri">
 
-                    <p class="tentang-text">
-                        Dengan adanya SAPA, diharapkan proses administrasi menjadi lebih efektif,
-                        mengurangi kesalahan pencatatan manual, serta mendukung penerapan teknologi dalam lingkungan pendidikan.
-                    </p>
-            </div>
-
-            <div class="col-md-6 posisi-gambar">
-                <img src="{{ asset('foto/tk1.png') }}" class="img-main">
-                <img src="{{ asset('foto/tk2.png') }}" class="img-back">
+                        <div class="floating-card">
+                            <div class="icon-box">✓</div>
+                            <div>
+                                <h6>Aman • Cepat • Akurat</h6>
+                                <p>Monitoring siswa secara real-time.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+        <div class="hero-dots"></div>
+    </section>
 
-
-<!-- GURU -->
-<section class="guru" id="guru">
-    <div class="container text-center">
-        <h3 class="judul-tentang mb-3">Guru</h3>
-        <p class="mb-5">
-            Informasi mengenai guru yang terdaftar dalam sistem SAPA.
-        </p>
-
-        <div class="row justify-content-center g-4">
-
-        <!-- WRAPPER SCROLL -->
-        <div class="guru-scroll">
-
-            <!-- CARD -->
-            <div class="guru-card">
-                <img src="{{ asset('foto/guru1.jpg') }}" class="guru-img">
-                <div class="card-body">
-                    <h5>Nama Guru</h5>
-                    <span class="badge bg-warning text-dark">Wali Kelas A</span>
+    <section class="stats-section">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-3 col-6">
+                    <div class="stats-card">
+                        <h3>500+</h3>
+                        <p>Siswa Aktif</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stats-card">
+                        <h3>98%</h3>
+                        <p>Akurasi Data</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stats-card">
+                        <h3>24/7</h3>
+                        <p>Monitoring</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stats-card">
+                        <h3>RFID</h3>
+                        <p>Fingerprint</p>
+                    </div>
                 </div>
             </div>
-
-            <div class="guru-card">
-                <img src="{{ asset('foto/guru2.jpg') }}" class="guru-img">
-                <div class="card-body">
-                    <h5>Nama Guru</h5>
-                    <span class="badge bg-warning text-dark">Wali Kelas B</span>
-                </div>
-            </div>
-
-            <div class="guru-card">
-                <img src="{{ asset('foto/guru3.jpg') }}" class="guru-img">
-                <div class="card-body">
-                    <h5>Nama Guru</h5>
-                    <span class="badge bg-warning text-dark">Guru Pendamping</span>
-                </div>
-            </div>
-
-            <div class="guru-card">
-                <img src="{{ asset('foto/guru4.jpg') }}" class="guru-img">
-                <div class="card-body">
-                    <h5>Nama Guru</h5>
-                    <span class="badge bg-warning text-dark">Guru Seni</span>
-                </div>
-            </div>
-
-            <div class="guru-card">
-                <img src="{{ asset('foto/guru5.jpg') }}" class="guru-img">
-                <div class="card-body">
-                    <h5>Nama Guru</h5>
-                    <span class="badge bg-warning text-dark">Guru Olahraga</span>
-                </div>
-            </div>
-            <div class="guru-card">
-                <img src="{{ asset('foto/guru6.jpg') }}" class="guru-img">
-                <div class="card-body">
-                    <h5>Nama Guru</h5>
-                    <span class="badge bg-warning text-dark">Guru Pendamping</span>
-                </div>
-            </div>
-
-            <div class="guru-card">
-                <img src="{{ asset('foto/guru7.jpg') }}" class="guru-img">
-                <div class="card-body">
-                    <h5>Nama Guru</h5>
-                    <span class="badge bg-warning text-dark">Guru Seni</span>
-                </div>
-            </div>
-
-            <div class="guru-card">
-                <img src="{{ asset('foto/guru8.jpg') }}" class="guru-img">
-                <div class="card-body">
-                    <h5>Nama Guru</h5>
-                    <span class="badge bg-warning text-dark">Guru Olahraga</span>
-                </div>
-            </div>
-
         </div>
-    </div>
-</section>
+    </section>
 
+    <section class="fitur-section" id="fitur">
+        <div class="container">
+            <div class="section-title">
+                <span>FITUR UNGGULAN</span>
+                <h2>Mengapa Memilih SAPA?</h2>
+            </div>
+
+            <div class="row g-4 mt-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="fitur-card">
+                        <div class="fitur-icon">📡</div>
+                        <h5>RFID</h5>
+                        <p>Pencatatan kehadiran siswa otomatis dan cepat.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="fitur-card">
+                        <div class="fitur-icon">👆</div>
+                        <h5>Fingerprint</h5>
+                        <p>Validasi identitas secara aman dan akurat.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="fitur-card">
+                        <div class="fitur-icon">🔔</div>
+                        <h5>Notifikasi</h5>
+                        <p>Informasi langsung kepada wali siswa.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="fitur-card">
+                        <div class="fitur-icon">📊</div>
+                        <h5>Laporan</h5>
+                        <p>Riwayat kehadiran dan penjemputan lengkap.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
+    <section class="tentang-section" id="tentang">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <div class="tentang-image">
+                        <img class="img-main" src="{{ asset('foto/tk1.png') }}" alt="SAPA">
+                        <img class="img-back" src="{{ asset('foto/tk2.png') }}" alt="SAPA">
+                    </div>
+                </div>
 
-<!-- PANDUAN -->
-<section class="tentang" id="panduan">
-    <div class="container text-center">
-        <h3>Panduan</h3>
-        <p class="mt-3 text-start d-inline-block">
-            1. Siswa melakukan scan RFID atau fingerprint saat datang.<br>
-            2. Data kehadiran otomatis tersimpan dalam sistem.<br>
-            3. Orang tua dapat memantau melalui dashboard.<br>
-            4. Penjemput melakukan scan saat menjemput siswa.
-        </p>
-    </div>
-</section>
+                <div class="col-lg-6">
+                    <span class="section-badge">TENTANG SAPA</span>
+                    <h2 class="section-heading">
+                        Sistem Absensi dan Penjemputan Anak yang Aman dan Modern
+                    </h2>
+                    <p>
+                        SAPA merupakan sistem informasi berbasis web yang dirancang untuk meningkatkan keamanan,
+                        efisiensi, dan transparansi dalam proses kehadiran serta penjemputan siswa.
+                    </p>
+                    <div class="check-list">
+                        <div>✓ Absensi RFID Otomatis</div>
+                        <div>✓ Verifikasi Fingerprint</div>
+                        <div>✓ Monitoring Real-time</div>
+                        <div>✓ Riwayat Kehadiran Lengkap</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section class="panduan-section" id="panduan">
+        <div class="container">
+            <div class="section-title text-center">
+                <span>CARA KERJA</span>
+                <h2>Panduan Penggunaan SAPA</h2>
+            </div>
 
-<!-- TIM -->
-<section class="guru tim-section" id="tim">
-    <div class="container text-center">
-        <h3 class="text-primary mb-5">Tim Pengembang</h3>
+            <div class="row g-4 mt-4">
+                <div class="col-lg-3">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h5>Scan RFID</h5>
+                        <p>Siswa melakukan scan kartu RFID saat datang.</p>
+                    </div>
+                </div>
 
-        <div class="row justify-content-center g-4">
+                <div class="col-lg-3">
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h5>Verifikasi</h5>
+                        <p>Sistem memvalidasi identitas siswa.</p>
+                    </div>
+                </div>
 
-            <!--CARD-->
+                <div class="col-lg-3">
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h5>Data Tersimpan</h5>
+                        <p>Kehadiran otomatis masuk ke database.</p>
+                    </div>
+                </div>
 
-            <div class="col-md-4">
-                <div class="card tim-card">
-                    <img src="{{ asset('foto/bila.png') }}" class="tim-img">
-                    <div class="card-body">
+                <div class="col-lg-3">
+                    <div class="step-card">
+                        <div class="step-number">4</div>
+                        <h5>Notifikasi</h5>
+                        <p>Orang tua menerima informasi secara langsung.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="guru-section" id="guru">
+        <div class="container">
+            <div class="section-title text-center">
+                <span>TENAGA PENDIDIK</span>
+                <h2>Guru SDIT Nurul Fikri</h2>
+            </div>
+
+            <div class="row g-4 mt-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="guru-card-simple">
+                        <div class="guru-icon">👩‍🏫</div>
+                        <h5>Guru Kelas</h5>
+                        <p>Mendampingi proses belajar mengajar siswa setiap hari.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="guru-card-simple">
+                        <div class="guru-icon">📚</div>
+                        <h5>Guru Mata Pelajaran</h5>
+                        <p>Mengelola pembelajaran sesuai bidang keahlian masing-masing.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="guru-card-simple">
+                        <div class="guru-icon">📝</div>
+                        <h5>Administrasi Kehadiran</h5>
+                        <p>Mengelola data kehadiran dan aktivitas siswa.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="guru-card-simple">
+                        <div class="guru-icon">🤝</div>
+                        <h5>Kolaborasi Wali</h5>
+                        <p>Menjalin komunikasi aktif dengan orang tua siswa.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tim-section" id="tim">
+        <div class="container">
+            <div class="section-title text-center">
+                <span>PENGEMBANG</span>
+                <h2>Tim SAPA</h2>
+            </div>
+
+            <div class="row g-4 mt-5">
+                <div class="col-lg-4">
+                    <div class="tim-card">
+                        <img class="tim-img" src="{{ asset('foto/bila.png') }}" alt="Radita Nabila Shofa">
                         <h5>Radita Nabila Shofa</h5>
-                        <p>
-                            <span class="role">UI/UX Designer</span><br>
-                            <span class="role">Frontend Developer</span><br>
-
-                            <span class="text-muted">
-                                Bertanggung jawab dalam desain UI/UX dan pengembangan tampilan sistem.
-                            </span>
-                        </p>
+                        <span>UI/UX Designer & Frontend Developer</span>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card tim-card">
-                    <img src="{{ asset('foto/isma1.png') }}" class="tim-img">
-                    <div class="card-body">
+
+                <div class="col-lg-4">
+                    <div class="tim-card">
+                        <img class="tim-img" src="{{ asset('foto/isma1.png') }}" alt="Ismatul Hawa">
                         <h5>Ismatul Hawa</h5>
-                        <p>
-                            <span class="role">Backend Developer</span><br>
-                            <span class="role">Database Administrator</span><br>
-
-                            <span class="text-muted">
-                                 Bertanggung jawab mengembangkan logika sistem serta mengelola database.
-                            </span>
-                        </p>
+                        <span>Backend Developer & Database Administrator</span>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card tim-card">
-                    <img src="{{ asset('foto/imau1.png') }}" class="tim-img">
-                    <div class="card-body">
+
+                <div class="col-lg-4">
+                    <div class="tim-card">
+                        <img class="tim-img" src="{{ asset('foto/imau1.png') }}" alt="Noor Maulida">
                         <h5>Noor Maulida</h5>
-                        <p>
-                            <span class="role">Tester</span><br>
-                            <span class="role">Frontend Support</span><br>
-
-                            <span class="text-muted">
-                                 Melakukan pengujian sistem dan membantu pengembangan antarmuka.
-                            </span>
-                        </p>
+                        <span>Tester & Frontend Support</span>
                     </div>
                 </div>
             </div>
-
         </div>
-    </div>
-</section>
+    </section>
 
+    <section class="kontak-section" id="kontak">
+        <div class="container text-center">
+            <span class="section-badge">HUBUNGI KAMI</span>
+            <h2 class="mt-3">SDIT Nurul Fikri Banjarmasin</h2>
+            <p class="mt-4">
+                Email : sapa@gmail.com
+                <br>
+                Telepon : 08123456789
+            </p>
+        </div>
+    </section>
 
-<!-- KONTAK -->
-<section class="tentang" id="kontak">
-    <div class="container text-center">
-        <h3>Kontak</h3>
-        <p class="mt-3">
-            Email: sapa@gmail.com <br>
-            Telepon: 08123456789
-        </p>
-    </div>
-</section>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <h4>SAPA</h4>
+                    <p>
+                        Sistem Absensi dan Penjemputan Anak berbasis RFID dan Fingerprint.
+                    </p>
+                </div>
 
+                <div class="col-lg-4">
+                    <h5>Menu</h5>
+                    <ul class="footer-links">
+                        <li><a href="#hero">Beranda</a></li>
+                        <li><a href="#fitur">Fitur</a></li>
+                        <li><a href="#tentang">Tentang</a></li>
+                        <li><a href="#kontak">Kontak</a></li>
+                    </ul>
+                </div>
 
-<!-- FOOTER -->
-<footer class="footer text-center">
-    <div class="container">
-        <p>© 2026 SAPA - Sistem Absensi dan Penjemputan Anak</p>
-    </div>
-</footer>
+                <div class="col-lg-4">
+                    <h5>Kontak</h5>
+                    <p>Banjarmasin, Kalimantan Selatan</p>
+                    <a class="instagram-link" href="https://instagram.com/sdit_nurul_fikri_banjarmasin" target="_blank">
+                        <i class="bi bi-instagram"></i> Instagram Sekolah
+                    </a>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                © 2026 SAPA - Sistem Absensi dan Penjemputan Anak
+            </div>
+        </div>
+    </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 
-<script>
-    const cards = document.querySelectorAll('.tim-card');
-
-    cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-
-            // ✅ Efek interaktif bagus banget
-            // ❗ Saran: kasih transition biar lebih smooth
-
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const rotateX = -(y - centerY) / 15;
-            const rotateY = (x - centerX) / 15;
-
-            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = `rotateX(0deg) rotateY(0deg)`;
-        });
-    });
-</script>
+</html>

@@ -133,22 +133,12 @@ class DashboardController extends Controller
 
         return view('wali.kehadiran', compact('siswa', 'today', 'calendarDays', 'stats'));
     }
-<<<<<<< HEAD
     public function statusPenjemputan()
     {
         $wali = Wali::where('id_user', auth()->id())->first();
 
         if (!$wali) {
             return redirect()->route('wali.dashboard')->with('error', 'Data wali tidak ditemukan.');
-=======
-
-    public function laporan()
-    {
-        $wali = Wali::where('id_user', auth()->id())->first();
-
-        if (!$wali) {
-            return redirect()->route('login')->with('error', 'Data wali tidak ditemukan.');
->>>>>>> limau
         }
 
         $relasi = Relasi::where('id_wali', $wali->id_wali)->first();
@@ -163,7 +153,6 @@ class DashboardController extends Controller
             return redirect()->route('wali.dashboard')->with('error', 'Data anak tidak ditemukan.');
         }
 
-<<<<<<< HEAD
         $today = Carbon::today()->toDateString();
 
         // Ambil data kehadiran hari ini
@@ -307,27 +296,5 @@ class DashboardController extends Controller
         } else {
             return $created_at->translatedFormat('d F');
         }
-=======
-        $kehadiranReports = Kehadiran::where('id_siswa', $siswa->id_siswa)
-            ->orderBy('tanggal', 'desc')
-            ->get(['tanggal', 'status_hadir']);
-
-        $penjemputanReports = Penjemputan::where('id_siswa', $siswa->id_siswa)
-            ->orderBy('tanggal', 'desc')
-            ->get(['tanggal', 'jam_jemput']);
-
-        return view('wali.laporan', compact('siswa', 'kehadiranReports', 'penjemputanReports'));
-    }
-
-    public function statusPenjemputan()
-    {
-        $riwayat = [
-            ['jam' => '13:12', 'status' => 'Dijemput'],
-            ['jam' => '13:00', 'status' => 'Jadwal pulang'],
-            ['jam' => '07:12', 'status' => 'Masuk'],
-        ];
-
-        return view('wali.status-penjemputan', compact('riwayat'));
->>>>>>> limau
     }
 }

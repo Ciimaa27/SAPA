@@ -35,31 +35,33 @@
 }
 
 /* ===== BUTTON KEMBALI (FIX BOOTSTRAP) ===== */
-a.btn-kembali {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+.btn-kembali{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
 
-    background: #f3f0ff;
-    color: #6f42c1;
-    border: 1px solid #d6c9ff;
+    background:#e9e1ff;
+    color:#6f42c1;
 
-    padding: 5px 12px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 500;
+    border:1px solid #d6c8ff;
+    border-radius:6px;
 
-    text-decoration: none;
-    margin-bottom: 12px;
+    padding:4px 10px;
+    font-size:12px;
+    font-weight:500;
+
+    text-decoration:none;
+    width:fit-content;
+    max-width:max-content;
 }
 
-a.btn-kembali i {
-    font-size: 12px;
+.btn-kembali i{
+    font-size:11px;
 }
 
-a.btn-kembali:hover {
-    background: #e5dbff;
-    color: #5a32a3;
+.btn-kembali:hover{
+    background:#dcd0ff;
+    color:#5a34a3;
 }
 
 /* ===== FORM ===== */
@@ -143,3 +145,4 @@ body{
         margin-left:0;
     }
 }
+

@@ -50,17 +50,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Kehadiran12022026.pdf</td>
-                        <td>1-A</td>
-                        <td>12-02-2026</td>
-                        <td>Kehadiran</td>
-                        <td>
-                            <button type="button" class="btn btn-info btn-sm" title="Unduh">
-                                <i class="fa fa-download"></i>
-                            </button>
-                        </td>
-                    </tr>
+                   <tr>
+                    <td>Kehadiran12022026.pdf</td>
+                    <td>1-A</td>
+                    <td>12-02-2026</td>
+                    <td>Kehadiran</td>
+
+                    <td class="col-aksi">
+                        <a href="#" class="btn-excel">
+                            <i class="fa-solid fa-file-excel"></i>
+                        </a>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -85,11 +86,11 @@
                         <td>1-A</td>
                         <td>12-02-2026</td>
                         <td>Penjemputan</td>
-                        <td>
-                            <button type="button" class="btn btn-info btn-sm" title="Unduh">
-                                <i class="fa fa-download"></i>
-                            </button>
-                        </td>
+                    <td class="col-aksi">
+                        <a href="#" class="btn-excel">
+                            <i class="fa-solid fa-file-excel"></i>
+                        </a>
+                    </td>
                     </tr>
                 </tbody>
             </table>

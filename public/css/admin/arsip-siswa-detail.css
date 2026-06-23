@@ -103,3 +103,32 @@
     color: #fff;
     transform: translateY(-1px);
 }
+
+.btn-kembali{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+
+    background:#f3ecff;
+    color:#6f42c1;
+
+    border:1px solid #d8c8ff;
+    border-radius:8px;
+
+    padding:5px 12px;
+
+    font-size:13px;
+    font-weight:500;
+
+    text-decoration:none;
+    transition:.2s ease;
+}
+
+.btn-kembali i{
+    font-size:12px;
+}
+
+.btn-kembali:hover{
+    background:#ebe0ff;
+    color:#5a34a3;
+}

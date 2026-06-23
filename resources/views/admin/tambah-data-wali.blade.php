@@ -25,9 +25,11 @@
         <div class="card-form">
 
             <!-- BUTTON KEMBALI -->
-            <a href="/admin/data-wali" class="btn-kembali">
-                <i class="fas fa-chevron-left"></i> Kembali
-            </a>
+            <div class="mb-4">
+                <a href="/admin/data-wali" class="btn-kembali">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </a>
+            </div>
 
             <form action="{{ route('wali.store') }}" method="POST">
                 @csrf

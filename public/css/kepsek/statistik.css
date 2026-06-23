@@ -68,3 +68,80 @@
     background: #245edc;  
     border-radius: 10px;
 }
+
+.btn-filter {
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    color: white;
+    border: none;
+
+    height: 48px;          /* samakan dengan select */
+    padding: 0 22px;       /* lebih kecil */
+    border-radius: 14px;   /* sudut melengkung */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    box-shadow: 0 8px 20px rgba(109, 40, 217, 0.25);
+    transition: all 0.25s ease;
+}
+
+.btn-filter:hover {
+    background: linear-gradient(135deg,#8b5cf6,#6d28d9);
+    color: white;
+}
+
+.btn-filter i {
+    font-size: 15px;
+}
+
+.filter-form{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.filter-form input,
+.filter-form select{
+    height: 42px;
+}
+
+.btn-filter{
+    background: linear-gradient(135deg,#8b5cf6,#6d28d9);
+    color:white;
+    border:none;
+
+    height:38px;
+    padding:0 12px;
+
+    border-radius:10px;
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+
+    font-size:13px;
+    font-weight:600;
+
+    box-shadow:none;
+    transition:none;
+}
+
+.btn-filter i{
+    font-size:12px;
+}
+
+
+.btn-filter:hover,
+.btn-filter:focus,
+.btn-filter:active{
+    transform:none !important;
+    box-shadow:none !important;
+    outline:none !important;
+}

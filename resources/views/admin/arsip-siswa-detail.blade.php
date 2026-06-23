@@ -25,7 +25,7 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
 
             <a href="{{ route('arsip-siswa') }}" class="btn-kembali">
-                ← Kembali
+                <i class="fas fa-arrow-left"></i> Kembali
             </a>
 
             <a href="{{ route('arsip-siswa.export', [

@@ -31,10 +31,13 @@ class KehadiranKelasExport implements FromArray, WithHeadings
                 DB::raw("SUM(CASE WHEN kehadiran.status_hadir = 'sakit' AND YEAR(kehadiran.tanggal) = $tahun AND MONTH(kehadiran.tanggal) = $bulan THEN 1 ELSE 0 END) as sakit"),
                 DB::raw("SUM(CASE WHEN kehadiran.status_hadir = 'alpa' AND YEAR(kehadiran.tanggal) = $tahun AND MONTH(kehadiran.tanggal) = $bulan THEN 1 ELSE 0 END) as alpa")
             )
-            ->groupBy('siswa.id_siswa')
-            ->orderBy('siswa.nama_siswa')
-            ->get()
-            ->toArray();
+        ->groupBy(
+            'siswa.id_siswa',
+            'siswa.nama_siswa'
+        )
+        ->orderBy('siswa.nama_siswa')
+        ->get()
+        ->toArray();
     }
 
     public function headings(): array

@@ -25,7 +25,7 @@
     </div>
 
         <div class="filter-box">
-            <form method="GET" action="{{ route('kepsek.statistik') }}" class="d-flex gap-3">
+            <form method="GET"action="{{ route('kepsek.statistik') }}"class="filter-form">
                 <input type="date" name="tanggal" class="form-control form-control-sm" value="{{ $tanggal }}">
 
                 <select name="kelas" class="form-select form-select-sm">
@@ -45,7 +45,10 @@
                     <option value="alpa" {{ $selectedStatus == 'alpa' ? 'selected' : '' }}>Alpa</option>
                 </select>
 
-                <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+                <button type="submit" class="btn-filter">
+                    <i class="fas fa-filter"></i>
+                    Filter
+                </button>
             </form>
         </div>
     </div>
