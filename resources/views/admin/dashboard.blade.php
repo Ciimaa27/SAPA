@@ -235,16 +235,16 @@
         data: {
             labels: @json($labels),
             datasets: [
-                {
-                    label: 'Hadir',
-                    data: @json($dataHadir),
-                    backgroundColor: '#8e6cc9'
-                },
-                {
-                    label: 'Tidak hadir',
-                    data: @json($dataTidakHadir),
-                    backgroundColor: '#3ec7b7'
-                }
+        {
+            label: 'Hadir',
+            data: @json($dataHadir),
+            backgroundColor: '#198754' // hijau
+        },
+        {
+            label: 'Tidak hadir',
+            data: @json($dataTidakHadir),
+            backgroundColor: '#dc3545' // merah
+        }
             ]
         }
     });
@@ -257,7 +257,10 @@
             labels: ['Sudah dijemput', 'Belum dijemput'],
             datasets: [{
                 data: [{{ $sudahJemput }}, {{ $belumJemput }}],
-                backgroundColor: ['#34d1bf', '#ff7b7b']
+                backgroundColor: [
+                '#198754', // Sudah dijemput = hijau
+                '#6f42c1'  // Belum dijemput = ungu
+            ]
             }]
         }
     });

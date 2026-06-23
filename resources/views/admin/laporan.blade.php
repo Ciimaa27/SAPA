@@ -59,43 +59,43 @@
 
                     <tbody>
                         @forelse($kelas as $kls)
-                        <tr>
-                            <td>{{ $kls->nama_kelas }}</td>
+                       <tr>
+                    <td>{{ $kls->nama_kelas }}</td>
 
-                            <td>
-                                {{ \Carbon\Carbon::parse($bulan)->translatedFormat('F Y') }}
-                            </td>
+                    <td>
+                        {{ \Carbon\Carbon::parse($bulan)->translatedFormat('F Y') }}
+                    </td>
 
-                            <td>
-                                {{ $kehadiranCounts->get($kls->id_kelas, 0) }}
-                            </td>
+                    <td>
+                        {{ $kehadiranCounts->get($kls->id_kelas, 0) }}
+                    </td>
 
-                            <td>
-                                {{ $penjemputanCounts->get($kls->id_kelas, 0) }}
-                            </td>
+                    <td>
+                        {{ $penjemputanCounts->get($kls->id_kelas, 0) }}
+                    </td>
 
-                            <td>
-                                <a href="{{ route('laporan.kehadiran.export', [
-                                    'id_kelas' => $kls->id_kelas,
-                                    'bulan' => $bulan
-                                ]) }}"
-                                class="btn btn-info btn-sm"
-                                title="Export Kehadiran">
-                                    <i class="fa fa-file-excel"></i>
-                                </a>
-                            </td>
+                    <td>
+                        <a href="{{ route('laporan.kehadiran.export', [
+                            'id_kelas' => $kls->id_kelas,
+                            'bulan' => $bulan
+                        ]) }}"
+                        class="btn-excel"
+                        title="Export Kehadiran">
+                            <i class="fa-solid fa-file-excel"></i>
+                        </a>
+                    </td>
 
-                            <td>
-                                <a href="{{ route('laporan.penjemputan.export', [
-                                    'id_kelas' => $kls->id_kelas,
-                                    'bulan' => $bulan
-                                ]) }}"
-                                class="btn btn-info btn-sm"
-                                title="Export Penjemputan">
-                                    <i class="fa fa-file-excel"></i>
-                                </a>
-                            </td>
-                        </tr>
+                    <td>
+                        <a href="{{ route('laporan.penjemputan.export', [
+                            'id_kelas' => $kls->id_kelas,
+                            'bulan' => $bulan
+                        ]) }}"
+                        class="btn-excel"
+                        title="Export Penjemputan">
+                            <i class="fa-solid fa-file-excel"></i>
+                        </a>
+                    </td>
+                </tr>
                         @empty
                         <tr>
                             <td colspan="6" class="text-center">

@@ -15,6 +15,7 @@
     padding-right:10px;
 }
 
+<<<<<<< HEAD
 .sticky-toolbar{
     position: sticky;
     top: 145px;
@@ -23,12 +24,79 @@
 }
 
 /* ===== BUTTON & SEARCH ===== */
+=======
+/* ===== STICKY HEADER & TOOLBAR ===== */
+.main-dashboard > .container-dashboard > .card:nth-of-type(1),
+.main-dashboard > .container-dashboard > .card:nth-of-type(2) {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.main-dashboard > .container-dashboard > .card:nth-of-type(1) {
+    top: 0;
+}
+
+.main-dashboard > .container-dashboard > .card:nth-of-type(2) {
+    top: 60px;
+}
+
+/* ===== BUTTON TAMBAH ===== */
+>>>>>>> 4d93c4e178147d3e6e8372ac6a0bd9a8b78afbd2
 .btn-tambah{
-    display:flex;
+    display:inline-flex;
     align-items:center;
     gap:6px;
-    padding:6px 14px;
-    font-weight:500;
+
+    background:#f4edff;
+    color:#7c4dff;
+
+    border:1px solid #d8c5ff;
+    border-radius:10px;
+
+    padding:5px 12px;
+
+    font-size:12px;
+    font-weight:600;
+    line-height:1;
+
+    text-decoration:none;
+    transition:.2s ease;
+
+    box-shadow:0 0 0 1px rgba(124,77,255,.04);
+}
+
+.btn-tambah:hover{
+    background:#eee4ff;
+    color:#7c4dff;
+    border-color:#c8b0ff;
+}
+
+.btn-tambah i{
+    width:18px;
+    height:18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#7c4dff;
+    color:#fff;
+
+    border-radius:4px;
+    font-size:8px;
+    flex-shrink:0;
+}
+
+.btn-tambah:focus,
+.btn-tambah:active{
+    background:#f4edff !important;
+    color:#7c4dff !important;
+    border-color:#d8c5ff !important;
+    box-shadow:none !important;
+    outline:none !important;
 }
 
 .search-flex{

@@ -42,9 +42,9 @@
         <div class="card mb-3 p-3">
             <div class="d-flex align-items-center gap-3">
 
-                <div style="min-width:auto; padding: 8px 16px; border: 1px solid #ddd; border-radius: 8px; background: #fff;">
-                    Total : <strong>{{ $total }}</strong>
-                </div>
+             <div class="box-total">
+                Total Wali : <strong>{{ $total }}</strong>
+            </div>
 
                 <!-- FILTER DROPDOWN -->
                 <div style="width:180px;">
@@ -57,9 +57,10 @@
                 </div>
 
                 <!-- BUTTON TAMBAH -->
-                <a href="{{ route('wali.create') }}" class="btn btn-sm" style="border: 1px solid #dee2e6; background: transparent; color: #333;">
-                    <i class="fa fa-plus"></i> Tambah
-                </a>
+                    <a href="{{ route('wali.create') }}" class="btn-tambah">
+                        Tambah
+                        <i class="fa fa-plus"></i>
+                    </a>
 
                 <!-- SEARCH BACKEND -->
                 <div style="flex: 1; max-width: 500px;">

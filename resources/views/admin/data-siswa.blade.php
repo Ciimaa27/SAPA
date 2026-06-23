@@ -50,9 +50,9 @@
         <div class="card mb-3 p-3">
             <div class="d-flex align-items-center gap-3">
 
-                <div style="min-width:140px;">
-                    Total Siswa : <strong>{{ $total }}</strong>
-                </div>
+        <div class="total-data">
+            Total Siswa : <strong>{{ $total }}</strong>
+        </div>
 
                 <div style="width:200px;">
                     <select class="form-select form-select-sm">
@@ -63,16 +63,17 @@
                     </select>
                 </div>
 
-                <a href="{{ route('tambah-siswa') }}" class="btn btn-sm" style="border: 1px solid #dee2e6; background: transparent; color: #333;">
-                    <i class="fa fa-plus"></i> Tambah
+                <a href="{{ route('tambah-siswa') }}" class="btn-tambah">
+                    Tambah
+                    <i class="fa fa-plus"></i>
                 </a>
 
                 <button type="button"
-                        class="btn btn-sm"
+                        class="btn-kenaikan"
                         data-bs-toggle="modal"
-                        data-bs-target="#modalKenaikan"
-                        style="border: 1px solid #dee2e6; background: transparent; color: #333;">
-                    <i class="fa fa-arrow-up"></i> Kenaikan Kelas
+                        data-bs-target="#modalKenaikan">
+                    Kenaikan Kelas
+                    <i class="fa fa-arrow-up"></i>
                 </button>
 
                 <form method="GET" action="{{ route('data-siswa') }}" style="flex: 1; max-width: 500px;">
