@@ -44,7 +44,7 @@
         </div>
 
         <div class="card">
-            <div class="table-responsive">
+            <div class="table-responsive table-container">
                 <table class="table align-middle mb-0">
                     <thead>
                         <tr>

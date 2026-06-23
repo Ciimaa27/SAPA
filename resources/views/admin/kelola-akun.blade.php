@@ -19,12 +19,12 @@
     <div class="container-dashboard">
 
         <!-- HEADER -->
-        <div class="card mb-3 p-3">
+        <div class="card mb-3 p-3 sticky-header">
             <h5 class="mb-0">Kelola akun pengguna</h5>
         </div>
 
         <!-- TOOLBAR -->
-        <div class="card mb-3 p-3">
+        <div class="card mb-3 p-3 sticky-toolbar">  
             <div class="d-flex align-items-center gap-3 flex-wrap">
 
                 <div>

@@ -7,51 +7,138 @@
     padding:5px 30px 20px 20px;
 }
 
-/* TAB */
-.btn-tab{
-    border:none;
-    padding:6px 14px;
-    background:#eee;
-    border-radius:8px;
+/* FILTER */
+.form-select,
+.form-control{
     font-size:13px;
-    cursor:pointer;
-}
-
-.btn-tab.active{
-    background:#6f42c1;
-    color:white;
 }
 
 /* TABLE */
+.table-container{
+    max-height:400px;
+    overflow-y:auto;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+}
+
+.table thead th{
+    position:sticky;
+    top:0;
+    background:#f8f9fa;
+    z-index:2;
+}
+
 .table th{
     font-size:13px;
     font-weight:600;
+    white-space:nowrap;
 }
 
 .table td{
     font-size:13px;
+    white-space:nowrap;
 }
 
-/* BUTTON */
-.btn-unduh{
-    background:#a78bfa;
-    border:none;
-    padding:4px 12px;
-    border-radius:6px;
-    font-size:12px;
+.table td .btn-sm{
+    width:34px;
+    height:34px;
+    padding:0;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:8px;
+}
+
+.table td .btn-sm i{
+    font-size:14px;
+}
+
+.btn-info{
     color:white;
 }
 
-.btn-unduh:hover{
-    background:#8b5cf6;
-}
-
-/* LAYOUT */
+/* CONTENT */
 .content{
     margin-left:230px;
     padding-top:60px;
+    padding-left:10px;
+    padding-right:10px;
 }
 
 body{
     overflow-x:hidden;
+}
+
+/* ===================================== */
+/* RESPONSIVE TABLET */
+/* ===================================== */
+
+@media (max-width:768px){
+
+    .content{
+        margin-left:0;
+        padding-left:10px;
+        padding-right:10px;
+    }
+
+    .main-dashboard{
+        padding:10px;
+    }
+
+    .container-dashboard{
+        max-width:100%;
+    }
+
+    .card form{
+        flex-direction:column;
+        align-items:stretch !important;
+    }
+
+    .card form .form-select,
+    .card form .form-control,
+    .card form .btn{
+        width:100% !important;
+    }
+
+    .table{
+        min-width:850px;
+    }
+
+    .table th,
+    .table td{
+        font-size:12px;
+    }
+}
+
+/* ===================================== */
+/* RESPONSIVE HP */
+/* ===================================== */
+
+@media (max-width:576px){
+
+    .main-dashboard{
+        padding:8px;
+    }
+
+    .card{
+        border-radius:8px;
+    }
+
+    .card h5{
+        font-size:15px;
+    }
+
+    .table th,
+    .table td{
+        font-size:11px;
+    }
+
+    .table td .btn-sm{
+        width:30px;
+        height:30px;
+    }
+
+    .table td .btn-sm i{
+        font-size:12px;
+    }
 }

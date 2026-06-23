@@ -23,21 +23,21 @@
 
         <p class="menu-title">Data Master</p>
 
-        <li class="menu-item {{ request()->routeIs('data-siswa') ? 'active' : '' }}">
+        <li class="menu-item {{ request()->routeIs('data-siswa', 'tambah-siswa', 'edit-siswa') ? 'active' : '' }}">
             <a href="{{ route('data-siswa') }}">
                 <i class="fa-solid fa-users"></i>
                 Data siswa
             </a>
         </li>
 
-        <li class="menu-item {{ request()->routeIs('data-wali') ? 'active' : '' }}">
+        <li class="menu-item {{ request()->routeIs('data-wali', 'wali.create', 'edit-data-wali') ? 'active' : '' }}">
             <a href="{{ route('data-wali') }}">
                 <i class="fa-solid fa-user-group"></i>
                 Data wali
             </a>
         </li>
 
-        <li class="menu-item {{ request()->routeIs('guru') ? 'active' : '' }}">
+        <li class="menu-item {{ request()->routeIs('guru', 'kelas', 'detail-guru', 'edit-data-guru', 'tambah-data-guru', 'tambah-data-kelas', 'siswa-kelas') ? 'active' : '' }}">
             <a href="{{ route('guru') }}">
                 <i class="fa-solid fa-chalkboard-user"></i>
                 Guru & kelas
@@ -87,7 +87,7 @@
 
         <li class="menu-item {{ request()->routeIs('laporan') ? 'active' : '' }}">
             <a href="{{ route('laporan') }}">
-                <i class="fa-solid fa-box-archive"></i>
+                <i class="fa-solid fa-file-lines"></i>
                 Laporan
             </a>
         </li>
