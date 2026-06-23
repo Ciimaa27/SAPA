@@ -18,6 +18,8 @@ use App\Http\Controllers\Guru\GuruController;
 use App\Http\Controllers\KepsekController;
 use App\Models\Wali;
 use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\LupaPasswordController;
+use Illuminate\Support\Facades\Mail;
 
 
 /*
@@ -44,10 +46,15 @@ Route::post('/logout', function () {
 })->name('logout');
 
 // Lupa Sandi
-Route::get('/lupasandi', function () {
+Route::get('/lupa-password', function () {
     return view('lupasandi');
-})->name('lupasandi');
+})->name('password.request');
 
+Route::post('/lupa-password', [LupaPasswordController::class, 'verifikasi'])
+    ->name('password.verifikasi');
+
+Route::post('/reset-password', [LupaPasswordController::class, 'updatePassword'])
+    ->name('password.update');
 Route::get('/cek-fonnte', function () {
 
     $token = env('FONNTE_TOKEN');
@@ -56,6 +63,23 @@ Route::get('/cek-fonnte', function () {
         'token' => $token,
         'length' => strlen($token),
     ]);
+});
+
+Route::get('/verifikasi-otp', function () {
+    return view('verifikasi-otp');
+})->name('otp.form');
+
+Route::post('/verifikasi-otp', [LupaPasswordController::class, 'cekOtp'])
+    ->name('otp.cek');
+
+Route::get('/test-email', function () {
+
+    Mail::raw('Halo, ini adalah email percobaan dari Sistem SAPA.', function ($message)  {
+        $message->to('noormaulida11062005@gmail.com')
+                ->subject('Test Email SAPA');
+    });
+
+    return 'Email terkirim';
 });
 
 /*
@@ -168,12 +192,23 @@ Route::get('/guru/penjemputan/{id_kelas}', [GuruController::class, 'daftarPenjem
 |--------------------------------------------------------------------------
 */
 
+<<<<<<< HEAD
 Route::get('/wali/dashboard', [App\Http\Controllers\wali\DashboardController::class, 'index'])->name('wali.dashboard');
 Route::get('/wali/kehadiran', [App\Http\Controllers\wali\DashboardController::class, 'kehadiran'])->name('wali.kehadiran');
 Route::get('/wali/status-penjemputan', [App\Http\Controllers\wali\DashboardController::class, 'statusPenjemputan'])->name('wali.status-penjemputan');
 Route::get('/wali/notifikasi', [App\Http\Controllers\wali\DashboardController::class, 'notifikasi'])->name('wali.notifikasi');
 Route::get('/wali/jadwal-pulang', [App\Http\Controllers\wali\DashboardController::class, 'jadwalPulang'])->name('wali.jadwal-pulang');
 Route::get('/wali/laporan', function () {return view('wali.laporan');})->name('wali.laporan');
+=======
+Route::prefix('wali')->middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\Wali\DashboardController::class, 'index'])->name('wali.dashboard');
+    Route::get('/kehadiran', [App\Http\Controllers\Wali\DashboardController::class, 'kehadiran'])->name('wali.kehadiran');
+    Route::get('/status-penjemputan', [App\Http\Controllers\Wali\DashboardController::class, 'statusPenjemputan'])->name('wali.status-penjemputan');
+    Route::view('/jadwal-pulang', 'wali.jadwal-pulang')->name('wali.jadwal-pulang');
+    Route::get('/notifikasi', function () { return view('wali.notifikasi'); })->name('wali.notifikasi');
+    Route::get('/laporan', [App\Http\Controllers\Wali\DashboardController::class, 'laporan'])->name('wali.laporan');
+});
+>>>>>>> limau
 
 /*
 |--------------------------------------------------------------------------

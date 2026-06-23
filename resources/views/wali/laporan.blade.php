@@ -30,8 +30,8 @@
             </div>
 
             <div class="student-info">
-                <h6>Nabila Putri</h6>
-                <span>Kelas 3A</span>
+                <h6>{{ $siswa->nama_siswa ?? 'Data anak tidak ditemukan' }}</h6>
+                <span>{{ $siswa && $siswa->kelas ? $siswa->kelas->nama_kelas : 'Kelas tidak tersedia' }}</span>
             </div>
 
         </div>
@@ -75,52 +75,40 @@
                     </thead>
 
                     <tbody>
+                @forelse($kehadiranReports as $report)
+                    <tr>
+                        <td>Kehadiran {{ \Carbon\Carbon::parse($report->tanggal)->translatedFormat('F Y') }}.pdf</td>
+                        <td>{{ \Carbon\Carbon::parse($report->tanggal)->format('d-m-Y') }}</td>
+                        <td>Kehadiran</td>
+                        <td>
+                            <button class="btn-download" type="button">
+                                Unduh
+                            </button>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4">Tidak ada laporan kehadiran.</td>
+                    </tr>
+                @endforelse
 
-                        <tr>
-                            <td>Kehadiran Februari 2026.pdf</td>
-                            <td>12-02-2026</td>
-                            <td>Kehadiran</td>
-                            <td>
-                                <button class="btn-download">
-                                    Unduh
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Penjemputan Februari 2026.pdf</td>
-                            <td>13-02-2026</td>
-                            <td>Penjemputan</td>
-                            <td>
-                                <button class="btn-download">
-                                    Unduh
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Kehadiran Januari 2026.pdf</td>
-                            <td>10-01-2026</td>
-                            <td>Kehadiran</td>
-                            <td>
-                                <button class="btn-download">
-                                    Unduh
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Penjemputan Januari 2026.pdf</td>
-                            <td>10-01-2026</td>
-                            <td>Penjemputan</td>
-                            <td>
-                                <button class="btn-download">
-                                    Unduh
-                                </button>
-                            </td>
-                        </tr>
-
-                    </tbody>
+                @forelse($penjemputanReports as $report)
+                    <tr>
+                        <td>Penjemputan {{ \Carbon\Carbon::parse($report->tanggal)->translatedFormat('F Y') }}.pdf</td>
+                        <td>{{ \Carbon\Carbon::parse($report->tanggal)->format('d-m-Y') }}</td>
+                        <td>Penjemputan</td>
+                        <td>
+                            <button class="btn-download" type="button">
+                                Unduh
+                            </button>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4">Tidak ada laporan penjemputan.</td>
+                    </tr>
+                @endforelse
+            </tbody>
 
                 </table>
 

@@ -20,14 +20,41 @@
             <div class="col-md-5 pe-md-5">
                 <div class="mb-4">
                     <h1 class="display-5 fw-bold text-orange">Lupa Kata sandi?</h1>
-                    <p class="text-orange fs-6">Masukkan alamat email yang terdaftar. Tautan untuk mengatur ulang kata sandi akan dikirim ke email anda.</p>
+                    <p class="text-orange fs-6">Masukkan username dan email yang terdaftar agar Anda dapat melanjutkan reset kata sandi.</p>
                 </div>
 
-                <form action="/forgot-password" method="POST">
+                @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+                @endif
+
+                <form action="{{ route('password.verifikasi') }}" method="POST">
                     @csrf
                     <div class="mb-4">
-                        <label class="custom-label">Masukkan email</label>
-                        <input type="email" class="form-control custom-input" name="email" placeholder="Contoh: user@gmail.com" required>
+                        <label class="custom-label">Username</label>
+                        <input type="text"
+                            class="form-control custom-input @error('username') is-invalid @enderror"
+                            name="username"
+                            value="{{ old('username') }}"
+                            placeholder="Masukkan Username"
+                            required>
+                        @error('username')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="custom-label">Email</label>
+                        <input type="email"
+                            class="form-control custom-input @error('email') is-invalid @enderror"
+                            name="email"
+                            value="{{ old('email') }}"
+                            placeholder="Masukkan Email"
+                            required>
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <button type="submit" class="btn btn-purple w-100 py-2 fw-bold">Kirim</button>
