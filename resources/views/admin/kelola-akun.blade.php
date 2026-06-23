@@ -27,7 +27,7 @@
         <div class="card mb-3 p-3">
             <div class="d-flex align-items-center gap-3 flex-wrap">
 
-                <div>
+                <div class="total-account-box">
                     Total akun : <strong>{{ $total }}</strong>
                 </div>
 
@@ -64,9 +64,9 @@
 
                 <!-- TAMBAH -->
                 <a href="{{ route('kelola-akun.create') }}"
-                   class="btn btn-sm"
-                   style="border: 1px solid #dee2e6;">
-                    <i class="fa fa-plus"></i> Tambah
+                class="btn-tambah">
+                    Tambah
+                    <i class="fa fa-plus"></i>
                 </a>
 
                 <!-- SEARCH -->

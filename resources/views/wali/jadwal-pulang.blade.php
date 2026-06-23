@@ -23,7 +23,7 @@
         <div class="class-card">
             <div class="class-tabs">
                 <span class="btn-kelas active">
-                    Kelas 3
+                    Kelas {{ $siswa?->id_kelas ?? '-' }}
                 </span>
             </div>
         </div>
@@ -37,37 +37,16 @@
             </div>
 
             <div class="jadwal-list">
-
-                <div class="jadwal-row">
-                    <div class="jadwal-hari">Senin</div>
-                    <div class="jadwal-jam">11:30 WIB</div>
-                </div>
-
-                <div class="jadwal-row">
-                    <div class="jadwal-hari">Selasa</div>
-                    <div class="jadwal-jam">11:30 WIB</div>
-                </div>
-
-                <div class="jadwal-row">
-                    <div class="jadwal-hari">Rabu</div>
-                    <div class="jadwal-jam">13:00 WIB</div>
-                </div>
-
-                <div class="jadwal-row">
-                    <div class="jadwal-hari">Kamis</div>
-                    <div class="jadwal-jam">11:30 WIB</div>
-                </div>
-
-                <div class="jadwal-row">
-                    <div class="jadwal-hari">Jumat</div>
-                    <div class="jadwal-jam">10:30 WIB</div>
-                </div>
-
-                <div class="jadwal-row">
-                    <div class="jadwal-hari">Sabtu</div>
-                    <div class="jadwal-jam">Libur</div>
-                </div>
-
+                @forelse($jadwalList as $item)
+                    <div class="jadwal-row">
+                        <div class="jadwal-hari">{{ $item['hari'] }}</div>
+                        <div class="jadwal-jam">{{ $item['jam'] }}</div>
+                    </div>
+                @empty
+                    <div class="jadwal-row">
+                        <p class="text-muted text-center py-4">Jadwal pulang belum diatur oleh admin</p>
+                    </div>
+                @endforelse
             </div>
 
         </div>

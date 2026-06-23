@@ -19,10 +19,17 @@
         Status penjemputan anak
     </div>
 
+    @if(isset($penjemputan) && $penjemputan && $penjemputan->jam_jemput)
     <div class="status-alert success">
         <span>!</span>
         Sudah di jemput
     </div>
+    @else
+    <div class="status-alert warning">
+        <span>!</span>
+        Belum dijemput
+    </div>
+    @endif
 
     <div class="timeline">
 

@@ -22,17 +22,22 @@
         </div>
 
         <div class="card-form">
-            <div class="mb-3">
-                <a href="{{ route('arsip-siswa') }}" class="btn btn-kembali mb-3">
-                    ← Kembali
-                </a>
+        <div class="d-flex justify-content-between align-items-center mb-4">
 
-                 <a href="{{ route('arsip-siswa.export', $tahun) }}"
-                    class="btn btn-success">
-                        <i class="fa fa-file-excel"></i>
-                        Export Excel
-                    </a>
-                </div>
+            <a href="{{ route('arsip-siswa') }}" class="btn-kembali">
+                ← Kembali
+            </a>
+
+            <a href="{{ route('arsip-siswa.export', [
+                'tahun' => $tahun,
+                'status' => $status
+            ]) }}"
+            class="btn-export-excel">
+                <i class="fa fa-file-excel"></i>
+                Export Excel
+            </a>
+
+        </div>
 
             <div class="table-responsive">
 

@@ -23,55 +23,23 @@
 
         <div class="notif-card">
 
+            @forelse($notifikasi as $item)
             <div class="notif-item">
                 <div class="notif-title">
-                    Anak Anda telah dijemput oleh Ibu
+                    {{ $item['judul'] }}
                 </div>
 
                 <div class="notif-time">
-                    Hari ini
+                    {{ $item['waktu'] }}
                 </div>
             </div>
-
+            @empty
             <div class="notif-item">
                 <div class="notif-title">
-                    Jadwal pulang hari ini pukul 13:00
-                </div>
-
-                <div class="notif-time">
-                    Hari ini
+                    Tidak ada notifikasi
                 </div>
             </div>
-
-            <div class="notif-item">
-                <div class="notif-title">
-                    Anak Anda berhasil absensi masuk pukul 07:32
-                </div>
-
-                <div class="notif-time">
-                    Hari ini
-                </div>
-            </div>
-
-            <div class="notif-item">
-                <div class="notif-title">
-                    Anak Anda berhasil absensi pulang pukul 13:00
-                </div>
-
-                <div class="notif-time">
-                    Kemarin
-                </div>
-            </div>
-
-            <div class="notif-item">
-                <div class="notif-title">
-                    Tanggal 18 Mei merupakan hari libur sekolah
-                </div>
-
-                <div class="notif-time">
-                    17 Mei
-                </div>
-            </div>
+            @endforelse
 
         </div>
 

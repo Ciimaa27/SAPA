@@ -7,95 +7,112 @@
     padding:5px 30px 20px 20px;
 }
 
-.btn-tambah {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+/* ===== BUTTON TAMBAH ===== */
+.btn-tambah{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
 
-    background: #f1f3f5; /* abu muda */
-    color: #333;         /* teks gelap */
-    border: 1px solid #dcdcdc;
+    background:#f4edff;
+    color:#7c4dff;
 
-    padding: 6px 14px;
-    border-radius: 8px;
-    font-size: 14px;
-    text-decoration: none;
+    border:1px solid #d8c5ff;
+    border-radius:10px;
 
-    transition: 0.2s;
+    padding:5px 12px;
+
+    font-size:12px;
+    font-weight:600;
+    line-height:1;
+
+    text-decoration:none;
+    transition:.2s ease;
+
+    box-shadow:0 0 0 1px rgba(124,77,255,.04);
 }
 
-.btn-tambah {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-
-    background: #f1f3f5;
-    color: #333;
-    border: 1px solid #dee2e6;
-
-    padding: 4px 10px;     /* 🔥 lebih kecil */
-    font-size: 13px;       /* 🔥 kecilkan font */
-    border-radius: 6px;    /* sedikit lebih kecil */
-
-    text-decoration: none;
-    transition: 0.2s;
+.btn-tambah:hover{
+    background:#eee4ff;
+    color:#7c4dff;
+    border-color:#c8b0ff;
 }
 
-/* ICON lebih kecil */
-.btn-tambah i {
-    font-size: 12px;
+.btn-tambah i{
+    width:18px;
+    height:18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#7c4dff;
+    color:#fff;
+
+    border-radius:4px;
+    font-size:8px;
+    flex-shrink:0;
 }
 
-/* HOVER */
-.btn-tambah:hover {
-    background: #e9ecef;
-    color: #333;
-}
-
-.btn-tambah {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-
-    background: #f1f3f5;
-    color: #333;
-    border: 1px solid #dee2e6;
-
-    padding: 5px 12px;
-    border-radius: 8px;
-    font-size: 13px;
-
-    text-decoration: none;
-    transition: 0.2s;
-}
-
-/* ICON */
-.btn-tambah i {
-    font-size: 12px;
-}
-
-/* HOVER */
-.btn-tambah:hover {
-    background: #e9ecef;
-    color: #333;
-}
-
-/* 🔥 INI KUNCI NYA (hilangkan biru) */
 .btn-tambah:focus,
-.btn-tambah:active {
-    background: #f1f3f5 !important;
-    color: #333 !important;
-    border-color: #dee2e6 !important;
+.btn-tambah:active{
+    background:#f4edff !important;
+    color:#7c4dff !important;
+    border-color:#d8c5ff !important;
+    box-shadow:none !important;
+    outline:none !important;
+}
+/* ===== BUTTON KENAIKAN KELAS ===== */
+.btn-kenaikan{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
 
-    box-shadow: none !important;
-    outline: none !important;
+    background:#fff8e1;
+    color:#996c00;
+
+    border:1px solid #ffd54f;
+    border-radius:10px;
+
+    padding:5px 12px;
+
+    font-size:12px;
+    font-weight:600;
+    line-height:1;
+
+    text-decoration:none;
+    transition:.2s ease;
 }
 
-/* efek klik ringan */
-.btn-tambah:active {
-    transform: scale(0.97);
+.btn-kenaikan:hover{
+    background:#ffefb3;
+    color:#996c00;
+    border-color:#ffc107;
 }
 
+.btn-kenaikan i{
+    width:18px;
+    height:18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#ffc107;
+    color:#fff;
+
+    border-radius:4px;
+    font-size:8px;
+    flex-shrink:0;
+}
+
+.btn-kenaikan:focus,
+.btn-kenaikan:active{
+    background:#fff8e1 !important;
+    color:#996c00 !important;
+    border-color:#ffd54f !important;
+    box-shadow:none !important;
+    outline:none !important;
+}
 .search-flex{
     flex:1;
 }
@@ -288,3 +305,28 @@ body{
     }
 
 }
+
+.total-data{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 32px;      /* sebelumnya 36px */
+    min-width: 105px;  /* sebelumnya 120px */
+
+    padding: 0 8px;   /* sebelumnya 12px */
+
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    background: #fff;
+
+    font-size: 13px;
+    font-weight: 500;
+    color: #212529;
+}
+
+.total-data strong{
+    margin-left: 4px;
+}
+
+

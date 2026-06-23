@@ -85,7 +85,7 @@ private function kirimNotifikasiJadwal($kelas, $hari, $jam, $alasan)
         ->join('siswa_wali', 'siswa.id_siswa', '=', 'siswa_wali.id_siswa')
         ->join('wali', 'siswa_wali.id_wali', '=', 'wali.id_wali')
         ->where('kelas.nama_kelas', 'like', $kelas . '%')
-        ->where('siswa.status', 'aktif')
+        ->where('siswa.is_active', '1')
         ->select('siswa.id_siswa', 'siswa.nama_siswa', 'wali.id_wali', 'wali.nama_wali', 'wali.no_hp')
         ->get();
 

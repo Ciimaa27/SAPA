@@ -142,7 +142,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
    // Arsip Siswa
    Route::get('/arsip-siswa', [ArsipSiswaController::class, 'index'])->name('arsip-siswa');
-   Route::get('/arsip-siswa/{tahun}/export', [ArsipSiswaController::class, 'exportByYear'])->name('arsip-siswa.export');
+   Route::get('/admin/arsip-siswa/{tahun}/{status}/export',[ArsipSiswaController::class, 'exportByYear'])->name('arsip-siswa.export');
    Route::get('/arsip-siswa/{tahun}/{status}', [ArsipSiswaController::class, 'showByYear'])->name('arsip-siswa.tahun');
 });
 
@@ -171,8 +171,8 @@ Route::get('/guru/penjemputan/{id_kelas}', [GuruController::class, 'daftarPenjem
 Route::get('/wali/dashboard', [App\Http\Controllers\wali\DashboardController::class, 'index'])->name('wali.dashboard');
 Route::get('/wali/kehadiran', [App\Http\Controllers\wali\DashboardController::class, 'kehadiran'])->name('wali.kehadiran');
 Route::get('/wali/status-penjemputan', [App\Http\Controllers\wali\DashboardController::class, 'statusPenjemputan'])->name('wali.status-penjemputan');
-Route::view('/wali/jadwal-pulang', 'wali.jadwal-pulang') ->name('wali.jadwal-pulang');
-Route::get('/wali/notifikasi', function () {return view('wali.notifikasi');})->name('wali.notifikasi');
+Route::get('/wali/notifikasi', [App\Http\Controllers\wali\DashboardController::class, 'notifikasi'])->name('wali.notifikasi');
+Route::get('/wali/jadwal-pulang', [App\Http\Controllers\wali\DashboardController::class, 'jadwalPulang'])->name('wali.jadwal-pulang');
 Route::get('/wali/laporan', function () {return view('wali.laporan');})->name('wali.laporan');
 
 /*
