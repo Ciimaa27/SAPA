@@ -50,7 +50,7 @@
                     </div>
 
                     <div class="text-end mb-4">
-                        <a href="{{ route('lupasandi') }}" class="text-danger x-small text-decoration-none">Lupa kata sandi?</a>
+                        <a href="/lupa-password" class="text-danger x-small text-decoration-none">Lupa kata sandi?</a>
                     </div>
 
                     <button type="submit" class="btn btn-purple w-100 py-2 fw-bold">Masuk</button>

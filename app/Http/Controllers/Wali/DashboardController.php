@@ -116,14 +116,46 @@ class DashboardController extends Controller
 
         return view('wali.kehadiran', compact('siswa', 'today', 'calendarDays', 'stats'));
     }
-    public function statusPenjemputan()
-{
-    $riwayat = [
-        ['jam' => '13:12', 'status' => 'Dijemput'],
-        ['jam' => '13:00', 'status' => 'Jadwal pulang'],
-        ['jam' => '07:12', 'status' => 'Masuk'],
-    ];
 
-    return view('wali.status-penjemputan', compact('riwayat'));
-}
+    public function laporan()
+    {
+        $wali = Wali::where('id_user', auth()->id())->first();
+
+        if (!$wali) {
+            return redirect()->route('login')->with('error', 'Data wali tidak ditemukan.');
+        }
+
+        $relasi = Relasi::where('id_wali', $wali->id_wali)->first();
+
+        if (!$relasi) {
+            return redirect()->route('wali.dashboard')->with('error', 'Data anak tidak ditemukan.');
+        }
+
+        $siswa = Siswa::with('kelas')->find($relasi->id_siswa);
+
+        if (!$siswa) {
+            return redirect()->route('wali.dashboard')->with('error', 'Data anak tidak ditemukan.');
+        }
+
+        $kehadiranReports = Kehadiran::where('id_siswa', $siswa->id_siswa)
+            ->orderBy('tanggal', 'desc')
+            ->get(['tanggal', 'status_hadir']);
+
+        $penjemputanReports = Penjemputan::where('id_siswa', $siswa->id_siswa)
+            ->orderBy('tanggal', 'desc')
+            ->get(['tanggal', 'jam_jemput']);
+
+        return view('wali.laporan', compact('siswa', 'kehadiranReports', 'penjemputanReports'));
+    }
+
+    public function statusPenjemputan()
+    {
+        $riwayat = [
+            ['jam' => '13:12', 'status' => 'Dijemput'],
+            ['jam' => '13:00', 'status' => 'Jadwal pulang'],
+            ['jam' => '07:12', 'status' => 'Masuk'],
+        ];
+
+        return view('wali.status-penjemputan', compact('riwayat'));
+    }
 }
