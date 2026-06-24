@@ -65,3 +65,14 @@
 body{
     overflow-x:hidden;
 }
+
+.btn-reset{
+    background:#dc3545;
+    border:none;
+    color:white;
+}
+
+.btn-reset:hover{
+    background:#bb2d3b;
+    color:white;
+}

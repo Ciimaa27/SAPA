@@ -79,3 +79,29 @@
     }
 
 }
+
+.btn-reset {
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 13px;
+}
+
+.btn-reset:hover {
+    background: #bb2d3b;
+}
+
+.btn-simpan {
+    background: #0eac3b;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 13px;
+}
+
+.btn-simpan:hover {
+    background: #0b8f31;
+}

@@ -110,7 +110,8 @@
 }
 
 .btn-reset {
-    background: #ffeaa7;
+    background: #dc3545;
+    color: #fff;
     padding: 6px 14px;
     border-radius: 6px;
     border: none;
@@ -118,20 +119,20 @@
 }
 
 .btn-reset:hover {
-    background: #fdcb6e;
+    background: #bb2d3b;
 }
 
 .btn-simpan {
-    background: #20c997;
+    background: #0eac3b;
+    color: #fff;
     padding: 6px 14px;
-    color: white;
     border-radius: 6px;
     border: none;
     font-size: 13px;
 }
 
 .btn-simpan:hover {
-    background: #12b886;
+    background: #0b8f31;
 }
 
 /* ===== BODY ===== */
