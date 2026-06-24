@@ -113,15 +113,15 @@
 }
 
 .btn-reset {
-    background: #ffeaa7;
-    padding: 6px 14px;
-    border-radius: 6px;
-    border: none;
-    font-size: 13px;
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
 }
 
 .btn-reset:hover {
-    background: #fdcb6e;
+    background-color: #bb2d3b;
+    border-color: #bb2d3b;
+    color: #fff;
 }
 
 .btn-simpan {

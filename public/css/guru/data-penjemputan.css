@@ -18,9 +18,11 @@
 
 /* ===== TITLE ===== */
 .page-title {
-    font-weight: 600;
-    font-size: 15px; /* 🔥 biar sama */
-    margin-bottom: 10px;
+    margin-bottom: 0;
+}
+
+.card-box:first-child {
+    margin-bottom: 16px;
 }
 
 /* ===== SEARCH ===== */
@@ -91,4 +93,45 @@
     padding-top:60px;
     padding-left:10px;
     padding-right:10px;
+}
+
+.btn-kembali{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 6px 12px;
+
+    background: #f3edff;
+    border: 1px solid #cbb7ff;
+
+    color: #7c5ce6 !important;
+    font-size: 13px;
+    font-weight: 500;
+
+    border-radius: 8px;
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.btn-kembali i{
+    font-size: 12px;
+}
+
+
+.btn-kembali:hover{
+    background: #e8deff;
+    border-color: #b79cff;
+    color: #6a4bc4 !important;
+}
+
+.btn-kembali{
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 7px;
+}
+
+.btn-kembali i{
+    font-size: 11px;
 }

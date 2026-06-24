@@ -24,11 +24,11 @@
 
 <!-- INFORMASI -->
 <div class="card-box mt-3">
-
-    <a href="{{ route('guru.data-penjemputan') }}" class="btn-kembali">
-        <i class="fa fa-angle-left"></i>
-        Kembali
-    </a>
+    
+        <a href="{{ route('guru.data-penjemputan') }}" class="btn-kembali">
+            <i class="fas fa-arrow-left"></i>
+            Kembali
+        </a>
 
     <div class="info-wrapper">
 

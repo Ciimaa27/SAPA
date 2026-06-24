@@ -16,14 +16,16 @@
 <div class="main-dashboard">
     <div class="container-dashboard">
 
-        <h5 class="page-title">Tambah kelas</h5>
+        <div class="page-title-box">
+            Tambah kelas
+        </div>
 
         <div class="card-form">
-            <a href="{{ route('kelas') }}" class="btn-kembali">
-                ← Kembali
+
+            <a href="{{ route('kelas') }}" class="btn btn-kembali mb-3">
+                <i class="fas fa-arrow-left"></i> Kembali
             </a>
 
-            {{-- ERROR --}}
             @if ($errors->any())
                 <div class="alert alert-danger">
                     {{ $errors->first() }}
@@ -77,9 +79,9 @@
                 </div>
 
                 <!-- Button -->
-                <div class="form-action">
-                    <a href="{{ route('kelas') }}" class="btn-batal">Batal</a>
-                    <button type="submit" class="btn-simpan">Simpan</button>
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <button type="reset" class="btn btn-danger btn-sm">Reset</button>
+                    <button type="submit" class="btn btn-success btn-sm">Simpan</button>
                 </div>
 
             </form>
