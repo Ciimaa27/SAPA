@@ -1,0 +1,425 @@
+/* ===== LAYOUT SAMA SEPERTI DATA SISWA ===== */
+.container-dashboard{
+    max-width:1100px;
+    margin:0 auto;
+}
+
+.main-dashboard{
+    padding:5px 30px 20px 20px;
+}
+
+.content{
+    margin-left:230px;
+    padding-top:60px;
+    padding-left:10px;
+    padding-right:10px;
+}
+
+.sticky-toolbar{
+    position: sticky;
+    top: 145px;
+    z-index: 1049;
+    background: #fff;
+}
+
+/* ===== BUTTON & SEARCH ===== */
+
+.main-dashboard > .container-dashboard > .card:nth-of-type(1) {
+    top: 0;
+}
+
+.main-dashboard > .container-dashboard > .card:nth-of-type(2) {
+    top: 60px;
+}
+
+/* ===== BUTTON TAMBAH ===== */
+
+.btn-tambah{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+
+    background:#f4edff;
+    color:#7c4dff;
+
+    border:1px solid #d8c5ff;
+    border-radius:10px;
+
+    padding:5px 12px;
+
+    font-size:12px;
+    font-weight:600;
+    line-height:1;
+
+    text-decoration:none;
+    transition:.2s ease;
+
+    box-shadow:0 0 0 1px rgba(124,77,255,.04);
+}
+
+.btn-tambah:hover{
+    background:#eee4ff;
+    color:#7c4dff;
+    border-color:#c8b0ff;
+}
+
+.btn-tambah i{
+    width:18px;
+    height:18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#7c4dff;
+    color:#fff;
+
+    border-radius:4px;
+    font-size:8px;
+    flex-shrink:0;
+}
+
+.btn-tambah:focus,
+.btn-tambah:active{
+    background:#f4edff !important;
+    color:#7c4dff !important;
+    border-color:#d8c5ff !important;
+    box-shadow:none !important;
+    outline:none !important;
+}
+
+.search-flex{
+    flex:1;
+}
+
+/* ===== TABLE (KONSISTEN) ===== */
+.table td{
+    font-size:13px;
+}
+
+.table th{
+    font-size:13px;
+    font-weight:600;
+}
+
+/* ===================================== */
+/* TABLE SCROLL */
+/* ===================================== */
+
+.table-container{
+    max-height:500px;
+    overflow-y:auto;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+}
+
+/* Header tabel tetap terlihat */
+.table thead th{
+    position:sticky;
+    top:0;
+    background:#f8f9fa;
+    z-index:10;
+}
+
+/* Hilangkan jarak bawah tabel */
+.table{
+    margin-bottom:0;
+}
+
+/* 🔥 OPTIONAL: kalau mau tetap rapi */
+.table {
+    margin-bottom: 0;
+}
+
+/* ===== WARNA BUTTON ===== */
+.btn-warning{
+    color:white;
+}
+
+.btn-danger{
+    color:white;
+}
+
+.btn-info{
+    color:white;
+}
+
+/* ===== PAGINATION ===== */
+.pagination {
+    margin: 0;
+    gap: 6px;
+}
+
+.pagination .page-item {
+    list-style: none;
+}
+
+.pagination .page-link {
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 13px;
+    border: 1px solid #dee2e6;   /* 🔥 kasih border */
+    background: #fff;            /* 🔥 putih */
+    color: #495057;
+    transition: all 0.2s ease;
+}
+
+.pagination .page-link:hover {
+    background: #f1f3f5;
+    transform: translateY(-1px); /* 🔥 efek naik dikit */
+}
+
+.pagination .page-item.active .page-link {
+    background: #6f42c1;
+    border-color: #6f42c1;
+    color: #fff;
+    font-weight: 500;
+}
+
+.pagination .page-item.disabled .page-link {
+    background: #e9ecef;
+    color: #adb5bd;
+    border-color: #dee2e6;
+}
+
+.pagination .page-link svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* ===== BODY ===== */
+body{
+    overflow-x:hidden;
+}
+
+/* ===================================================== */
+/* 🔥 POPUP DELETE (SUDAH BENAR) */
+/* ===================================================== */
+
+.confirm-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirm-modal.show {
+    display: flex;
+}
+
+.confirm-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.confirm-modal-dialog {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 350px;
+}
+
+.confirm-modal-content {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.confirm-modal-header {
+    padding: 16px;
+    text-align: center;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+}
+
+.confirm-modal-body {
+    padding: 16px;
+    text-align: center;
+    color: #555;
+}
+
+.confirm-modal-footer {
+    padding: 12px;
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid #eee;
+}
+
+.confirm-modal-footer .btn {
+    flex: 1;
+    border-radius: 8px;
+}
+
+.confirm-modal.show .confirm-modal-content {
+    animation: popup 0.25s ease;
+}
+
+@keyframes popup {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ===================================== */
+/* RESPONSIVE MOBILE */
+/* ===================================== */
+
+@media (max-width:768px){
+
+    /* Content */
+    .content{
+        margin-left:0;
+        padding-left:10px;
+        padding-right:10px;
+    }
+
+    .main-dashboard{
+        padding:10px;
+    }
+
+    .container-dashboard{
+        max-width:100%;
+    }
+
+    /* Header Card */
+    .card h5{
+        font-size:16px;
+    }
+
+    /* Toolbar */
+    .d-flex.align-items-center.gap-3.flex-wrap{
+
+        display:flex !important;
+        flex-direction:column;
+        align-items:stretch !important;
+        gap:10px !important;
+    }
+
+    /* Total akun */
+    .d-flex.align-items-center.gap-3.flex-wrap > div:first-child{
+        width:100%;
+    }
+
+    /* Filter */
+    .d-flex.align-items-center.gap-3.flex-wrap > div[style*="width:180px"]{
+        width:100% !important;
+    }
+
+    /* Tombol tambah */
+    .btn-tambah,
+    .btn.btn-sm{
+        width:100%;
+        justify-content:center;
+    }
+
+    /* Search */
+    form.ms-auto{
+        max-width:100% !important;
+        width:100% !important;
+        margin-left:0 !important;
+    }
+
+    /* Table */
+    .table-container{
+        overflow-x:auto;
+        -webkit-overflow-scrolling:touch;
+    }
+
+    .table{
+        min-width:700px;
+    }
+
+    .table th,
+    .table td{
+        font-size:12px;
+        white-space:nowrap;
+    }
+
+    /* Aksi */
+    .col-aksi{
+        min-width:100px;
+    }
+
+    /* Pagination */
+    .pagination{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .pagination .page-link{
+        padding:5px 10px;
+        font-size:12px;
+    }
+
+}
+
+/* HP KECIL */
+@media (max-width:576px){
+
+    .card{
+        border-radius:10px;
+    }
+
+    .card h5{
+        font-size:15px;
+    }
+
+    .table th,
+    .table td{
+        font-size:11px;
+    }
+
+}
+
+.total-data{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 36px;
+    min-width: 120px;
+    padding: 0 14px;
+
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    background: #fff;
+
+    font-size: 13px;
+    font-weight: 500;
+    color: #212529;
+}
+
+.total-data strong{
+    margin-left: 4px;
+}
+
+
+/* ===== SAMAKAN TINGGI TOOLBAR ===== */
+
+.total-data{
+    height: 36px;
+    min-width: 120px;
+    padding: 0 14px;
+}
+
+.form-select{
+    height: 36px;
+}
+
+.btn-tambah{
+    height: 36px;
+    padding: 0 14px;
+}
+
+.search-flex .form-control{
+    height: 36px;
+}
