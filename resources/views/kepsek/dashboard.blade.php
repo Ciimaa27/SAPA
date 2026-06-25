@@ -96,28 +96,32 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-const ctx = document.getElementById('chartKehadiran');
+const ctx = document.getElementById('statistikChart');
 
 new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: {!! json_encode($labels) !!},
+        labels: @json($labels),
         datasets: [
             {
                 label: 'Hadir',
-                data: {!! json_encode($dataHadir) !!},
-                backgroundColor: '#6a4bc4'
+                data: @json($dataHadir),
+                backgroundColor: '#22c55e',
+                borderColor: '#22c55e',
+                borderRadius: 8
             },
             {
                 label: 'Tidak hadir',
-                data: {!! json_encode($dataTidakHadir) !!},
-                backgroundColor: '#2ec4b6'
+                data: @json($dataTidakHadir),
+                backgroundColor: '#ef4444',
+                borderColor: '#ef4444',
+                borderRadius: 8
             }
         ]
     },
     options: {
         responsive: true,
-        maintainAspectRatio: false, // 🔥 penting biar ikut height CSS
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 position: 'top'
@@ -126,4 +130,3 @@ new Chart(ctx, {
     }
 });
 </script>
-@endpush

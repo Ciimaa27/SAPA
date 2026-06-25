@@ -108,13 +108,9 @@
                                 <td>
                                     <form action="{{ route('iot.destroy',['tab'=>'rfid','id'=>$item->id_siswa]) }}" method="POST" style="display:inline;">
                                         @csrf @method('DELETE')
-<<<<<<< HEAD
                                         <button type="submit" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Yakin hapus?')">
                                             <i class="fa fa-trash"></i>
                                         </button>
-=======
-                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')" type="submit">Hapus</button>
->>>>>>> isma
                                     </form>
                                 </td>
                             @else
@@ -123,13 +119,9 @@
                                 <td>
                                     <form action="{{ route('iot.destroy',['tab'=>'sidik-jari','id'=>$item->id_wali]) }}" method="POST" style="display:inline;">
                                         @csrf @method('DELETE')
-<<<<<<< HEAD
                                         <button type="submit" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Yakin hapus?')">
                                             <i class="fa fa-trash"></i>
                                         </button>
-=======
-                                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')" type="submit">Hapus</button>
->>>>>>> isma
                                     </form>
                                 </td>
                             @endif

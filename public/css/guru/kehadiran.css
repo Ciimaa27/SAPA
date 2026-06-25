@@ -41,16 +41,21 @@
 }
 
 /* BUTTON */
-.btn-lihat {
-    background: #d1f5ec;
-    color: #00a884;
-    border: none;
-    padding: 5px 12px;
+.btn-detail {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    background: #16a34a;
+    color: #fff !important;
     border-radius: 6px;
-    font-size: 12px;
-    cursor: pointer;
+    text-decoration: none;
+    transition: 0.2s;
+    font-size: 14px;
 }
 
-.btn-lihat:hover {
-    opacity: 0.8;
+.btn-detail:hover {
+    background: #15803d;
+    color: #fff !important;
 }

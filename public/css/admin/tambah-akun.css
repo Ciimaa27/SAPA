@@ -78,4 +78,16 @@
         width:100%;
     }
 
+
+}
+.btn-reset {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
+}
+
+.btn-reset:hover {
+    background-color: #bb2d3b;
+    border-color: #bb2d3b;
+    color: #fff;
 }
