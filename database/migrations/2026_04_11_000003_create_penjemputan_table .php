@@ -13,13 +13,30 @@ return new class extends Migration
     {
         Schema::create('penjemputan', function (Blueprint $table) {
             $table->id();
+
             $table->unsignedBigInteger('id_siswa');
             $table->unsignedBigInteger('id_wali');
+
             $table->date('tanggal');
             $table->time('jam_jemput');
 
-            $table->foreign('id_siswa')->references('id_siswa')->on('siswa')->cascadeOnDelete();
-            $table->foreign('id_wali')->references('id_wali')->on('wali')->cascadeOnDelete();
+            // Tambahan
+            $table->enum('status_penjemputan', [
+                'Tepat Waktu',
+                'Terlambat'
+            ])->default('Tepat Waktu');
+
+            $table->foreign('id_siswa')
+                ->references('id_siswa')
+                ->on('siswa')
+                ->cascadeOnDelete();
+
+            $table->foreign('id_wali')
+                ->references('id_wali')
+                ->on('wali')
+                ->cascadeOnDelete();
+
+            $table->timestamps();
         });
     }
 

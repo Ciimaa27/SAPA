@@ -16,8 +16,8 @@ class Penjemputan extends Model
         'id_siswa',
         'id_wali',
         'tanggal',
-        'status',
         'jam_jemput',
+        "status_penjemputan",
         'keterangan',
     ];
 

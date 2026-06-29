@@ -28,7 +28,7 @@ class LaporanController extends Controller
             $kelasQuery->where('id_kelas', $kelasFilter);
         }
 
-        $kelas = $kelasQuery->get();
+        $kelas = $kelasQuery->paginate(10)->appends($request->query());
 
         $kehadiranQuery = Kehadiran::join('siswa', 'kehadiran.id_siswa', '=', 'siswa.id_siswa')
             ->whereYear('kehadiran.tanggal', $tahun)

@@ -1,169 +1,376 @@
-.container-dashboard{
-    max-width:1160px;
-    margin:0 auto;
+/* =====================================================
+   CONTAINER
+===================================================== */
+.container-dashboard {
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
-.main-dashboard{
-    padding:20px 24px;
+.main-dashboard {
+    padding: 5px 30px 20px 20px;
 }
 
-/* =========================
-   TITLE
-========================= */
-.page-title-card{
+body {
+    overflow-x: hidden;
+}
+
+.content {
+    margin-left: 230px;
+    padding-top: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* =====================================================
+   CARD
+===================================================== */
+.card{
     background:#fff;
-    border:1px solid #e5e7eb;
-    border-radius:10px;
-    padding:18px 24px;
-    margin-bottom:18px;
-    box-shadow:0 2px 8px rgba(0,0,0,.04);
-}
-
-.page-title-card h5{
-    margin:0;
-    font-size:20px;
-    font-weight:600;
-    color:#374151;
-}
-
-/* =========================
-   KELAS
-========================= */
-.class-card{
-    background:#fff;
-    border:1px solid #e5e7eb;
-    border-radius:10px;
-    padding:15px 20px;
-    margin-bottom:20px;
-    box-shadow:0 2px 8px rgba(0,0,0,.04);
-}
-
-.class-tabs{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-}
-
-.btn-kelas{
-    min-width:70px;
-    height:32px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-decoration:none;
-    font-size:13px;
-    color:#666;
-    background:#f5f5f5;
     border:1px solid #d9d9d9;
-    border-radius:6px;
-    transition:.2s;
-}
-
-.btn-kelas:hover{
-    background:#ececec;
-}
-
-.btn-kelas.active{
-    background:#f4b400;
-    color:#333;
-    border-color:#f4b400;
-    font-weight:600;
-}
-
-/* =========================
-   CARD JADWAL
-========================= */
-.schedule-card{
-    background:#fff;
-    border:1px solid #e5e7eb;
     border-radius:10px;
-    padding:20px;
-    box-shadow:0 2px 8px rgba(0,0,0,.04);
+    box-shadow:none;
 }
 
-.schedule-card-top{
-    display:flex;
-    justify-content:flex-end;
-    margin-bottom:16px;
+.card h5 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #343a40;
 }
 
-.btn-edit{
-    padding:6px 18px;
-    border:1px solid #d1d5db;
-    border-radius:5px;
-    background:#fafafa;
-    color:#555;
-    text-decoration:none;
-    font-size:12px;
-    font-weight:500;
+/* =====================================================
+   PILIH KELAS
+===================================================== */
+.kelas-wrapper {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
-.btn-edit:hover{
-    background:#f3f4f6;
+.btn-kelas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 78px;
+    height: 34px;
+    text-decoration: none;
+    border-radius: 8px;
+    border: 1px solid #d8c5ff;
+    background: #f4edff;
+    color: #7c4dff;
+    font-size: 13px;
+    font-weight: 600;
+    transition: .25s;
 }
 
-/* =========================
+.btn-kelas:hover {
+    background: #eee4ff;
+    color: #7c4dff;
+    border-color: #c8b0ff;
+}
+
+.btn-kelas.active {
+    background: #7c4dff;
+    color: #fff;
+    border-color: #7c4dff;
+}
+
+/* =====================================================
+   INFO
+===================================================== */
+.jadwal-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: #6c757d;
+}
+
+.jadwal-scroll{
+    max-height:360px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    padding-right:6px;
+}
+
+.jadwal-info i {
+    color: #7c4dff;
+}
+
+/* =====================================================
    LIST JADWAL
-========================= */
-.jadwal-list{
-    width:95%;
-    margin:0 auto;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
+===================================================== */
+.jadwal-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-.jadwal-row{
-    display:flex;
-    align-items:center;
-    height:40px;
-    border:1px solid #b794f4;
-    border-radius:4px;
-    overflow:hidden;
-    background:#fff;
+.jadwal-item {
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: .2s;
 }
 
-.jadwal-hari{
-    width:110px;
-    height:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#d9c3ff;
-    color:#6b46c1;
-    font-size:13px;
-    font-weight:600;
-    border-right:1px solid #b794f4;
+.jadwal-item:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
 }
 
-.jadwal-jam{
-    flex:1;
-    padding-left:18px;
-    color:#6b46c1;
-    font-size:13px;
-    font-weight:500;
+/* =====================================================
+   HARI
+===================================================== */
+.hari {
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    background: #f4edff;
+    color: #7c4dff;
+    font-size: 14px;
+    font-weight: 600;
+    border-right: 1px solid #d8c5ff;
 }
 
-/* =========================
-   TOMBOL PENSIL
-========================= */
-.btn-row-edit{
-    width:40px;
-    height:40px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#dbeafe;
-    border-left:1px solid #93c5fd;
-    color:#2563eb;
-    text-decoration:none;
-    transition:.2s;
+/* =====================================================
+   JAM
+===================================================== */
+.jam {
+    flex: 1;
+    padding: 0 20px;
+    font-size: 14px;
+    color: #495057;
+    font-weight: 500;
 }
 
-.btn-row-edit:hover{
-    background:#bfdbfe;
+/* =====================================================
+   BADGE LIBUR
+===================================================== */
+.badge-libur {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 14px;
+    border-radius: 20px;
+    background: #ffe9e9;
+    color: #dc3545;
+    font-size: 12px;
+    font-weight: 600;
 }
 
-.btn-row-edit i{
-    font-size:12px;
+/* =====================================================
+   AKSI
+===================================================== */
+.aksi {
+    width: 70px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-edit {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    text-decoration: none;
+    background: #fff8e1;
+    color: #996c00;
+    border: 1px solid #ffd54f;
+    transition: .2s;
+}
+
+.btn-edit:hover {
+    background: #ffefb3;
+    color: #996c00;
+    border-color: #ffc107;
+}
+
+.btn-edit i {
+    font-size: 13px;
+}
+/* =====================================================
+   RESPONSIVE TABLET
+===================================================== */
+@media (max-width: 768px) {
+    .content {
+        margin-left: 0;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .main-dashboard {
+        padding: 10px;
+    }
+
+    .container-dashboard {
+        max-width: 100%;
+    }
+
+    .kelas-wrapper {
+        gap: 8px;
+    }
+
+    .btn-kelas {
+        flex: 1 1 calc(33.333% - 8px);
+        min-width: 90px;
+    }
+
+    .jadwal-item {
+        flex-wrap: wrap;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .hari {
+        width: 100%;
+        height: 42px;
+        border-right: none;
+        border-bottom: 1px solid #d8c5ff;
+    }
+
+    .jam {
+        flex: 1;
+        padding: 15px;
+    }
+
+    .aksi {
+        width: 60px;
+        justify-content: center;
+    }
+}
+
+/* =====================================================
+   RESPONSIVE HP
+===================================================== */
+@media (max-width: 576px) {
+    .main-dashboard {
+        padding: 8px;
+    }
+
+    .card {
+        border-radius: 8px;
+    }
+
+    .card h5 {
+        font-size: 17px;
+    }
+
+    .kelas-wrapper {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .btn-kelas {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .jadwal-info {
+        font-size: 12px;
+        align-items: flex-start;
+    }
+
+    .jadwal-item {
+        display: block;
+        border-radius: 8px;
+    }
+
+    .hari {
+        width: 100%;
+        height: 42px;
+        font-size: 13px;
+    }
+
+    .jam {
+        padding: 14px;
+        font-size: 13px;
+        text-align: center;
+    }
+
+    .aksi {
+        width: 100%;
+        padding: 12px;
+        border-top: 1px solid #e9ecef;
+    }
+
+    .btn-edit {
+        width: 100%;
+        height: 38px;
+        border-radius: 8px;
+    }
+}
+
+/* =====================================================
+   ANIMATION
+===================================================== */
+.card {
+    transition: .25s;
+}
+
+.card:hover {
+    box-shadow: 0 8px 22px rgba(0,0,0,.06);
+}
+
+.btn-kelas,
+.btn-edit {
+    transition: all .25s ease;
+}
+
+.jadwal-item {
+    transition: all .25s ease;
+}
+
+.jadwal-item:hover {
+    transform: translateY(-2px);
+    border-color: #c8b0ff;
+}
+
+/* =====================================================
+   SCROLL
+===================================================== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d2d6dc;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #b8bec7;
+}
+
+::-webkit-scrollbar-track {
+    background: #f8f9fa;
+}
+
+/* =====================================================
+   FINISH
+===================================================== */
+.card-body {
+    padding: 24px;
+}
+
+.jadwal-container {
+    margin-top: 5px;
+}
+
+.jam {
+    letter-spacing: .2px;
+}
+
+.btn-edit:focus,
+.btn-kelas:focus {
+    outline: none;
+    box-shadow: none;
 }

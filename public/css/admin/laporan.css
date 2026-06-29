@@ -1,73 +1,300 @@
-.container-dashboard{
-    max-width:1100px;
-    margin:0 auto;
+/* =========================================
+   LAYOUT
+========================================= */
+.container-dashboard {
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
-.main-dashboard{
-    padding:5px 30px 20px 20px;
+.main-dashboard {
+    padding: 5px 30px 20px 20px;
 }
 
-/* TAB */
-.btn-tab{
-    border:none;
-    padding:6px 14px;
-    background:#eee;
-    border-radius:8px;
-    font-size:13px;
-    cursor:pointer;
+.content {
+    margin-left: 230px;
+    padding-top: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
-.btn-tab.active{
-    background:#6f42c1;
-    color:white;
+body {
+    overflow-x: hidden;
+    background: #f8f9fa;
 }
 
-/* TABLE */
-.table th{
-    font-size:13px;
-    font-weight:600;
+/* =========================================
+   CARD
+========================================= */
+.card {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    box-shadow: none;
 }
 
-.table td{
-    font-size:13px;
+.card h5 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #343a40;
 }
 
-/* BUTTON */
-.btn-unduh{
-    background:#a78bfa;
-    border:none;
-    padding:4px 12px;
-    border-radius:6px;
-    font-size:12px;
-    color:white;
+.card-body {
+    padding: 20px;
 }
 
-.btn-unduh:hover{
-    background:#8b5cf6;
+/* =========================================
+   FILTER
+========================================= */
+form {
+    width: 100%;
 }
 
-/* LAYOUT */
-.content{
-    margin-left:230px;
-    padding-top:60px;
+.form-select,
+.form-control {
+    height: 38px;
+    font-size: 13px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    box-shadow: none;
 }
 
-body{
-    overflow-x:hidden;
+.form-select:focus,
+.form-control:focus {
+    border-color: #7c4dff;
+    box-shadow: 0 0 0 .15rem rgba(124,77,255,.15);
 }
 
-.btn-primary{
-    background:#7c4dff !important;
-    border-color:#7c4dff !important;
-    color:#fff !important;
+/* =========================================
+   BUTTON
+========================================= */
+.btn-primary {
+    background: #7c4dff !important;
+    border-color: #7c4dff !important;
+    color: #fff !important;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 8px 18px;
 }
 
-.btn-primary:hover{
-    background:#6f42c1 !important;
-    border-color:#6f42c1 !important;
+.btn-primary:hover {
+    background: #6f42c1 !important;
+    border-color: #6f42c1 !important;
 }
 
-.fa-file-excel{
-    color:#198754 !important;
-    font-size:18px;
+/* =========================================
+   TABLE
+========================================= */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background: #f8f9fa;
+    font-size: 13px;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 1px solid #dee2e6;
+    white-space: nowrap;
+}
+
+.table tbody td {
+    font-size: 13px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+/* Hover */
+.table tbody tr:hover {
+    background: #faf8ff;
+}
+
+/* =========================================
+   BUTTON EXCEL
+========================================= */
+.btn-excel {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid #d9d9d9;
+    background: #fff;
+    text-decoration: none;
+    transition: .2s;
+}
+
+.btn-excel:hover {
+    background: #f3fff5;
+    border-color: #198754;
+}
+
+.btn-excel i {
+    color: #198754;
+    font-size: 18px;
+}
+/* =========================================
+   PAGINATION
+========================================= */
+.pagination .page-link {
+    color: #7c4dff;
+    border-color: #d9d9d9;
+    border-radius: 6px;
+    margin: 0 2px;
+    padding: 6px 10px;
+    font-size: 13px;
+}
+
+.pagination .page-link:hover {
+    color: #6f42c1;
+    background-color: #f5f0ff;
+    border-color: #cbb8ff;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #7c4dff;
+    border-color: #7c4dff;
+    color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #adb5bd;
+    background-color: #fff;
+    border-color: #e9ecef;
+}
+
+/* =========================================
+   RESPONSIVE TABLET
+========================================= */
+@media (max-width: 768px) {
+    .content {
+        margin-left: 0;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .main-dashboard {
+        padding: 10px;
+    }
+
+    .container-dashboard {
+        max-width: 100%;
+    }
+
+    /* Filter */
+    form.d-flex {
+        flex-wrap: wrap;
+        gap: 10px !important;
+        align-items: stretch !important;
+    }
+
+    form.d-flex .form-select,
+    form.d-flex .form-control,
+    form.d-flex .btn {
+        width: 100% !important;
+    }
+
+    /* Table */
+    .table-responsive {
+        overflow-x: auto;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table {
+        min-width: 900px;
+    }
+
+    .table th,
+    .table td {
+        white-space: nowrap;
+    }
+}
+
+/* =========================================
+   RESPONSIVE HP
+========================================= */
+@media (max-width: 576px) {
+    .main-dashboard {
+        padding: 8px;
+    }
+
+    .card {
+        border-radius: 8px;
+    }
+
+    .card h5 {
+        font-size: 17px;
+    }
+
+    .table th,
+    .table td {
+        font-size: 12px;
+    }
+
+    .btn-primary {
+        width: 100%;
+    }
+}
+
+/* =========================================
+   CARD
+========================================= */
+.card {
+    transition: .2s;
+}
+
+.card:hover {
+    border-color: #d0d5dd;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+.table tbody tr {
+    transition: .2s;
+}
+
+.table tbody tr:hover {
+    background: #faf8ff;
+}
+
+/* =========================================
+   BUTTON EXCEL
+========================================= */
+.btn-excel {
+    transition: .2s;
+}
+
+.btn-excel:hover {
+    transform: translateY(-2px);
+}
+
+.btn-excel:active {
+    transform: scale(.95);
+}
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+.table-responsive::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: #cfd4da;
+    border-radius: 20px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+    background: #adb5bd;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: #f8f9fa;
 }

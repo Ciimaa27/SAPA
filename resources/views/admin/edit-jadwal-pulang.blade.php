@@ -1,160 +1,144 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Jadwal Pulang')
+@section('title','Edit Jadwal Pulang')
 
 @section('sidebar')
     @include('layouts.sidebar-admin')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-    document.getElementById('btnKirim').addEventListener('click', function() {
-
-        let kelasDipilih = [];
-
-        document.querySelectorAll('input[name="kelas_tujuan[]"]:checked')
-            .forEach(function(item){
-                kelasDipilih.push(item.value);
-            });
-
-        Swal.fire({
-            title: '📢 Kirim Notifikasi?',
-            html: `
-                <p style="text-align:left">
-                    Jadwal pulang akan diperbarui dan notifikasi WA akan dikirim ke seluruh wali kelas
-                    <b>${kelasDipilih.join(', ')}</b>.
-                </p>
-
-                <p style="text-align:left;color:#666;margin-top:15px">
-                    ⚠️ Pastikan data sudah benar.<br>
-                    Proses ini tidak dapat dibatalkan.
-                </p>
-            `,
-            showCancelButton: true,
-            confirmButtonText: 'Kirim',
-            cancelButtonText: 'Batal',
-            confirmButtonColor: '#4f8dfd',
-            cancelButtonColor: '#dc3545',
-            reverseButtons: true
-        }).then((result) => {
-
-            if (result.isConfirmed) {
-                document.getElementById('formJadwalPulang').submit();
-            }
-
-        });
-
-    });
-    </script>
 @endsection
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
-<link rel="stylesheet" href="{{ asset('css/admin/edit-jadwal-pulang.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/edit-jadwal-pulang.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endpush
 
 @section('content')
+<div class="main-dashboard">
+    <div class="container-dashboard">
 
-<div class="container">
-
-    {{-- HEADER --}}
-    <div class="judul-halaman">
-        Edit jadwal pulang
-    </div>
-
-    {{-- INFO --}}
-    <div class="info-box">
-        ! Fitur ini digunakan untuk mengirim notifikasi WhatsApp kepada wali siswa terkait perubahan jadwal pulang.
-    </div>
-
-    {{-- FORM --}}
-   <form id="formJadwalPulang"
-      action="{{ route('jadwal-pulang.update-satu') }}"
-      method="POST">
-    @csrf
-
-    <input type="hidden" name="kelas" value="{{ $activeKelas }}">
-    <input type="hidden" name="hari" value="{{ $hariDipilih }}">
-
-    <div class="card-jadwal">
-
-        <div class="form-grid">
-
-            {{-- HARI --}}
-            <div class="field-label">Hari</div>
-            <div class="field-separator">:</div>
-
-            <div class="field-control">
-                <input type="text"
-                    class="readonly-input"
-                    value="{{ $hariDipilih }}"
-                    readonly>
-            </div>
-
-            {{-- JAM --}}
-            <div class="field-label">Jam pulang</div>
-            <div class="field-separator">:</div>
-
-            <div class="field-control">
-                <input type="time"
-                    name="jam"
-                    class="jam-input"
-                    value="{{ $jadwal && $jadwal->jam ? \Carbon\Carbon::parse($jadwal->jam)->format('H:i') : '' }}">
-            </div>
-
-            {{-- ALASAN --}}
-            <div class="field-label">Alasan</div>
-            <div class="field-separator">:</div>
-
-            <div class="field-control">
-                <select class="select-input" name="alasan">
-                    <option value="">Pilih alasan</option>
-                    <option value="Rapat guru">Rapat guru</option>
-                    <option value="Kegiatan sekolah">Kegiatan sekolah</option>
-                    <option value="Libur khusus">Libur khusus</option>
-                    <option value="Gladi / persiapan acara">Gladi / persiapan acara</option>
-                    <option value="Kelas tambahan">Kelas tambahan</option>
-                </select>
-            </div>
-
-            {{-- PILIH KELAS --}}
-            <div class="field-label">Pilih kelas</div>
-            <div class="field-separator">:</div>
-
-            <div class="field-control">
-
-                <div class="checkbox-note">
-                    *Perhatikan dengan benar ketika memilih kelas
-                </div>
-
-                <div class="checkbox-grid">
-                    @for($i = 1; $i <= 6; $i++)
-                    <label class="checkbox-item">
-                        <input type="checkbox"
-                            name="kelas_tujuan[]"
-                            value="{{ $i }}"
-                            {{ $i == $activeKelas ? 'checked' : '' }}>
-                        Kelas {{ $i }}
-                    </label>
-                    @endfor
-                </div>
-
-            </div>
-
+        {{-- HEADER --}}
+        <div class="card mb-3 p-3">
+            <h5 class="mb-0">Edit Jadwal Pulang</h5>
         </div>
 
-        <div class="actions-row">
-
-            <button type="button"
-                    class="btn-batal"
-                    onclick="window.location='{{ route('jadwal-pulang', ['kelas' => $activeKelas]) }}'">
-                Batal
-            </button>
-
-            <button type="button" class="btn-simpan" id="btnKirim">
-                Kirim
-            </button>
-
+        {{-- INFO --}}
+        <div class="card mb-3">
+            <div class="card-body py-3">
+                <div class="info-box">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>
+                        Perubahan jadwal pulang akan mengirimkan notifikasi WhatsApp kepada wali siswa yang dipilih.
+                    </span>
+                </div>
+            </div>
         </div>
 
-    </div>
+        <form id="formJadwalPulang"
+              action="{{ route('jadwal-pulang.update-satu') }}"
+              method="POST">
 
-</form>
+            @csrf
+
+            <input type="hidden" name="kelas" value="{{ $activeKelas }}">
+            <input type="hidden" name="hari" value="{{ $hariDipilih }}">
+
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="form-grid">
+
+                        {{-- HARI --}}
+                        <div class="field-label">Hari</div>
+                        <div class="field-separator">:</div>
+                        <div class="field-control">
+                            <input type="text" class="form-control" value="{{ $hariDipilih }}" readonly>
+                        </div>
+
+                        {{-- JAM --}}
+                        <div class="field-label">Jam Pulang</div>
+                        <div class="field-separator">:</div>
+                        <div class="field-control">
+                            <input type="time"
+                                   class="form-control"
+                                   name="jam"
+                                   value="{{ $jadwal && $jadwal->jam ? \Carbon\Carbon::parse($jadwal->jam)->format('H:i') : '' }}">
+                        </div>
+
+                        {{-- ALASAN --}}
+                        <div class="field-label">Alasan</div>
+                        <div class="field-separator">:</div>
+                        <div class="field-control">
+                            <select class="form-select" name="alasan">
+                                <option value="">Pilih alasan</option>
+                                <option value="Rapat guru">Rapat Guru</option>
+                                <option value="Kegiatan sekolah">Kegiatan Sekolah</option>
+                                <option value="Libur khusus">Libur Khusus</option>
+                                <option value="Gladi / persiapan acara">Gladi / Persiapan Acara</option>
+                                <option value="Kelas tambahan">Kelas Tambahan</option>
+                            </select>
+                        </div>
+
+                        {{-- PILIH KELAS --}}
+                        <div class="field-label">Pilih Kelas</div>
+                        <div class="field-separator">:</div>
+                        <div class="field-control">
+                            <small class="text-muted d-block mb-3">
+                                Pilih kelas yang akan menerima perubahan jadwal pulang.
+                            </small>
+                            <div class="checkbox-wrapper">
+                                @for($i = 1; $i <= 6; $i++)
+                                    <label class="checkbox-item">
+                                        <input type="checkbox"
+                                               name="kelas_tujuan[]"
+                                               value="{{ $i }}"
+                                               {{ $i == $activeKelas ? 'checked' : '' }}>
+                                        Kelas {{ $i }}
+                                    </label>
+                                @endfor
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="button-area">
+                        <a href="{{ route('jadwal-pulang',['kelas'=>$activeKelas]) }}" class="btn-batal">Batal</a>
+                        <button type="button" class="btn-simpan" id="btnKirim">Kirim</button>
+                    </div>
+
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<script>
+document.getElementById('btnKirim').addEventListener('click', function () {
+    let kelasDipilih = [];
+
+    document.querySelectorAll('input[name="kelas_tujuan[]"]:checked').forEach(function (item) {
+        kelasDipilih.push(item.value);
+    });
+
+    Swal.fire({
+        title: 'Kirim Notifikasi?',
+        html: `
+            Jadwal pulang akan diperbarui dan notifikasi akan dikirim ke:
+            <br><br>
+            <b>Kelas ${kelasDipilih.join(', ')}</b>
+        `,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Kirim',
+        cancelButtonText: 'Batal',
+        confirmButtonColor: '#7c4dff',
+        cancelButtonColor: '#dc3545'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('formJadwalPulang').submit();
+        }
+    });
+});
+</script>
+@endsection

@@ -1,238 +1,344 @@
-/* ===================================
-   BACKGROUND
-=================================== */
-
-body{
-    background:#f4f5f7;
-    font-family:Arial, Helvetica, sans-serif;
+/* =========================================
+   LAYOUT
+========================================= */
+body {
+    background: #f5f6fa;
+    overflow-x: hidden;
 }
 
-/* ===================================
-   CONTAINER
-=================================== */
-
-.container{
-    padding:20px 18px;
-    max-width:980px;
-    margin:60px auto 20px;
+.content {
+    margin-left: 230px;
+    padding-top: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
-/* ===================================
-   JUDUL HALAMAN
-=================================== */
-
-.judul-halaman{
-    background:#fff;
-    border:1px solid #dcdcdc;
-    border-radius:3px;
-    padding:10px 15px;
-    font-size:14px;
-    font-weight:600;
-    color:#444;
-    margin-bottom:10px;
+.main-dashboard {
+    padding: 5px 30px 20px 20px;
 }
 
-/* ===================================
-   INFO BOX
-=================================== */
-
-.info-box{
-    background:#eadcff;
-    border:1px solid #c4a7ff;
-    color:#7b58c4;
-    font-size:12px;
-    padding:8px 12px;
-    border-radius:3px;
-    margin-bottom:15px;
+.container-dashboard {
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
-/* ===================================
+/* =========================================
    CARD
-=================================== */
-
-.card-jadwal{
-    background:#fff;
-    border:1px solid #dcdcdc;
-    border-radius:4px;
-    padding:25px 35px;
-    min-height:420px;
-    box-shadow:0 1px 3px rgba(0,0,0,.04);
+========================================= */
+.card {
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    box-shadow: none;
+    background: #fff;
 }
 
-/* ===================================
+.card h5 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #343a40;
+}
+
+.card-body {
+    padding: 24px;
+}
+
+/* =========================================
+   INFO
+========================================= */
+.info-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #6f42c1;
+    background: #f5efff;
+    border: 1px solid #d9c8ff;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 13px;
+}
+
+.info-box i {
+    font-size: 16px;
+}
+
+/* =========================================
    FORM GRID
-=================================== */
-
-.form-grid{
-    display:grid;
-    grid-template-columns:120px 20px 1fr;
-    row-gap:18px;
-    align-items:flex-start;
+========================================= */
+.form-grid {
+    display: grid;
+    grid-template-columns: 160px 25px 1fr;
+    row-gap: 22px;
+    align-items: start;
 }
 
-.field-label{
-    font-size:13px;
-    font-weight:600;
-    color:#7b58c4;
-    padding-top:8px;
+.field-label {
+    padding-top: 8px;
+    font-weight: 600;
+    color: #6f42c1;
+    font-size: 14px;
 }
 
-.field-separator{
-    color:#666;
-    text-align:center;
-    padding-top:8px;
+.field-separator {
+    padding-top: 8px;
+    text-align: center;
+    color: #888;
 }
 
-.field-control{
-    width:100%;
+.field-control {
+    width: 100%;
 }
 
-/* ===================================
+/* =========================================
    INPUT
-=================================== */
-
-.readonly-input,
-.jam-input,
-.select-input{
-    width:100%;
-    max-width:750px;
-    height:34px;
-    border:1px solid #d8d8d8;
-    border-radius:2px;
-    background:#f7f7f7;
-    padding:0 10px;
-    font-size:12px;
-    color:#444;
+========================================= */
+.form-control,
+.form-select {
+    height: 42px;
+    border-radius: 8px;
+    border: 1px solid #d9d9d9;
+    font-size: 13px;
+    box-shadow: none;
 }
 
-.readonly-input{
-    background:#efefef;
+.form-control:focus,
+.form-select:focus {
+    border-color: #7c4dff;
+    box-shadow: 0 0 0 .15rem rgba(124,77,255,.15);
 }
 
-.select-input{
-    cursor:pointer;
+/* =========================================
+   CHECKBOX
+========================================= */
+.checkbox-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+    gap: 12px;
 }
 
-/* ===================================
-   CHECKBOX NOTE
-=================================== */
-
-.checkbox-note{
-    font-size:11px;
-    color:#8a8a8a;
-    margin-bottom:10px;
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: .2s;
+    background: #fff;
 }
 
-/* ===================================
-   CHECKBOX LIST
-=================================== */
-
-.checkbox-grid{
-    display:flex;
-    flex-direction:column;
-    gap:4px;
+.checkbox-item:hover {
+    border-color: #7c4dff;
+    background: #faf8ff;
 }
 
-.checkbox-item{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-size:12px;
-    color:#333;
+.checkbox-item input {
+    width: 16px;
+    height: 16px;
 }
 
-.checkbox-item input{
-    width:13px;
-    height:13px;
-    cursor:pointer;
+/* =========================================
+   BUTTON
+========================================= */
+.button-area {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 35px;
 }
 
-/* ===================================
-   BUTTON AREA
-=================================== */
-
-.actions-row{
-    display:flex;
-    justify-content:flex-end;
-    gap:8px;
-    margin-top:35px;
+.btn-batal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 1px solid #f5c2c7;
+    background: #fdeaea;
+    color: #b42318;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: .2s;
 }
 
-/* ===================================
-   BUTTON BATAL
-=================================== */
-
-.btn-batal{
-    background:#ffd7d7;
-    border:1px solid #f0bcbc;
-    color:#b94a48;
-    padding:5px 16px;
-    border-radius:3px;
-    font-size:11px;
-    text-decoration:none;
-    transition:.2s;
+.btn-batal:hover {
+    background: #fbd5d5;
+    color: #b42318;
 }
 
-.btn-batal:hover{
-    background:#fecaca;
-    color:#b94a48;
+.btn-simpan {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 22px;
+    border: none;
+    border-radius: 8px;
+    background: #7c4dff;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s;
 }
 
-/* ===================================
-   BUTTON KIRIM
-=================================== */
-
-.btn-simpan{
-    background:#d9ecff;
-    border:1px solid #b8dafc;
-    color:#2f74c0;
-    padding:5px 16px;
-    border-radius:3px;
-    font-size:11px;
-    cursor:pointer;
-    transition:.2s;
+.btn-simpan:hover {
+    background: #6940db;
 }
-
-.btn-simpan:hover{
-    background:#c8e1fb;
-}
-
-/* ===================================
-   RESPONSIVE
-=================================== */
-
-@media(max-width:768px){
-
-    .container{
-        padding:15px;
+/* =========================================
+   RESPONSIVE TABLET
+========================================= */
+@media (max-width: 768px) {
+    .content {
+        margin-left: 0;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
-    .card-jadwal{
-        padding:20px;
+    .main-dashboard {
+        padding: 10px;
     }
 
-    .form-grid{
-        grid-template-columns:1fr;
-        row-gap:10px;
+    .container-dashboard {
+        max-width: 100%;
     }
 
-    .field-separator{
-        display:none;
+    .card-body {
+        padding: 20px;
     }
 
-    .readonly-input,
-    .jam-input,
-    .select-input{
-        max-width:100%;
+    .form-grid {
+        grid-template-columns: 1fr;
+        row-gap: 12px;
     }
 
-    .actions-row{
-        flex-direction:column;
+    .field-label {
+        padding-top: 0;
+    }
+
+    .field-separator {
+        display: none;
+    }
+
+    .checkbox-wrapper {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .button-area {
+        margin-top: 25px;
+    }
+}
+
+/* =========================================
+   RESPONSIVE HP
+========================================= */
+@media (max-width: 576px) {
+    .main-dashboard {
+        padding: 8px;
+    }
+
+    .card {
+        border-radius: 8px;
+    }
+
+    .card h5 {
+        font-size: 17px;
+    }
+
+    .info-box {
+        font-size: 12px;
+        align-items: flex-start;
+    }
+
+    .checkbox-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .button-area {
+        flex-direction: column;
     }
 
     .btn-batal,
-    .btn-simpan{
-        width:100%;
-        text-align:center;
+    .btn-simpan {
+        width: 100%;
     }
+}
+
+/* =========================================
+   HOVER
+========================================= */
+.card {
+    transition: .2s;
+}
+
+.card:hover {
+    border-color: #cfcfcf;
+}
+
+.checkbox-item {
+    transition: .2s;
+}
+
+.checkbox-item:hover {
+    transform: translateY(-2px);
+}
+
+.btn-batal,
+.btn-simpan {
+    transition: .2s;
+}
+
+.form-control,
+.form-select {
+    transition: .2s;
+}
+
+/* =========================================
+   CHECKBOX AKTIF
+========================================= */
+.checkbox-item:has(input:checked) {
+    border-color: #7c4dff;
+    background: #f6f1ff;
+}
+
+.checkbox-item input {
+    accent-color: #7c4dff;
+}
+
+/* =========================================
+   SPACING
+========================================= */
+.text-muted {
+    font-size: 12px;
+}
+
+.form-control[readonly] {
+    background: #f8f9fa;
+}
+
+.button-area {
+    border-top: 1px solid #ececec;
+    padding-top: 20px;
+}
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d2d6dc;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #b8bec7;
+}
+
+::-webkit-scrollbar-track {
+    background: #f8f9fa;
 }

@@ -87,7 +87,7 @@
 
         <li class="menu-item {{ request()->routeIs('laporan') ? 'active' : '' }}">
             <a href="{{ route('laporan') }}">
-                <i class="fa-solid fa-box-archive"></i>
+                <i class="fa-solid fa-file-lines"></i>
                 Laporan
             </a>
         </li>

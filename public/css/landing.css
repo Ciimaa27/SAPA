@@ -1,692 +1,862 @@
-```css
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+/* =====================================================
+                    RESET
+===================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-html{
-    scroll-behavior:smooth;
+html {
+    scroll-behavior: smooth;
 }
 
-body{
-    font-family:'Poppins',sans-serif;
-    overflow-x:hidden;
-    color:#1f2937;
-
+body {
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+    color: #1f2937;
     background:
-    radial-gradient(
-        circle at top left,
-        rgba(108,76,241,0.12),
-        transparent 35%
-    ),
-
-    radial-gradient(
-        circle at top right,
-        rgba(139,92,246,0.10),
-        transparent 30%
-    ),
-
-    #f8fafc;
+        radial-gradient(circle at top left, rgba(108,76,241,.12), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(139,92,246,.10), transparent 35%),
+        #f8fafc;
 }
 
-/* ================= NAVBAR ================= */
+/* =====================================================
+                SCROLLBAR
+===================================================== */
+::-webkit-scrollbar {
+    width: 10px;
+}
 
+::-webkit-scrollbar-track {
+    background: #ececec;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #6C4CF1;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #5b3de5;
+}
+
+/* =====================================================
+                    NAVBAR
+===================================================== */
 .navbar-custom {
-  background: rgba(255, 255, 255, 0.90);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  padding: 8px 0;
-  transition: 0.3s;
+    background: rgba(255,255,255,.90);
+    backdrop-filter: blur(14px);
+    padding: 12px 0;
+    transition: .4s;
+    box-shadow: 0 4px 20px rgba(0,0,0,.05);
 }
 
-/* LOGO SAPA */
+.navbar-scroll {
+    background: white;
+    padding: 8px 0;
+    box-shadow: 0 15px 40px rgba(0,0,0,.08);
+}
 
 .navbar-brand {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .navbar-brand h5 {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 800;
-  background: linear-gradient(
-    135deg,
-    #6c4cf1,
-    #8b5cf6
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  line-height: 1;
+    font-size: 26px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #6C4CF1, #8B5CF6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .navbar-brand small {
-  display: block;
-  margin-top: 4px;
-  color: #6b7280;
-  font-size: 13px;
-  font-weight: 500;
+    display: block;
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 3px;
 }
 
-/* MENU */
-
 .nav-link {
-  color: #374151 !important;
-  font-size: 15px;
-  font-weight: 600;
-  margin: 0 10px;
-  transition: 0.3s;
+    color: #374151 !important;
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 12px;
+    transition: .22s ease;
+    position: relative;
+}
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background: #6C4CF1;
+    transition: .22s ease;
 }
 
 .nav-link:hover {
-  color: #6c4cf1 !important;
+    color: #6C4CF1 !important;
 }
 
-/* BUTTON LOGIN */
+.nav-link:hover::after {
+    width: 100%;
+}
 
+/* =====================================================
+                LOGIN BUTTON
+===================================================== */
 .btn-login {
-  background: linear-gradient(
-    135deg,
-    #6c4cf1,
-    #8b5cf6
-  );
-  color: white !important;
-  padding: 10px 30px;
-  border-radius: 999px;
-  font-size: 15px;
-  font-weight: 700;
-  border: none;
-  transition: 0.3s;
+    background: linear-gradient(135deg, #6C4CF1, #8B5CF6);
+    color: white !important;
+    padding: 11px 28px;
+    border-radius: 999px;
+    font-weight: 700;
+    transition: .22s ease;
 }
 
 .btn-login:hover {
-  color: white !important;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(108, 76, 241, 0.25);
+    transform: translateY(-4px);
+    color: white !important;
+    box-shadow: 0 18px 35px rgba(108,76,241,.25);
 }
 
-/* ================= HERO ================= */
-
-.hero-row{
-    min-height:75vh;
-    padding-top:50px;
-}
-
+/* =====================================================
+                    HERO
+===================================================== */
 .hero-section {
-  position: relative;
-  overflow: hidden;
-  background: 
-    radial-gradient(
-      circle at top left,
-      rgba(124, 58, 237, 0.18),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at bottom right,
-      rgba(139, 92, 246, 0.15),
-      transparent 40%
-    ),
-    linear-gradient(
-      135deg,
-      #ede9fe 0%,
-      #f5f3ff 35%,
-      #ffffff 100%
-    );
-  padding-top: 40px;
-}
-
-.hero-dots{
-    position:absolute;
-
-    right:120px;
-    top:180px;
-
-    width:140px;
-    height:140px;
-
-    background-image:
-    radial-gradient(
-        rgba(124,58,237,.25) 2px,
-        transparent 2px
-    );
-
-    background-size:20px 20px;
-}
-
-
-.hero-section::before {
-  content: "";
-  position: absolute;
-  width: 700px;
-  height: 700px;
-  top: -300px;
-  left: -250px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(124, 58, 237, 0.15),
-    transparent 70%
-  );
-  pointer-events: none;
-}
-
-.hero-section::after {
-  content: "";
-  position: absolute;
-  width: 800px;
-  height: 800px;
-  bottom: -450px;
-  right: -450px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(124, 58, 237, 0.12),
-    transparent 70%
-  );
-  pointer-events: none;
+    position: relative;
+    overflow: hidden;
+    padding-top: 120px;
+    padding-bottom: 90px;
+    background: linear-gradient(135deg, #ede9fe, #f8f5ff, #ffffff);
 }
 
 .hero-row {
-  min-height: 75vh;
-  padding-top: 50px;
-}
-
-.hero-image {
-  width: 100%;
-  border-radius: 35px;
-  box-shadow:
-    0 30px 70px rgba(124, 58, 237, 0.18),
-    0 10px 30px rgba(0, 0, 0, 0.08);
-}
-
-.floating-card {
-  position: absolute;
-  bottom: -35px;
-  left: 60px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 22px 28px;
-  border-radius: 25px;
-  box-shadow:
-    0 25px 60px rgba(124, 58, 237, 0.15),
-    0 10px 20px rgba(0, 0, 0, 0.05);
+    min-height: 78vh;
 }
 
 .hero-badge {
-  display: inline-block;
-  padding: 14px 30px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(12px);
-  color: #6c4cf1;
-  font-weight: 700;
-  font-size: 20px;
-  margin-bottom: 25px;
+    display: inline-block;
+    padding: 12px 28px;
+    background: #ede9fe;
+    color: #6C4CF1;
+    border-radius: 999px;
+    font-weight: 700;
+    margin-bottom: 25px;
 }
 
-.hero-badge{
-    display:inline-block;
-    padding:12px 24px;
-    border-radius:50px;
-    background:#ede9fe;
-    color:#6C4CF1;
-    font-size:20px;
-    font-weight:700;
-    margin-bottom:25px;
+.hero-title {
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #111827;
+    margin-bottom: 22px;
 }
 
-.hero-title{
-    font-size:46px;
-    font-weight:800;
-    line-height:1.15;
-    color:#111827;
-    margin-bottom:20px;
-    max-width:650px;
+.hero-desc {
+    font-size: 18px;
+    color: #6b7280;
+    margin-bottom: 35px;
+    max-width: 600px;
 }
 
-
-.hero-desc{
-    font-size:18px;
-    color:#6b7280;
-    margin-bottom:30px;
+.hero-btn-group {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
 }
 
-.hero-btn-group{
-    display:flex;
-    gap:15px;
-    flex-wrap:wrap;
+.btn-hero-primary {
+    background: #FF9F1C;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: .22s ease;
 }
 
-.btn-hero-primary{
-    background:#FF9F1C;
-    color:white;
-    padding:14px 28px;
-    border-radius:50px;
-    text-decoration:none;
-    font-weight:600;
+.btn-hero-primary:hover {
+    color: white;
+    transform: translateY(-5px);
 }
 
-.btn-hero-primary:hover{
-    color:white;
+.btn-hero-secondary {
+    border: 2px solid #6C4CF1;
+    color: #6C4CF1;
+    padding: 15px 30px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: .22s ease;
 }
 
-.btn-hero-secondary{
-    border:2px solid #6C4CF1;
-    color:#6C4CF1;
-    padding:14px 28px;
-    border-radius:50px;
-    text-decoration:none;
-    font-weight:600;
+.btn-hero-secondary:hover {
+    background: #6C4CF1;
+    color: white;
 }
 
-.hero-image-wrapper{
-    position:relative;
+/* =====================================================
+                HERO IMAGE
+===================================================== */
+.hero-image-wrapper {
+    position: relative;
 }
 
-.hero-image{
-    width:100%;
-    border-radius:35px;
-    box-shadow:0 25px 60px rgba(0,0,0,.15);
+.hero-image {
+    width: 100%;
+    border-radius: 35px;
+    box-shadow: 0 30px 70px rgba(108,76,241,.18);
 }
 
-.floating-card{
-    position:absolute;
-    bottom:-25px;
-    left:40px;
-
-    display:flex;
-    align-items:center;
-    gap:15px;
-
-    background:rgba(255,255,255,.95);
-
-    padding:18px 22px;
-    border-radius:20px;
-
-    box-shadow:0 10px 40px rgba(0,0,0,.12);
+.floating-card {
+    position: absolute;
+    left: 40px;
+    bottom: -30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: white;
+    padding: 20px 25px;
+    border-radius: 22px;
+    box-shadow: 0 20px 45px rgba(0,0,0,.10);
 }
 
-.icon-box{
-    width:50px;
-    height:50px;
-    border-radius:50%;
-    background:#6C4CF1;
-    color:white;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    font-weight:700;
+.icon-box {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: #6C4CF1;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
 }
 
-/* ================= STATS ================= */
-
-.stats-section{
-    padding:80px 0;
+/* =====================================================
+            FLOATING ANIMATION
+===================================================== */
+.floating-image {
+    animation: floatImage 2.8s ease-in-out infinite;
 }
 
-.stats-card{
-    background:white;
-    border-radius:25px;
-    text-align:center;
-    padding:35px 20px;
-
-    box-shadow:0 15px 40px rgba(0,0,0,.05);
+@keyframes floatImage {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
+    100% { transform: translateY(0); }
 }
 
-.stats-card h3{
-    color:#6C4CF1;
-    font-weight:800;
-    margin-bottom:10px;
+.floating-card {
+    animation: cardFloat 2.5s ease-in-out infinite;
 }
 
-.stats-card p{
-    margin:0;
-    color:#6b7280;
+@keyframes cardFloat {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
 }
 
-/* ================= SECTION TITLE ================= */
-
-.section-title{
-    text-align:center;
+.hero-dots {
+    position: absolute;
+    right: 120px;
+    top: 170px;
+    width: 150px;
+    height: 150px;
+    background-image: radial-gradient(rgba(108,76,241,.25) 2px, transparent 2px);
+    background-size: 20px 20px;
 }
 
-.section-title span{
-    color:#6C4CF1;
-    font-weight:700;
-    letter-spacing:1px;
+/* =====================================================
+                    STATS
+===================================================== */
+.stats-section {
+    padding: 90px 0;
 }
 
-.section-title h2{
-    font-size:42px;
-    font-weight:700;
-    margin-top:10px;
+.stats-card {
+    background: white;
+    border-radius: 28px;
+    padding: 38px 25px;
+    text-align: center;
+    height: 100%;
+    transition: .22s ease;
+    cursor: pointer;
+    border: 1px solid rgba(108,76,241,.08);
+    box-shadow: 0 18px 40px rgba(0,0,0,.05);
 }
 
-/* ================= FITUR ================= */
-
-.fitur-section{
-    padding:100px 0;
+.stats-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 30px 60px rgba(108,76,241,.18);
 }
 
-.fitur-card{
-    background:white;
-    border-radius:30px;
-    padding:35px 25px;
-    text-align:center;
-
-    height:100%;
-
-    transition:.3s;
-
-    box-shadow:0 15px 40px rgba(0,0,0,.05);
+.stats-card h3 {
+    font-size: 42px;
+    font-weight: 800;
+    color: #6C4CF1;
+    margin-bottom: 10px;
 }
 
-.fitur-card:hover{
-    transform:translateY(-10px);
+.stats-card p {
+    color: #6b7280;
+    font-size: 16px;
+    margin: 0;
 }
 
-.fitur-icon{
-    font-size:42px;
-    margin-bottom:15px;
+/* =====================================================
+                SECTION TITLE
+===================================================== */
+.section-title {
+    text-align: center;
+    margin-bottom: 15px;
 }
 
-.fitur-card h5{
-    font-weight:700;
+.section-title span {
+    display: inline-block;
+    color: #6C4CF1;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
 }
 
-.fitur-card p{
-    color:#6b7280;
+.section-title h2 {
+    font-size: 44px;
+    font-weight: 800;
+    color: #111827;
 }
 
-/* ================= TENTANG ================= */
-
-.tentang-section{
-    padding:120px 0;
+/* =====================================================
+                    FITUR
+===================================================== */
+.fitur-section {
+    padding: 120px 0;
+    background: linear-gradient(180deg, #ffffff, #faf8ff);
 }
 
-.section-badge{
-    color:#6C4CF1;
-    font-weight:700;
+.fitur-card {
+    position: relative;
+    overflow: hidden;
+    background: white;
+    border-radius: 30px;
+    padding: 40px 28px;
+    text-align: center;
+    height: 100%;
+    transition: .22s ease;
+    border: 1px solid rgba(108,76,241,.08);
+    box-shadow: 0 20px 50px rgba(0,0,0,.05);
 }
 
-.section-heading{
-    font-size:44px;
-    font-weight:800;
-    margin:15px 0;
+.fitur-card::before {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(rgba(108,76,241,.12), transparent 70%);
+    top: -120px;
+    right: -120px;
+    transition: .5s;
 }
 
-.tentang-image{
-    position:relative;
-    min-height:400px;
+.fitur-card:hover::before {
+    transform: scale(1.4);
 }
 
-.img-main{
-    width:320px;
-    border-radius:25px;
-    position:relative;
-    z-index:2;
-
-    box-shadow:0 25px 50px rgba(0,0,0,.15);
+.fitur-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 35px 70px rgba(108,76,241,.18);
 }
 
-.img-back{
-    width:320px;
-    border-radius:25px;
-
-    position:absolute;
-
-    top:60px;
-    left:120px;
-
-    opacity:.8;
-
-    box-shadow:0 25px 50px rgba(0,0,0,.12);
+.fitur-icon {
+    width: 90px;
+    height: 90px;
+    margin: auto;
+    margin-bottom: 25px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 42px;
+    background: linear-gradient(135deg, #ede9fe, #ffffff);
+    transition: .22s ease;
 }
 
-.check-list{
-    margin-top:25px;
+.fitur-card:hover .fitur-icon {
+    transform: rotate(10deg) scale(1.12);
 }
 
-.check-list div{
-    margin-bottom:12px;
-    font-weight:600;
+.fitur-card h5 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #111827;
 }
 
-/* ================= PANDUAN ================= */
-
-.panduan-section{
-    padding:120px 0;
-    background:#f3f4f6;
+.fitur-card p {
+    color: #6b7280;
+    line-height: 1.8;
 }
 
-.step-card{
-    background:white;
-    border-radius:25px;
-    padding:35px 25px;
-    text-align:center;
-    height:100%;
+/* =====================================================
+                CARD GLOW
+===================================================== */
+.fitur-card:hover {
+    border-color: rgba(108,76,241,.20);
 }
 
-.step-number{
-    width:60px;
-    height:60px;
-
-    border-radius:50%;
-    background:#6C4CF1;
-    color:white;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    margin:auto;
-    margin-bottom:20px;
-
-    font-size:20px;
-    font-weight:700;
+.fitur-card:hover h5 {
+    color: #6C4CF1;
 }
 
-/* ================= GURU ================= */
-
-.guru-section{
-    padding:120px 0;
+.fitur-card:hover p {
+    color: #4b5563;
 }
 
-.guru-card{
-    background:white;
-    overflow:hidden;
-    border-radius:25px;
-    transition:.3s;
-
-    box-shadow:0 15px 40px rgba(0,0,0,.06);
+/* =====================================================
+                ICON ANIMATION
+===================================================== */
+.fitur-icon {
+    animation: iconFloat 2.5s ease-in-out infinite;
 }
 
-.guru-card:hover{
-    transform:translateY(-10px);
+@keyframes iconFloat {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0); }
 }
 
-.guru-img{
-    width:100%;
-    height:320px;
-    object-fit:cover;
+/* =====================================================
+                SHADOW EFFECT
+===================================================== */
+.stats-card::after,
+.fitur-card::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -20px;
+    width: 70%;
+    height: 20px;
+    transform: translateX(-50%);
+    background: radial-gradient(rgba(0,0,0,.12), transparent 70%);
+    opacity: 0;
+    transition: .22s ease;
 }
 
-.guru-info{
-    padding:20px;
-    text-align:center;
+.stats-card:hover::after,
+.fitur-card:hover::after {
+    opacity: 1;
 }
 
-.guru-info h5{
-    margin-bottom:8px;
-    font-weight:700;
+/* =====================================================
+                    TENTANG
+===================================================== */
+.tentang-section {
+    padding: 130px 0;
+    position: relative;
+    overflow: hidden;
 }
 
-.guru-info span{
-    color:#6b7280;
+.section-badge {
+    display: inline-block;
+    color: #6C4CF1;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 18px;
 }
 
-/* ================= TIM ================= */
-
-.tim-section{
-    padding:120px 0;
-    background:
-    linear-gradient(
-    180deg,
-    #f8fafc,
-    #ede9fe
-    );
+.section-heading {
+    font-size: 46px;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 25px;
+    line-height: 1.25;
 }
 
-.tim-card{
-    background:white;
-    text-align:center;
-    border-radius:30px;
-    padding:30px;
-
-    box-shadow:0 20px 50px rgba(0,0,0,.08);
-
-    transition:.3s;
+.tentang-section p {
+    color: #6b7280;
+    line-height: 1.9;
+    font-size: 17px;
 }
 
-.tim-card:hover{
-    transform:translateY(-12px);
+/* =====================================================
+                GAMBAR TENTANG
+===================================================== */
+.tentang-image {
+    position: relative;
+    min-height: 470px;
 }
 
-.tim-img{
-    width:220px;
-    height:220px;
-
-    object-fit:cover;
-
-    border-radius:50%;
-
-    margin-bottom:20px;
+.img-main {
+    width: 340px;
+    border-radius: 30px;
+    position: relative;
+    z-index: 2;
+    transition: .5s;
+    box-shadow: 0 25px 60px rgba(0,0,0,.15);
 }
 
-.tim-card h5{
-    font-weight:700;
+.img-back {
+    position: absolute;
+    width: 330px;
+    left: 130px;
+    top: 70px;
+    border-radius: 30px;
+    transition: .5s;
+    opacity: .92;
+    box-shadow: 0 20px 45px rgba(0,0,0,.12);
 }
 
-.tim-card span{
-    color:#6b7280;
+.tentang-image:hover .img-main {
+    transform: translateY(-10px) rotate(-2deg);
 }
 
-/* ================= KONTAK ================= */
-
-.kontak-section{
-    padding:120px 0;
+.tentang-image:hover .img-back {
+    transform: translateY(10px) rotate(2deg);
 }
 
-.kontak-section h2{
-    font-weight:800;
+/* =====================================================
+                CHECK LIST
+===================================================== */
+.check-list {
+    margin-top: 35px;
 }
 
-/* ================= FOOTER ================= */
+.check-list div {
+    background: white;
+    padding: 16px 22px;
+    border-radius: 16px;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: #374151;
+    transition: .22s ease;
+    box-shadow: 0 12px 30px rgba(0,0,0,.05);
+}
 
-.footer{
-    background:#111827;
-    color:white;
-    padding:70px 0 20px;
+.check-list div:hover {
+    transform: translateX(12px);
+    color: #6C4CF1;
+    box-shadow: 0 18px 40px rgba(108,76,241,.15);
+}
+
+/* =====================================================
+                PANDUAN
+===================================================== */
+.panduan-section {
+    padding: 130px 0;
+    background: linear-gradient(180deg, #f8fafc, #ede9fe);
+}
+
+.step-card {
+    background: white;
+    border-radius: 30px;
+    padding: 40px 28px;
+    text-align: center;
+    height: 100%;
+    transition: .22s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 18px 45px rgba(0,0,0,.06);
+}
+
+.step-card::before {
+    content: "";
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: radial-gradient(rgba(108,76,241,.08), transparent 70%);
+    top: -150px;
+    right: -150px;
+    transition: .5s;
+}
+
+.step-card:hover::before {
+    transform: scale(1.4);
+}
+
+.step-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 35px 70px rgba(108,76,241,.16);
+}
+
+/* =====================================================
+                STEP NUMBER
+===================================================== */
+.step-number {
+    width: 70px;
+    height: 70px;
+    margin: auto;
+    margin-bottom: 22px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #6C4CF1, #8B5CF6);
+    color: white;
+    font-size: 24px;
+    font-weight: 800;
+    transition: .22s ease;
+    box-shadow: 0 15px 30px rgba(108,76,241,.20);
+}
+
+.step-card:hover .step-number {
+    transform: rotate(360deg) scale(1.1);
+}
+
+.step-card h5 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #111827;
+}
+
+.step-card p {
+    color: #6b7280;
+    line-height: 1.8;
+}
+
+/* =====================================================
+            FLOATING ANIMATION
+===================================================== */
+.img-main {
+    animation: animation: imageFloat 3s ease-in-out infinite;
+}
+
+.img-back {
+    animation: imageFloat2 3.2s ease-in-out infinite;
+}
+
+@keyframes imageFloat {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes imageFloat2 {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(12px); }
+    100% { transform: translateY(0); }
+}
+
+/* =====================================================
+                    GURU
+===================================================== */
+.guru-section {
+    padding: 130px 0;
+    background: #ffffff;
+}
+
+.guru-card-simple {
+    background: white;
+    border-radius: 30px;
+    padding: 40px 25px;
+    text-align: center;
+    height: 100%;
+    transition: .22s ease;
+    box-shadow: 0 18px 45px rgba(0,0,0,.06);
+}
+
+.guru-card-simple:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 35px 70px rgba(108,76,241,.15);
+}
+
+.guru-icon {
+    width: 90px;
+    height: 90px;
+    margin: auto;
+    margin-bottom: 22px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    background: linear-gradient(135deg, #ede9fe, #ffffff);
+    transition: .22s ease;
+}
+
+.guru-card-simple:hover .guru-icon {
+    transform: scale(1.12) rotate(12deg);
+}
+
+.guru-card-simple h5 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.guru-card-simple p {
+    color: #6b7280;
+    line-height: 1.8;
+}
+
+/* =====================================================
+                    TIM
+===================================================== */
+.tim-section {
+    padding: 130px 0;
+    background: linear-gradient(180deg, #f8fafc, #ede9fe);
+}
+
+.tim-card {
+    background: white;
+    border-radius: 35px;
+    text-align: center;
+    padding: 35px;
+    transition: .4s;
+    box-shadow: 0 20px 50px rgba(0,0,0,.07);
+}
+
+.tim-card:hover {
+    transform: translateY(-18px);
+    box-shadow: 0 40px 80px rgba(108,76,241,.16);
+}
+
+.tim-img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 25px;
+    transition: .4s;
+}
+
+.tim-card:hover .tim-img {
+    transform: scale(1.06);
+}
+
+.tim-card h5 {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.tim-card span {
+    color: #6b7280;
+}
+
+/* =====================================================
+                    KONTAK
+===================================================== */
+.kontak-section {
+    padding: 120px 0;
+}
+
+.kontak-section h2 {
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.kontak-section p {
+    color: #6b7280;
+    line-height: 2;
+}
+
+/* =====================================================
+                    FOOTER
+===================================================== */
+.footer {
+    background: #111827;
+    color: white;
+    padding: 80px 0 25px;
 }
 
 .footer h4,
-.footer h5{
-    margin-bottom:15px;
+.footer h5 {
+    margin-bottom: 18px;
+    font-weight: 700;
 }
 
-.footer-links{
-    list-style:none;
-    padding:0;
+.footer p {
+    color: #d1d5db;
+    line-height: 1.8;
 }
 
-.footer-links li{
-    margin-bottom:10px;
+.footer-links {
+    list-style: none;
+    padding: 0;
 }
 
-.footer-links a{
-    color:#d1d5db;
-    text-decoration:none;
+.footer-links li {
+    margin-bottom: 12px;
 }
 
-.footer-links a:hover{
-    color:white;
+.footer-links a {
+    color: #d1d5db;
+    text-decoration: none;
+    transition: .3s;
 }
 
-.footer hr{
-    margin:40px 0 20px;
-    border-color:rgba(255,255,255,.1);
+.footer-links a:hover {
+    color: white;
+    padding-left: 8px;
 }
 
-/* ================= RESPONSIVE ================= */
-
-@media(max-width:991px){
-
-    .hero-title{
-        font-size:42px;
-    }
-
-    .hero-image{
-        margin-top:40px;
-    }
-
-    .floating-card{
-        position:relative;
-        left:0;
-        bottom:0;
-        margin-top:20px;
-    }
-
-    .img-back{
-        display:none;
-    }
-
-    .img-main{
-        width:100%;
-    }
-
-    .section-heading{
-        font-size:34px;
-    }
-
-    .section-title h2{
-        font-size:32px;
-    }
-
+.instagram-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #d1d5db;
+    text-decoration: none;
+    transition: .3s;
 }
 
-@media(max-width:576px){
+.instagram-link:hover {
+    color: white;
+}
 
-    .hero-title{
-        font-size:34px;
-    }
+.footer hr {
+    margin: 40px 0 20px;
+    border-color: rgba(255,255,255,.10);
+}
 
-    .hero-desc{
-        font-size:16px;
-    }
+/* =====================================================
+                RESPONSIVE
+===================================================== */
+@media (max-width: 991px) {
+    .hero-title { font-size: 40px; }
+    .hero-row { text-align: center; }
+    .hero-btn-group { justify-content: center; }
+    .hero-image { margin-top: 40px; }
+    .floating-card { position: relative; left: 0; bottom: 0; margin-top: 20px; }
+    .img-back { display: none; }
+    .img-main { width: 100%; }
+    .section-heading { font-size: 36px; }
+    .section-title h2 { font-size: 34px; }
+    .tim-img { width: 180px; height: 180px; }
+}
 
+@media (max-width: 576px) {
+    .hero-title { font-size: 32px; }
+    .hero-desc { font-size: 16px; }
+    .hero-btn-group { flex-direction: column; }
     .btn-hero-primary,
-    .btn-hero-secondary{
-        width:100%;
-        text-align:center;
-    }
-
+    .btn-hero-secondary { width: 100%; text-align: center; }
+    .section-title h2 { font-size: 28px; }
+    .section-heading { font-size: 30px; }
+    .tim-img { width: 150px; height: 150px; }
 }
 
-.instagram-link{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-
-    color:#d1d5db;
-    text-decoration:none;
-
-    transition:.3s;
+/* =====================================================
+            GLOBAL HOVER
+===================================================== */
+.stats-card,
+.fitur-card,
+.step-card,
+.guru-card-simple,
+.tim-card {
+    will-change: transform;
 }
 
-.instagram-link:hover{
-    color:#ffffff;
+/* =====================================================
+            SMOOTH TRANSITION
+===================================================== */
+a,
+button,
+img,
+div {
+    transition: .35s ease;
 }
