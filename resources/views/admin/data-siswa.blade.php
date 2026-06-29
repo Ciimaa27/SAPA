@@ -237,14 +237,36 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <div class="modal-body">
-                Apakah Anda yakin ingin memproses kenaikan kelas seluruh siswa?
+           <div class="modal-body">
+                <p>Sistem akan melakukan:</p>
+
+                <ul class="mb-3">
+                    <li>Kelas 1 → Kelas 2</li>
+                    <li>Kelas 2 → Kelas 3</li>
+                    <li>Kelas 3 → Kelas 4</li>
+                    <li>Kelas 4 → Kelas 5</li>
+                    <li>Kelas 5 → Kelas 6</li>
+                    <li>Kelas 6 → Diarsipkan (Lulus)</li>
+                </ul>
+
+                <p class="mb-1">
+                    Pastikan seluruh data siswa sudah benar!!
+                </p>
+
+                <p class="text-danger fw-semibold mb-0">
+                    ⚠️Proses ini tidak dapat dibatalkan.
+                </p>
+
             </div>
 
             <div class="modal-footer">
 
+            <button type="submit" class="btn btn-primary">
+                        Proses
+                    </button>
+
                 <button type="button"
-                        class="btn btn-secondary"
+                        class="btn btn-danger"
                         data-bs-dismiss="modal">
                     Batal
                 </button>
@@ -252,9 +274,6 @@
                 <form action="{{ route('kenaikan-kelas') }}" method="POST">
                     @csrf
 
-                    <button type="submit" class="btn btn-warning">
-                        Proses
-                    </button>
                 </form>
 
             </div>
