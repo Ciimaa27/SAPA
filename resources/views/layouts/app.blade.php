@@ -13,7 +13,6 @@
 
     <!-- GLOBAL CSS -->
     <link rel="stylesheet" href="{{ asset('css/topbar.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admin/actions.css') }}">
 
     {{-- CSS PER HALAMAN --}}
     @stack('styles')

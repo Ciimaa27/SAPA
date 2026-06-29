@@ -118,18 +118,16 @@
 
 /* RESET */
 
-.btn-reset{
-    background:#ffeaa7;
-    padding:6px 14px;
-    border-radius:6px;
-    border:none;
-    font-size:13px;
-    cursor:pointer;
-    transition:0.2s;
+.btn-reset {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
 }
 
-.btn-reset:hover{
-    background:#fdcb6e;
+.btn-reset:hover {
+    background-color: #bb2d3b;
+    border-color: #bb2d3b;
+    color: #fff;
 }
 
 /* SIMPAN */

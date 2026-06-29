@@ -66,13 +66,14 @@ body{
     overflow-x:hidden;
 }
 
-.btn-reset{
-    background:#dc3545;
-    border:none;
-    color:white;
+.btn-reset {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
 }
 
-.btn-reset:hover{
-    background:#bb2d3b;
-    color:white;
+.btn-reset:hover {
+    background-color: #bb2d3b;
+    border-color: #bb2d3b;
+    color: #fff;
 }

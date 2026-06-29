@@ -1,11 +1,16 @@
 /* ===== LAYOUT (SAMA PERSIS) ===== */
 .container-dashboard{
-    max-width:1100px;
+    width:100%;
+    max-width:1400px;
     margin:0 auto;
 }
 
-.main-dashboard{
-    padding:5px 30px 20px 20px;
+.card-form{
+    background:#fff;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.05);
+    width:100%;
 }
 
 .content{
@@ -16,10 +21,19 @@
 }
 
 /* ===== TITLE ===== */
-.page-title{
-    font-size:16px;
+.page-title-box{
+    background:#fff;
+    padding:15px 20px;
+    border-radius:10px;
     font-weight:600;
-    margin-bottom:10px;
+    font-size:18px;
+    margin-bottom:20px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.05);
+}
+
+.page-title-box{
+    margin-top: 40px;
+    margin-bottom: 25px;
 }
 
 /* ===== CARD ===== */
@@ -49,6 +63,8 @@
     text-decoration:none;
 
     width:fit-content;
+
+    margin-bottom:20px; /* tambah jarak ke bawah */
 }
 
 .btn-kembali:hover{
@@ -59,18 +75,17 @@
 /* ===== FORM ===== */
 .form-row{
     display:flex;
-    gap:20px;
+    gap:16px;
     margin-bottom:15px;
 }
 
-.form-group{
-    flex:1;
-    display:flex;
-    flex-direction:column;
+.form-row .form-group{
+    flex:0 0 49%;
 }
 
-.form-group.full{
-    width:100%;
+.form-group{
+    display:flex;
+    flex-direction:column;
 }
 
 /* ===== LABEL ===== */
@@ -84,9 +99,10 @@ label{
 .form-control{
     border:1px solid #dee2e6;
     border-radius:6px;
-    padding:6px;
+    padding:6px 12px;
     font-size:13px;
     background:#f8f9fa;
+    height:42px; /* sebelumnya lebih besar */
 }
 
 .form-control:focus{
@@ -104,8 +120,8 @@ label{
 .form-action{
     display:flex;
     justify-content:flex-end;
-    gap:8px;
-    margin-top:10px;
+    gap:10px;
+    margin-top:40px;
 }
 
 .btn-batal{
@@ -140,4 +156,25 @@ label{
 /* ===== BODY ===== */
 body{
     overflow-x:hidden;
+}
+
+.form-control{
+    height:48px;
+    border:1px solid #dee2e6;
+    border-radius:8px;
+    padding:0 14px;
+    font-size:14px;
+    background:#fff;
+}
+
+.card-form{
+    background:#fff;
+    padding:24px 28px;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+
+.form-group.full{
+    width:100%;
+    margin-top:10px;
 }

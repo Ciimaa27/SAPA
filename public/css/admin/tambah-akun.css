@@ -78,30 +78,16 @@
         width:100%;
     }
 
-}
 
+}
 .btn-reset {
-    background: #dc3545;
+    background-color: #dc3545;
+    border-color: #dc3545;
     color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 14px;
-    font-size: 13px;
 }
 
 .btn-reset:hover {
-    background: #bb2d3b;
-}
-
-.btn-simpan {
-    background: #0eac3b;
+    background-color: #bb2d3b;
+    border-color: #bb2d3b;
     color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 14px;
-    font-size: 13px;
-}
-
-.btn-simpan:hover {
-    background: #0b8f31;
 }

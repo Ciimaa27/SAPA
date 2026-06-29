@@ -69,9 +69,9 @@
                 </div>
 
                 <!-- BUTTON -->
-                <div class="form-action">
-                    <button type="reset" class="btn-reset">Reset</button>
-                    <button type="submit" class="btn-simpan">Simpan</button>
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="reset" class="btn btn-danger btn-sm">Reset</button>
+                    <button type="submit" class="btn btn-success btn-sm">Simpan</button>
                 </div>
 
             </form>

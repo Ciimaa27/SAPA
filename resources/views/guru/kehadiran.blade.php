@@ -8,7 +8,7 @@
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/guru/dashboard.css') }}">
-<link rel="stylesheet" href="{{ asset('css/admin/guru.css') }}">
+<link rel="stylesheet" href="{{ asset('css/guru/kehadiran.css') }}">
 @endpush
 
 @section('content')
@@ -59,12 +59,12 @@
                             <td>{{ $row['kelas'] }}</td>
                             <td>{{ $row['wali'] }}</td>
                             <td>{{ $row['jumlah'] }}</td>
-                        <td>
-                                <a href="{{ route('guru.detail-kehadiran', $row['id_kelas']) }}"
-                                class="btn-lihat">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                        </td>
+                    <td>
+                    <a href="{{ route('guru.detail-kehadiran', $row['id_kelas']) }}"
+                        class="btn-detail">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                </td>
                         </tr>
                         @empty
                         <tr>

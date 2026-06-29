@@ -110,29 +110,28 @@
 }
 
 .btn-reset {
-    background: #dc3545;
+    background-color: #dc3545;
+    border-color: #dc3545;
     color: #fff;
-    padding: 6px 14px;
-    border-radius: 6px;
-    border: none;
-    font-size: 13px;
 }
 
 .btn-reset:hover {
-    background: #bb2d3b;
+    background-color: #bb2d3b;
+    border-color: #bb2d3b;
+    color: #fff;
 }
 
 .btn-simpan {
-    background: #0eac3b;
-    color: #fff;
+    background: #20c997;
     padding: 6px 14px;
+    color: white;
     border-radius: 6px;
     border: none;
     font-size: 13px;
 }
 
 .btn-simpan:hover {
-    background: #0b8f31;
+    background: #12b886;
 }
 
 /* ===== BODY ===== */
