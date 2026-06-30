@@ -87,3 +87,37 @@
 .timeline-content strong{
     margin-right:5px;
 }
+
+/* CALENDAR STYLES */
+
+.calendar-cell--muted {
+    opacity: 0.45;
+}
+
+.status-jemput {
+    background: #bde8d8 !important;
+}
+
+.legend-marker.jemput {
+    background: #bde8d8;
+}
+
+.calendar-label {
+    display: block;
+    margin-top: 8px;
+    font-size: 11px;
+    color: #555;
+}
+
+.calendar-time {
+    display: block;
+    font-size: 12px;
+    color: #333;
+    font-weight: 600;
+}
+
+.status-alert.warning{
+    background:#fff4cc;
+    border:1px solid #f5c95a;
+    color:#8a6d1d;
+}

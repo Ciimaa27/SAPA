@@ -41,22 +41,51 @@
 
             <!-- Filter -->
             <div class="filter-section">
+<form method="GET" action="{{ route('wali.laporan') }}">
 
-                <input type="date" class="filter-input">
 
-                <select class="filter-select">
-                    <option>Semua</option>
-                    <option>Kehadiran</option>
-                    <option>Penjemputan</option>
-                </select>
+    <input
+        type="date"
+        name="tanggal"
+        value="{{ request('tanggal') }}"
+        class="filter-input">
 
-                <button class="btn-search">
-                    Cari
-                </button>
+    <select
+        name="jenis"
+        class="filter-select">
 
-                <button class="btn-refresh">
-                    <i class="fa-solid fa-rotate-right"></i>
-                </button>
+        <option value="">Semua</option>
+
+        <option value="Kehadiran"
+            {{ request('jenis') == 'Kehadiran' ? 'selected' : '' }}>
+            Kehadiran
+        </option>
+
+        <option value="Penjemputan"
+            {{ request('jenis') == 'Penjemputan' ? 'selected' : '' }}>
+            Penjemputan
+        </option>
+
+    </select>
+
+    <button type="submit" class="btn-search">
+    Cari
+</button>
+
+<button
+    type="button"
+    class="btn-refresh"
+    onclick="window.location='{{ route('wali.laporan') }}'">
+
+    <i class="fa-solid fa-rotate-right"></i>
+
+</button>
+
+</div>
+
+</form>
+
+                
 
             </div>
 
@@ -76,38 +105,106 @@
 
                     <tbody>
                 @forelse($kehadiranReports as $report)
-                    <tr>
-                        <td>Kehadiran {{ \Carbon\Carbon::parse($report->tanggal)->translatedFormat('F Y') }}.pdf</td>
-                        <td>{{ \Carbon\Carbon::parse($report->tanggal)->format('d-m-Y') }}</td>
-                        <td>Kehadiran</td>
-                        <td>
-                            <button class="btn-download" type="button">
-                                Unduh
-                            </button>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="4">Tidak ada laporan kehadiran.</td>
-                    </tr>
-                @endforelse
+<tr>
 
-                @forelse($penjemputanReports as $report)
-                    <tr>
-                        <td>Penjemputan {{ \Carbon\Carbon::parse($report->tanggal)->translatedFormat('F Y') }}.pdf</td>
-                        <td>{{ \Carbon\Carbon::parse($report->tanggal)->format('d-m-Y') }}</td>
-                        <td>Penjemputan</td>
-                        <td>
-                            <button class="btn-download" type="button">
-                                Unduh
-                            </button>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="4">Tidak ada laporan penjemputan.</td>
-                    </tr>
-                @endforelse
+    <td>
+        Kehadiran
+        {{ \Carbon\Carbon::create($report->tahun, $report->bulan, 1)->translatedFormat('F Y') }}.pdf
+    </td>
+
+    <td>
+        {{ \Carbon\Carbon::create($report->tahun, $report->bulan, 1)->translatedFormat('F Y') }}
+    </td>
+
+    <td>
+        Kehadiran
+    </td>
+
+    <td>
+
+        <div class="d-flex gap-2">
+
+            <a href="{{ route('wali.export.pdf',[
+                'bulan'=>$report->bulan,
+                'tahun'=>$report->tahun
+            ]) }}"
+            class="btn btn-danger"
+            target="_blank">
+
+                <i class="fas fa-file-pdf"></i>
+
+            </a>
+
+            <a href="{{ route('wali.export.excel',[
+                'bulan'=>$report->bulan,
+                'tahun'=>$report->tahun
+            ]) }}"
+            class="btn btn-success">
+
+                <i class="fas fa-file-excel"></i>
+
+            </a>
+
+        </div>
+
+    </td>
+
+</tr>
+@empty
+<tr>
+    <td colspan="4">Tidak ada laporan kehadiran.</td>
+</tr>
+@endforelse
+
+@forelse($penjemputanReports as $report)
+
+<tr>
+
+    <td>
+        Penjemputan
+        {{ \Carbon\Carbon::create($report->tahun, $report->bulan, 1)->translatedFormat('F Y') }}.pdf
+    </td>
+
+    <td>
+        {{ \Carbon\Carbon::create($report->tahun, $report->bulan, 1)->translatedFormat('F Y') }}
+    </td>
+
+    <td>
+        Penjemputan
+    </td>
+
+    <td>
+        <div class="d-flex gap-2">
+            <a href="{{ route('wali.export.pdf.penjemputan', [
+                'bulan' => $report->bulan,
+                'tahun' => $report->tahun,
+            ]) }}"
+            class="btn btn-danger"
+            target="_blank">
+                <i class="fas fa-file-pdf"></i>
+            </a>
+
+            <a href="{{ route('wali.export.excel.penjemputan', [
+                'bulan' => $report->bulan,
+                'tahun' => $report->tahun,
+            ]) }}"
+            class="btn btn-success">
+                <i class="fas fa-file-excel"></i>
+            </a>
+        </div>
+    </td>
+
+</tr>
+
+@empty
+
+<tr>
+    <td colspan="4">
+        Tidak ada laporan penjemputan.
+    </td>
+</tr>
+
+@endforelse
             </tbody>
 
                 </table>

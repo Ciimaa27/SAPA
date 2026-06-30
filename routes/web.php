@@ -20,6 +20,7 @@ use App\Models\Wali;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\LupaPasswordController;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Wali\DashboardController as WaliDashboardController;
 
 
 /*
@@ -198,7 +199,31 @@ Route::get('/wali/kehadiran', [App\Http\Controllers\wali\DashboardController::cl
 Route::get('/wali/status-penjemputan', [App\Http\Controllers\wali\DashboardController::class, 'statusPenjemputan'])->name('wali.status-penjemputan');
 Route::get('/wali/notifikasi', [App\Http\Controllers\wali\DashboardController::class, 'notifikasi'])->name('wali.notifikasi');
 Route::get('/wali/jadwal-pulang', [App\Http\Controllers\wali\DashboardController::class, 'jadwalPulang'])->name('wali.jadwal-pulang');
-Route::get('/wali/laporan', function () {return view('wali.laporan');})->name('wali.laporan');
+Route::get('/wali/laporan', [App\Http\Controllers\Wali\DashboardController::class, 'laporan'])
+    ->name('wali.laporan');
+
+Route::get('/wali/laporan/kehadiran/{bulan}/{tahun}',
+    [App\Http\Controllers\Wali\DashboardController::class, 'downloadLaporan'])
+    ->name('wali.laporan.download');
+
+Route::get('/wali/laporan/export-pdf/{bulan}/{tahun}',
+    [WaliDashboardController::class, 'exportPdf'])
+    ->name('wali.export.pdf');
+
+Route::get('/wali/export-excel/{bulan}/{tahun}',
+    [WaliDashboardController::class, 'exportExcel'])
+    ->name('wali.export.excel');
+
+Route::get(
+    '/wali/laporan/export-pdf-penjemputan/{bulan}/{tahun}',
+    [App\Http\Controllers\Wali\DashboardController::class, 'exportPdfPenjemputan']
+)->name('wali.export.pdf.penjemputan');
+
+Route::get(
+    '/wali/laporan/export-excel-penjemputan/{bulan}/{tahun}',
+    [App\Http\Controllers\Wali\DashboardController::class, 'exportExcelPenjemputan']
+)->name('wali.export.excel.penjemputan');
+
 
 /*
 |--------------------------------------------------------------------------
