@@ -3,133 +3,116 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use PhpMqtt\Client\MqttClient;
-use Throwable;
+use Illuminate\Support\Facades\DB;
 
 class MQTTListen extends Command
 {
     protected $signature = 'mqtt:listen';
-    protected $description = 'Listen MQTT untuk RFID Siswa';
+    protected $description = 'Listen MQTT RFID';
 
     public function handle()
     {
-        $host = env('MQTT_HOST', '127.0.0.1');
-        $port = (int) env('MQTT_PORT', 1883);
-        $clientId = env('MQTT_CLIENT_ID', 'laravel-sapa');
+        $mqtt = new MqttClient(
+            env('MQTT_HOST'),
+            env('MQTT_PORT'),
+            env('MQTT_CLIENT_ID')
+        );
 
-        $mqtt = new MqttClient($host, $port, $clientId);
+        $mqtt->connect();
 
-        try {
-            $mqtt->connect();
-            $this->info("MQTT Connected ke {$host}:{$port}");
-        } catch (Throwable $e) {
-            $this->error("Gagal koneksi MQTT: " . $e->getMessage());
-            return Command::FAILURE;
-        }
+        $this->info("========================================");
+        $this->info(" MQTT CONNECTED");
+        $this->info(" Topic : xsyau");
+        $this->info(" Menunggu Scan RFID...");
+        $this->info("========================================");
 
-        $mqtt->subscribe('xsyau', function (string $topic, string $message) {
-
-            echo "\n=====================================\n";
-            echo "Topic   : {$topic}\n";
-            echo "Payload : {$message}\n";
+        $mqtt->subscribe('xsyau', function ($topic, $message) {
 
             $data = json_decode($message, true);
 
-            if (!is_array($data) || !isset($data['uid'])) {
-                echo "Data MQTT tidak valid.\n";
+            if (!$data || !isset($data['uid'])) {
+                $this->error("Data MQTT tidak valid.");
                 return;
             }
 
-            $uid = strtoupper(trim($data['uid']));
+            $uid = trim($data['uid']);
 
-            echo "=====================================\n";
-            echo "DEBUG RFID\n";
-            echo "UID         : [{$uid}]\n";
-            echo "Panjang UID : " . strlen($uid) . "\n";
-            echo "HEX UID     : " . strtoupper(bin2hex($uid)) . "\n";
-            echo "=====================================\n";
+            $this->info("");
+            $this->info("RFID Terdeteksi : " . $uid);
 
-            // Tampilkan seluruh UID yang ada di database
-            echo "\n===== DATA RFID DI DATABASE =====\n";
-
-            $semuaSiswa = DB::table('siswa')
-                ->select('id_siswa', 'nama_siswa', 'rfid_uid')
-                ->get();
-
-            foreach ($semuaSiswa as $row) {
-                echo "{$row->id_siswa} | {$row->nama_siswa} | [{$row->rfid_uid}] | HEX: "
-                    . strtoupper(bin2hex($row->rfid_uid)) . "\n";
-            }
-
-            echo "=====================================\n";
-
-            // Cari siswa
             $siswa = DB::table('siswa')
-                ->whereRaw('TRIM(UPPER(rfid_uid)) = ?', [$uid])
+                ->leftJoin('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+                ->where('siswa.rfid_uid', $uid)
+                ->select(
+                    'siswa.*',
+                    'kelas.nama_kelas'
+                )
                 ->first();
 
-            // Simpan log scan
-            DB::table('log_tap')->insert([
-                'uid_rfid'   => $uid,
-                'id_device'  => 1,
-                'keterangan' => 'Scan RFID',
-                'status'     => $siswa ? 'berhasil' : 'gagal',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
             if (!$siswa) {
-                echo "\nXXXXXXXX RFID TIDAK DITEMUKAN XXXXXXXX\n";
-                echo "UID Dicari : {$uid}\n";
-                echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
+
+                DB::table('log_tap')->insert([
+                    'uid_rfid' => $uid,
+                    'id_device' => 1,
+                    'keterangan' => 'scan rfid',
+                    'status' => 'gagal',
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+
+                $this->error("========================================");
+                $this->error(" RFID TIDAK TERDAFTAR");
+                $this->error(" UID    : $uid");
+                $this->error(" Status : GAGAL");
+                $this->error("========================================");
+
                 return;
             }
 
-            echo "\nSISWA DITEMUKAN\n";
-            echo "Nama : {$siswa->nama_siswa}\n";
-            echo "UID  : {$siswa->rfid_uid}\n";
-
-            $today = now()->toDateString();
-
-            // Cek apakah sudah absen hari ini
             $sudahAbsen = DB::table('kehadiran')
                 ->where('id_siswa', $siswa->id_siswa)
-                ->where('tanggal', $today)
+                ->whereDate('tanggal', now()->toDateString())
                 ->exists();
 
-            if ($sudahAbsen) {
-                echo "\n=====================================\n";
-                echo "Siswa {$siswa->nama_siswa} sudah absen hari ini.\n";
-                echo "=====================================\n";
-                return;
+            if (!$sudahAbsen) {
+
+                DB::table('kehadiran')->insert([
+                    'id_siswa' => $siswa->id_siswa,
+                    'id_device' => 1,
+                    'tanggal' => now()->toDateString(),
+                    'jam_masuk' => now()->toTimeString(),
+                    'metode' => 'rfid',
+                    'status_hadir' => 'hadir'
+                ]);
             }
 
-            // Simpan absensi
-            DB::table('kehadiran')->insert([
-                'id_siswa'      => $siswa->id_siswa,
-                'id_device'     => 1,
-                'tanggal'       => $today,
-                'jam_masuk'     => now()->format('H:i:s'),
-                'metode'        => 'rfid',
-                'status_hadir'  => 'hadir',
-                'created_at'    => now(),
-                'updated_at'    => now(),
+            DB::table('log_tap')->insert([
+                'uid_rfid' => $uid,
+                'id_device' => 1,
+                'keterangan' => 'scan rfid',
+                'status' => 'berhasil',
+                'created_at' => now(),
+                'updated_at' => now()
             ]);
 
-            echo "\n=====================================\n";
-            echo "ABSEN BERHASIL\n";
-            echo "Nama : {$siswa->nama_siswa}\n";
-            echo "UID  : {$uid}\n";
-            echo "Jam  : " . now()->format('H:i:s') . "\n";
-            echo "=====================================\n";
+            $this->info("========================================");
+            $this->info(" ABSENSI SISWA BERHASIL");
+            $this->info("========================================");
+            $this->line("UID RFID   : " . $uid);
+            $this->line("NIS        : " . $siswa->nis);
+            $this->line("Nama       : " . $siswa->nama_siswa);
+            $this->line("Kelas      : " . ($siswa->nama_kelas ?? '-'));
+            $this->line("Tanggal    : " . now()->format('d-m-Y'));
+            $this->line("Jam Masuk  : " . now()->format('H:i:s'));
+            $this->line("Status     : HADIR");
+            $this->info("========================================");
+            $this->line("");
 
         }, 0);
 
-        $this->info("Menunggu data RFID...");
-
         $mqtt->loop(true);
 
-        return Command::SUCCESS;
+        $mqtt->disconnect();
     }
 }
