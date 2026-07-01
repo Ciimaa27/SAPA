@@ -158,6 +158,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/admin/jadwal-pulang/edit',[JadwalPulangController::class, 'edit'])->name('jadwal-pulang.edit');
     Route::post('/admin/jadwal-pulang/update-satu',[JadwalPulangController::class, 'updateSatu'])->name('jadwal-pulang.update-satu');
     Route::get('/data-penjemputan', [DataPenjemputanController::class, 'index'])->name('data-penjemputan');
+    Route::get('/data-penjemputan/status/{id_kelas}', [DataPenjemputanController::class, 'status'])->name('data-penjemputan.status');
+    Route::post('/data-penjemputan/update-status', [DataPenjemputanController::class, 'updateStatus'])->name('data-penjemputan.update-status');
 
     // LAPORAN
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');

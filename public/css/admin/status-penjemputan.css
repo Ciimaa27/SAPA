@@ -1,0 +1,243 @@
+.container-dashboard{
+    max-width:1100px;
+    margin:0 auto;
+}
+
+.main-dashboard{
+    padding:5px 30px 20px 20px;
+}
+
+body{
+    overflow-x:hidden;
+}
+
+.content{
+    margin-left:230px;
+    padding-top:60px;
+    padding-left:10px;
+    padding-right:10px;
+}
+
+/* =========================================
+   CARD
+========================================= */
+
+.card{
+    border:none;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+
+.card h5{
+    margin:0;
+    font-size:18px;
+    font-weight:600;
+    color:#333;
+}
+
+/* =========================================
+   BUTTON KEMBALI
+========================================= */
+
+.btn-kembali{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+
+    background:#f4edff;
+    color:#7c4dff;
+    border:1px solid #d8c5ff;
+
+    border-radius:10px;
+    padding:7px 14px;
+
+    text-decoration:none;
+    font-size:13px;
+    font-weight:500;
+
+    transition:.2s;
+}
+
+.btn-kembali:hover{
+    background:#ece0ff;
+    color:#6f42c1;
+}
+
+/* =========================================
+   FORM
+========================================= */
+
+.form-label{
+    font-size:13px;
+    font-weight:600;
+    color:#555;
+}
+
+.form-control{
+    height:40px;
+    border-radius:8px;
+    border:1px solid #dee2e6;
+    font-size:13px;
+    background:#fafafa;
+}
+
+.form-control:focus{
+    border-color:#7c4dff;
+    box-shadow:none;
+}
+
+/* =========================================
+   TOMBOL LAPORAN
+========================================= */
+
+.btn-primary{
+    background:#4c9aff;
+    border:none;
+    border-radius:8px;
+    padding:7px 15px;
+    font-size:13px;
+    font-weight:500;
+}
+
+.btn-primary:hover{
+    background:#3187f5;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.table-container{
+    overflow-x:auto;
+}
+
+.table{
+    margin-bottom:0;
+}
+
+.table thead th{
+    background:#fff;
+    border-top:none;
+    border-bottom:1px solid #ececec;
+
+    color:#8d8d8d;
+
+    font-size:13px;
+    font-weight:600;
+
+    padding:14px;
+}
+
+.table tbody td{
+    padding:16px 14px;
+    font-size:13px;
+    border-color:#f2f2f2;
+    vertical-align:middle;
+}
+
+.table tbody tr:hover{
+    background:#faf9ff;
+}
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status-select{
+    width:140px;
+    height:36px;
+    border-radius:8px;
+    border:1px solid #d8c5ff;
+    font-size:13px;
+    font-weight:500;
+    box-shadow:none;
+}
+
+.status-select:focus{
+    border-color:#7c4dff;
+    box-shadow:none;
+}
+
+/* =========================================
+   BUTTON SIMPAN
+========================================= */
+
+.btn-simpan{
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    flex-direction:row !important;
+    gap:6px;
+    height:36px;
+    padding:0 14px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:600;
+    white-space:nowrap;
+    line-height:1;
+}
+
+.btn-simpan i{
+    font-size:11px;
+    margin:0;
+    line-height:1;
+}
+
+.btn-simpan:hover{
+    transform:translateY(-1px);
+}
+
+/* =========================================
+   RESPONSIVE TABLET
+========================================= */
+
+@media(max-width:768px){
+
+    .content{
+        margin-left:0;
+        padding-left:10px;
+        padding-right:10px;
+    }
+
+    .main-dashboard{
+        padding:10px;
+    }
+
+    .container-dashboard{
+        max-width:100%;
+    }
+    .table{
+        min-width:780px;
+    }
+    .btn-kembali{
+        width:100%;
+        justify-content:center;
+    }
+}
+/* =========================================
+   RESPONSIVE HP
+========================================= */
+@media(max-width:576px){
+    .main-dashboard{
+        padding:8px;
+    }
+    .card{
+        border-radius:10px;
+    }
+    .card h5{
+        font-size:16px;
+    }
+    .table th,
+    .table td{
+        font-size:12px;
+    }
+    .status-select{
+        width:120px;
+        font-size:12px;
+    }
+    .btn-simpan{
+        height:34px;
+        padding:0 10px;
+        font-size:11px;
+    }
+}
