@@ -11,6 +11,7 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
 <link rel="stylesheet" href="{{ asset('css/admin/kelola-akun.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endpush
 
 @section('content')
@@ -24,7 +25,7 @@
         </div>
 
         <!-- TOOLBAR -->
-        <div class="card mb-3 p-3 sticky-toolbar">  
+        <div class="card mb-3 p-3 sticky-toolbar">
             <div class="d-flex align-items-center gap-3 flex-wrap">
 
         <div class="total-data">
@@ -284,5 +285,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 </script>
-
+@if(session('success'))
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+            title: 'Berhasil!',
+            text: '{{ session('success') }}',
+            icon: 'success',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#198754'
+        });
+    });
+    </script>
+@endif
 @endsection
