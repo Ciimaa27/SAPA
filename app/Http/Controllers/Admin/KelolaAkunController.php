@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Guru;
 use App\Models\Wali;
 use Illuminate\Validation\Rule;
 
@@ -58,9 +59,18 @@ class KelolaAkunController extends Controller
     // Form tambah akun
     // ========================
     public function create()
-    {
-        return view('admin.tambah-akun');
-    }
+        {
+            $guru = Guru::whereNull('id_user')
+                ->orderBy('nama_guru')
+                ->get();
+
+            $wali = Wali::whereNull('id_user')
+                ->where('is_active', 1)
+                ->orderBy('nama_wali')
+                ->get();
+
+            return view('admin.tambah-akun', compact('guru', 'wali'));
+        }
 
     // ========================
     // Form edit akun

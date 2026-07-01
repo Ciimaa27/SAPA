@@ -28,6 +28,19 @@
                 <i class="fas fa-arrow-left me-1"></i> Kembali
             </a>
 
+            {{-- ================= INFORMASI ================= --}}
+                <div class="alert alert-info d-flex align-items-start mb-4" role="alert">
+                    <i class="fas fa-circle-info me-3 mt-1"></i>
+
+                    <div>
+                        <strong>Informasi</strong>
+                        <ul class="mb-0 mt-2 ps-3">
+                            <li>Pastikan data <strong>Guru</strong> atau <strong>Orang Tua/Wali</strong> telah ditambahkan terlebih dahulu melalui menu <strong>Data Guru</strong> atau <strong>Data Wali</strong>.</li>
+                            <li>Untuk peran <strong>Guru</strong> dan <strong>Orang Tua/Wali</strong>, pilih nama melalui dropdown yang tersedia.</li>
+                            <li>Untuk peran <strong>Admin</strong> dan <strong>Kepala Sekolah</strong>, nama lengkap diisi secara manual.</li>
+                        </ul>
+                    </div>
+                </div>
             <form action="{{ route('kelola-akun.store') }}" method="POST">
                 @csrf
 
@@ -94,25 +107,40 @@
                 <div class="row mb-4">
 
                     <div class="col-md-6">
-
                         <label class="form-label fw-semibold">
                             Nama Lengkap
                         </label>
-
                         <input
                             type="text"
+                            id="nama_lengkap"
                             name="nama_lengkap"
                             value="{{ old('nama_lengkap') }}"
                             class="form-control @error('nama_lengkap') is-invalid @enderror"
                             placeholder="Masukkan nama lengkap..."
                             required>
-
+                    <small class="text-muted d-block mt-1">
+                        *Digunakan untuk peran admin dan kepsek
+                    </small>
                         @error('nama_lengkap')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
-
                     </div>
 
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">
+                            Pilih Guru / Wali
+                        </label>
+                        <select
+                            id="data_user"
+                            name="data_user"
+                            class="form-select"
+                            disabled>
+                            <option value="">Pilih Data</option>
+                        </select>
+                        <small class="text-muted">
+                            *Digunakan untuk memilih data Guru atau Orang Tua/Wali yang sudah terdaftar.
+                        </small>
+                    </div>
                     <div class="col-md-6">
 
                         <label class="form-label fw-semibold">
@@ -277,6 +305,15 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
+    // ==========================
+    // DATA DARI CONTROLLER
+    // ==========================
+    const guru = @json($guru);
+    const wali = @json($wali);
+
+    // ==========================
+    // SHOW / HIDE PASSWORD
+    // ==========================
     function togglePassword(inputId, buttonId) {
 
         const input = document.getElementById(inputId);
@@ -287,15 +324,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const icon = this.querySelector('i');
 
             if (input.type === 'password') {
-
                 input.type = 'text';
                 icon.classList.replace('fa-eye', 'fa-eye-slash');
-
             } else {
-
                 input.type = 'password';
                 icon.classList.replace('fa-eye-slash', 'fa-eye');
-
             }
 
         });
@@ -305,6 +338,77 @@ document.addEventListener('DOMContentLoaded', function () {
     togglePassword('password', 'togglePassword');
     togglePassword('password_confirmation', 'toggleConfirmPassword');
 
+    // ==========================
+    // ELEMENT
+    // ==========================
+    const peran = document.getElementById('peran');
+    const inputNama = document.getElementById('nama_lengkap');
+    const dropdown = document.getElementById('data_user');
+
+    // ==========================
+    // SAAT PERAN BERUBAH
+    // ==========================
+    peran.addEventListener('change', function () {
+
+        dropdown.innerHTML = '<option value="">Pilih Data</option>';
+
+        inputNama.value = '';
+        dropdown.value = '';
+
+        if (this.value === 'Guru') {
+
+            inputNama.disabled = true;
+            dropdown.disabled = false;
+
+            guru.forEach(function(item){
+
+                dropdown.innerHTML += `
+                    <option value="${item.id_guru}">
+                        ${item.nama_guru}
+                    </option>
+                `;
+
+            });
+
+        }
+
+        else if (this.value === 'Orangtua/Wali') {
+
+            inputNama.disabled = true;
+            dropdown.disabled = false;
+
+            wali.forEach(function(item){
+
+                dropdown.innerHTML += `
+                    <option value="${item.id_wali}">
+                        ${item.nama_wali}
+                    </option>
+                `;
+            });
+        }
+        else {
+            inputNama.disabled = false;
+            dropdown.disabled = true;
+            dropdown.innerHTML = '<option value="">Pilih Data</option>';
+        }
+    });
+    // ==========================
+    // SAAT MEMILIH GURU / WALI
+    // ==========================
+    dropdown.addEventListener('change', function () {
+        if (peran.value === 'Guru') {
+            const item = guru.find(g => g.id_guru == this.value);
+            if(item){
+                inputNama.value = item.nama_guru;
+            }
+        }
+        else if (peran.value === 'Orangtua/Wali') {
+            const item = wali.find(w => w.id_wali == this.value);
+            if(item){
+                inputNama.value = item.nama_wali;
+            }
+        }
+    });
 });
 </script>
 
