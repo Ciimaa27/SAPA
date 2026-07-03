@@ -105,6 +105,7 @@
                         <tr>
                             <th>No</th>
                             <th>NIS</th>
+                            <th>UID RFID</th>
                             <th>Nama lengkap</th>
                             <th>Kelas</th>
                             <th>Jenis Kelamin</th>
@@ -116,11 +117,12 @@
                     <tbody>
                         @foreach ($siswa as $item)
                         <tr>
-                            <tr>
-        <td>
-            {{ ($siswa->currentPage() - 1) * $siswa->perPage() + $loop->iteration }}
-        </td>
+                            <td>
+                                {{ ($siswa->currentPage() - 1) * $siswa->perPage() + $loop->iteration }}
+                            </td>
+
                             <td>{{ $item->nis }}</td>
+                            <td>{{ $item->rfid_uid ?? '-' }}</td>
                             <td>{{ $item->nama_siswa }}</td>
                             <td>{{ $item->kelas->nama_kelas ?? '-' }}</td>
                             <td>{{ $item->jenis_kelamin }}</td>

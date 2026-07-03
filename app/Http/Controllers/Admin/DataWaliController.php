@@ -41,26 +41,26 @@ class DataWaliController extends Controller
     // ========================
     // SIMPAN DATA
     // ========================
-   public function store(Request $request)
-    {
-        dd($request->all());
+public function store(Request $request)
+            {
+                $request->validate([
+                    'fingerprint_id' => 'required|string|unique:wali,fingerprint_id',
+                    'nama_wali' => 'required',
+                    'no_hp' => 'required|unique:wali,no_hp',
+                    'jenis_kelamin' => 'required',
+                ]);
 
-        $request->validate([
-            'nama_wali' => 'required',
-            'no_hp' => 'required|unique:wali,no_hp',
-            'jenis_kelamin' => 'required',
-        ]);
+                Wali::create([
+                    'fingerprint_id' => $request->fingerprint_id,
+                    'nama_wali' => $request->nama_wali,
+                    'no_hp' => $request->no_hp,
+                    'jenis_kelamin' => $request->jenis_kelamin,
+                    'is_active' => 1,
+                ]);
 
-        Wali::create([
-            'nama_wali' => $request->nama_wali,
-            'no_hp' => $request->no_hp,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'is_active' => 1,
-        ]);
-
-        return redirect()->route('data-wali');
-    }
-
+                return redirect()->route('data-wali')
+                    ->with('success', 'Data wali berhasil ditambahkan');
+            }
     // ========================
     // FORM EDIT
     // ========================
