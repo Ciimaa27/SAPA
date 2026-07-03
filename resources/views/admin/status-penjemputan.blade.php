@@ -54,9 +54,6 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h6 class="mb-0 fw-semibold">Daftar Siswa</h6>
-                    <a href="#" class="btn btn-primary btn-sm">
-                        <i class="fa-solid fa-download me-1"></i> Laporan
-                    </a>
                 </div>
 
                 <div class="table-container">

@@ -114,11 +114,11 @@
                     </table>
                 </div>
 
-                <div class="d-flex gap-2 mt-3">
+                <div class="d-flex justify-content-end gap-2 p-3">
                     <button type="submit" class="btn btn-success">
                         <i class="fas fa-save"></i> Simpan
                     </button>
-                    <a href="{{ route('kelas') }}" class="btn btn-secondary">Batal</a>
+                    <a href="{{ route('kelas') }}" class="btn btn-danger">Batal</a>
                 </div>
             </form>
         </div>

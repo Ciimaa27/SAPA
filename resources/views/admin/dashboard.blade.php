@@ -238,12 +238,12 @@
         {
             label: 'Hadir',
             data: @json($dataHadir),
-            backgroundColor: '#198754' // hijau
+            backgroundColor: '#11a88c' // hijau
         },
         {
             label: 'Tidak hadir',
             data: @json($dataTidakHadir),
-            backgroundColor: '#dc3545' // merah
+            backgroundColor: '#D95F6A' // merah
         }
             ]
         }

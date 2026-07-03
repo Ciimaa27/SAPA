@@ -21,15 +21,17 @@
 
         {{-- Card Table --}}
         <div class="card p-4">
-            {{-- Search --}}
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <div class="search-flex" style="max-width: 300px;">
-                    <div class="position-relative">
-                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                        <input type="text" id="searchInput" class="form-control search-input" placeholder="Pencarian">
+                    {{-- Search --}}
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-white">
+                            <i class="fa fa-search"></i>
+                        </span>
+
+                        <input type="text"
+                            id="searchInput"
+                            class="form-control"
+                            placeholder="Pencarian">
                     </div>
-                </div>
-            </div>
 
             <div class="table-container">
                 <table class="table align-middle mb-0" id="kelasTable">
