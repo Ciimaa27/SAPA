@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class LogTap extends Model
 {
     protected $table = 'log_tap';
-    protected $primaryKey = 'id_log';
+    protected $primaryKey = 'id';
     public $timestamps = false;
 
     protected $fillable = [

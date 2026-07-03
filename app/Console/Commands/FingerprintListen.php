@@ -53,6 +53,16 @@ class FingerprintListen extends Command
             $uid = strtoupper($data['uid']);
             $fingerprintId = $data['id_jari_wali'];
 
+            DB::table('log_tap')->insert([
+                'id_device'      => 2, // sesuaikan dengan id device fingerprint
+                'uid_rfid'       => $uid,
+                'fingerprint_id' => $fingerprintId,
+                'keterangan'     => 'scan fingerprint',
+                'status'         => 'berhasil',
+                'created_at'     => now(),
+                'updated_at'     => now(),
+            ]);
+
             // Tampilkan data hasil scan terlebih dahulu
             $this->info("");
             $this->info("========================================");

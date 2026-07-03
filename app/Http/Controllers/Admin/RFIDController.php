@@ -66,4 +66,16 @@ class RFIDController extends Controller
 
         return response()->json($data);
     }
+
+    public function latestFingerprint()
+    {
+        $finger = DB::table('log_tap')
+            ->whereNotNull('fingerprint_id')
+            ->latest('created_at')
+            ->value('fingerprint_id');
+
+        return response()->json([
+            'fingerprint_id' => $finger
+        ]);
+    }
 }

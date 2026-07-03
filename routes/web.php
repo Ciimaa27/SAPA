@@ -150,6 +150,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::delete('/iot/{tab}/{id}', [RFIDController::class, 'destroy'])->name('iot.destroy');
     Route::view('/tambah-data-rfid', 'admin.tambah-data-rfid')->name('tambah-data-rfid');
     Route::get('/latest-rfid', [RFIDController::class, 'latestRFID']);
+    Route::get('/latest-fingerprint', [RFIDController::class, 'latestFingerprint']);
 
     // JADWAL & PENJEMPUTAN
     Route::get('/jadwal-pulang', [JadwalPulangController::class, 'index'])->name('jadwal-pulang');

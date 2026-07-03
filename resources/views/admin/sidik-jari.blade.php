@@ -120,9 +120,15 @@ function loadFingerprint(){
     fetch('/admin/latest-fingerprint')
     .then(res => res.json())
     .then(data => {
+        const label = document.getElementById('fingerprintID');
         if(data && data.fingerprint_id){
-            document.getElementById('fingerprintID').innerText = data.fingerprint_id;
+            label.innerText = data.fingerprint_id;
+        } else {
+            label.innerText = 'Menunggu scan...';
         }
+    })
+    .catch(() => {
+        document.getElementById('fingerprintID').innerText = 'Menunggu scan...';
     });
 }
 

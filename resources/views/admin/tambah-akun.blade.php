@@ -310,6 +310,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // ==========================
     const guru = @json($guru);
     const wali = @json($wali);
+    console.log(wali);
 
     // ==========================
     // SHOW / HIDE PASSWORD
@@ -349,7 +350,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // SAAT PERAN BERUBAH
     // ==========================
     peran.addEventListener('change', function () {
-
+        console.log(this.value);
         dropdown.innerHTML = '<option value="">Pilih Data</option>';
 
         inputNama.value = '';
@@ -357,7 +358,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (this.value === 'Guru') {
 
-            inputNama.disabled = true;
+            inputNama.readOnly = true;
             dropdown.disabled = false;
 
             guru.forEach(function(item){
@@ -374,9 +375,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         else if (this.value === 'Orangtua/Wali') {
 
-            inputNama.disabled = true;
+            inputNama.readOnly = true;
             dropdown.disabled = false;
-
+            console.log(wali);
             wali.forEach(function(item){
 
                 dropdown.innerHTML += `
@@ -387,7 +388,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
         else {
-            inputNama.disabled = false;
+            inputNama.readOnly = false;
             dropdown.disabled = true;
             dropdown.innerHTML = '<option value="">Pilih Data</option>';
         }
@@ -409,6 +410,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
+
+    // Jalankan event saat halaman pertama kali dibuka
+    peran.dispatchEvent(new Event('change'));
 });
 </script>
 

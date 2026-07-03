@@ -17,7 +17,6 @@ class Wali extends Model
         'nama_wali',
         'jenis_kelamin',
         'fingerprint_id',
-        'no_wa',
         'no_hp',
         'is_active',
     ];
