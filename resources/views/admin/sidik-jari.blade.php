@@ -25,17 +25,34 @@
             <h5 class="mb-0">Sidik Jari</h5>
         </div>
 
-        <!-- SEARCH -->
-        <div class="card mb-3 p-3">
-            <div class="d-flex align-items-center gap-3">
-                <div class="input-group input-group-sm search-flex">
-                    <span class="input-group-text bg-white">
-                        <i class="fa fa-search"></i>
-                    </span>
-                    <input type="text" id="searchInput" class="form-control" placeholder="Pencarian">
+        <!-- SEARCH + REFRESH -->
+            <div class="card mb-3 p-3">
+                <div class="d-flex align-items-center gap-2">
+
+                    <div class="input-group input-group-sm search-flex">
+                        <span class="input-group-text bg-white">
+                            <i class="fa fa-search"></i>
+                        </span>
+
+                        <input
+                            type="text"
+                            id="searchInput"
+                            class="form-control"
+                            placeholder="Pencarian"
+                        >
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn btn-refresh btn-sm"
+                        id="refreshTable"
+                        title="Tampilkan semua data">
+                        <i class="fa fa-refresh"></i>
+                        Refresh
+                    </button>
+
                 </div>
             </div>
-        </div>
 
         <!-- 🔥 FINGERPRINT REALTIME -->
         <div class="card p-3 mb-3 text-center">
@@ -101,39 +118,91 @@
 
     </div>
 </div>
-
-{{-- SEARCH --}}
+{{-- SEARCH + REFRESH + FINGERPRINT REALTIME --}}
 <script>
-document.getElementById("searchInput").addEventListener("keyup", function() {
-    let keyword = this.value.toLowerCase();
-    let rows = document.querySelectorAll("#dataTable tbody tr");
+
+const searchInput = document.getElementById("searchInput");
+const refreshButton = document.getElementById("refreshTable");
+
+let lastFingerprint = null;
+
+
+/* ==============================
+   FILTER TABLE
+============================== */
+function filterTable(keyword) {
+
+    keyword = String(keyword).toLowerCase().trim();
+
+    const rows = document.querySelectorAll("#dataTable tbody tr");
 
     rows.forEach(row => {
-        row.style.display = row.textContent.toLowerCase().includes(keyword) ? "" : "none";
+
+        const rowText = row.textContent.toLowerCase();
+
+        row.style.display = rowText.includes(keyword)
+            ? ""
+            : "none";
+    });
+}
+
+
+/* ==============================
+   SEARCH MANUAL
+============================== */
+searchInput.addEventListener("keyup", function() {
+    filterTable(this.value);
+});
+
+
+/* ==============================
+   REFRESH TABLE
+============================== */
+refreshButton.addEventListener("click", function() {
+    // Kosongkan pencarian
+    searchInput.value = "";
+    // Tampilkan semua baris
+    const rows = document.querySelectorAll("#dataTable tbody tr");
+    rows.forEach(row => {
+        row.style.display = "";
     });
 });
-</script>
-
-{{-- 🔥 FINGERPRINT REALTIME --}}
-<script>
-function loadFingerprint(){
+/* ==============================
+   FINGERPRINT REALTIME
+============================== */
+function loadFingerprint() {
     fetch('/admin/latest-fingerprint')
     .then(res => res.json())
     .then(data => {
         const label = document.getElementById('fingerprintID');
-        if(data && data.fingerprint_id){
+        if(data && data.fingerprint_id) {
+            // Tampilkan ID fingerprint
             label.innerText = data.fingerprint_id;
+            // Hanya filter jika scan berbeda
+            if(lastFingerprint !== data.fingerprint_id) {
+                lastFingerprint = data.fingerprint_id;
+                // Masukkan ID ke search
+                searchInput.value = data.fingerprint_id;
+                // Filter tabel
+                filterTable(data.fingerprint_id);
+            }
         } else {
             label.innerText = 'Menunggu scan...';
         }
     })
-    .catch(() => {
-        document.getElementById('fingerprintID').innerText = 'Menunggu scan...';
+    .catch(error => {
+        console.error('Fingerprint Error:', error);
+        document.getElementById('fingerprintID').innerText =
+            'Menunggu scan...';
     });
 }
-
+/* ==============================
+   CEK SETIAP 2 DETIK
+============================== */
 setInterval(loadFingerprint, 2000);
+
 loadFingerprint();
+
 </script>
 
 @endsection
