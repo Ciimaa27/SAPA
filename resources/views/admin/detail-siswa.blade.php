@@ -37,7 +37,7 @@
                 <div class="detail-row">
                     <div class="label">NIS</div>
                     <div class="separator">:</div>
-                    <div class="value">{{ $siswa->nis }}</div>
+                    <div class="value highlight">{{ $siswa->nis }}</div>
                 </div>
 
                 <div class="detail-row">
