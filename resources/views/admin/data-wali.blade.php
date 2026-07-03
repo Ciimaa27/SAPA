@@ -82,6 +82,7 @@
                     <thead class="table-light">
                         <tr>
                             <th>No</th>
+                            <th>ID Fingerprint</th>
                             <th>Nama orangtua/wali</th>
                             <th>No. HP</th>
                             <th>Jenis Kelamin</th>
@@ -96,7 +97,7 @@
                             <td>
                                 {{ ($wali->currentPage() - 1) * $wali->perPage() + $loop->iteration }}
                             </td>
-
+                            <td>{{ $row->fingerprint_id ?? '-' }}</td>
                             <td>{{ $row->nama_wali }}</td>
                             <td>{{ $row->no_hp ?? '-' }}</td>
                             <td class="text-capitalize">{{ $row->jenis_kelamin ?? '-' }}</td>

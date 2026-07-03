@@ -101,21 +101,23 @@
             <div class="table-container">
 
                 <table class="table table-hover align-middle mb-0" id="dataTable">
-                    <thead class="table-light">
-                        <tr>
-                            <th>NIS</th>
-                            <th>Nama lengkap</th>
-                            <th>Kelas</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Tempat/Tanggal lahir</th>
-                            <th class="col-aksi">Aksi</th>
-                        </tr>
-                    </thead>
+                  <thead class="table-light">
+                    <tr>
+                        <th>NIS</th>
+                        <th>UID RFID</th>
+                        <th>Nama lengkap</th>
+                        <th>Kelas</th>
+                        <th>Jenis Kelamin</th>
+                        <th>Tempat/Tanggal lahir</th>
+                        <th class="col-aksi">Aksi</th>
+                    </tr>
+                </thead>
 
                     <tbody>
                         @foreach ($siswa as $item)
                         <tr>
                             <td>{{ $item->nis }}</td>
+                            <td>{{ $item->rfid_uid ?? '-' }}</td>
                             <td>{{ $item->nama_siswa }}</td>
                             <td>{{ $item->kelas->nama_kelas ?? '-' }}</td>
                             <td>{{ $item->jenis_kelamin }}</td>
