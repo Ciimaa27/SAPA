@@ -40,32 +40,38 @@
         </div>
 
         <div class="card mb-3 p-3">
-            <div class="d-flex align-items-center gap-3">
+    <div class="d-flex align-items-center gap-3">
 
-                <!-- 🔍 SEARCH (DITAMBAH ID) -->
-                <div class="input-group input-group-sm search-flex">
-                    <span class="input-group-text bg-white">
-                        <i class="fa fa-search"></i>
-                    </span>
-                    <input type="text" id="searchInputRelasi" class="form-control" placeholder="Pencarian">
-                </div>
-
-                <div style="width:170px;">
-                    <select id="filterRelasiHubungan" class="form-select form-select-sm">
-                        <option value="">Tampilkan</option>
-                        <option value="ibu">Ibu</option>
-                        <option value="ayah">Ayah</option>
-                        <option value="wali">Wali</option>
-                    </select>
-                </div>
-
-               <a href="{{ route('relasi.tambah') }}" class="btn-tambah">
-                <span>Tambah</span>
-                <i class="fa fa-plus"></i>
-            </a>
-
-            </div>
+        <!-- TAMPILKAN -->
+        <div style="width:170px;">
+            <select id="filterRelasiHubungan" class="form-select form-select-sm">
+                <option value="">Tampilkan</option>
+                <option value="ibu">Ibu</option>
+                <option value="ayah">Ayah</option>
+                <option value="wali">Wali</option>
+            </select>
         </div>
+
+        <!-- TAMBAH -->
+        <a href="{{ route('relasi.tambah') }}" class="btn-tambah">
+            <span>Tambah</span>
+            <i class="fa fa-plus"></i>
+        </a>
+
+        <!-- PENCARIAN -->
+        <div class="input-group input-group-sm search-flex">
+            <span class="input-group-text bg-white">
+                <i class="fa fa-search"></i>
+            </span>
+            <input type="text"
+                   id="searchInputRelasi"
+                   class="form-control"
+                   placeholder="Pencarian">
+        </div>
+
+    </div>
+</div>
+
 
         <div class="card">
             <div class="table-container table-responsive">
