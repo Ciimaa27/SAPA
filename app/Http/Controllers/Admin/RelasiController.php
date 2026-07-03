@@ -26,8 +26,19 @@ class RelasiController extends Controller
     // Form tambah
     public function create()
     {
-        $siswa = Siswa::all();
-        $wali = Wali::all();
+        $usedSiswaIds = Relasi::pluck('id_siswa')->all();
+        $usedWaliIds = Relasi::pluck('id_wali')->all();
+
+        $siswa = Siswa::where('is_active', 1)
+            ->whereNotIn('id_siswa', $usedSiswaIds)
+            ->orderBy('nama_siswa')
+            ->get();
+
+        $wali = Wali::where('is_active', 1)
+            ->whereNotIn('id_wali', $usedWaliIds)
+            ->orderBy('nama_wali')
+            ->get();
+
         return view('admin.tambah-relasi', compact('siswa','wali'));
     }
 
@@ -52,8 +63,28 @@ class RelasiController extends Controller
             ->where('id_wali', $id_wali)
             ->firstOrFail();
 
-        $siswa = Siswa::all();
-        $wali = Wali::all();
+        $usedSiswaIds = Relasi::where('id_siswa', '!=', $id_siswa)
+            ->pluck('id_siswa')
+            ->all();
+        $usedWaliIds = Relasi::where('id_wali', '!=', $id_wali)
+            ->pluck('id_wali')
+            ->all();
+
+        $siswa = Siswa::where('is_active', 1)
+            ->where(function ($query) use ($id_siswa, $usedSiswaIds) {
+                $query->whereNotIn('id_siswa', $usedSiswaIds)
+                    ->orWhere('id_siswa', $id_siswa);
+            })
+            ->orderBy('nama_siswa')
+            ->get();
+
+        $wali = Wali::where('is_active', 1)
+            ->where(function ($query) use ($id_wali, $usedWaliIds) {
+                $query->whereNotIn('id_wali', $usedWaliIds)
+                    ->orWhere('id_wali', $id_wali);
+            })
+            ->orderBy('nama_wali')
+            ->get();
 
         return view('admin.edit-relasi', compact('relasi', 'siswa', 'wali'));
     }

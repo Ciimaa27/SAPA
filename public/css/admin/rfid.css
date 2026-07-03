@@ -145,6 +145,28 @@ button.btn-danger {
     border-radius: 4px;
 }
 
+.search-flex {
+    margin-left: auto;
+}
+
+.btn-refresh {
+    background-color: #6f42c1;
+    color: white;
+    border: none;
+    white-space: nowrap;
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+
+.btn-refresh:hover {
+    background-color: #5a32a3;
+    color: white;
+}
+
+.btn-refresh i {
+    margin-right: 5px;
+}
+
 /* ===== PAGINATION ===== */
 .pagination {
     margin: 0;

@@ -47,11 +47,31 @@
                    Sidik jari
                 </a>
 
-                <div class="input-group input-group-sm search-flex">
-                    <span class="input-group-text bg-white">
-                        <i class="fa fa-search"></i>
-                    </span>
-                    <input type="text" id="searchInput" class="form-control" placeholder="Pencarian">
+                <div class="d-flex align-items-center gap-2 search-flex">
+
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-white">
+                            <i class="fa fa-search"></i>
+                        </span>
+
+                        <input
+                            type="text"
+                            id="searchInput"
+                            class="form-control"
+                            placeholder="Pencarian"
+                        >
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn btn-refresh btn-sm"
+                        id="refreshTable"
+                        title="Tampilkan semua data"
+                    >
+                        <i class="fa fa-refresh"></i>
+                        Refresh
+                    </button>
+
                 </div>
 
             </div>
@@ -213,38 +233,87 @@
 
 {{-- SEARCH --}}
 <script>
-document.getElementById("searchInput").addEventListener("keyup", function() {
-    let keyword = this.value.toLowerCase();
-    let rows = document.querySelectorAll("#dataTable tbody tr");
+    const searchInput = document.getElementById("searchInput");
+    const refreshButton = document.getElementById("refreshTable");
+    function filterTable(keyword) {
+        keyword = keyword.toLowerCase().trim();
+        const rows = document.querySelectorAll("#dataTable tbody tr");
+        rows.forEach(row => {
+            const rowText = row.textContent.toLowerCase();
+            row.style.display = rowText.includes(keyword)
+                ? ""
+                : "none";
+        });
+    }
 
-    rows.forEach(row => {
-        row.style.display = row.textContent.toLowerCase().includes(keyword) ? "" : "none";
+
+    // SEARCH MANUAL
+    searchInput.addEventListener("keyup", function() {
+        filterTable(this.value);
     });
-});
+
+
+    // REFRESH / TAMPILKAN SEMUA DATA
+    refreshButton.addEventListener("click", function() {
+        searchInput.value = "";
+        const rows = document.querySelectorAll("#dataTable tbody tr");
+        rows.forEach(row => {
+            row.style.display = "";
+        });
+    });
 </script>
 
 {{-- 🔥 RFID & FINGERPRINT REALTIME --}}
 <script>
+
+let lastRFID = null;
+let lastFingerprint = null;
 function loadRFID(){
     fetch('/admin/latest-rfid')
     .then(res => res.json())
     .then(data => {
         if(data && data.uid_rfid){
             document.getElementById('rfidUID').innerText = data.uid_rfid;
+            // Hanya filter kalau ada scan baru
+            if(lastRFID !== data.uid_rfid){
+                lastRFID = data.uid_rfid;
+                // Masukkan UID ke search
+                searchInput.value = data.uid_rfid;
+                // Filter tabel
+                filterTable(data.uid_rfid);
+            }
         }
+    })
+    .catch(error => {
+        console.error('RFID Error:', error);
     });
 }
-
 function loadFingerprint(){
     fetch('/admin/latest-fingerprint')
     .then(res => res.json())
     .then(data => {
         if(data && data.fingerprint_id){
-            document.getElementById('fingerprintID').innerText = data.fingerprint_id;
+            document.getElementById('fingerprintID').innerText =
+                data.fingerprint_id;
+
+            // Hanya filter kalau ada scan baru
+            if(lastFingerprint !== data.fingerprint_id){
+
+                lastFingerprint = data.fingerprint_id;
+
+                // Masukkan ID ke search
+                searchInput.value = data.fingerprint_id;
+
+                // Filter tabel
+                filterTable(data.fingerprint_id);
+            }
         }
+
+    })
+    .catch(error => {
+        console.error('Fingerprint Error:', error);
     });
 }
-
 @if($tab == 'rfid')
     setInterval(loadRFID, 2000);
     loadRFID();
