@@ -103,6 +103,7 @@
 
                     <thead class="table-light">
                         <tr>
+                            <th>No</th>
                             <th>Nama pengguna</th>
                             <th>Nama lengkap</th>
                             <th>Peran</th>
@@ -112,12 +113,16 @@
                     </thead>
 
                     <tbody>
-                        @forelse($users as $user)
-                            <tr>
-                                <td>{{ $user->username }}</td>
-                                <td>{{ $user->nama_lengkap ?? '-' }}</td>
-                                <td>{{ ucfirst($user->nama_role ?? '-') }}</td>
-                                <td>{{ $user->email ?? '-' }}</td>
+                       @forelse($users as $user)
+    <tr>
+        <td>
+            {{ ($users->currentPage() - 1) * $users->perPage() + $loop->iteration }}
+        </td>
+
+        <td>{{ $user->username }}</td>
+        <td>{{ $user->nama_lengkap ?? '-' }}</td>
+        <td>{{ ucfirst($user->nama_role ?? '-') }}</td>
+        <td>{{ $user->email ?? '-' }}</td>
 
                                 <td class="d-flex gap-2 justify-content-center">
 
@@ -147,9 +152,9 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center">
-                                    Tidak ada data
-                                </td>
+                                <td colspan="6" class="text-center">
+                                Tidak ada data
+                            </td>
                             </tr>
                         @endforelse
                     </tbody>

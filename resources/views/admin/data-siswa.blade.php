@@ -103,6 +103,7 @@
                 <table class="table table-hover align-middle mb-0" id="dataTable">
                     <thead class="table-light">
                         <tr>
+                            <th>No</th>
                             <th>NIS</th>
                             <th>Nama lengkap</th>
                             <th>Kelas</th>
@@ -115,6 +116,10 @@
                     <tbody>
                         @foreach ($siswa as $item)
                         <tr>
+                            <tr>
+        <td>
+            {{ ($siswa->currentPage() - 1) * $siswa->perPage() + $loop->iteration }}
+        </td>
                             <td>{{ $item->nis }}</td>
                             <td>{{ $item->nama_siswa }}</td>
                             <td>{{ $item->kelas->nama_kelas ?? '-' }}</td>
