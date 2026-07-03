@@ -55,35 +55,66 @@
                     Kelas
                 </a>
 
-                <!-- FILTER KELAS + SEARCH -->
-                <form id="filterGuruForm" action="{{ route('guru') }}" method="GET" class="d-flex align-items-center gap-2">
-                    <select name="kelas" id="filterKelas" class="form-select form-select-sm" style="width:180px">
-                        <option value="">Semua Kelas</option>
-                        @foreach($kelasOptions ?? [] as $k)
-                            <option value="{{ $k->id_kelas }}" {{ (isset($kelasId) && $kelasId == $k->id_kelas) ? 'selected' : '' }}>
-                                {{ $k->nama_kelas }}
-                            </option>
-                        @endforeach
-                    </select>
 
-                    <div class="input-group input-group-sm search-flex" style="width: 280px;">
-                        <span class="input-group-text bg-white">
-                            <i class="fa fa-search"></i>
-                        </span>
-                        <input type="text" id="searchInputGuru" class="form-control" placeholder="Pencarian">
-                    </div>
-                </form>
+                    <!-- FILTER KELAS + TOMBOL TAMBAH + SEARCH -->
+<form id="filterGuruForm"
+      action="{{ route('guru') }}"
+      method="GET"
+      class="d-flex align-items-center gap-2 flex-grow-1">
+
+    <!-- DROPDOWN -->
+    <select name="kelas"
+            id="filterKelas"
+            class="form-select form-select-sm"
+            style="width:180px">
+
+        <option value="">Semua Kelas</option>
+
+        @foreach($kelasOptions ?? [] as $k)
+            <option value="{{ $k->id_kelas }}"
+                {{ (isset($kelasId) && $kelasId == $k->id_kelas) ? 'selected' : '' }}>
+                {{ $k->nama_kelas }}
+            </option>
+        @endforeach
+
+    </select>
+
+
+    <!-- TOMBOL TAMBAH -->
+    <a href="{{ route('tambah-data-guru') }}"
+       class="btn-tambah-guru">
+        Tambah
+        <span class="icon-plus">+</span>
+    </a>
+
+
+   <!-- SEARCH -->
+<div class="input-group input-group-sm"
+     style="flex: 1;">
+
+    <span class="input-group-text bg-white">
+        <i class="fa fa-search"></i>
+    </span>
+
+    <input type="text"
+           id="searchInputGuru"
+           class="form-control"
+           placeholder="Pencarian">
+
+</div>
+
+</form>
 
             </div>
         </div>
 
-        <div class="card">
-            <div class="d-flex justify-content-end p-3">
 
-                <a href="{{ route('tambah-data-guru') }}" class="btn-tambah-guru">
-                    Tambah
-                    <span class="icon-plus">+</span>
-                </a>
+     <div class="card">
+
+    <!-- TABLE -->
+    <div class="table-container table-responsive">
+        <table class="table table-hover align-middle mb-0"
+               id="dataTableGuru">
             </div>
 
             <!-- TABLE -->

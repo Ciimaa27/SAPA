@@ -11,34 +11,28 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class LaporanWaliExport implements FromView, ShouldAutoSize, WithEvents
+class PenjemputanWaliExport implements FromView, ShouldAutoSize, WithEvents
 {
     protected $siswa;
-    protected $laporan;
-    protected $hadir;
-    protected $izin;
-    protected $sakit;
-    protected $alpha;
+    protected $penjemputan;
+    protected $tepat;
+    protected $terlambat;
 
-    public function __construct($siswa, $laporan, $hadir, $izin, $sakit, $alpha)
+    public function __construct($siswa, $penjemputan, $tepat, $terlambat)
     {
         $this->siswa = $siswa;
-        $this->laporan = $laporan;
-        $this->hadir = $hadir;
-        $this->izin = $izin;
-        $this->sakit = $sakit;
-        $this->alpha = $alpha;
+        $this->penjemputan = $penjemputan;
+        $this->tepat = $tepat;
+        $this->terlambat = $terlambat;
     }
 
     public function view(): View
     {
-        return view('wali.laporan_excel', [
-            'siswa'   => $this->siswa,
-            'laporan' => $this->laporan,
-            'hadir'   => $this->hadir,
-            'izin'    => $this->izin,
-            'sakit'   => $this->sakit,
-            'alpha'   => $this->alpha,
+        return view('wali.laporan_penjemputan_excel', [
+            'siswa'        => $this->siswa,
+            'penjemputan'  => $this->penjemputan,
+            'tepat'        => $this->tepat,
+            'terlambat'    => $this->terlambat,
         ]);
     }
 
@@ -75,8 +69,8 @@ class LaporanWaliExport implements FromView, ShouldAutoSize, WithEvents
                 $sheet->getColumnDimension('A')->setWidth(8);
                 $sheet->getColumnDimension('B')->setWidth(18);
                 $sheet->getColumnDimension('C')->setWidth(18);
-                $sheet->getColumnDimension('D')->setWidth(18);
-                $sheet->getColumnDimension('E')->setWidth(30);
+                $sheet->getColumnDimension('D')->setWidth(25);
+                $sheet->getColumnDimension('E')->setWidth(20);
 
                 // Header tabel
                 $sheet->getStyle('A7:E7')->applyFromArray([
@@ -103,23 +97,23 @@ class LaporanWaliExport implements FromView, ShouldAutoSize, WithEvents
                 ]);
 
                 // Border tabel
-                $lastRow = 8 + count($this->laporan);
+                $lastRow = 8 + count($this->penjemputan);
 
                 $sheet->getStyle("A8:E{$lastRow}")
                     ->getBorders()
                     ->getAllBorders()
                     ->setBorderStyle(Border::BORDER_THIN);
 
-                // Rekap
-                $rekapStart = $lastRow + 2; // Judul REKAP
-                $rekapEnd   = $lastRow + 4; // Sampai baris data rekap
+                // Border rekap
+                $rekapStart = $lastRow + 2;
+                $rekapEnd   = $lastRow + 4;
 
                 $sheet->getStyle("A{$rekapStart}:E{$rekapEnd}")
                     ->getBorders()
                     ->getAllBorders()
                     ->setBorderStyle(Border::BORDER_THIN);
-                    
-                // Tengah
+
+                // Rata tengah isi tabel
                 $sheet->getStyle("A8:E{$lastRow}")
                     ->getAlignment()
                     ->setHorizontal(Alignment::HORIZONTAL_CENTER);

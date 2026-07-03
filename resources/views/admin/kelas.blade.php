@@ -49,6 +49,10 @@
                 <a href="{{ route('kelas') }}" class="btn btn-tab active">
                     Kelas
                 </a>
+                <a href="{{ route('tambah-data-kelas') }}" class="btn-tambah-kelas">
+                    Tambah
+                    <span class="icon-plus">+</span>
+                </a>
 
                 <!-- 🔍 SEARCH (DITAMBAH ID) -->
                 <div class="input-group input-group-sm search-flex">
@@ -62,12 +66,7 @@
         </div>
 
         <div class="card">
-            <div class="d-flex justify-content-end p-3">
-                <a href="{{ route('tambah-data-kelas') }}" class="btn-tambah-kelas">
-                    Tambah
-                    <span class="icon-plus">+</span>
-                </a>
-            </div>
+
 
             <!-- TABLE -->
             <div class="table-container">

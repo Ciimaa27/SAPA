@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Guru;
 use App\Models\Wali;
 use Illuminate\Validation\Rule;
 
@@ -58,9 +59,18 @@ class KelolaAkunController extends Controller
     // Form tambah akun
     // ========================
     public function create()
-    {
-        return view('admin.tambah-akun');
-    }
+        {
+            $guru = Guru::whereNull('id_user')
+                ->orderBy('nama_guru')
+                ->get();
+
+            $wali = Wali::whereNull('id_user')
+                ->where('is_active', 1)
+                ->orderBy('nama_wali')
+                ->get();
+
+            return view('admin.tambah-akun', compact('guru', 'wali'));
+        }
 
     // ========================
     // Form edit akun
@@ -77,14 +87,18 @@ class KelolaAkunController extends Controller
     // Simpan akun
     // ========================
     public function store(Request $request)
-    {
-        $request->validate([
-            'nama_lengkap' => 'required|string|max:100',
-            'username'     => 'required|string|max:50|unique:users,username',
-            'email'        => 'required|email|unique:users,email',
-            'peran'        => ['required', Rule::in(['Admin', 'Guru', 'Kepala Sekolah', 'Orangtua/Wali'])],
-            'password'     => 'nullable|string|min:6',
-        ]);
+        {
+            $request->validate([
+                'nama_lengkap' => 'required|string|max:100',
+                'username'     => 'required|string|max:50|unique:users,username',
+                'email'        => 'required|email|unique:users,email',
+                'peran'        => ['required', Rule::in(['Admin', 'Guru', 'Kepala Sekolah', 'Orangtua/Wali'])],
+                'password'     => 'required|string|min:6|confirmed',
+            ], [
+                'password.required'  => 'Password wajib diisi.',
+                'password.min'       => 'Password minimal 6 karakter.',
+                'password.confirmed' => 'Konfirmasi password tidak sesuai.',
+            ]);
 
         $id_role = match($request->peran) {
             'Admin' => 1,
@@ -99,7 +113,7 @@ class KelolaAkunController extends Controller
             'username'      => $request->username,
             'nama_lengkap'  => $request->nama_lengkap,
             'email'         => $request->email,
-            'password'      => Hash::make($request->password ?? 'password123'),
+            'password' => Hash::make($request->password),
             'status'        => 'aktif',
         ]);
 

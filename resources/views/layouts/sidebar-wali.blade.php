@@ -18,7 +18,7 @@
 
             <a href="{{ route('wali.status-penjemputan') }}"
                 class="{{ request()->routeIs('wali.status-penjemputan') ? 'active' : '' }}">
-                    <i class="fa-solid fa-truck"></i>
+                     <i class="fa-solid fa-list-check"></i>
                     Status penjemputan
                 </a>
 

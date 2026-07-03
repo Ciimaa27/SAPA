@@ -52,12 +52,7 @@ body{
     overflow-x:hidden;
 }
 
-.content{
-    margin-left:230px;
-    padding-top:60px;
-    padding-left:10px;
-    padding-right:10px;
-}
+
 
 .btn-tambah-guru {
     display: inline-flex;
@@ -145,6 +140,10 @@ body{
 }
 
 .btn-action {
+    background: #e0f7f4 !important;
+    color: #00a896 !important;
+    border: 1px solid #8ee5dc !important;
+
     border-radius: 10px;
     padding: 6px 14px;
     font-size: 13px;
@@ -152,8 +151,15 @@ body{
     text-decoration: none;
 }
 
-.btn-action.btn-sm {
-    padding: 5px 12px;
+.btn-action:hover {
+    background: #ccf2ed !important;
+    color: #008f80 !important;
+    border-color: #70d8ce !important;
+}
+
+.btn-action {
+    min-width: 88px;
+    text-align: center;
 }
 
 /* ===== PAGINATION ===== */
@@ -201,11 +207,7 @@ body{
 
 @media (max-width:768px){
 
-    .content{
-        margin-left:0;
-        padding-left:10px;
-        padding-right:10px;
-    }
+
 
     .main-dashboard{
         padding:10px;

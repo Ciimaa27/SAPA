@@ -1,204 +1,249 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <title>Laporan Penjemputan</title>
-
     <link rel="stylesheet" href="{{ public_path('css/wali/pdf-penjemputan.css') }}">
 </head>
+
 <body>
 
 <div class="container">
 
-    <!-- ===========================
+    <!-- ======================================
             HEADER SEKOLAH
-    ============================ -->
+    ======================================= -->
     <img src="{{ public_path('foto/sdit.png') }}" class="header-image">
 
     <div class="line"></div>
 
-    <!-- ===========================
+    <!-- ======================================
             JUDUL
-    ============================ -->
+    ======================================= -->
     <div class="title">
-        <h1>LAPORAN PENJEMPUTAN SISWA</h1>
-
+        <h1>REKAP PENJEMPUTAN SISWA</h1>
         <p>
             Periode :
-            <b>
-                {{ \Carbon\Carbon::createFromDate($tahun,$bulan,1)->locale('id')->translatedFormat('F Y') }}
-            </b>
+            {{ \Carbon\Carbon::createFromDate($tahun,$bulan,1)
+                ->locale('id')
+                ->translatedFormat('F Y') }}
         </p>
     </div>
 
     <div class="line"></div>
 
-    <!-- ===========================
+    <!-- ======================================
             IDENTITAS SISWA
-    ============================ -->
-
+    ======================================= -->
     <table class="student-table">
-
         <tr>
-            <td class="label">Nama Siswa</td>
+            <td class="label">Nama</td>
             <td class="colon">:</td>
-            <td><b>{{ $siswa->nama_siswa }}</b></td>
-
-            <td class="label">Kelas</td>
-            <td class="colon">:</td>
-            <td><b>{{ $siswa->kelas->nama_kelas }}</b></td>
+            <td>{{ $siswa->nama_siswa }}</td>
         </tr>
-
         <tr>
             <td class="label">NIS</td>
             <td class="colon">:</td>
-            <td><b>{{ $siswa->nis }}</b></td>
-
+            <td>{{ $siswa->nis }}</td>
+        </tr>
+        <tr>
+            <td class="label">Kelas</td>
+            <td class="colon">:</td>
+            <td>{{ $siswa->kelas->nama_kelas }}</td>
+        </tr>
+        <tr>
             <td class="label">Nama Wali</td>
             <td class="colon">:</td>
-            <td><b>{{ $wali->nama_wali }}</b></td>
+            <td>{{ $wali->nama_wali }}</td>
         </tr>
-
     </table>
 
     <div class="line space-line"></div>
 
+    <!-- ======================================
+            DESKRIPSI
+    ======================================= -->
     <p class="description">
-        Laporan ini berisi rekapitulasi data penjemputan siswa selama periode
-        <b>{{ \Carbon\Carbon::createFromDate($tahun,$bulan,1)->locale('id')->translatedFormat('F Y') }}</b>.
+        Berikut adalah rekap penjemputan siswa selama bulan
+        <b>
+            {{ strtoupper(
+                \Carbon\Carbon::createFromDate($tahun,$bulan,1)
+                ->locale('id')
+                ->translatedFormat('F Y')
+            ) }}
+        </b>
     </p>
 
-    <!-- ===========================
-            RINGKASAN
-    ============================ -->
-
-    <table class="summary-table">
-        <tr>
-
-            <td class="card success">
-
-                <div class="card-title">
-                    Tepat Waktu
-                </div>
-
-                <div class="card-value">
+    <!-- ======================================
+            TABEL REKAP
+    ======================================= -->
+    <table class="rekap-table">
+        <thead>
+            <tr>
+                <th>Bulan</th>
+                <th>Total Penjemputan</th>
+                <th>Tepat Waktu</th>
+                <th>Terlambat</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    {{ strtoupper(
+                        \Carbon\Carbon::createFromDate($tahun,$bulan,1)
+                        ->locale('id')
+                        ->translatedFormat('F Y')
+                    ) }}
+                </td>
+                <td>
+                    {{ $penjemputanDetails->count() }}
+                </td>
+                <td>
                     {{ $tepat }}
-                </div>
-
-                <div class="card-desc">
-                    Kali Penjemputan
-                </div>
-
-            </td>
-
-            <td width="18"></td>
-
-            <td class="card warning">
-
-                <div class="card-title">
-                    Terlambat
-                </div>
-
-                <div class="card-value">
+                </td>
+                <td>
                     {{ $terlambat }}
-                </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-                <div class="card-desc">
-                    Kali Penjemputan
-                </div>
+    <!-- ======================================
+            STATISTIK PENJEMPUTAN
+    ======================================= -->
+    <div class="section-title">Statistik Penjemputan</div>
 
+    <table class="statistik-table">
+        <tr>
+            <td>Ayah</td>
+            <td>
+                {{ $penjemputanDetails->where('nama_penjemput','Ayah')->count() }}
             </td>
-
-            <td width="18"></td>
-
-            <td class="card danger">
-
-                <div class="card-title">
-                    Belum Dijemput
-                </div>
-
-                <div class="card-value">
-                    {{ $belum }}
-                </div>
-
-                <div class="card-desc">
-                    Kali Penjemputan
-                </div>
-
+        </tr>
+        <tr>
+            <td>Ibu</td>
+            <td>
+                {{ $penjemputanDetails->where('nama_penjemput','Ibu')->count() }}
             </td>
-
+        </tr>
+        <tr>
+            <td>Wali</td>
+            <td>
+                {{ $penjemputanDetails
+                    ->whereNotIn('nama_penjemput',['Ayah','Ibu'])
+                    ->count() }}
+            </td>
         </tr>
     </table>
 
+    <!-- ======================================
+            KETERANGAN
+    ======================================= -->
     <div class="section-title">
-        DETAIL PENJEMPUTAN
+        Keterangan
     </div>
 
-    <table class="detail-table">
-
-        <thead>
-
+    <table class="keterangan-table">
         <tr>
-
-            <th width="8%">No</th>
-            <th width="18%">Tanggal</th>
-            <th>Jam Pulang</th>
-            <th>Jam Dijemput</th>
-            <th>Status</th>
-
+            <td width="25%">
+                Total Penjemputan
+            </td>
+            <td width="2%">:</td>
+            <td>
+                Total seluruh penjemputan siswa selama periode laporan.
+            </td>
         </tr>
-
-        </thead>
-        <tbody>
-
-        @forelse($penjemputanDetails as $index => $item)
-
-<tr>
-
-    <td>{{ $index + 1 }}</td>
-
-    <td>
-        {{ \Carbon\Carbon::parse($item['tanggal'])->translatedFormat('d M Y') }}
-    </td>
-
-    <td>{{ $item['jam_pulang'] }}</td>
-
-    <td>{{ $item['jam_jemput'] }}</td>
-
-    <td>{{ $item['nama_penjemput'] }}</td>
-
-    <td>
-
-        @if($item['status'] == 'Tepat Waktu')
-
-            <span class="badge-success">
+        <tr>
+            <td>
                 Tepat Waktu
-            </span>
-
-        @elseif($item['status'] == 'Terlambat')
-
-            <span class="badge-warning">
+            </td>
+            <td>:</td>
+            <td>
+                Penjemputan dilakukan sesuai jadwal pulang sekolah.
+            </td>
+        </tr>
+        <tr>
+            <td>
                 Terlambat
-            </span>
+            </td>
+            <td>:</td>
+            <td>
+                Penjemputan dilakukan melewati jadwal pulang sekolah.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Belum Dijemput
+            </td>
+            <td>:</td>
+            <td>
+                Sampai laporan dibuat siswa belum dijemput.
+            </td>
+        </tr>
+    </table>
 
-        @else
+    <!-- ======================================
+            CATATAN
+    ======================================= -->
+    <div class="section-title">
+        Catatan
+    </div>
 
-            <span class="badge-danger">
-                {{ $item['status'] }}
-            </span>
+    <div class="catatan">
+        Laporan ini dibuat secara otomatis oleh
+        <b>SAPA (Sistem Absensi dan Penjemputan Anak)</b>.
+        Data yang ditampilkan merupakan hasil rekapitulasi
+        penjemputan siswa selama periode yang dipilih.
+    </div>
 
-        @endif
+    <!-- ======================================
+            PENUTUP
+    ======================================= -->
+    <table class="footer-table">
+        <tr>
+            <td class="footer-left">
+                Mengetahui,
+                <br>
+                Orang Tua / Wali
+                <div class="signature-space"></div>
+                <u>
+                    <b>
+                        {{ $wali->nama_wali }}
+                    </b>
+                </u>
+            </td>
+            <td class="footer-right">
+                Banjarmasin,
+                {{ now()->locale('id')->translatedFormat('d F Y') }}
+                <br>
+                Wali Kelas
+                <div class="signature-space"></div>
+                <u>
+                    <b>
+                        ....................................
+                    </b>
+                </u>
+            </td>
+        </tr>
+    </table>
 
-    </td>
+    <!-- ======================================
+            INFO CETAK
+    ======================================= -->
+    <div class="print-info">
+        Dokumen ini dicetak secara otomatis oleh
+        <b>
+            SAPA (Sistem Absensi dan Penjemputan Anak)
+        </b>
+        <br>
+        Dicetak pada :
+        {{ now()->translatedFormat('d F Y H:i') }}
+        WITA
+    </div>
 
-</tr>
+</div>
 
-@empty
+</body>
 
-<tr>
-    <td colspan="6" style="text-align:center">
-        Tidak ada data penjemputan.
-    </td>
-</tr>
-
-@endforelse
+</html>

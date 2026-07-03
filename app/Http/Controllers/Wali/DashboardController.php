@@ -623,37 +623,31 @@ class DashboardController extends Controller
             abort(404);
         }
 
-        $penjemputan = Penjemputan::where('id_siswa', $siswa->id_siswa)
+        $penjemputan = Penjemputan::with('wali')
+            ->where('id_siswa', $siswa->id_siswa)
             ->whereMonth('tanggal', $bulan)
             ->whereYear('tanggal', $tahun)
             ->orderBy('tanggal')
             ->get();
 
-        // ===========================
-        // Statistik Penjemputan
-        // ===========================
+        $tepat = $penjemputan
+            ->where('status_penjemputan', 'Tepat Waktu')
+            ->count();
 
-        $tepat = $penjemputan->where('status_penjemputan', 'Tepat Waktu')->count();
+        $terlambat = $penjemputan
+            ->where('status_penjemputan', 'Terlambat')
+            ->count();
 
-        $terlambat = $penjemputan->where('status_penjemputan', 'Terlambat')->count();
-
-        // Karena belum ada status "Belum Dijemput"
-        $belum = 0;
-
-        $pdf = Pdf::loadView(
-            'pdf.laporan-penjemputan',
-            compact(
-                'siswa',
-                'wali',
-                'penjemputan',
-                'bulan',
-                'tahun',
-                'tepat',
-                'terlambat',
-                'belum'
-            )
+        return Excel::download(
+            new PenjemputanWaliExport(
+                $siswa,
+                $penjemputan,
+                $tepat,
+                $terlambat
+            ),
+            'Laporan_Penjemputan.xlsx'
         );
-                }
+    }
 
     public function exportExcel($bulan, $tahun)
     {

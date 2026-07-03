@@ -150,6 +150,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::delete('/iot/{tab}/{id}', [RFIDController::class, 'destroy'])->name('iot.destroy');
     Route::view('/tambah-data-rfid', 'admin.tambah-data-rfid')->name('tambah-data-rfid');
     Route::get('/latest-rfid', [RFIDController::class, 'latestRFID']);
+    Route::get('/latest-fingerprint', [RFIDController::class, 'latestFingerprint']);
 
     // JADWAL & PENJEMPUTAN
     Route::get('/jadwal-pulang', [JadwalPulangController::class, 'index'])->name('jadwal-pulang');
@@ -158,6 +159,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/admin/jadwal-pulang/edit',[JadwalPulangController::class, 'edit'])->name('jadwal-pulang.edit');
     Route::post('/admin/jadwal-pulang/update-satu',[JadwalPulangController::class, 'updateSatu'])->name('jadwal-pulang.update-satu');
     Route::get('/data-penjemputan', [DataPenjemputanController::class, 'index'])->name('data-penjemputan');
+    Route::get('/data-penjemputan/status/{id_kelas}', [DataPenjemputanController::class, 'status'])->name('data-penjemputan.status');
+    Route::post('/data-penjemputan/update-status', [DataPenjemputanController::class, 'updateStatus'])->name('data-penjemputan.update-status');
 
     // LAPORAN
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');

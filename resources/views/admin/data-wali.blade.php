@@ -63,7 +63,7 @@
                     </a>
 
                 <!-- SEARCH BACKEND -->
-                <div style="flex: 1; max-width: 500px;">
+                <div style="flex: 1;">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text bg-white border">
                             <i class="fa fa-search"></i>

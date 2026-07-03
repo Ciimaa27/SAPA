@@ -22,7 +22,6 @@ class DataWaliController extends Controller
                 'users.email'
             )
             ->where('wali.is_active', 1)
-            ->where('users.status', 'aktif')
             ->orderByDesc('wali.id_wali')
             ->paginate(10);
 
@@ -42,22 +41,24 @@ class DataWaliController extends Controller
     // ========================
     // SIMPAN DATA
     // ========================
-    public function store(Request $request)
+   public function store(Request $request)
     {
+        dd($request->all());
+
         $request->validate([
             'nama_wali' => 'required',
             'no_hp' => 'required|unique:wali,no_hp',
             'jenis_kelamin' => 'required',
         ]);
 
-    Wali::create([
-       'id_user' => auth()->id(),
-        'nama_wali' => $request->nama_wali,
-        'no_hp' => $request->no_hp,
-        'jenis_kelamin' => $request->jenis_kelamin,
-    ]);
+        Wali::create([
+            'nama_wali' => $request->nama_wali,
+            'no_hp' => $request->no_hp,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'is_active' => 1,
+        ]);
 
-        return redirect()->route('data-wali')->with('success', 'Data wali berhasil ditambahkan');
+        return redirect()->route('data-wali');
     }
 
     // ========================

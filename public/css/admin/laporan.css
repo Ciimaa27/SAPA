@@ -1,3 +1,5 @@
+
+
 /* =========================================
    LAYOUT
 ========================================= */
@@ -150,12 +152,101 @@
 }
 
 
+/* =====================================
+   BUTTON TERAPKAN
+===================================== */
+
+.btn-primary{
+    background: #6f42c1 !important;
+    border-color: #6f42c1 !important;
+    color: #fff !important;
+}
+
 .btn-primary:hover{
-    background:#6f42c1 !important;
-    border-color:#6f42c1 !important;
+    background: #6f42c1 !important;
+    border-color: #6f42c1 !important;
+    color: #fff !important;
+}
+
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:focus-visible{
+    background: #6f42c1 !important;
+    border-color: #6f42c1 !important;
+    color: #fff !important;
+    box-shadow: none !important;
+}
+
+/* =====================================
+   BUTTON EXCEL
+===================================== */
+
+.btn-excel{
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #198754;
+    color: #fff;
+
+    border-radius: 7px;
+    text-decoration: none;
+
+    transition: all .25s ease;
 }
 
 .btn-excel i{
-    font-size:14px;
+    font-size: 16px;
+}
+
+/* ===== PAGINATION ===== */
+
+.pagination{
+    margin:0;
+    gap:6px;
+}
+
+.pagination .page-item{
+    list-style:none;
+}
+
+.pagination .page-link{
+    min-width:36px;
+    height:36px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:0;
+
+    border:1px solid #dee2e6;
+    border-radius:8px;
+
+    background:#fff;
+    color:#495057;
+    font-size:13px;
+
+    transition:.2s ease;
+}
+
+.pagination .page-link:hover{
+    background:#f1f3f5;
+    color:#495057;
+}
+
+.pagination .page-item.active .page-link{
+    background:#6f42c1;
+    border-color:#6f42c1;
+    color:#fff;
+    font-weight:600;
+}
+
+.pagination .page-item.disabled .page-link{
+    background:#e9ecef;
+    border-color:#dee2e6;
+    color:#adb5bd;
 }
 
