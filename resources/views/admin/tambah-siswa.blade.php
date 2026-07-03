@@ -40,18 +40,40 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label>NIS Siswa</label>
-                        <input type="text" name="nis" class="form-control">
+                        <input
+                            type="text"
+                            name="nis"
+                            class="form-control"
+                            value="{{ old('nis') }}"
+                        >
                     </div>
 
                     <div class="col-md-6">
-                        <label>Kelas</label>
-                        <select name="id_kelas" class="form-select">
-                            <option value="">Pilih kelas</option>
-                            @foreach($kelas as $k)
-                                <option value="{{ $k->id_kelas }}">{{ $k->nama_kelas }}</option>
-                            @endforeach
-                        </select>
+                        <label>UID RFID</label>
+                        <input
+                            type="text"
+                            name="rfid_uid"
+                            class="form-control"
+                            value="{{ old('rfid_uid') }}"
+                            placeholder="Masukkan UID RFID"
+                            required>
                     </div>
+                </div>
+
+                <div class="mb-3">
+                    <label>Kelas</label>
+                    <select name="id_kelas" class="form-select">
+                        <option value="">Pilih kelas</option>
+
+                        @foreach($kelas as $k)
+                            <option
+                                value="{{ $k->id_kelas }}"
+                                {{ old('id_kelas') == $k->id_kelas ? 'selected' : '' }}
+                            >
+                                {{ $k->nama_kelas }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="mb-3">

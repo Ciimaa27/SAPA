@@ -49,36 +49,38 @@ class DataSiswaController extends Controller
     // ========================
     // SIMPAN DATA
     // ========================
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nis' => 'required|unique:siswa,nis',
-            'nama_siswa' => 'required',
-            'id_kelas' => 'required',
-            'jenis_kelamin' => 'required',
-            'tempat_lahir' => 'required',
-            'tanggal_lahir' => 'required|date',
-        ]);
+        public function store(Request $request)
+        {
+            $request->validate([
+                'nis' => 'required|unique:siswa,nis',
+                'nama_siswa' => 'required',
+                'id_kelas' => 'required',
+                'jenis_kelamin' => 'required',
+                'tempat_lahir' => 'required',
+                'tanggal_lahir' => 'required|date',
 
-        Siswa::create([
-            'nis' => $request->nis,
-            'nama_siswa' => $request->nama_siswa,
-            'id_kelas' => $request->id_kelas,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tanggal_lahir' => $request->tanggal_lahir,
+                // UID RFID wajib dan tidak boleh sama
+                'rfid_uid' => 'required|string|unique:siswa,rfid_uid',
+            ]);
 
-            // default value
-            'rfid_uid' => 'RFID'.rand(100,999),
-            'status' => 'aktif',
-            'is_active' => 1
-        ]);
+            Siswa::create([
+                'nis' => $request->nis,
+                'nama_siswa' => $request->nama_siswa,
+                'id_kelas' => $request->id_kelas,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'tempat_lahir' => $request->tempat_lahir,
+                'tanggal_lahir' => $request->tanggal_lahir,
 
-        // 🔥 INI WAJIB (biar balik ke halaman)
-        return redirect()->route('data-siswa')
-            ->with('success', 'Data siswa berhasil ditambahkan');
-    }
+                // UID dari form
+                'rfid_uid' => $request->rfid_uid,
 
+                'status' => 'aktif',
+                'is_active' => 1
+            ]);
+
+            return redirect()->route('data-siswa')
+                ->with('success', 'Data siswa berhasil ditambahkan');
+        }
     // ========================
 // FORM EDIT
 // ========================
