@@ -138,10 +138,15 @@
 
                             <!-- STATUS -->
                             <td>
-                                <span class="log-status {{ $log->status == 'gagal' ? 'failed' : 'success' }}">
-                            <span class="status-dot"></span>
-                            {{ ucfirst($log->status ?? 'berhasil') }}
-                        </span>
+                                @if(strtolower($log->status ?? 'berhasil') === 'gagal')
+                                    <span class="badge bg-danger">
+                                        Gagal
+                                    </span>
+                                @else
+                                    <span class="badge bg-success">
+                                        Berhasil
+                                    </span>
+                                @endif
                             </td>
 
                         </tr>
