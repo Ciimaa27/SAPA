@@ -39,8 +39,8 @@ body {
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 8px 10px;
-    margin-bottom: 6px;
+    padding: 6px 10px;
+    margin-bottom: 2px;
     text-decoration: none;
     color: #555;
     border-radius: 6px;

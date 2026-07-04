@@ -24,47 +24,70 @@
         </div>
 
         <!-- ================= STATUS PERANGKAT ================= -->
-        <div class="row mb-3">
-            @foreach($perangkat as $p)
-            <div class="col-md-4">
-                <div class="card p-3 status-card">
+                <div class="row g-3 mb-3">
+                @foreach($perangkat as $p)
 
-                    <!-- NAMA DEVICE -->
-                    <h6 class="mb-2">{{ $p->nama_device ?? 'RFID Reader' }}</h6>
+                    @php
+                        $status = strtolower(trim($p->status_koneksi ?? 'offline'));
+                    @endphp
 
-                    <!-- STATUS DEVICE -->
-                    <div class="d-flex justify-content-between">
-                        <span>Status</span>
+                    <div class="col-md-4">
+                        <div class="status-card">
 
-                        @php
-                            $status = strtolower(trim($p->status_koneksi ?? 'offline'));
-                        @endphp
+                            <div class="device-header">
+                                <div class="device-icon">
+                                    <i class="fa-solid fa-microchip"></i>
+                                </div>
 
-                        <span class="{{ $status === 'online' ? 'status-online' : 'status-offline' }}">
-                            ● {{ ucfirst($status) }}
-                        </span>
+                                <div>
+                                    <h6 class="device-name">
+                                        {{ $p->nama_device ?? 'RFID Reader' }}
+                                    </h6>
+
+                                    <span class="device-type">
+                                        Perangkat IoT
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="device-info">
+
+                                <div class="info-item">
+                                    <span class="info-label">Status</span>
+
+                                    <span class="status-badge {{ $status === 'online' ? 'online' : 'offline' }}">
+                                        <span class="status-dot"></span>
+                                        {{ ucfirst($status) }}
+                                    </span>
+                                </div>
+
+                                <div class="info-item">
+                                    <span class="info-label">IP Address</span>
+                                    <span class="info-value">
+                                        {{ $p->ip ?? '-' }}
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="last-active">
+                                <i class="fa-regular fa-clock"></i>
+                                Terakhir aktif: {{ $p->last_active ?? '-' }}
+                            </div>
+
+                        </div>
                     </div>
 
-                    <!-- IP -->
-                    <div class="d-flex justify-content-between">
-                        <span>IP Address</span>
-                        <span>{{ $p->ip ?? '-' }}</span>
-                    </div>
-
-                    <!-- LAST ACTIVE -->
-                    <div class="text-danger small mt-2">
-                        Terakhir aktif : {{ $p->last_active ?? '-' }}
-                    </div>
-
-                </div>
+                @endforeach
             </div>
-            @endforeach
-        </div>
 
         <!-- ================= LOG AKTIVITAS ================= -->
         <div class="card">
-            <div class="p-3">
-                <h6 class="mb-0">Log aktivitas perangkat</h6>
+            <div class="log-header">
+                <div>
+                    <h6>Log aktivitas perangkat</h6>
+                    <p>Riwayat aktivitas RFID dan fingerprint hari ini</p>
+                </div>
             </div>
 
             <div class="table-responsive">
@@ -115,11 +138,10 @@
 
                             <!-- STATUS -->
                             <td>
-                                <span class="badge
-                                    {{ $log->status == 'gagal' ? 'bg-danger' : 'bg-success' }}">
-
-                                    {{ ucfirst($log->status ?? 'berhasil') }}
-                                </span>
+                                <span class="log-status {{ $log->status == 'gagal' ? 'failed' : 'success' }}">
+                            <span class="status-dot"></span>
+                            {{ ucfirst($log->status ?? 'berhasil') }}
+                        </span>
                             </td>
 
                         </tr>
