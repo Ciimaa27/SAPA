@@ -153,6 +153,7 @@
 
 
 /* =====================================
+/* =====================================
    BUTTON TERAPKAN
 ===================================== */
 
@@ -160,6 +161,11 @@
     background: #6f42c1 !important;
     border-color: #6f42c1 !important;
     color: #fff !important;
+
+    padding: 5px 12px;
+    font-size: 12px;
+    border-radius: 6px;
+    height: 32px;
 }
 
 .btn-primary:hover{
