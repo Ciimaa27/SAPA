@@ -239,14 +239,19 @@ Route::prefix('kepsek')->group(function () {
     Route::get('/dashboard', [KepsekController::class, 'dashboard'])->name('kepsek.dashboard');
     Route::get('/statistik', [KepsekController::class, 'statistik'])->name('kepsek.statistik');
 
+    // 1. Route ini HARUS ADA untuk menampilkan halaman laporan.blade.php
     Route::get('/laporan', function () {
         return view('kepsek.laporan');
     })->name('kepsek.laporan');
 
+    // 2. Route proses download Excel (Sudah benar di sini jabatannya)
+    Route::get('/laporan/download/{bulan}', [KepsekController::class, 'unduhLaporanKepsekGlobal'])->name('kepsek.laporan.download');
+
+    // Route Dashboard Guru & Fitur-fiturnya
     Route::get('/guru/dashboard', [GuruController::class, 'dashboard'])->name('kepsek.guru.dashboard');
     Route::get('/guru/kehadiran', [GuruController::class, 'kehadiran'])->name('kepsek.guru.kehadiran');
     Route::get('/guru/detail-kehadiran/{id_kelas}', [GuruController::class, 'detailKehadiran'])->name('kepsek.guru.detail-kehadiran');
     Route::get('/guru/data-penjemputan', [GuruController::class, 'dataPenjemputan'])->name('kepsek.guru.data-penjemputan');
 
-    Route::get('/guru/riwayat-penjemputan', [GuruController::class, 'riwayatPenjemputan'])->name('guru.riwayat');
+    Route::get('/guru/riwayat-penjemputan', [GuruController::class, 'riwayatPenjemputan'])->name('kepsek.guru.riwayat-penjemputan');
 });

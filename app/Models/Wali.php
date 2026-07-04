@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Wali extends Model
 {
-    protected $table = 'wali';    
+    protected $table = 'wali';
 
     protected $primaryKey = 'id_wali';
-    
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -20,4 +20,14 @@ class Wali extends Model
         'no_hp',
         'is_active',
     ];
+
+    public function siswa()
+    {
+        return $this->belongsToMany(
+            Siswa::class,
+            'siswa_wali',
+            'id_wali',
+            'id_siswa'
+        )->withPivot('hubungan');
+    }
 }

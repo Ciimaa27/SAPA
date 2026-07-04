@@ -9,7 +9,8 @@ use App\Models\Penjemputan;
 use App\Models\LogTap;
 use App\Models\Kelas;
 use Carbon\Carbon;
-
+use App\Exports\LaporanKepsekSapaExport;
+use Maatwebsite\Excel\Facades\Excel;
 class KepsekController extends Controller
 {
     public function dashboard()
@@ -156,4 +157,16 @@ class KepsekController extends Controller
             'selectedStatus' => $status,
         ]);
         }
+
+    public function unduhLaporanKepsekGlobal($bulan)
+    {
+        // Misal $bulan diterima berformat '2026-07'
+        // Ambil tanggal hari ini atau gunakan filter tanggal jika ada
+        $tanggalHariIni = request('tanggal', now()->format('Y-m-d'));
+        
+        $namaFile = 'Laporan_SAPA_Kepsek_' . $bulan . '.xlsx';
+        
+        // Kirimkan parameter bulan dan tanggal ke dalam Export Class
+        return Excel::download(new LaporanKepsekSapaExport($bulan, $tanggalHariIni), $namaFile);
+    }
 }
