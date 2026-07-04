@@ -83,7 +83,7 @@
 
                 {{-- BUTTON --}}
                 <div class="form-action">
-                    <button type="reset" class="btn-reset">Reset</button>
+                    <a href="{{ route('guru') }}" class="btn-batal">Batal</a>
                     <button type="submit" class="btn-simpan">Simpan</button>
                 </div>
 

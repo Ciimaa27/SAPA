@@ -233,3 +233,30 @@ body{
     }
 
 }
+
+/* ===== BATAL ===== */
+
+.btn-batal {
+    background: #ff6b6b;
+    padding: 6px 14px;
+
+    color: white;
+
+    border: none;
+    border-radius: 6px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+.btn-batal:hover {
+    background: #ee5253;
+    color: white;
+}

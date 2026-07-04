@@ -93,7 +93,8 @@
                                                 </option>
                                             </select>
                                             <button type="submit" class="btn btn-success btn-sm btn-simpan">
-                                                <i class="fa-solid fa-floppy-disk me-1"></i> Simpan
+                                                 Simpan
+                                                
                                             </button>
                                         </form>
                                     </td>

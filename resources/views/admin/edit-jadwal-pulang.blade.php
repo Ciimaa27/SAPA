@@ -102,7 +102,7 @@
 
                     <div class="button-area">
                         <a href="{{ route('jadwal-pulang',['kelas'=>$activeKelas]) }}" class="btn-batal">Batal</a>
-                        <button type="button" class="btn-simpan" id="btnKirim">Kirim</button>
+                        <button type="button" class="btn-simpan" id="btn-simpan">Kirim</button>
                     </div>
 
                 </div>

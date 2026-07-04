@@ -1,6 +1,7 @@
 /* =========================================
    LAYOUT
 ========================================= */
+
 body {
     background: #f5f6fa;
     overflow-x: hidden;
@@ -18,18 +19,26 @@ body {
 }
 
 .container-dashboard {
+    width: 100%;
     max-width: 1100px;
     margin: 0 auto;
 }
 
+
 /* =========================================
    CARD
 ========================================= */
+
 .card {
     border: 1px solid #d9d9d9;
     border-radius: 10px;
     box-shadow: none;
     background: #fff;
+    transition: .2s;
+}
+
+.card:hover {
+    border-color: #cfcfcf;
 }
 
 .card h5 {
@@ -43,45 +52,61 @@ body {
     padding: 24px;
 }
 
+
 /* =========================================
-   INFO
+   INFO BOX
 ========================================= */
+
 .info-box {
     display: flex;
     align-items: center;
     gap: 10px;
+
     color: #6f42c1;
     background: #f5efff;
+
     border: 1px solid #d9c8ff;
     border-radius: 8px;
+
     padding: 12px 15px;
+
     font-size: 13px;
 }
 
 .info-box i {
     font-size: 16px;
+    flex-shrink: 0;
 }
+
 
 /* =========================================
    FORM GRID
 ========================================= */
+
 .form-grid {
     display: grid;
+
     grid-template-columns: 160px 25px 1fr;
+
     row-gap: 22px;
+
     align-items: start;
 }
 
 .field-label {
     padding-top: 8px;
-    font-weight: 600;
-    color: #6f42c1;
+
     font-size: 14px;
+    font-weight: 600;
+
+    color: #6f42c1;
 }
 
 .field-separator {
     padding-top: 8px;
+
     text-align: center;
+
     color: #888;
 }
 
@@ -89,110 +114,255 @@ body {
     width: 100%;
 }
 
+
 /* =========================================
-   INPUT
+   INPUT DAN SELECT
 ========================================= */
+
 .form-control,
 .form-select {
+    width: 100%;
     height: 42px;
-    border-radius: 8px;
+
+    padding-left: 12px;
+    padding-right: 12px;
+
     border: 1px solid #d9d9d9;
+    border-radius: 8px;
+
     font-size: 13px;
+
     box-shadow: none;
+
+    transition: .2s;
 }
 
 .form-control:focus,
 .form-select:focus {
     border-color: #7c4dff;
-    box-shadow: 0 0 0 .15rem rgba(124,77,255,.15);
+
+    box-shadow:
+        0 0 0 .15rem rgba(124, 77, 255, .15);
 }
 
+.form-control[readonly] {
+    background: #f8f9fa;
+}
+
+
 /* =========================================
-   CHECKBOX
+   TEXT MUTED
 ========================================= */
+
+.text-muted {
+    font-size: 12px;
+}
+
+
+/* =========================================
+   CHECKBOX WRAPPER
+========================================= */
+
 .checkbox-wrapper {
     display: grid;
-    grid-template-columns: repeat(2, minmax(150px, 1fr));
+
+    grid-template-columns:
+        repeat(2, minmax(150px, 1fr));
+
     gap: 12px;
 }
 
+
+/* =========================================
+   CHECKBOX ITEM
+========================================= */
+
 .checkbox-item {
     display: flex;
+
     align-items: center;
+
     gap: 10px;
+
     padding: 10px 14px;
+
     border: 1px solid #e5e7eb;
     border-radius: 8px;
+
     cursor: pointer;
-    transition: .2s;
+
     background: #fff;
+
+    transition: .2s;
 }
 
 .checkbox-item:hover {
     border-color: #7c4dff;
+
     background: #faf8ff;
+
+    transform: translateY(-2px);
 }
 
 .checkbox-item input {
     width: 16px;
     height: 16px;
+
+    accent-color: #7c4dff;
+
+    flex-shrink: 0;
 }
 
+
 /* =========================================
-   BUTTON
+   CHECKBOX AKTIF
 ========================================= */
-.button-area {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 35px;
+
+.checkbox-item:has(input:checked) {
+    border-color: #7c4dff;
+
+    background: #f6f1ff;
 }
+
+
+/* =========================================
+   BUTTON AREA
+========================================= */
+
+.button-area {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    border-top: 1px solid #ececec;
+
+    padding-top: 20px;
+
+    margin-top: 25px;
+}
+
+
+/* =========================================
+   BUTTON BATAL
+========================================= */
 
 .btn-batal {
     display: inline-flex;
+
     align-items: center;
+
     justify-content: center;
-    padding: 8px 20px;
-    border-radius: 8px;
-    border: 1px solid #f5c2c7;
-    background: #fdeaea;
-    color: #b42318;
-    text-decoration: none;
+
+    background: #ff6b6b;
+
+    color: #fff;
+
+    padding: 6px 14px;
+
+    border: none;
+
+    border-radius: 6px;
+
     font-size: 13px;
-    font-weight: 600;
+
+    font-weight: 400;
+
+    line-height: 1.5;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
     transition: .2s;
 }
 
 .btn-batal:hover {
-    background: #fbd5d5;
-    color: #b42318;
+    background: #ee5253;
+
+    color: #fff;
+
+    text-decoration: none;
 }
+
+.btn-batal:focus,
+.btn-batal:active {
+    color: #fff;
+
+    background: #ee5253;
+
+    outline: none;
+
+    box-shadow: none;
+}
+
+
+/* =========================================
+   BUTTON KIRIM
+========================================= */
 
 .btn-simpan {
     display: inline-flex;
+
     align-items: center;
+
     justify-content: center;
-    padding: 8px 22px;
-    border: none;
-    border-radius: 8px;
-    background: #7c4dff;
+
+    background: #20c997;
+
     color: #fff;
+
+    padding: 6px 14px;
+
+    border: none;
+
+    border-radius: 6px;
+
     font-size: 13px;
-    font-weight: 600;
+
+    font-weight: 400;
+
+    line-height: 1.5;
+
     cursor: pointer;
+
     transition: .2s;
 }
 
 .btn-simpan:hover {
-    background: #6940db;
+    background: #12b886;
+
+    color: #fff;
 }
+
+.btn-simpan:focus,
+.btn-simpan:active {
+    background: #12b886;
+
+    color: #fff;
+
+    outline: none;
+
+    box-shadow: none;
+}
+
+
 /* =========================================
    RESPONSIVE TABLET
 ========================================= */
+
 @media (max-width: 768px) {
+
     .content {
         margin-left: 0;
+
         padding-left: 10px;
+
         padding-right: 10px;
     }
 
@@ -208,32 +378,58 @@ body {
         padding: 20px;
     }
 
+
+    /* Form menjadi satu kolom */
+
     .form-grid {
         grid-template-columns: 1fr;
+
         row-gap: 12px;
     }
 
     .field-label {
         padding-top: 0;
+
+        margin-top: 5px;
     }
 
     .field-separator {
         display: none;
     }
 
+
+    /* Checkbox */
+
     .checkbox-wrapper {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+            repeat(2, 1fr);
     }
 
+
+    /* Tombol tetap kanan */
+
     .button-area {
-        margin-top: 25px;
+        width: 100%;
+
+        display: flex;
+
+        flex-direction: row;
+
+        justify-content: flex-end;
+
+        align-items: center;
+
+        gap: 8px;
     }
 }
+
 
 /* =========================================
    RESPONSIVE HP
 ========================================= */
+
 @media (max-width: 576px) {
+
     .main-dashboard {
         padding: 8px;
     }
@@ -246,92 +442,61 @@ body {
         font-size: 17px;
     }
 
-    .info-box {
-        font-size: 12px;
-        align-items: flex-start;
+    .card-body {
+        padding: 16px;
     }
+
+
+    /* Info */
+
+    .info-box {
+        align-items: flex-start;
+
+        font-size: 12px;
+    }
+
+
+    /* Checkbox satu kolom */
 
     .checkbox-wrapper {
         grid-template-columns: 1fr;
     }
 
+
+    /* Tombol tetap berdampingan */
+
     .button-area {
-        flex-direction: column;
+        display: flex;
+
+        flex-direction: row;
+
+        align-items: center;
+
+        justify-content: flex-end;
+
+        gap: 8px;
     }
 
     .btn-batal,
     .btn-simpan {
-        width: 100%;
+        width: auto;
     }
 }
 
-/* =========================================
-   HOVER
-========================================= */
-.card {
-    transition: .2s;
-}
-
-.card:hover {
-    border-color: #cfcfcf;
-}
-
-.checkbox-item {
-    transition: .2s;
-}
-
-.checkbox-item:hover {
-    transform: translateY(-2px);
-}
-
-.btn-batal,
-.btn-simpan {
-    transition: .2s;
-}
-
-.form-control,
-.form-select {
-    transition: .2s;
-}
-
-/* =========================================
-   CHECKBOX AKTIF
-========================================= */
-.checkbox-item:has(input:checked) {
-    border-color: #7c4dff;
-    background: #f6f1ff;
-}
-
-.checkbox-item input {
-    accent-color: #7c4dff;
-}
-
-/* =========================================
-   SPACING
-========================================= */
-.text-muted {
-    font-size: 12px;
-}
-
-.form-control[readonly] {
-    background: #f8f9fa;
-}
-
-.button-area {
-    border-top: 1px solid #ececec;
-    padding-top: 20px;
-}
 
 /* =========================================
    SCROLLBAR
 ========================================= */
+
 ::-webkit-scrollbar {
     width: 8px;
+
     height: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
     background: #d2d6dc;
+
     border-radius: 20px;
 }
 

@@ -128,16 +128,17 @@
     margin-top: 15px;
 }
 
-.btn-reset {
-    background: #ffeaa7;
+.btn-batal {
+    background: #ff6b6b;
     padding: 6px 14px;
+    color: white;
     border-radius: 6px;
-    border: none;
+    text-decoration: none;
     font-size: 13px;
 }
 
-.btn-reset:hover {
-    background: #fdcb6e;
+.btn-batal:hover {
+    background: #ee5253;
 }
 
 .btn-simpan {

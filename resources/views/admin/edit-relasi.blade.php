@@ -92,7 +92,7 @@
 
                 <!-- BUTTON -->
                 <div class="form-action">
-                    <a href="{{ route('relasi.index') }}" class="btn-reset">Batal</a>
+                    <a href="{{ route('relasi.index') }}" class="btn-batal">Batal</a>
                     <button type="submit" class="btn-simpan">Simpan</button>
                 </div>
 
