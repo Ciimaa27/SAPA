@@ -44,6 +44,13 @@
                     </div>
 
                     <div class="form-group">
+                        <label>UID RFID</label>
+                        <input type="text" name="rfid_uid" value="{{ $siswa->rfid_uid }}" placeholder="Masukkan UID RFID">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
                         <label>Kelas</label>
                         <select name="id_kelas" class="form-select">
                             <option value="">Pilih kelas</option>
@@ -80,7 +87,10 @@
                         <label>Tempat lahir</label>
                         <input type="text" name="tempat_lahir" value="{{ $siswa->tempat_lahir }}">
                     </div>
+                </div>
 
+                <!-- ROW 3 -->
+                <div class="form-row">
                     <div class="form-group">
                         <label>Tanggal lahir</label>
                         <input type="date" name="tanggal_lahir" value="{{ $siswa->tanggal_lahir }}">

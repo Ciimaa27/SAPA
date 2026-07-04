@@ -103,6 +103,7 @@ public function update(Request $request, $id)
         'jenis_kelamin' => 'required',
         'tempat_lahir' => 'required',
         'tanggal_lahir' => 'required|date',
+        'rfid_uid' => 'nullable|string|unique:siswa,rfid_uid,'.$id.',id_siswa',
     ]);
 
     $siswa = Siswa::findOrFail($id);
@@ -114,6 +115,7 @@ public function update(Request $request, $id)
         'jenis_kelamin' => $request->jenis_kelamin,
         'tempat_lahir' => $request->tempat_lahir,
         'tanggal_lahir' => $request->tanggal_lahir,
+        'rfid_uid' => $request->rfid_uid,
     ]);
 
     return redirect()->route('data-siswa')
