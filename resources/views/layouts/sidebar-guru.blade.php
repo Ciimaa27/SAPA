@@ -23,19 +23,19 @@
             </a>
         </li>
 
+        <!-- DATA -->
+        <li class="menu-item {{ request()->routeIs('guru.data-penjemputan') ? 'active' : '' }}">
+            <a href="{{ route('guru.data-penjemputan') }}">
+                <i class="fa-solid fa-download"></i>
+                Data Penjemputan
+            </a>
+        </li>
+
         <!-- RIWAYAT -->
         <li class="menu-item {{ request()->routeIs('guru.riwayat') ? 'active' : '' }}">
             <a href="{{ route('guru.riwayat') }}">
                 <i class="fa-solid fa-user-check"></i>
                 Riwayat Penjemputan
-            </a>
-        </li>
-
-        <!-- DATA -->
-        <li class="menu-item {{ request()->routeIs('guru.data-penjemputan') ? 'active' : '' }}">
-            <a href="{{ route('guru.data-penjemputan') }}">
-                <i class="fa-solid fa-database"></i>
-                Data Penjemputan
             </a>
         </li>
 
