@@ -47,7 +47,17 @@
                 <!-- ID FINGERPRINT -->
                 <div class="form-group full">
                     <label>ID Fingerprint</label>
+<<<<<<< HEAD
                     <input type="text" name="fingerprint_id" value="{{ old('fingerprint_id', $wali->fingerprint_id) }}" placeholder="Masukkan nomor ID fingerprint">
+=======
+
+                    <input
+                        type="text"
+                        name="fingerprint_id"
+                        value="{{ old('fingerprint_id', $wali->fingerprint_id) }}"
+                        placeholder="Masukkan nomor ID fingerprint"
+                        required>
+>>>>>>> 15466a75e98518c3354a42640be81d0b28105acc
                     <small class="form-text">
                         *Masukkan ID fingerprint yang terdaftar pada sensor sidik jari
                     </small>
