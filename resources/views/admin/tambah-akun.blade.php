@@ -273,25 +273,13 @@
 
                 {{-- ================= BUTTON ================= --}}
                 <div class="d-flex justify-content-end gap-2">
-
-                    <button
-                        type="reset"
-                        class="btn btn-outline-danger px-4">
-
-                        <i class="fas fa-rotate-left me-1"></i>
+                    <button type="reset" class="btn btn-reset">
                         Reset
-
                     </button>
 
-                    <button
-                        type="submit"
-                        class="btn btn-success px-4">
-
-                        <i class="fas fa-floppy-disk me-1"></i>
+                    <button type="submit" class="btn btn-success">
                         Simpan
-
                     </button>
-
                 </div>
 
             </form>

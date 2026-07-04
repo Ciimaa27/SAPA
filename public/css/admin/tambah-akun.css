@@ -33,13 +33,53 @@
     font-size:13px;
 }
 
+/* =====================================
+   BUTTON SIMPAN
+===================================== */
+
 .btn-success{
-    background:#0eac3b;
-    border:none;
+    background-color:#0eac3b;
+    border-color:#0eac3b;
+    color:#fff;
 }
 
-.btn-warning{
-    color:white;
+.btn-success:hover{
+    background-color:#0c9634;
+    border-color:#0c9634;
+    color:#fff;
+}
+
+.btn-success:focus,
+.btn-success:active{
+    background-color:#0c9634 !important;
+    border-color:#0c9634 !important;
+    color:#fff !important;
+    box-shadow:none !important;
+}
+
+
+/* =====================================
+   BUTTON RESET
+===================================== */
+
+.btn-reset{
+    background-color:#dc3545;
+    border-color:#dc3545;
+    color:#fff;
+}
+
+.btn-reset:hover{
+    background-color:#bb2d3b;
+    border-color:#bb2d3b;
+    color:#fff;
+}
+
+.btn-reset:focus,
+.btn-reset:active{
+    background-color:#bb2d3b !important;
+    border-color:#bb2d3b !important;
+    color:#fff !important;
+    box-shadow:none !important;
 }
 
 /* ===================================== */
@@ -91,3 +131,4 @@
     border-color: #bb2d3b;
     color: #fff;
 }
+
