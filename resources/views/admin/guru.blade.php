@@ -12,19 +12,6 @@
 <link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
 <link rel="stylesheet" href="{{ asset('css/admin/guru.css') }}">
 
-<style>
-    .table-container {
-        max-height: 400px;
-        overflow-y: auto;
-    }
-
-    .table thead th {
-        position: sticky;
-        top: 0;
-        background: #f8f9fa;
-        z-index: 2;
-    }
-</style>
 @endpush
 
 {{-- 🔥 CONTENT --}}
@@ -84,7 +71,7 @@
     <a href="{{ route('tambah-data-guru') }}"
        class="btn-tambah-guru">
         Tambah
-        <span class="icon-plus">+</span>
+       <span class="icon-plus">+</span>
     </a>
 
 
