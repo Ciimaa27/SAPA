@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title','Laporan')
+@section('title', 'Laporan')
 
 @section('sidebar')
     @include('layouts.sidebar-kepsek')
 @endsection
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/kepsek/dashboard.css') }}">
-<link rel="stylesheet" href="{{ asset('css/kepsek/laporan.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/kepsek/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/kepsek/laporan.css') }}">
 @endpush
 
 @section('content')
@@ -20,98 +20,71 @@
         <h5 class="mb-0">Laporan</h5>
     </div>
 
-    <!-- TAB -->
-    <div class="tab-wrapper mb-3">
-        <button class="tab-btn active" onclick="showTab(event,'kehadiran')">Kehadiran</button>
-        <button class="tab-btn" onclick="showTab(event,'penjemputan')">Penjemputan</button>
-    </div>
-
     <!-- FILTER -->
     <div class="card-dashboard mb-3">
         <div class="filter-box">
-            <input type="date" class="form-control form-control-sm">
+
+            <!-- FILTER TANGGAL -->
+            <input type="date"
+                   class="form-control form-control-sm">
+
+            <!-- FILTER KELAS -->
             <select class="form-select form-select-sm">
-                <option>Semua</option>
+                <option value="">Semua Kelas</option>
+                <option value="1-A">1-A</option>
+                <option value="1-B">1-B</option>
+                <option value="2-A">2-A</option>
             </select>
+
         </div>
     </div>
 
-    <!-- KEHADIRAN -->
-    <div id="kehadiran" class="tab-content">
-        <div class="card-dashboard">
-            <table class="table align-middle">
-                <thead>
-                        <tr>
-                        <th>Judul</th>
-                        <th>Kelas</th>
-                        <th>Tanggal</th>
-                        <th>Jenis laporan</th>
-                        <th class="col-aksi">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                   <tr>
-                    <td>Kehadiran12022026.pdf</td>
-                    <td>1-A</td>
-                    <td>12-02-2026</td>
-                    <td>Kehadiran</td>
+    <!-- TABEL LAPORAN -->
+    <div class="card-dashboard">
+
+        <table class="table align-middle">
+
+            <thead>
+                <tr>
+                    <th>Judul</th>
+                    <th>Kelas</th>
+                    <th>Tanggal</th>
+                    <th class="col-aksi">Aksi</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>
+                        Laporan(12-02-2026).pdf
+                    </td>
+
+                    <td>
+                        1-A
+                    </td>
+
+                    <td>
+                        12-02-2026
+                    </td>
 
                     <td class="col-aksi">
-                        <a href="#" class="btn-excel">
+                        <a href="#"
+                           class="btn-excel"
+                           title="Download Laporan">
+
                             <i class="fa-solid fa-file-excel"></i>
+
                         </a>
                     </td>
                 </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
 
-    <!-- PENJEMPUTAN -->
-    <div id="penjemputan" class="tab-content" style="display:none;">
-        <div class="card-dashboard">
-            <table class="table align-middle">
-                <thead>
-                    <tr>
-                        <th>Judul</th>
-                        <th>Kelas</th>
-                        <th>Tanggal</th>
-                        <th>Jenis laporan</th>
-                        <th class="col-aksi">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Penjemputan12022026.pdf</td>
-                        <td>1-A</td>
-                        <td>12-02-2026</td>
-                        <td>Penjemputan</td>
-                    <td class="col-aksi">
-                        <a href="#" class="btn-excel">
-                            <i class="fa-solid fa-file-excel"></i>
-                        </a>
-                    </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            </tbody>
+
+        </table>
+
     </div>
 
 </div>
 
 @endsection
-
-
-@push('scripts')
-<script>
-function showTab(e, tab){
-    document.getElementById('kehadiran').style.display = 'none';
-    document.getElementById('penjemputan').style.display = 'none';
-
-    document.getElementById(tab).style.display = 'block';
-
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    e.target.classList.add('active');
-}
-</script>
-@endpush

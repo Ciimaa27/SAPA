@@ -2,33 +2,37 @@
    DATA PENJEMPUTAN
 =========================== */
 
-.search-input{
-    height:38px;
-    padding-left:38px;
-    font-size:13px;
-    border-radius:10px;
+.search-input {
+    height: 38px;
+    padding-left: 38px;
+    font-size: 13px;
+    border-radius: 10px;
 }
 
-.search-input:focus{
-    box-shadow:none;
-    border-color:#d6c8ff;
+.search-input:focus {
+    box-shadow: none;
+    border-color: #d6c8ff;
 }
 
-.search-icon{
-    position:absolute;
-    left:14px;
-    top:50%;
-    transform:translateY(-50%);
-    color:#b3b3b3;
-    z-index:2;
+.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #b3b3b3;
+    z-index: 2;
 }
 
-.table-container{
-    overflow-x:auto;
+
+/* TABLE */
+.table-container {
+    overflow-x: auto;
 }
 
-.table{
-    margin-bottom:0;
+.table {
+    width: 100%;
+    margin-bottom: 0;
+    table-layout: fixed;
 }
 
 .table thead th{
@@ -38,29 +42,63 @@
     font-weight:600;
     border-bottom:1px solid #ececec;
     text-align:center;
+    padding:8px 8px;
 }
 
 .table tbody td{
     font-size:13px;
     vertical-align:middle;
     text-align:center;
-    padding:18px 10px;
+    padding:10px 8px;
 }
 
-.btn-status{
-    display:inline-block;
-    padding:6px 16px;
-    border-radius:8px;
-    background:#dff9f4;
-    border:1px solid #9de8da;
-    color:#11a88c;
-    font-size:13px;
-    font-weight:600;
-    text-decoration:none;
-    transition:.2s;
+
+/* LEBAR KOLOM */
+.table th:nth-child(1),
+.table td:nth-child(1) {
+    width: 7%;
 }
 
-.btn-status:hover{
-    background:#11a88c;
-    color:#fff;
+.table th:nth-child(2),
+.table td:nth-child(2) {
+    width: 12%;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+    width: 35%;
+    text-align: left;
+}
+
+.table th:nth-child(4),
+.table td:nth-child(4) {
+    width: 18%;
+}
+
+.table th:nth-child(5),
+.table td:nth-child(5) {
+    width: 18%;
+}
+
+
+/* BUTTON STATUS */
+.btn-status {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 8px;
+
+    background: #dff9f4;
+    border: 1px solid #9de8da;
+    color: #11a88c;
+
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+
+    transition: .2s;
+}
+
+.btn-status:hover {
+    background: #11a88c;
+    color: #fff;
 }

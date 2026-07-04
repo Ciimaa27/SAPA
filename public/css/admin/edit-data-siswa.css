@@ -40,18 +40,34 @@
 .btn-kembali {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    margin-bottom: 15px;
-    font-size: 13px;
+    gap: 5px;
+
+    background: #e9e1ff;
     color: #6f42c1;
-    text-decoration: none;
-    background: #f3f0ff;
-    padding: 5px 10px;
+
+    border: 1px solid #d6c8ff;
     border-radius: 6px;
+
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    width: fit-content;
+    max-width: max-content;
+
+    margin-bottom: 18px;
+    transition: 0.2s;
+}
+
+.btn-kembali i {
+    font-size: 12px;
 }
 
 .btn-kembali:hover {
-    background: #e5dbff;
+    background: #dcd0ff;
+    color: #5a34a3;
 }
 
 /* ===== FORM ===== */
