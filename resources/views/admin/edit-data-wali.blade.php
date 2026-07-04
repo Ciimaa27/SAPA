@@ -37,12 +37,21 @@
 
             <!-- BUTTON KEMBALI -->
             <a href="{{ route('data-wali') }}" class="btn btn-kembali mb-3">
-                ← Kembali
+                <i class="fas fa-arrow-left"></i> Kembali
             </a>
 
             <form action="{{ route('update-wali', $wali->id_wali) }}" method="POST">
                 @csrf
                 @method('PUT')
+
+                <!-- ID FINGERPRINT -->
+                <div class="form-group full">
+                    <label>ID Fingerprint</label>
+                    <input type="text" name="fingerprint_id" value="{{ old('fingerprint_id', $wali->fingerprint_id) }}" placeholder="Masukkan nomor ID fingerprint">
+                    <small class="form-text">
+                        *Masukkan ID fingerprint yang terdaftar pada sensor sidik jari
+                    </small>
+                </div>
 
                 <!-- NAMA -->
                 <div class="form-group full">

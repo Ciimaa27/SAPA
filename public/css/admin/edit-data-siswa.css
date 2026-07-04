@@ -90,6 +90,10 @@
     font-size: 13px;
 }
 
+.form-group .form-text {
+    font-size: 11px;
+}
+
 /* FOCUS */
 .form-group input:focus,
 .form-group select:focus {

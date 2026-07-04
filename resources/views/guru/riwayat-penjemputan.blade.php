@@ -44,7 +44,7 @@
                             <th>Jenis perangkat</th>
                             <th>Peran</th>
                             <th>Status</th>
-                            <th>Detail</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
 

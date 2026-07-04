@@ -4,6 +4,7 @@ namespace App\Models;
 use App\Models\Device;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class LogTap extends Model
 {
@@ -22,5 +23,36 @@ class LogTap extends Model
     public function device()
     {
         return $this->belongsTo(Device::class, 'id_device');
+    }
+
+    /**
+     * Accessor untuk mendapatkan jenis perangkat
+     * Deteksi otomatis berdasarkan uid_rfid atau fingerprint_id
+     */
+    protected function jenisPerangkat(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->getDeviceType()
+        );
+    }
+
+    /**
+     * Helper method untuk deteksi jenis perangkat
+     */
+    public function getDeviceType()
+    {
+        if ($this->device && $this->device->nama_device) {
+            return $this->device->nama_device;
+        }
+
+        if ($this->uid_rfid) {
+            return 'RFID';
+        }
+
+        if ($this->fingerprint_id) {
+            return 'Fingerprint';
+        }
+
+        return '-';
     }
 }

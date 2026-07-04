@@ -39,7 +39,7 @@
                 <!-- ROW 1 -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label>NIS Siswa</label>
+                        <label>NIS siswa</label>
                         <input type="text" name="nis" value="{{ $siswa->nis }}">
                     </div>
 

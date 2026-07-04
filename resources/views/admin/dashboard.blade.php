@@ -177,7 +177,7 @@
                             </td>
 
                             {{-- Jenis Perangkat --}}
-                            <td>{{ $log->device->nama_device ?? '-' }}</td> <!-- Jenis perangkat -->
+                            <td>{{ $log->getDeviceType() }}</td>
                             <td>
                                 @if($log->uid_rfid) Siswa
                                 @elseif($log->fingerprint_id) Orang Tua

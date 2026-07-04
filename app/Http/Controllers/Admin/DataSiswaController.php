@@ -28,7 +28,7 @@ class DataSiswaController extends Controller
             });
         }
 
-        $siswa = $query->orderBy('id_siswa', 'asc')
+        $siswa = $query->orderByDesc('id_siswa')
                     ->paginate(10)
                     ->withQueryString();
 

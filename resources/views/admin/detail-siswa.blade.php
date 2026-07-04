@@ -41,6 +41,12 @@
                 </div>
 
                 <div class="detail-row">
+                    <div class="label">UID RFID</div>
+                    <div class="separator">:</div>
+                    <div class="value highlight">{{ $siswa->rfid_uid ?? '-' }}</div>
+                </div>
+                
+                <div class="detail-row">
                     <div class="label">Nama lengkap</div>
                     <div class="separator">:</div>
                     <div class="value highlight">{{ $siswa->nama_siswa }}</div>

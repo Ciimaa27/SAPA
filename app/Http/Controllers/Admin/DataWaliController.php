@@ -18,6 +18,7 @@ class DataWaliController extends Controller
                 'wali.nama_wali',
                 'wali.no_hp',
                 'wali.jenis_kelamin',
+                'wali.fingerprint_id',
                 'users.username',
                 'users.email'
             )
@@ -76,6 +77,7 @@ public function store(Request $request)
     public function update(Request $request, $id)
     {
         $request->validate([
+            'fingerprint_id' => 'required|string|unique:wali,fingerprint_id,'.$id.',id_wali',
             'nama_wali' => 'required',
             'no_hp' => 'required|unique:wali,no_hp,'.$id.',id_wali',
             'jenis_kelamin' => 'required',
@@ -83,6 +85,7 @@ public function store(Request $request)
 
         $wali = Wali::findOrFail($id);
         $wali->update([
+            'fingerprint_id' => $request->fingerprint_id,
             'nama_wali' => $request->nama_wali,
             'no_hp' => $request->no_hp,
             'jenis_kelamin' => $request->jenis_kelamin,
