@@ -32,69 +32,89 @@ class KehadiranKelasExport implements
     {
         [$tahun, $bulan] = explode('-', $this->bulan);
 
-        return Siswa::leftJoin('kehadiran', 'siswa.id_siswa', '=', 'kehadiran.id_siswa')
+        $data = Siswa::leftJoin('kehadiran', 'siswa.id_siswa', '=', 'kehadiran.id_siswa')
             ->where('siswa.id_kelas', $this->kelasId)
             ->select(
                 'siswa.nama_siswa',
-                DB::raw("SUM(CASE WHEN kehadiran.status_hadir = 'hadir' AND YEAR(kehadiran.tanggal) = $tahun AND MONTH(kehadiran.tanggal) = $bulan THEN 1 ELSE 0 END) as hadir"),
-                DB::raw("SUM(CASE WHEN kehadiran.status_hadir = 'izin' AND YEAR(kehadiran.tanggal) = $tahun AND MONTH(kehadiran.tanggal) = $bulan THEN 1 ELSE 0 END) as izin"),
-                DB::raw("SUM(CASE WHEN kehadiran.status_hadir = 'sakit' AND YEAR(kehadiran.tanggal) = $tahun AND MONTH(kehadiran.tanggal) = $bulan THEN 1 ELSE 0 END) as sakit"),
-                DB::raw("SUM(CASE WHEN kehadiran.status_hadir = 'alpa' AND YEAR(kehadiran.tanggal) = $tahun AND MONTH(kehadiran.tanggal) = $bulan THEN 1 ELSE 0 END) as alpa")
+                DB::raw("SUM(CASE WHEN kehadiran.status_hadir = 'hadir' AND YEAR(kehadiran.tanggal) = ? AND MONTH(kehadiran.tanggal) = ? THEN 1 ELSE 0 END) as hadir"),
+                DB::raw("SUM(CASE WHEN kehadiran.status_hadir = 'izin' AND YEAR(kehadiran.tanggal) = ? AND MONTH(kehadiran.tanggal) = ? THEN 1 ELSE 0 END) as izin"),
+                DB::raw("SUM(CASE WHEN kehadiran.status_hadir = 'sakit' AND YEAR(kehadiran.tanggal) = ? AND MONTH(kehadiran.tanggal) = ? THEN 1 ELSE 0 END) as sakit"),
+                DB::raw("SUM(CASE WHEN kehadiran.status_hadir = 'alpa' AND YEAR(kehadiran.tanggal) = ? AND MONTH(kehadiran.tanggal) = ? THEN 1 ELSE 0 END) as alpa")
             )
-        ->groupBy(
-            'siswa.id_siswa',
-            'siswa.nama_siswa'
-        )
-        ->orderBy('siswa.nama_siswa')
-        ->get()
-        ->toArray();
+            // Mengisi placeholder binding secara berurutan untuk masing-masing CASE WHEN
+            ->setBindings([$tahun, $bulan, $tahun, $bulan, $tahun, $bulan, $tahun, $bulan], 'select')
+            ->groupBy('siswa.id_siswa', 'siswa.nama_siswa')
+            ->orderBy('siswa.nama_siswa')
+            ->get();
+
+        $result = [];
+        foreach ($data as $idx => $row) {
+            $result[] = [
+                $idx + 1, // Penambahan kolom No otomatis
+                $row->nama_siswa,
+                (int) $row->hadir,
+                (int) $row->izin,
+                (int) $row->sakit,
+                (int) $row->alpa,
+            ];
+        }
+
+        return $result;
     }
 
     public function headings(): array
     {
         return [
+            'No',
             'Nama Siswa',
             'Hadir',
             'Izin',
             'Sakit',
-            'Alpa'
+            'Alpa',
         ];
     }
 
     public function styles(Worksheet $sheet)
-{
-    // Header tabel
-    $sheet->getStyle('A1:E1')->applyFromArray([
-        'font' => [
-            'bold' => true,
-            'color' => ['rgb' => 'FFFFFF'],
-        ],
-        'fill' => [
-            'fillType' => Fill::FILL_SOLID,
-            'startColor' => ['rgb' => '4472C4'],
-        ],
-        'alignment' => [
-            'horizontal' => Alignment::HORIZONTAL_CENTER,
-            'vertical' => Alignment::VERTICAL_CENTER,
-        ],
-        'borders' => [
-            'allBorders' => [
-                'borderStyle' => Border::BORDER_THIN,
+    {
+        // Header tabel (A1 sampai F1 karena ada kolom nomor)
+        $sheet->getStyle('A1:F1')->applyFromArray([
+            'font' => [
+                'bold' => true,
+                'color' => ['rgb' => 'FFFFFF'],
             ],
-        ],
-    ]);
+            'fill' => [
+                'fillType' => Fill::FILL_SOLID,
+                'startColor' => ['rgb' => '4472C4'],
+            ],
+            'alignment' => [
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
+                'vertical' => Alignment::VERTICAL_CENTER,
+            ],
+        ]);
 
-    $lastRow = $sheet->getHighestRow();
+        // Mengatur tinggi baris header agar lebih lega
+        $sheet->getRowDimension(1)->setRowHeight(24);
 
-    // Border seluruh tabel
-    $sheet->getStyle("A1:E{$lastRow}")
-        ->getBorders()
-        ->getAllBorders()
-        ->setBorderStyle(Border::BORDER_THIN);
+        $lastRow = $sheet->getHighestRow();
 
-    // Isi rata tengah kecuali nama siswa
-    $sheet->getStyle("B2:E{$lastRow}")
-        ->getAlignment()
-        ->setHorizontal(Alignment::HORIZONTAL_CENTER);
-}
+        if ($lastRow >= 1) {
+            // Border seluruh tabel
+            $sheet->getStyle("A1:F{$lastRow}")
+                ->getBorders()
+                ->getAllBorders()
+                ->setBorderStyle(Border::BORDER_THIN)
+                ->getColor()
+                ->setRGB('BFBFBF'); // Warna border abu-abu soft agar terlihat clean
+
+            // Judul kolom rata tengah (No)
+            $sheet->getStyle("A2:A{$lastRow}")
+                ->getAlignment()
+                ->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+            // Isi rekap kehadiran rata tengah (Hadir, Izin, Sakit, Alpa)
+            $sheet->getStyle("C2:F{$lastRow}")
+                ->getAlignment()
+                ->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        }
+    }
 }

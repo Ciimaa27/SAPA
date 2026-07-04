@@ -23,7 +23,7 @@ class LaporanKepsekSapaExport implements WithMultipleSheets
             new Sheets\RekapPenjemputanSheet($this->bulan),
             new Sheets\StatistikBulananSheet(),
             new Sheets\DataWaliSheet(),
-            new Sheets\RiwayatAktivitasSheet($this->tanggal),
+            new Sheets\RiwayatAktivitasSheet($this->bulan),
         ];
     }
 }
