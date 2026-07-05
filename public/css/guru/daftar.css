@@ -108,14 +108,16 @@ border-radius:4px;
 .form-status {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 8px;
+    margin: 0;
 }
 
 /* SELECT STATUS */
 .status-select {
     width: 120px;
     height: 32px;
+    box-sizing: border-box;
     padding: 4px 8px;
 
     font-family: 'Poppins', sans-serif;
@@ -131,42 +133,28 @@ border-radius:4px;
     cursor: pointer;
 }
 
-.status-select:focus {
-    border-color: #7b5cff;
-    box-shadow: 0 0 0 2px rgba(123, 92, 255, 0.12);
-}
-
 /* TOMBOL SIMPAN */
-.btn-simpan-status {
-    height: 32px;
-    padding: 0 10px;
+.btn-simpan {
+    background: #20c997;
+    padding: 6px 14px;
 
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
+    color: white;
 
     border: none;
     border-radius: 6px;
 
-    background: #7b5cff;
-    color: #fff;
+    font-size: 13px;
 
-    font-family: 'Poppins', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
     cursor: pointer;
-    transition: 0.2s;
 }
 
-.btn-simpan-status:hover {
-    background: #6948e8;
-}
-
-.btn-simpan-status:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
+.btn-simpan:hover {
+    background: #12b886;
+    color: white;
 }
 
 /* RESPONSIVE */
@@ -186,16 +174,14 @@ border-radius:4px;
    PAGINATION
 ================================ */
 
-.pagination-wrapper {
+/* PAGINATION BOOTSTRAP */
+.pagination {
     display: flex;
-    justify-content: flex-end;
     align-items: center;
-    gap: 7px;
-
-    padding: 20px 8px 5px;
+    gap: 8px;
 }
 
-.pagination-btn {
+.pagination .page-item .page-link {
     width: 36px;
     height: 36px;
 
@@ -203,38 +189,39 @@ border-radius:4px;
     align-items: center;
     justify-content: center;
 
+    padding: 0;
+    margin: 0;
+
+    background: #ffffff;
     border: 1px solid #d8dee8;
     border-radius: 7px;
 
-    background-color: #ffffff;
     color: #7040c8;
-
     font-size: 13px;
     font-weight: 500;
-    line-height: 1;
-    text-decoration: none;
 
-    box-sizing: border-box;
-    transition: all 0.2s ease;
+    box-shadow: none;
 }
 
-.pagination-btn:hover {
-    border-color: #7040c8;
-    color: #7040c8;
-    background-color: #f8f5ff;
-}
-
-.pagination-btn.active {
-    background-color: #7040c8;
+/* HALAMAN AKTIF */
+.pagination .page-item.active .page-link {
+    background: #7040c8;
     border-color: #7040c8;
     color: #ffffff;
 }
 
-.pagination-btn.disabled {
-    background-color: #eef2f5;
+/* PREVIOUS / NEXT DISABLED */
+.pagination .page-item.disabled .page-link {
+    background: #eef2f5;
     border-color: #dce2e8;
     color: #aeb9c5;
-    cursor: not-allowed;
+}
+
+/* HOVER */
+.pagination .page-item:not(.active):not(.disabled) .page-link:hover {
+    background: #f8f5ff;
+    border-color: #7040c8;
+    color: #7040c8;
 }
 
 .btn-kembali {
@@ -269,4 +256,19 @@ border-radius:4px;
     border-color: #c9b0ff;
     color: #6842d9;
     text-decoration: none;
+}
+
+.table-custom th:nth-child(1),
+.table-custom td:nth-child(1) {
+    width: 28%;
+}
+
+.table-custom th:nth-child(2),
+.table-custom td:nth-child(2) {
+    width: 32%;
+}
+
+.table-custom th:nth-child(3),
+.table-custom td:nth-child(3) {
+    width: 40%;
 }
