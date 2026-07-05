@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'RFID & Sidik Jari')
+@section('title', 'RFID')
 
 {{-- SIDEBAR --}}
 @section('sidebar')
@@ -9,8 +9,9 @@
 
 {{-- CSS --}}
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admin/rfid.css') }}">
+<link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/rfid.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endpush
 
 {{-- CONTENT --}}
@@ -18,146 +19,123 @@
 <div class="main-dashboard">
     <div class="container-dashboard">
 
-        <!-- TITLE -->
+        {{-- TITLE --}}
         <div class="card mb-3 p-3">
-            <h5 class="mb-0">RFID dan Sidik jari</h5>
+            <h5 class="mb-0">RFID</h5>
         </div>
 
-        <!-- ✅ ALERT -->
+        {{-- ALERT SUCCESS --}}
         @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
+            <div class="alert alert-success alert-dismissible fade show">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
         @endif
 
-        <!-- TAB -->
+        {{-- SEARCH + REFRESH --}}
         <div class="card mb-3 p-3">
-            <div class="d-flex align-items-center gap-3">
-                <a href="{{ route('iot.index', ['tab' => 'rfid']) }}" class="btn btn-tab {{ ($tab ?? 'rfid') == 'rfid' ? 'active' : '' }}">RFID</a>
-                <a href="{{ route('iot.index', ['tab' => 'sidik-jari']) }}" class="btn btn-tab {{ ($tab ?? '') == 'sidik-jari' ? 'active' : '' }}">Sidik jari</a>
-
-                <div class="d-flex align-items-center gap-2 search-flex">
-                    <div class="input-group input-group-sm">
-                        <span class="input-group-text bg-white"><i class="fa fa-search"></i></span>
-                        <input type="text" id="searchInput" class="form-control" placeholder="Pencarian">
-                    </div>
-                    <button type="button" class="btn btn-refresh btn-sm" id="refreshTable" title="Tampilkan semua data">
-                        <i class="fa fa-refresh"></i> Refresh
-                    </button>
+            <div class="d-flex align-items-center gap-2">
+                {{-- SEARCH --}}
+                <div class="input-group input-group-sm search-flex">
+                    <span class="input-group-text bg-white">
+                        <i class="fa fa-search"></i>
+                    </span>
+                    <input type="text" id="searchInput" class="form-control" placeholder="Pencarian">
                 </div>
+
+                {{-- REFRESH --}}
+                <button type="button" class="btn btn-refresh btn-sm" id="refreshTable" title="Tampilkan semua data">
+                    <i class="fa fa-refresh"></i> Refresh
+                </button>
             </div>
         </div>
 
-        <!-- 🔥 REALTIME CARD -->
-        @if($tab == 'rfid')
+        {{-- RFID REALTIME --}}
         <div class="card p-3 mb-3 text-center">
             <h5>Scan RFID Terakhir</h5>
             <h3 id="rfidUID" style="font-weight:bold; color:#6f42c1;">Menunggu scan...</h3>
         </div>
-        @else
-        <div class="card p-3 mb-3 text-center">
-            <h5>Scan Sidik Jari Terakhir</h5>
-            <h3 id="fingerprintID" style="font-weight:bold; color:#6f42c1;">Menunggu scan...</h3>
-        </div>
-        @endif
 
-        <!-- TABLE -->
+        {{-- TABLE CARD --}}
         <div class="card">
+            {{-- TABLE --}}
             <div class="table-container">
                 <table class="table table-hover align-middle mb-0" id="dataTable">
+                    {{-- TABLE HEADER --}}
                     <thead class="table-light">
                         <tr>
                             <th>No</th>
-                            @if($tab == 'rfid')
-                                <th>Nama Siswa</th>
-                                <th>UID</th>
-                            @else
-                                <th>Nama Wali</th>
-                                <th>ID Fingerprint</th>
-                            @endif
-                            <th class="col-aksi">Aksi</th>
+                            <th>Nama Siswa</th>
+                            <th>UID</th>
                         </tr>
                     </thead>
+
+                    {{-- TABLE BODY --}}
                     <tbody>
                         @forelse($data as $item)
-                        <tr>
-                            <td>{{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}</td>
-                            @if($tab == 'rfid')
+                            <tr>
+                                {{-- NOMOR --}}
+                                <td>
+                                    {{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}
+                                </td>
+
+                                {{-- NAMA SISWA --}}
                                 <td>{{ $item->nama_siswa }}</td>
+
+                                {{-- RFID UID --}}
                                 <td>{{ $item->rfid_uid ?? '-' }}</td>
-                                <td>
-                                    <form action="{{ route('iot.destroy', ['tab' => 'rfid', 'id' => $item->id_siswa]) }}" method="POST" style="display:inline;">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Yakin hapus?')">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            @else
-                                <td>{{ $item->nama_wali }}</td>
-                                <td>{{ $item->fingerprint_id ?? '-' }}</td>
-                                <td>
-                                    <form action="{{ route('iot.destroy', ['tab' => 'sidik-jari', 'id' => $item->id_wali]) }}" method="POST" style="display:inline;">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Yakin hapus?')">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            @endif
-                        </tr>
+                            </tr>
                         @empty
-                        <tr>
-                            <td colspan="4" class="text-center">Tidak ada data</td>
-                        </tr>
+                            <tr>
+                                <td colspan="3" class="text-center">Tidak ada data</td>
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
 
-            <!-- PAGINATION -->
+            {{-- PAGINATION --}}
             <div class="p-3 d-flex justify-content-end">
                 <nav>
                     <ul class="pagination pagination-sm mb-0">
-                        {{-- Previous --}}
-                        @if ($data->onFirstPage())
+                        {{-- PREVIOUS --}}
+                        @if($data->onFirstPage())
                             <li class="page-item disabled"><span class="page-link">‹</span></li>
                         @else
                             <li class="page-item"><a class="page-link" href="{{ $data->previousPageUrl() }}">‹</a></li>
                         @endif
 
-                        {{-- Numbers --}}
+                        {{-- PAGE VARIABLES --}}
                         @php
                             $current = $data->currentPage();
                             $last = $data->lastPage();
                         @endphp
 
-                        {{-- First page --}}
-                        @if ($current > 3)
+                        {{-- FIRST PAGE --}}
+                        @if($current > 3)
                             <li class="page-item"><a class="page-link" href="{{ $data->url(1) }}">1</a></li>
-                            @if ($current > 4)
+                            @if($current > 4)
                                 <li class="page-item disabled"><span class="page-link">...</span></li>
                             @endif
                         @endif
 
-                        {{-- Middle pages --}}
-                        @for ($i = max(1, $current - 1); $i <= min($last, $current + 1); $i++)
+                        {{-- MIDDLE PAGE --}}
+                        @for($i = max(1, $current - 1); $i <= min($last, $current + 1); $i++)
                             <li class="page-item {{ $i == $current ? 'active' : '' }}">
                                 <a class="page-link" href="{{ $data->url($i) }}">{{ $i }}</a>
                             </li>
                         @endfor
 
-                        {{-- Last page --}}
-                        @if ($current < $last - 2)
-                            @if ($current < $last - 3)
+                        {{-- LAST PAGE --}}
+                        @if($current < $last - 2)
+                            @if($current < $last - 3)
                                 <li class="page-item disabled"><span class="page-link">...</span></li>
                             @endif
                             <li class="page-item"><a class="page-link" href="{{ $data->url($last) }}">{{ $last }}</a></li>
                         @endif
 
-                        {{-- Next --}}
-                        @if ($data->hasMorePages())
+                        {{-- NEXT --}}
+                        @if($data->hasMorePages())
                             <li class="page-item"><a class="page-link" href="{{ $data->nextPageUrl() }}">›</a></li>
                         @else
                             <li class="page-item disabled"><span class="page-link">›</span></li>
@@ -170,76 +148,94 @@
     </div>
 </div>
 
-{{-- SEARCH JS --}}
+{{-- SEARCH + REFRESH SCRIPT --}}
 <script>
-    const searchInput = document.getElementById("searchInput");
-    const refreshButton = document.getElementById("refreshTable");
+const searchInput = document.getElementById("searchInput");
+const refreshButton = document.getElementById("refreshTable");
 
-    function filterTable(keyword) {
-        keyword = keyword.toLowerCase().trim();
-        const rows = document.querySelectorAll("#dataTable tbody tr");
-        rows.forEach(row => {
-            const rowText = row.textContent.toLowerCase();
-            row.style.display = rowText.includes(keyword) ? "" : "none";
-        });
-    }
+function filterTable(keyword) {
+    keyword = String(keyword).toLowerCase().trim();
+    const rows = document.querySelectorAll("#dataTable tbody tr");
 
-    // SEARCH MANUAL
-    searchInput.addEventListener("keyup", function() {
-        filterTable(this.value);
+    rows.forEach(function(row) {
+        const rowText = row.textContent.toLowerCase();
+        row.style.display = rowText.includes(keyword) ? "" : "none";
     });
+}
 
-    // REFRESH / TAMPILKAN SEMUA DATA
-    refreshButton.addEventListener("click", function() {
-        searchInput.value = "";
-        const rows = document.querySelectorAll("#dataTable tbody tr");
-        rows.forEach(row => { row.style.display = ""; });
+/* SEARCH MANUAL */
+searchInput.addEventListener("keyup", function() {
+    filterTable(this.value);
+});
+
+/* REFRESH */
+refreshButton.addEventListener("click", function() {
+    searchInput.value = "";
+    const rows = document.querySelectorAll("#dataTable tbody tr");
+    rows.forEach(function(row) {
+        row.style.display = "";
     });
+});
 </script>
 
-{{-- 🔥 RFID & FINGERPRINT REALTIME JS --}}
+{{-- RFID REALTIME SCRIPT --}}
 <script>
 let lastRFID = null;
-let lastFingerprint = null;
 
-function loadRFID(){
+function loadRFID() {
     fetch('/admin/latest-rfid')
-    .then(res => res.json())
-    .then(data => {
-        if(data && data.uid_rfid){
-            document.getElementById('rfidUID').innerText = data.uid_rfid;
-            if(lastRFID !== data.uid_rfid){
-                lastRFID = data.uid_rfid;
-                searchInput.value = data.uid_rfid;
-                filterTable(data.uid_rfid);
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            if (data && data.uid_rfid) {
+                const uid = String(data.uid_rfid).trim();
+                document.getElementById('rfidUID').innerText = uid;
+
+                /* Hanya filter jika UID berubah */
+                if (lastRFID !== uid) {
+                    lastRFID = uid;
+                    searchInput.value = uid; /* Masukkan UID ke pencarian */
+                    filterTable(uid); /* Filter tabel */
+                }
             }
-        }
-    })
-    .catch(error => { console.error('RFID Error:', error); });
+        })
+        .catch(function(error) {
+            console.error('RFID Error:', error);
+        });
 }
 
-function loadFingerprint(){
-    fetch('/admin/latest-fingerprint')
-    .then(res => res.json())
-    .then(data => {
-        if(data && data.fingerprint_id){
-            document.getElementById('fingerprintID').innerText = data.fingerprint_id;
-            if(lastFingerprint !== data.fingerprint_id){
-                lastFingerprint = data.fingerprint_id;
-                searchInput.value = data.fingerprint_id;
-                filterTable(data.fingerprint_id);
-            }
-        }
-    })
-    .catch(error => { console.error('Fingerprint Error:', error); });
-}
+/* POLLING SETIAP 2 DETIK */
+setInterval(loadRFID, 2000);
 
-@if($tab == 'rfid')
-    setInterval(loadRFID, 2000);
-    loadRFID();
-@else
-    setInterval(loadFingerprint, 2000);
-    loadFingerprint();
-@endif
+/* JALANKAN SAAT HALAMAN DIBUKA */
+loadRFID();
+</script>
+
+{{-- POPUP HAPUS SCRIPT --}}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.btn-hapus').forEach(function(button) {
+        button.addEventListener('click', function() {
+            const form = this.closest('.form-hapus');
+
+            Swal.fire({
+                title: 'Hapus Data RFID?',
+                text: 'Data RFID yang dihapus tidak dapat dikembalikan.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Hapus',
+                cancelButtonText: 'Batal',
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                reverseButtons: true
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+});
 </script>
 @endsection
