@@ -191,6 +191,7 @@ Route::get('/guru/penjemputan', [GuruController::class, 'penjemputan'])->name('g
 Route::get('/guru/riwayat-penjemputan', [GuruController::class, 'riwayatPenjemputan'])->name('guru.riwayat');
 Route::post('/guru/penjemputan/update-status', [GuruController::class, 'updateStatusPenjemputan'])->name('guru.penjemputan.update-status');
 Route::get('/guru/penjemputan/{id_kelas}', [GuruController::class, 'daftarPenjemputan'])->name('guru.penjemputan');
+Route::get('/guru/riwayat-penjemputan/{id}', [GuruController::class, 'showDetail'])->name('guru.detail-penjemputan');
 
 /*
 |--------------------------------------------------------------------------
