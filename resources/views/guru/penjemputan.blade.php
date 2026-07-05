@@ -25,10 +25,10 @@
 <!-- INFORMASI -->
 <div class="card-box mt-3">
 
-        <a href="{{ route('guru.data-penjemputan') }}" class="btn-kembali">
-            <i class="fas fa-arrow-left"></i>
-            Kembali
-        </a>
+<a href="{{ route('guru.data-penjemputan') }}" class="btn-kembali">
+    <i class="fas fa-arrow-left"></i>
+    <span>Kembali</span>
+</a>
 
     <div class="info-wrapper">
 
@@ -56,13 +56,6 @@
 
 <!-- TABEL -->
 <div class="card-box mt-3">
-
-    <div class="table-header">
-        <a href="#" class="btn-laporan">
-            <i class="fa fa-download"></i>
-            Laporan
-        </a>
-    </div>
 
     <div class="table-container">
 
@@ -131,74 +124,45 @@
     </div>
 
     <!-- PAGINATION -->
-    <div class="p-3 d-flex justify-content-end">
-        <nav>
-            <ul class="pagination pagination-sm mb-0">
+<div class="pagination-wrapper">
 
-                {{-- Previous --}}
-                @if ($siswas->onFirstPage())
-                    <li class="page-item disabled">
-                        <span class="page-link">‹</span>
-                    </li>
-                @else
-                    <li class="page-item">
-                        <a class="page-link" href="{{ $siswas->previousPageUrl() }}">‹</a>
-                    </li>
-                @endif
+    {{-- PREVIOUS --}}
+    @if ($siswas->onFirstPage())
+        <span class="pagination-btn disabled">‹</span>
+    @else
+        <a href="{{ $siswas->previousPageUrl() }}"
+           class="pagination-btn">
+            ‹
+        </a>
+    @endif
 
-                {{-- Numbers --}}
-                @php
-                    $current = $siswas->currentPage();
-                    $last = $siswas->lastPage();
-                @endphp
 
-                {{-- First page --}}
-                @if ($current > 3)
-                    <li class="page-item">
-                        <a class="page-link" href="{{ $siswas->url(1) }}">1</a>
-                    </li>
+    {{-- NOMOR HALAMAN --}}
+    @for ($i = 1; $i <= $siswas->lastPage(); $i++)
 
-                    @if ($current > 4)
-                        <li class="page-item disabled">
-                            <span class="page-link">...</span>
-                        </li>
-                    @endif
-                @endif
+        @if ($i == $siswas->currentPage())
+            <span class="pagination-btn active">
+                {{ $i }}
+            </span>
+        @else
+            <a href="{{ $siswas->url($i) }}"
+               class="pagination-btn">
+                {{ $i }}
+            </a>
+        @endif
 
-                {{-- Middle pages --}}
-                @for ($i = max(1, $current - 1); $i <= min($last, $current + 1); $i++)
-                    <li class="page-item {{ $i == $current ? 'active' : '' }}">
-                        <a class="page-link" href="{{ $siswas->url($i) }}">{{ $i }}</a>
-                    </li>
-                @endfor
+    @endfor
 
-                {{-- Last page --}}
-                @if ($current < $last - 2)
-                    @if ($current < $last - 3)
-                        <li class="page-item disabled">
-                            <span class="page-link">...</span>
-                        </li>
-                    @endif
 
-                    <li class="page-item">
-                        <a class="page-link" href="{{ $siswas->url($last) }}">{{ $last }}</a>
-                    </li>
-                @endif
-
-                {{-- Next --}}
-                @if ($siswas->hasMorePages())
-                    <li class="page-item">
-                        <a class="page-link" href="{{ $siswas->nextPageUrl() }}">›</a>
-                    </li>
-                @else
-                    <li class="page-item disabled">
-                        <span class="page-link">›</span>
-                    </li>
-                @endif
-
-            </ul>
-        </nav>
-    </div>
+    {{-- NEXT --}}
+    @if ($siswas->hasMorePages())
+        <a href="{{ $siswas->nextPageUrl() }}"
+           class="pagination-btn">
+            ›
+        </a>
+    @else
+        <span class="pagination-btn disabled">›</span>
+    @endif
 
 </div>
 

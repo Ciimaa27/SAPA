@@ -76,27 +76,41 @@
 }
 
 /* ===== BUTTON DETAIL ===== */
+/* TOMBOL AKSI LIHAT DETAIL */
 .btn-detail {
-    border: none;
-    background: #eef4ff;
-    color: #3b82f6;
+    width: 37px;
+    height: 37px;
+    padding: 0;
 
-    width: 30px;
-    height: 30px;
-
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 6px;
+    background-color: #08ad5b;
+    border: none;
+    border-radius: 5px;
+
+    color: #ffffff;
+    text-decoration: none;
+
     cursor: pointer;
-    transition: 0.2s;
+    box-shadow: none;
 }
 
-/* HOVER */
+.btn-detail i {
+    font-size: 15px;
+    color: #ffffff;
+}
+
 .btn-detail:hover {
-    background: #dbeafe;
-    transform: scale(1.05);
+    background-color: #08ad5b;
+    color: #ffffff;
+}
+
+.btn-detail:focus,
+.btn-detail:active {
+    outline: none;
+    box-shadow: none;
 }
 
 /* ===== PAGINATION ===== */

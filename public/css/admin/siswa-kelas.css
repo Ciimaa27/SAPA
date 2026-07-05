@@ -20,26 +20,43 @@
 .btn-kembali {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    justify-content: center;
+    gap: 6px;
 
-    background: #e9e1ff;
-    color: #6f42c1;
+    width: auto;
+    height: 32px;
+    padding: 0 10px;
 
-    border: 1px solid #d6c8ff;
+    mmargin-top: 8px;
+    margin-bottom: 8px;
+
+    background-color: #f1eaff;
+    border: 1px solid #d6c2ff;
     border-radius: 6px;
 
-    padding: 4px 10px;
-
-    font-size: 12px;
-    font-weight: 500;
+    color: #7040c8;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1;
 
     text-decoration: none;
-    width: fit-content;
+    box-sizing: border-box;
+    box-shadow: none;
 }
 
-.btn-kembali:hover {
-    background: #dcd0ff;
-    color: #5a34a3;
+.btn-kembali i {
+    font-size: 12px;
+    color: #7040c8;
+}
+
+.btn-kembali:hover,
+.btn-kembali:focus {
+    background-color: #f1eaff;
+    border-color: #d6c2ff;
+    color: #7040c8;
+    text-decoration: none;
+    box-shadow: none;
 }
 
 

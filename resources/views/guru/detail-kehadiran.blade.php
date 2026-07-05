@@ -20,9 +20,10 @@
         <h5 class="mb-0">Kehadiran Siswa</h5>
     </div>
 
-    <a href="{{ route('guru.kehadiran') }}" class="btn btn-kembali mb-3">
-        ← Kembali
-    </a>
+<a href="{{ route('guru.kehadiran') }}" class="btn-kembali mb-3">
+    <i class="fas fa-arrow-left"></i>
+    Kembali
+</a>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
