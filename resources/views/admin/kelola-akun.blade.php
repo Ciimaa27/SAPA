@@ -135,19 +135,17 @@
 
                                     <!-- DELETE -->
                                     <form action="{{ route('kelola-akun.destroy', $user->id) }}"
-                                          method="POST"
-                                          class="delete-form">
+                                        method="POST"
+                                        class="delete-form">
                                         @csrf
                                         @method('DELETE')
 
-                                        <button type="submit"
-                                                class="btn btn-danger btn-sm"
-                                                onclick="return confirm('Yakin hapus?')"
+                                        <button type="button"
+                                                class="btn btn-danger btn-sm btn-delete"
                                                 title="Hapus">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
-
                                 </td>
                             </tr>
                         @empty
@@ -252,8 +250,15 @@
             </div>
 
             <div class="confirm-modal-footer">
-                <button class="btn btn-secondary btn-sm btn-cancel">Batal</button>
-                <button class="btn btn-danger btn-sm btn-confirm">Hapus</button>
+                <button type="button"
+                        class="btn btn-secondary btn-sm btn-cancel">
+                    Batal
+                </button>
+
+                <button type="button"
+                        class="btn btn-danger btn-sm btn-confirm">
+                    Hapus
+                </button>
             </div>
 
         </div>
