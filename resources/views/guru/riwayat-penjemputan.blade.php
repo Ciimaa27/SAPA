@@ -44,7 +44,6 @@
                             <th>Jenis perangkat</th>
                             <th>Peran</th>
                             <th>Status</th>
-                            <th>Aksi</th>
                         </tr>
                     </thead>
 
@@ -61,11 +60,6 @@
                                 <span class="badge-status {{ $row['status'] == 'Berhasil' ? 'success' : 'danger' }}">
                                     {{ $row['status'] }}
                                 </span>
-                            </td>
-                            <td>
-                                <button class="btn-detail">
-                                    <i class="fa fa-eye"></i>
-                                </button>
                             </td>
                         </tr>
                         @empty
