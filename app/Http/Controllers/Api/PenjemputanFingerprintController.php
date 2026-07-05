@@ -13,11 +13,11 @@ class PenjemputanFingerprintController extends Controller
     {
         $request->validate([
             'uid' => 'required|string',
-            'id_jari_wali' => 'required',
+            'id_jari' => 'required|integer',
         ]);
 
         $uid = strtoupper(trim($request->uid));
-        $fingerprintId = $request->id_jari_wali;
+        $fingerprintId = $request->id_jari;
 
         // Cari siswa berdasarkan RFID
         $siswa = DB::table('siswa')
@@ -34,6 +34,7 @@ class PenjemputanFingerprintController extends Controller
             )
             ->first();
 
+        // RFID siswa tidak ditemukan
         if (!$siswa) {
 
             DB::table('log_tap')->insert([
@@ -52,7 +53,7 @@ class PenjemputanFingerprintController extends Controller
             ], 404);
         }
 
-        // Cek fingerprint wali yang berelasi dengan siswa
+        // Cari wali berdasarkan fingerprint dan relasi siswa
         $penjemput = DB::table('wali')
             ->join(
                 'siswa_wali',
@@ -77,6 +78,7 @@ class PenjemputanFingerprintController extends Controller
             )
             ->first();
 
+        // Fingerprint tidak cocok
         if (!$penjemput) {
 
             DB::table('log_tap')->insert([
@@ -98,14 +100,8 @@ class PenjemputanFingerprintController extends Controller
         try {
 
             $sudahJemput = DB::table('penjemputan')
-                ->where(
-                    'id_siswa',
-                    $siswa->id_siswa
-                )
-                ->whereDate(
-                    'tanggal',
-                    now()->toDateString()
-                )
+                ->where('id_siswa', $siswa->id_siswa)
+                ->whereDate('tanggal', now()->toDateString())
                 ->exists();
 
             if (!$sudahJemput) {
@@ -128,26 +124,19 @@ class PenjemputanFingerprintController extends Controller
                 'updated_at' => now(),
             ]);
 
+            // Response disesuaikan dengan pembacaan ESP32
             return response()->json([
                 'status' => 'berhasil',
-
                 'sudah_dijemput' => $sudahJemput,
 
-                'siswa' => [
-                    'nis' => $siswa->nis,
-                    'nama' => $siswa->nama_siswa,
-                    'kelas' => $siswa->nama_kelas ?? '-',
-                ],
+                'nama_siswa' => $siswa->nama_siswa,
+                'kelas' => $siswa->nama_kelas ?? '-',
 
-                'penjemput' => [
-                    'nama' => $penjemput->nama_wali,
-                    'hubungan' => $penjemput->hubungan,
-                ],
+                'nama_penjemput' => $penjemput->nama_wali,
+                'hubungan' => $penjemput->hubungan,
 
-                'waktu' => [
-                    'tanggal' => now()->format('d-m-Y'),
-                    'jam' => now()->format('H:i:s'),
-                ],
+                'tanggal' => now()->format('d-m-Y'),
+                'jam' => now()->format('H:i:s'),
             ]);
 
         } catch (Throwable $e) {
