@@ -3,11 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Services\FonnteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class AbsensiRfidController extends Controller
 {
+    protected $fonnte;
+
+    public function __construct(FonnteService $fonnte)
+    {
+        $this->fonnte = $fonnte;
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -15,6 +24,10 @@ class AbsensiRfidController extends Controller
         ]);
 
         $uid = strtoupper(trim($request->uid));
+
+        // =========================
+        // CARI SISWA
+        // =========================
 
         $siswa = DB::table('siswa')
             ->leftJoin(
@@ -30,43 +43,158 @@ class AbsensiRfidController extends Controller
             )
             ->first();
 
+        // =========================
+        // RFID TIDAK TERDAFTAR
+        // =========================
+
         if (!$siswa) {
+
+            DB::table('log_tap')->insert([
+                'uid_rfid' => $uid,
+                'id_device' => 1,
+                'keterangan' => 'scan rfid',
+                'status' => 'gagal',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
             return response()->json([
                 'status' => 'gagal',
                 'pesan' => 'RFID tidak terdaftar',
             ], 404);
         }
 
-        $sudahAbsen = DB::table('kehadiran')
-            ->where('id_siswa', $siswa->id_siswa)
-            ->whereDate('tanggal', now()->toDateString())
-            ->exists();
+        try {
 
-        if (!$sudahAbsen) {
-            DB::table('kehadiran')->insert([
-                'id_siswa' => $siswa->id_siswa,
+            // =========================
+            // CEK SUDAH ABSEN
+            // =========================
+
+            $sudahAbsen = DB::table('kehadiran')
+                ->where('id_siswa', $siswa->id_siswa)
+                ->whereDate(
+                    'tanggal',
+                    now()->toDateString()
+                )
+                ->exists();
+
+            // =========================
+            // ABSEN PERTAMA
+            // =========================
+
+            if (!$sudahAbsen) {
+
+                DB::table('kehadiran')->insert([
+                    'id_siswa' => $siswa->id_siswa,
+                    'id_device' => 1,
+                    'tanggal' => now()->toDateString(),
+                    'jam_masuk' => now()->toTimeString(),
+                    'metode' => 'rfid',
+                    'status_hadir' => 'hadir',
+                ]);
+
+                // =========================
+                // AMBIL WALI SISWA
+                // =========================
+
+                $waliTujuan = DB::table('siswa_wali')
+                    ->join(
+                        'wali',
+                        'siswa_wali.id_wali',
+                        '=',
+                        'wali.id_wali'
+                    )
+                    ->where(
+                        'siswa_wali.id_siswa',
+                        $siswa->id_siswa
+                    )
+                    ->whereNotNull('wali.no_hp')
+                    ->select(
+                        'wali.id_wali',
+                        'wali.nama_wali',
+                        'wali.no_hp'
+                    )
+                    ->get();
+
+                // =========================
+                // KIRIM WA KE WALI
+                // =========================
+
+                foreach ($waliTujuan as $wali) {
+
+                    $pesan =
+                        "Assalamu'alaikum Wr. Wb.\n"
+                        . "Yth. Bapak/Ibu {$wali->nama_wali},\n\n"
+                        . "Kami informasikan bahwa {$siswa->nama_siswa} "
+                        . "telah melakukan absensi masuk sekolah "
+                        . "pada pukul "
+                        . now()->format('H:i')
+                        . ".\n\n"
+                        . "Terima kasih.";
+
+                    $hasil = $this->fonnte->kirim(
+                        $wali->no_hp,
+                        $pesan
+                    );
+
+                    // =========================
+                    // SIMPAN NOTIFIKASI
+                    // =========================
+
+                    DB::table('notifikasi')->insert([
+                        'id_user' => null,
+                        'id_siswa' => $siswa->id_siswa,
+                        'id_wali' => $wali->id_wali,
+                        'judul' => 'Kehadiran Siswa',
+                        'pesan' => $pesan,
+                        'tipe' => 'kehadiran',
+                        'status' => 'terkirim',
+                        'is_pushed' => 1,
+                        'tipe_notif' => 'wa',
+
+                        'status_wa' =>
+                            isset($hasil['status'])
+                            && $hasil['status']
+                                ? 'sukses'
+                                : 'gagal',
+
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
+            }
+
+            // =========================
+            // SIMPAN LOG TAP
+            // =========================
+
+            DB::table('log_tap')->insert([
+                'uid_rfid' => $uid,
                 'id_device' => 1,
-                'tanggal' => now()->toDateString(),
-                'jam_masuk' => now()->toTimeString(),
-                'metode' => 'rfid',
-                'status_hadir' => 'hadir',
+                'keterangan' => 'scan rfid',
+                'status' => 'berhasil',
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
+
+            // =========================
+            // RESPONSE KE ESP32
+            // =========================
+
+            return response()->json([
+                'status' => 'berhasil',
+                'sudah_absen' => $sudahAbsen,
+                'nama_siswa' => $siswa->nama_siswa,
+                'kelas' => $siswa->nama_kelas ?? '-',
+            ]);
+
+        } catch (Throwable $e) {
+
+            return response()->json([
+                'status' => 'gagal',
+                'pesan' => 'Gagal menyimpan kehadiran',
+                'error' => $e->getMessage(),
+            ], 500);
         }
-
-        DB::table('log_tap')->insert([
-            'uid_rfid' => $uid,
-            'id_device' => 1,
-            'keterangan' => 'scan rfid',
-            'status' => 'berhasil',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        return response()->json([
-            'status' => 'berhasil',
-            'sudah_absen' => $sudahAbsen,
-            'nama_siswa' => $siswa->nama_siswa,
-            'kelas' => $siswa->nama_kelas ?? '-',
-        ]);
     }
 }
