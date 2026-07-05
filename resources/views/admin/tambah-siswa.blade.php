@@ -39,12 +39,13 @@
 
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label>NIS Siswa</label>
+                        <label>NIS</label>
                         <input
                             type="text"
                             name="nis"
                             class="form-control"
                             value="{{ old('nis') }}"
+                            placeholder="Masukkan NIS"
                         >
                     </div>
 
@@ -78,7 +79,7 @@
 
                 <div class="mb-3">
                     <label>Nama lengkap siswa</label>
-                    <input type="text" name="nama_siswa" class="form-control">
+                    <input type="text" name="nama_siswa" class="form-control" placeholder="Masukkan nama lengkap siswa">
                 </div>
 
                 <div class="mb-3">
@@ -93,7 +94,7 @@
                 <div class="row mb-4">
                     <div class="col-md-6">
                         <label>Tempat lahir</label>
-                        <input type="text" name="tempat_lahir" class="form-control">
+                        <input type="text" name="tempat_lahir" class="form-control" placeholder="Masukkan tempat lahir">
                     </div>
 
                     <div class="col-md-6">
