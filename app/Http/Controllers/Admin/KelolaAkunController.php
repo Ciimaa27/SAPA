@@ -183,11 +183,26 @@ class KelolaAkunController extends Controller
     // ========================
     public function destroy($id)
     {
-        // 🔥 FIX: pakai id_user
-        $user = User::where('id', $id)->firstOrFail();
-        $user->delete();
+        DB::transaction(function () use ($id) {
 
-        return redirect()->route('kelola-akun.index')
+            // Lepaskan hubungan guru dengan akun
+            DB::table('guru')
+                ->where('id_user', $id)
+                ->update(['id_user' => null]);
+
+            // Lepaskan hubungan wali dengan akun
+            DB::table('wali')
+                ->where('id_user', $id)
+                ->update(['id_user' => null]);
+
+            // Baru hapus akun
+            DB::table('users')
+                ->where('id', $id)
+                ->delete();
+        });
+
+        return redirect()
+            ->route('kelola-akun.index')
             ->with('success', 'Akun pengguna berhasil dihapus!');
     }
 }

@@ -272,7 +272,7 @@ class GuruKelasController extends Controller
         ]);
 
         Guru::create([
-            'id_user' => auth()->user()->id,
+            'id_user' => null,
             'nama_guru' => $request->nama_guru,
             'nip' => $request->nip,
             'no_hp' => $request->no_hp,

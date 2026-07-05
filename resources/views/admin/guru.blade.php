@@ -150,13 +150,14 @@
 
                                 <!-- DELETE -->
                                 <form action="{{ route('hapus-guru', $row->id_guru) }}"
-                                      method="POST"
-                                      class="d-inline">
+                                    method="POST"
+                                    class="d-inline delete-form">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit"
-                                            class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Yakin ingin menghapus data guru ini?')">
+
+                                    <button type="button"
+                                            class="btn btn-danger btn-sm btn-delete"
+                                            title="Hapus">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
@@ -250,34 +251,155 @@
     </div>
 </div>
 
-<!-- 🔥 SCRIPT SEARCH -->
+<!-- MODAL DELETE -->
+<div class="confirm-modal" id="confirmModal">
+
+    <div class="confirm-modal-backdrop"></div>
+
+    <div class="confirm-modal-dialog">
+        <div class="confirm-modal-content">
+
+            <div class="confirm-modal-header">
+                <h5>Hapus</h5>
+            </div>
+
+            <div class="confirm-modal-body">
+                <p>
+                    Yakin ingin menghapus data guru?
+                    Data tidak dapat dikembalikan.
+                </p>
+            </div>
+
+            <div class="confirm-modal-footer">
+                <button type="button"
+                        class="btn btn-secondary btn-sm btn-cancel">
+                    Batal
+                </button>
+
+                <button type="button"
+                        class="btn btn-danger btn-sm btn-confirm">
+                    Hapus
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    let input = document.getElementById("searchInputGuru");
-    let filterKelas = document.getElementById('filterKelas');
-    let filterForm = document.getElementById('filterGuruForm');
 
-    if (filterKelas) {
-        filterKelas.addEventListener('change', function(){
+    // =========================
+    // FILTER KELAS
+    // =========================
+
+    const filterKelas = document.getElementById('filterKelas');
+    const filterForm = document.getElementById('filterGuruForm');
+
+    if (filterKelas && filterForm) {
+        filterKelas.addEventListener('change', function () {
             filterForm.submit();
         });
     }
 
-    input.addEventListener("keyup", function() {
-        let keyword = this.value.toLowerCase();
-        let rows = document.querySelectorAll("#dataTableGuru tbody tr");
 
-        rows.forEach(function(row) {
-            let text = row.textContent.toLowerCase();
+    // =========================
+    // SEARCH
+    // =========================
 
-            if (text.includes(keyword)) {
-                row.style.display = "";
-                row.style.backgroundColor = "#fff3cd"; // highlight
-            } else {
-                row.style.display = "none";
-            }
+    const input = document.getElementById("searchInputGuru");
+
+    if (input) {
+        input.addEventListener("keyup", function () {
+
+            const keyword = this.value.toLowerCase();
+
+            const rows = document.querySelectorAll(
+                "#dataTableGuru tbody tr"
+            );
+
+            rows.forEach(function (row) {
+
+                const text = row.textContent.toLowerCase();
+
+                if (text.includes(keyword)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+
+            });
         });
+    }
+
+
+    // =========================
+    // MODAL DELETE
+    // =========================
+
+    const confirmModal =
+        document.getElementById('confirmModal');
+
+    const confirmBtn =
+        document.querySelector('.btn-confirm');
+
+    const cancelBtn =
+        document.querySelector('.btn-cancel');
+
+    const backdrop =
+        document.querySelector('.confirm-modal-backdrop');
+
+    let activeForm = null;
+
+
+    document.querySelectorAll('.btn-delete')
+        .forEach(function (button) {
+
+            button.addEventListener('click', function () {
+
+                activeForm =
+                    button.closest('.delete-form');
+
+                confirmModal.classList.add('show');
+
+            });
+
+        });
+
+
+    confirmBtn.addEventListener('click', function () {
+
+        if (activeForm) {
+
+            confirmBtn.disabled = true;
+            confirmBtn.textContent = 'Menghapus...';
+
+            activeForm.submit();
+        }
+
     });
+
+
+    function closeModal() {
+
+        confirmModal.classList.remove('show');
+
+        activeForm = null;
+
+    }
+
+
+    cancelBtn.addEventListener(
+        'click',
+        closeModal
+    );
+
+    backdrop.addEventListener(
+        'click',
+        closeModal
+    );
+
 });
 </script>
 

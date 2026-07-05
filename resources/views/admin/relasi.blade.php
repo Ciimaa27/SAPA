@@ -101,10 +101,16 @@
                                     <i class="fa fa-pencil"></i>
                                 </a>
 
-                                <form action="{{ route('relasi.destroy', [$item->id_siswa, $item->id_wali]) }}" method="POST" style="display:inline;">
+                                <form action="{{ route('relasi.destroy', [$item->id_siswa, $item->id_wali]) }}"
+                                    method="POST"
+                                    class="delete-form"
+                                    style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Yakin hapus?')">
+
+                                    <button type="button"
+                                            class="btn btn-danger btn-sm btn-delete"
+                                            title="Hapus">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
@@ -195,30 +201,152 @@
     </div>
 </div>
 
+<!-- MODAL DELETE -->
+<div class="confirm-modal" id="confirmModal">
+    <div class="confirm-modal-backdrop"></div>
+
+    <div class="confirm-modal-dialog">
+        <div class="confirm-modal-content">
+
+            <div class="confirm-modal-header">
+                <h5>Hapus</h5>
+            </div>
+
+            <div class="confirm-modal-body">
+                <p>
+                    Yakin ingin menghapus relasi siswa dan wali?
+                    Data tidak dapat dikembalikan.
+                </p>
+            </div>
+
+            <div class="confirm-modal-footer">
+                <button type="button"
+                        class="btn btn-secondary btn-sm btn-cancel">
+                    Batal
+                </button>
+
+                <button type="button"
+                        class="btn btn-danger btn-sm btn-confirm">
+                    Hapus
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <!-- 🔥 SCRIPT SEARCH -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    let input = document.getElementById("searchInputRelasi");
-    let filter = document.getElementById('filterRelasiHubungan');
+
+    // =========================
+    // SEARCH DAN FILTER
+    // =========================
+
+    const input = document.getElementById("searchInputRelasi");
+    const filter = document.getElementById("filterRelasiHubungan");
 
     function filterRows() {
-        let keyword = input.value.toLowerCase();
-        let selectedStatus = filter.value.toLowerCase();
-        let rows = document.querySelectorAll('#dataTableRelasi tbody tr');
 
-        rows.forEach(function(row) {
-            let text = row.textContent.toLowerCase();
-            let hubungan = row.querySelector('td:nth-child(5)')?.textContent.toLowerCase() ?? '';
-            let matchesSearch = text.includes(keyword);
-            let matchesFilter = selectedStatus === '' || hubungan === selectedStatus;
+        const keyword = input.value.toLowerCase();
+        const selectedStatus = filter.value.toLowerCase();
 
-            row.style.display = matchesSearch && matchesFilter ? '' : 'none';
+        const rows = document.querySelectorAll(
+            '#dataTableRelasi tbody tr'
+        );
+
+        rows.forEach(function (row) {
+
+            const text = row.textContent.toLowerCase();
+
+            const hubungan =
+                row.querySelector('td:nth-child(5)')
+                ?.textContent
+                .trim()
+                .toLowerCase() ?? '';
+
+            const matchesSearch =
+                text.includes(keyword);
+
+            const matchesFilter =
+                selectedStatus === '' ||
+                hubungan === selectedStatus;
+
+            row.style.display =
+                matchesSearch && matchesFilter
+                    ? ''
+                    : 'none';
         });
     }
 
     input.addEventListener('keyup', filterRows);
     filter.addEventListener('change', filterRows);
+
+
+    // =========================
+    // POPUP DELETE
+    // =========================
+
+    const confirmModal =
+        document.getElementById('confirmModal');
+
+    const confirmBtn =
+        document.querySelector('.btn-confirm');
+
+    const cancelBtn =
+        document.querySelector('.btn-cancel');
+
+    const backdrop =
+        document.querySelector('.confirm-modal-backdrop');
+
+    let activeForm = null;
+
+
+    document.querySelectorAll('.btn-delete')
+        .forEach(function (button) {
+
+            button.addEventListener('click', function () {
+
+                activeForm =
+                    button.closest('.delete-form');
+
+                confirmModal.classList.add('show');
+            });
+
+        });
+
+
+    confirmBtn.addEventListener('click', function () {
+
+        if (activeForm) {
+
+            confirmBtn.disabled = true;
+            confirmBtn.textContent = 'Menghapus...';
+
+            activeForm.submit();
+        }
+
+    });
+
+
+    function closeModal() {
+
+        confirmModal.classList.remove('show');
+
+        activeForm = null;
+    }
+
+
+    cancelBtn.addEventListener(
+        'click',
+        closeModal
+    );
+
+    backdrop.addEventListener(
+        'click',
+        closeModal
+    );
+
 });
 </script>
-
 @endsection

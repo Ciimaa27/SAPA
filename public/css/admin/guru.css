@@ -397,3 +397,62 @@ body{
     margin-bottom: 0;
     vertical-align: middle;
 }
+
+.confirm-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirm-modal.show {
+    display: flex;
+}
+
+.confirm-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.confirm-modal-dialog {
+    position: relative;
+    z-index: 2;
+    width: 90%;
+    max-width: 420px;
+}
+
+.confirm-modal-content {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.confirm-modal-header {
+    padding: 18px 20px 10px;
+}
+
+.confirm-modal-header h5 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.confirm-modal-body {
+    padding: 10px 20px 20px;
+}
+
+.confirm-modal-body p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.confirm-modal-footer {
+    padding: 14px 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid #eee;
+}
