@@ -42,15 +42,6 @@
             <h3 id="fingerprintID" style="font-weight:bold; color:#6f42c1;">Menunggu scan...</h3>
         </div>
 
-        <!-- TABLE -->
-        <div class="card">
-            <!-- BUTTON TAMBAH -->
-            <div class="d-flex justify-content-end p-3">
-                <a href="{{ route('tambah-data-sidik-jari') }}" class="btn-tambah-rfid">
-                    Tambah <span class="icon-plus">+</span>
-                </a>
-            </div>
-
             <!-- TABLE CONTAINER -->
             <div class="table-container">
                 <table class="table table-hover align-middle mb-0" id="dataTable">
@@ -104,7 +95,7 @@ let lastFingerprint = null;
 
 
 // ======================================================
-// FILTER PENCARIAN MANUAL
+// FILTER TABLE
 // ======================================================
 function filterTable(keyword) {
 
@@ -114,47 +105,37 @@ function filterTable(keyword) {
 
     rows.forEach(row => {
 
-        const rowText = row.textContent.toLowerCase();
-
-        row.style.display = rowText.includes(keyword)
-            ? ""
-            : "none";
-    });
-}
-
-
-// ======================================================
-// FILTER KHUSUS HASIL SCAN FINGERPRINT
-// Hanya mencocokkan kolom ID Fingerprint
-// ======================================================
-function filterFingerprintTable(fingerprintID) {
-
-    const rows = document.querySelectorAll("#dataTable tbody tr");
-
-    rows.forEach(row => {
-
-        // Kolom:
-        // 0 = No
-        // 1 = Nama Wali
-        // 2 = ID Fingerprint
-        // 3 = Aksi
-
-        const fingerprintCell = row.cells[2];
-
-        if (!fingerprintCell) {
-            return;
-        }
-
-        const tableFingerprint =
-            fingerprintCell.textContent.trim();
+        const rowText = row.textContent
+            .toLowerCase()
+            .trim();
 
         row.style.display =
-            tableFingerprint === String(fingerprintID)
+            rowText.includes(keyword)
                 ? ""
                 : "none";
     });
 }
 
+    function filterFingerprintTable(fingerprintID)
+    {
+
+        const rows = document.querySelectorAll("#dataTable tbody tr");
+
+        rows.forEach(row => {
+
+            const fingerprintCell = row.cells[2];
+
+            if (!fingerprintCell) return;
+
+            const tableFingerprint =
+                fingerprintCell.textContent.trim();
+
+            row.style.display =
+                tableFingerprint === String(fingerprintID)
+                    ? ""
+                    : "none";
+        });
+    }
 
 // ======================================================
 // SEARCH MANUAL
@@ -173,8 +154,6 @@ refreshButton.addEventListener("click", function() {
 
     searchInput.value = "";
 
-    lastFingerprint = null;
-
     const rows =
         document.querySelectorAll("#dataTable tbody tr");
 
@@ -186,18 +165,15 @@ refreshButton.addEventListener("click", function() {
 
 
 // ======================================================
-// AMBIL FINGERPRINT TERBARU
+// LOAD FINGERPRINT
 // ======================================================
 function loadFingerprint() {
 
     fetch('/admin/latest-fingerprint')
 
-        .then(response => response.json())
+        .then(res => res.json())
 
         .then(data => {
-
-            const label =
-                document.getElementById('fingerprintID');
 
             if (
                 data &&
@@ -209,29 +185,27 @@ function loadFingerprint() {
                     String(data.fingerprint_id).trim();
 
 
-                // Tampilkan hasil scan
-                label.innerText = fingerprintID;
+                document.getElementById(
+                    'fingerprintID'
+                ).innerText = fingerprintID;
 
 
-                // Jalankan hanya jika ada scan berbeda
-                if (lastFingerprint !== fingerprintID) {
+                // hanya proses scan baru
+                if (
+                    lastFingerprint !== fingerprintID
+                ) {
 
                     lastFingerprint = fingerprintID;
 
 
-                    // Masukkan ID ke pencarian
-                    searchInput.value = fingerprintID;
+                    // masukkan fingerprint ke search
+                    searchInput.value =
+                        fingerprintID;
 
 
-                    // Tampilkan hanya wali
-                    // dengan fingerprint yang sesuai
+                    // filter tabel
                     filterFingerprintTable(fingerprintID);
                 }
-
-            } else {
-
-                label.innerText = "Menunggu scan...";
-
             }
 
         })
@@ -239,7 +213,7 @@ function loadFingerprint() {
         .catch(error => {
 
             console.error(
-                "Fingerprint Error:",
+                'Fingerprint Error:',
                 error
             );
 
@@ -248,12 +222,10 @@ function loadFingerprint() {
 
 
 // ======================================================
-// CEK FINGERPRINT SETIAP 2 DETIK
+// POLLING 2 DETIK
 // ======================================================
 setInterval(loadFingerprint, 2000);
 
-
-// Jalankan langsung ketika halaman dibuka
 loadFingerprint();
 
 </script>

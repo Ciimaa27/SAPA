@@ -14,22 +14,39 @@ class RFIDController extends Controller
         if ($tab === 'rfid') {
 
             $data = DB::table('siswa')
-                ->select('id_siswa','nama_siswa','rfid_uid')
+                ->select(
+                    'id_siswa',
+                    'nama_siswa',
+                    'rfid_uid'
+                )
                 ->where('is_active', 1)
                 ->paginate(10);
+
+            return view('admin.rfid', compact(
+                'data',
+                'tab'
+            ));
 
         } elseif ($tab === 'sidik-jari') {
 
             $data = DB::table('wali')
-                ->select('id_wali','nama_wali','fingerprint_id')
+                ->select(
+                    'id_wali',
+                    'nama_wali',
+                    'fingerprint_id'
+                )
                 ->where('is_active', 1)
                 ->paginate(10);
 
+            return view('admin.sidik-jari', compact(
+                'data',
+                'tab'
+            ));
+
         } else {
+
             abort(404);
         }
-
-        return view('admin.rfid', compact('data','tab'));
     }
 
     public function create()
@@ -69,13 +86,31 @@ class RFIDController extends Controller
 
     public function latestFingerprint()
     {
-        $finger = DB::table('log_tap')
+        $log = DB::table('log_tap')
             ->whereNotNull('fingerprint_id')
             ->latest('created_at')
-            ->value('fingerprint_id');
+            ->first();
+
+        if (!$log) {
+            return response()->json([
+                'fingerprint_id' => null,
+                'wali' => null
+            ]);
+        }
+
+        $wali = DB::table('wali')
+            ->where('fingerprint_id', $log->fingerprint_id)
+            ->where('is_active', 1)
+            ->select(
+                'id_wali',
+                'nama_wali',
+                'fingerprint_id'
+            )
+            ->first();
 
         return response()->json([
-            'fingerprint_id' => $finger
+            'fingerprint_id' => $log->fingerprint_id,
+            'wali' => $wali
         ]);
     }
 }

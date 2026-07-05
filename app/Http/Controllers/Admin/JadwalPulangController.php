@@ -54,41 +54,61 @@ class JadwalPulangController extends Controller
     {
         $request->validate([
             'kelas' => 'required|integer|min:1|max:6',
-            'hari'  => 'required|string',
-            'jam'   => 'nullable|date_format:H:i',
+            'hari' => 'required|string',
+            'jam' => 'nullable|date_format:H:i',
             'alasan' => 'nullable|string',
+            'kelas_tujuan' => 'required|array|min:1',
+            'kelas_tujuan.*' => 'integer|min:1|max:6',
         ]);
 
-        JadwalPulang::updateOrCreate(
-            [
-                'kelas' => $request->kelas,
-                'hari'  => $request->hari,
-            ],
-            [
-                'jam'   => $request->jam,
-                'libur' => false,
-            ]
-        );
+        foreach ($request->kelas_tujuan as $kelasTujuan) {
 
-        // Kirim notifikasi WA ke wali siswa di kelas ini
-        $this->kirimNotifikasiJadwal($request->kelas, $request->hari, $request->jam, $request->alasan);
+            JadwalPulang::updateOrCreate(
+                [
+                    'kelas' => $kelasTujuan,
+                    'hari' => $request->hari,
+                ],
+                [
+                    'jam' => $request->jam,
+                    'libur' => false,
+                ]
+            );
+
+            $this->kirimNotifikasiJadwal(
+                $kelasTujuan,
+                $request->hari,
+                $request->jam,
+                $request->alasan
+            );
+        }
 
         return redirect()
-            ->route('jadwal-pulang', ['kelas' => $request->kelas])
-            ->with('success', 'Jadwal berhasil diperbarui dan notifikasi telah dikirim');
+            ->route('jadwal-pulang', [
+                'kelas' => $request->kelas
+            ])
+            ->with(
+                'success',
+                'Jadwal berhasil diperbarui dan notifikasi telah dikirim'
+            );
     }
 
 private function kirimNotifikasiJadwal($kelas, $hari, $jam, $alasan)
 {
     $siswaWali = DB::table('siswa')
-        ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
-        ->join('siswa_wali', 'siswa.id_siswa', '=', 'siswa_wali.id_siswa')
-        ->join('wali', 'siswa_wali.id_wali', '=', 'wali.id_wali')
-        ->where('kelas.nama_kelas', 'like', $kelas . '%')
-        ->where('siswa.is_active', '1')
-        ->select('siswa.id_siswa', 'siswa.nama_siswa', 'wali.id_wali', 'wali.nama_wali', 'wali.no_hp')
-        ->get();
-
+    ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+    ->join('siswa_wali', 'siswa.id_siswa', '=', 'siswa_wali.id_siswa')
+    ->join('wali', 'siswa_wali.id_wali', '=', 'wali.id_wali')
+    ->where('kelas.nama_kelas', 'like', $kelas . '%')
+    ->where('siswa.is_active', 1)
+    ->select(
+        'siswa.id_siswa',
+        'siswa.nama_siswa',
+        'wali.id_wali',
+        'wali.nama_wali',
+        'wali.no_hp'
+    )
+    ->get();
+   
     $alasanText = $alasan ? " dikarenakan {$alasan}" : '';
 
     foreach ($siswaWali as $data) {

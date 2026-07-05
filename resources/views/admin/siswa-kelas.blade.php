@@ -131,9 +131,9 @@
                             @forelse($siswa as $row)
 
                                 @php
-                                    $statusValue = strtolower(
-                                        $row->status_hadir ?? ''
-                                    );
+                                    $statusValue = $row->status_hadir
+                                        ? strtolower(trim($row->status_hadir))
+                                        : '';
                                 @endphp
 
                                 <tr>
@@ -275,31 +275,17 @@ document.querySelectorAll('.status-group').forEach(group => {
     const buttons = group.querySelectorAll('.status-btn');
     const statusInput = group.querySelector('.status-input');
 
-    const activeButton = Array.from(buttons).find(
-        btn => btn.classList.contains('active')
-    );
-
-    if (activeButton && statusInput && !statusInput.value) {
-        statusInput.value = activeButton.dataset.status;
-    }
-
-
     buttons.forEach(btn => {
-
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', function () {
 
             buttons.forEach(button => {
                 button.classList.remove('active');
             });
 
-            btn.classList.add('active');
+            this.classList.add('active');
 
-            if (statusInput) {
-                statusInput.value = btn.dataset.status;
-            }
-
+            statusInput.value = this.dataset.status;
         });
-
     });
 
 });
