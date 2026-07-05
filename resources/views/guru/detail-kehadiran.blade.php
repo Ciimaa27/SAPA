@@ -64,13 +64,6 @@
 
         <!-- TABLE -->
         <div class="card p-3">
-
-            <div class="d-flex justify-content-end mb-3">
-                <button type="submit" class="btn btn-success btn-sm">
-                    Simpan
-                </button>
-            </div>
-
         <table class="table table-hover align-middle mb-0">
             <thead class="table-light">
                 <tr>
@@ -90,12 +83,18 @@
                     <td>{{ $row->nama_siswa }}</td>
                     <td>
                         <div class="status-group" data-siswa-id="{{ $row->id_siswa }}">
-                            <span class="status-btn {{ !$row->status_hadir || $row->status_hadir === 'hadir' ? 'active' : '' }}">H</span>
+                            <span class="status-btn {{ $row->status_hadir === 'hadir' ? 'active' : '' }}">H</span>
                             <span class="status-btn {{ $row->status_hadir === 'izin' ? 'active' : '' }}">I</span>
                             <span class="status-btn {{ $row->status_hadir === 'sakit' ? 'active' : '' }}">S</span>
                             <span class="status-btn {{ $row->status_hadir === 'alpa' ? 'active' : '' }}">A</span>
                         </div>
-                        <input type="hidden" name="status[{{ $row->id_siswa }}]" id="status-{{ $row->id_siswa }}" value="{{ $row->status_hadir ?? 'hadir' }}">
+
+                        <input
+                            type="hidden"
+                            name="status[{{ $row->id_siswa }}]"
+                            id="status-{{ $row->id_siswa }}"
+                            value="{{ $row->status_hadir ?? '' }}"
+                        >
                     </td>
                 </tr>
                 @empty
@@ -107,6 +106,17 @@
             </tbody>
 
         </table>
+        <div class="d-flex justify-content-end gap-2 mt-3">
+
+    <a href="{{ route('guru.kehadiran') }}" class="btn btn-danger">
+        Batal
+    </a>
+
+    <button type="submit" class="btn btn-success">
+        Simpan
+    </button>
+
+</div>
 
         </div>
     </form>
