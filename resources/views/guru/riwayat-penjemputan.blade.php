@@ -57,7 +57,7 @@
                             <td>{{ $row['alat'] }}</td>
                             <td>{{ $row['peran'] }}</td>
                             <td>
-                                <span class="badge-status {{ $row['status'] == 'Berhasil' ? 'success' : 'danger' }}">
+                                <span class="badge-status {{ strtolower(trim($row['status'])) == 'dijemput' ? 'success' : 'danger' }}">
                                     {{ $row['status'] }}
                                 </span>
                             </td>

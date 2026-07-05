@@ -55,62 +55,25 @@
 }
 
 /* ===== STATUS ===== */
+
 .badge-status {
-    padding: 3px 8px;
+    padding: 4px 8px;
     border-radius: 6px;
     font-size: 11px;
     font-weight: 500;
     display: inline-block;
 }
 
-/* BERHASIL */
+/* DIJEMPUT = SAMA DENGAN SUCCESS DASHBOARD */
 .badge-status.success {
-    background: #d1f5ec;
-    color: #00a884;
+    background: #e4fff5;
+    color: #2ec4b6;
 }
 
-/* GAGAL */
+/* MENUNGGU = SAMA DENGAN DANGER DASHBOARD */
 .badge-status.danger {
-    background: #fde2e2;
-    color: #e74c3c;
-}
-
-/* ===== BUTTON DETAIL ===== */
-/* TOMBOL AKSI LIHAT DETAIL */
-.btn-detail {
-    width: 37px;
-    height: 37px;
-    padding: 0;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    background-color: #08ad5b;
-    border: none;
-    border-radius: 5px;
-
-    color: #ffffff;
-    text-decoration: none;
-
-    cursor: pointer;
-    box-shadow: none;
-}
-
-.btn-detail i {
-    font-size: 15px;
-    color: #ffffff;
-}
-
-.btn-detail:hover {
-    background-color: #08ad5b;
-    color: #ffffff;
-}
-
-.btn-detail:focus,
-.btn-detail:active {
-    outline: none;
-    box-shadow: none;
+    background: #ffe5e5;
+    color: #ff6b6b;
 }
 
 /* ===== PAGINATION ===== */
