@@ -31,6 +31,21 @@ class MQTTListen extends Command
 
             $data = json_decode($message, true);
 
+if (!$data || !isset($data['uid'])) {
+    $this->error("Data MQTT tidak valid.");
+    return;
+}
+
+// Abaikan pesan penjemputan fingerprint
+if (
+    isset($data['id_jari_wali']) ||
+    (($data['status'] ?? null) === 'pulang')
+) {
+    return;
+}
+
+$uid = trim($data['uid']);
+
             if (!$data || !isset($data['uid'])) {
                 $this->error("Data MQTT tidak valid.");
                 return;

@@ -27,9 +27,10 @@ class IoTController extends Controller
                 'siswa.nama_siswa',
                 'wali.nama_wali',
                 DB::raw("
-                    CASE 
-                        WHEN log_tap.uid_rfid IS NOT NULL THEN 'Siswa'
-                        ELSE 'Orangtua/wali'
+                    CASE
+                        WHEN log_tap.id_device = 1 THEN 'Siswa'
+                        WHEN log_tap.id_device = 2 THEN 'Orangtua/wali'
+                        ELSE '-'
                     END as peran
                 ")
             )
