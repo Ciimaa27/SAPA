@@ -41,52 +41,41 @@
 
             <!-- Filter -->
             <div class="filter-section">
-<form method="GET" action="{{ route('wali.laporan') }}">
+                <form method="GET" action="{{ route('wali.laporan') }}">
 
+                    <input
+                        type="date"
+                        name="tanggal"
+                        value="{{ request('tanggal') }}"
+                        class="filter-input"
+                    >
 
-    <input
-        type="date"
-        name="tanggal"
-        value="{{ request('tanggal') }}"
-        class="filter-input">
+                    <select name="jenis" class="filter-select">
+                        <option value="">Semua</option>
 
-    <select
-        name="jenis"
-        class="filter-select">
+                        <option value="Kehadiran"
+                            {{ request('jenis') == 'Kehadiran' ? 'selected' : '' }}>
+                            Kehadiran
+                        </option>
 
-        <option value="">Semua</option>
+                        <option value="Penjemputan"
+                            {{ request('jenis') == 'Penjemputan' ? 'selected' : '' }}>
+                            Penjemputan
+                        </option>
+                    </select>
 
-        <option value="Kehadiran"
-            {{ request('jenis') == 'Kehadiran' ? 'selected' : '' }}>
-            Kehadiran
-        </option>
+                    <button type="submit" class="btn-search">
+                        Cari
+                    </button>
 
-        <option value="Penjemputan"
-            {{ request('jenis') == 'Penjemputan' ? 'selected' : '' }}>
-            Penjemputan
-        </option>
+                    <button
+                        type="button"
+                        class="btn-refresh"
+                        onclick="window.location='{{ route('wali.laporan') }}'">
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
 
-    </select>
-
-    <button type="submit" class="btn-search">
-    Cari
-</button>
-
-<button
-    type="button"
-    class="btn-refresh"
-    onclick="window.location='{{ route('wali.laporan') }}'">
-
-    <i class="fa-solid fa-rotate-right"></i>
-
-</button>
-
-</div>
-
-</form>
-
-                
-
+                </form>
             </div>
 
             <!-- Table -->
@@ -108,13 +97,17 @@
 <tr>
 
     <td>
-        Kehadiran
-        {{ \Carbon\Carbon::create($report->tahun, $report->bulan, 1)->translatedFormat('F Y') }}.pdf
-    </td>
+    Kehadiran
+    {{ \Carbon\Carbon::create($report->tahun, $report->bulan, 1)
+        ->locale('id')
+        ->translatedFormat('F Y') }}.pdf
+</td>
 
-    <td>
-        {{ \Carbon\Carbon::create($report->tahun, $report->bulan, 1)->translatedFormat('F Y') }}
-    </td>
+<td>
+    {{ \Carbon\Carbon::create($report->tahun, $report->bulan, 1)
+        ->locale('id')
+        ->translatedFormat('F Y') }}
+</td>
 
     <td>
         Kehadiran
@@ -161,13 +154,17 @@
 <tr>
 
     <td>
-        Penjemputan
-        {{ \Carbon\Carbon::create($report->tahun, $report->bulan, 1)->translatedFormat('F Y') }}.pdf
-    </td>
+    Penjemputan
+    {{ \Carbon\Carbon::create($report->tahun, $report->bulan, 1)
+        ->locale('id')
+        ->translatedFormat('F Y') }}.pdf
+</td>
 
-    <td>
-        {{ \Carbon\Carbon::create($report->tahun, $report->bulan, 1)->translatedFormat('F Y') }}
-    </td>
+<td>
+    {{ \Carbon\Carbon::create($report->tahun, $report->bulan, 1)
+        ->locale('id')
+        ->translatedFormat('F Y') }}
+</td>
 
     <td>
         Penjemputan
