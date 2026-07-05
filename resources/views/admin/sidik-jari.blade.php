@@ -50,7 +50,6 @@
                             <th>No</th>
                             <th>Nama Wali</th>
                             <th>ID Fingerprint</th>
-                            <th class="col-aksi">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,14 +58,6 @@
                             <td>{{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}</td>
                             <td>{{ $item->nama_wali }}</td>
                             <td>{{ $item->fingerprint_id ?? '-' }}</td>
-                            <td>
-                                <form action="{{ route('iot.destroy', ['tab' => 'sidik-jari', 'id' => $item->id_wali]) }}" method="POST">
-                                    @csrf @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Yakin hapus?')">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
                         </tr>
                         @empty
                         <tr>
