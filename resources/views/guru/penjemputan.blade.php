@@ -57,13 +57,6 @@
 <!-- TABEL -->
 <div class="card-box mt-3">
 
-    <div class="table-header">
-        <a href="#" class="btn-laporan">
-            <i class="fa fa-download"></i>
-            Laporan
-        </a>
-    </div>
-
     <div class="table-container">
 
         <table class="table-custom">

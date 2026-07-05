@@ -16,15 +16,31 @@ font-weight:600;
 }
 
 .btn-kembali{
-display:inline-flex;
-align-items:center;
-gap:6px;
-padding:6px 14px;
-border:1px solid #b996ff;
-border-radius:6px;
-color:#7d57c2;
-text-decoration:none;
-margin-bottom:25px;
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+
+    background:#e9e1ff;
+    color:#6f42c1;
+
+    border:1px solid #d6c8ff;
+    border-radius:6px;
+
+    padding:4px 10px;
+    font-size:12px;
+    font-weight:500;
+
+    text-decoration:none;
+
+    width:fit-content;
+    max-width:max-content;
+
+    margin-bottom:25px;
+}
+
+.btn-kembali:hover{
+    background:#dcd0ff;
+    color:#5a34a3;
 }
 
 
@@ -180,4 +196,4 @@ border-radius:4px;
     .btn-simpan-status {
         width: 100%;
     }
-}   
+}
