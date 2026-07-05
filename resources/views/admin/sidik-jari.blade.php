@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Sidik Jari')
+@section('title', 'Sidik Jari')
 
 {{-- SIDEBAR --}}
 @section('sidebar')
@@ -9,14 +9,12 @@
 
 {{-- CSS --}}
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
-<link rel="stylesheet" href="{{ asset('css/admin/rfid.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/rfid.css') }}">
 @endpush
 
 {{-- CONTENT --}}
 @section('content')
-
 <div class="main-dashboard">
     <div class="container-dashboard">
 
@@ -26,54 +24,34 @@
         </div>
 
         <!-- SEARCH + REFRESH -->
-            <div class="card mb-3 p-3">
-                <div class="d-flex align-items-center gap-2">
-
-                    <div class="input-group input-group-sm search-flex">
-                        <span class="input-group-text bg-white">
-                            <i class="fa fa-search"></i>
-                        </span>
-
-                        <input
-                            type="text"
-                            id="searchInput"
-                            class="form-control"
-                            placeholder="Pencarian"
-                        >
-                    </div>
-
-                    <button
-                        type="button"
-                        class="btn btn-refresh btn-sm"
-                        id="refreshTable"
-                        title="Tampilkan semua data">
-                        <i class="fa fa-refresh"></i>
-                        Refresh
-                    </button>
-
+        <div class="card mb-3 p-3">
+            <div class="d-flex align-items-center gap-2">
+                <div class="input-group input-group-sm search-flex">
+                    <span class="input-group-text bg-white"><i class="fa fa-search"></i></span>
+                    <input type="text" id="searchInput" class="form-control" placeholder="Pencarian">
                 </div>
+                <button type="button" class="btn btn-refresh btn-sm" id="refreshTable" title="Tampilkan semua data">
+                    <i class="fa fa-refresh"></i> Refresh
+                </button>
             </div>
+        </div>
 
         <!-- 🔥 FINGERPRINT REALTIME -->
         <div class="card p-3 mb-3 text-center">
             <h5>Scan Sidik Jari Terakhir</h5>
-            <h3 id="fingerprintID" style="font-weight:bold; color:#6f42c1;">
-                Menunggu scan...
-            </h3>
+            <h3 id="fingerprintID" style="font-weight:bold; color:#6f42c1;">Menunggu scan...</h3>
         </div>
 
         <!-- TABLE -->
         <div class="card">
-
             <!-- BUTTON TAMBAH -->
             <div class="d-flex justify-content-end p-3">
                 <a href="{{ route('tambah-data-sidik-jari') }}" class="btn-tambah-rfid">
-                    Tambah
-                    <span class="icon-plus">+</span>
+                    Tambah <span class="icon-plus">+</span>
                 </a>
             </div>
 
-            <!-- TABLE -->
+            <!-- TABLE CONTAINER -->
             <div class="table-container">
                 <table class="table table-hover align-middle mb-0" id="dataTable">
                     <thead class="table-light">
@@ -84,7 +62,6 @@
                             <th class="col-aksi">Aksi</th>
                         </tr>
                     </thead>
-
                     <tbody>
                         @forelse($data as $item)
                         <tr>
@@ -92,7 +69,7 @@
                             <td>{{ $item->nama_wali }}</td>
                             <td>{{ $item->fingerprint_id ?? '-' }}</td>
                             <td>
-                                <form action="{{ route('iot.destroy',['tab'=>'sidik-jari','id'=>$item->id_wali]) }}" method="POST">
+                                <form action="{{ route('iot.destroy', ['tab' => 'sidik-jari', 'id' => $item->id_wali]) }}" method="POST">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Yakin hapus?')">
                                         <i class="fa fa-trash"></i>
@@ -113,23 +90,22 @@
             <div class="p-3 d-flex justify-content-end">
                 {{ $data->links('pagination::bootstrap-5') }}
             </div>
-
         </div>
 
     </div>
 </div>
-{{-- SEARCH + REFRESH + FINGERPRINT REALTIME --}}
-<script>
 
+{{-- SEARCH + REFRESH + FINGERPRINT REALTIME JS --}}
+<script>
 const searchInput = document.getElementById("searchInput");
 const refreshButton = document.getElementById("refreshTable");
 
 let lastFingerprint = null;
 
 
-/* ==============================
-   FILTER TABLE
-============================== */
+// ======================================================
+// FILTER PENCARIAN MANUAL
+// ======================================================
 function filterTable(keyword) {
 
     keyword = String(keyword).toLowerCase().trim();
@@ -147,62 +123,138 @@ function filterTable(keyword) {
 }
 
 
-/* ==============================
-   SEARCH MANUAL
-============================== */
+// ======================================================
+// FILTER KHUSUS HASIL SCAN FINGERPRINT
+// Hanya mencocokkan kolom ID Fingerprint
+// ======================================================
+function filterFingerprintTable(fingerprintID) {
+
+    const rows = document.querySelectorAll("#dataTable tbody tr");
+
+    rows.forEach(row => {
+
+        // Kolom:
+        // 0 = No
+        // 1 = Nama Wali
+        // 2 = ID Fingerprint
+        // 3 = Aksi
+
+        const fingerprintCell = row.cells[2];
+
+        if (!fingerprintCell) {
+            return;
+        }
+
+        const tableFingerprint =
+            fingerprintCell.textContent.trim();
+
+        row.style.display =
+            tableFingerprint === String(fingerprintID)
+                ? ""
+                : "none";
+    });
+}
+
+
+// ======================================================
+// SEARCH MANUAL
+// ======================================================
 searchInput.addEventListener("keyup", function() {
+
     filterTable(this.value);
+
 });
 
 
-/* ==============================
-   REFRESH TABLE
-============================== */
+// ======================================================
+// REFRESH
+// ======================================================
 refreshButton.addEventListener("click", function() {
-    // Kosongkan pencarian
+
     searchInput.value = "";
-    // Tampilkan semua baris
-    const rows = document.querySelectorAll("#dataTable tbody tr");
+
+    lastFingerprint = null;
+
+    const rows =
+        document.querySelectorAll("#dataTable tbody tr");
+
     rows.forEach(row => {
         row.style.display = "";
     });
+
 });
-/* ==============================
-   FINGERPRINT REALTIME
-============================== */
+
+
+// ======================================================
+// AMBIL FINGERPRINT TERBARU
+// ======================================================
 function loadFingerprint() {
+
     fetch('/admin/latest-fingerprint')
-    .then(res => res.json())
-    .then(data => {
-        const label = document.getElementById('fingerprintID');
-        if(data && data.fingerprint_id) {
-            // Tampilkan ID fingerprint
-            label.innerText = data.fingerprint_id;
-            // Hanya filter jika scan berbeda
-            if(lastFingerprint !== data.fingerprint_id) {
-                lastFingerprint = data.fingerprint_id;
-                // Masukkan ID ke search
-                searchInput.value = data.fingerprint_id;
-                // Filter tabel
-                filterTable(data.fingerprint_id);
+
+        .then(response => response.json())
+
+        .then(data => {
+
+            const label =
+                document.getElementById('fingerprintID');
+
+            if (
+                data &&
+                data.fingerprint_id !== null &&
+                data.fingerprint_id !== undefined
+            ) {
+
+                const fingerprintID =
+                    String(data.fingerprint_id).trim();
+
+
+                // Tampilkan hasil scan
+                label.innerText = fingerprintID;
+
+
+                // Jalankan hanya jika ada scan berbeda
+                if (lastFingerprint !== fingerprintID) {
+
+                    lastFingerprint = fingerprintID;
+
+
+                    // Masukkan ID ke pencarian
+                    searchInput.value = fingerprintID;
+
+
+                    // Tampilkan hanya wali
+                    // dengan fingerprint yang sesuai
+                    filterFingerprintTable(fingerprintID);
+                }
+
+            } else {
+
+                label.innerText = "Menunggu scan...";
+
             }
-        } else {
-            label.innerText = 'Menunggu scan...';
-        }
-    })
-    .catch(error => {
-        console.error('Fingerprint Error:', error);
-        document.getElementById('fingerprintID').innerText =
-            'Menunggu scan...';
-    });
+
+        })
+
+        .catch(error => {
+
+            console.error(
+                "Fingerprint Error:",
+                error
+            );
+
+        });
 }
-/* ==============================
-   CEK SETIAP 2 DETIK
-============================== */
+
+
+// ======================================================
+// CEK FINGERPRINT SETIAP 2 DETIK
+// ======================================================
 setInterval(loadFingerprint, 2000);
 
+
+// Jalankan langsung ketika halaman dibuka
 loadFingerprint();
 
 </script>
-
 @endsection
