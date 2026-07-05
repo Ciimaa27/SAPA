@@ -271,56 +271,111 @@ class DashboardController extends Controller
         }
     }
 
-    public function laporan(Request $request)
-    {
-        $wali = Wali::where('id_user', auth()->id())->first();
+   public function laporan(Request $request)
+{
+    $wali = Wali::where('id_user', auth()->id())->first();
 
-        if (!$wali) {
-            return redirect()->route('wali.dashboard');
-        }
-
-        $relasi = Relasi::where('id_wali', $wali->id_wali)->first();
-
-        if (!$relasi) {
-            return redirect()->route('wali.dashboard');
-        }
-
-        $siswa = Siswa::with('kelas')->find($relasi->id_siswa);
-
-        if (!$siswa) {
-            return redirect()->route('wali.dashboard');
-        }
-
-        // Data laporan kehadiran per bulan
-        $kehadiranReports = Kehadiran::where('id_siswa', $siswa->id_siswa)
-            ->select(
-                DB::raw('YEAR(tanggal) as tahun'),
-                DB::raw('MONTH(tanggal) as bulan'),
-                DB::raw('MAX(tanggal) as tanggal')
-            )
-            ->groupBy(DB::raw('YEAR(tanggal)'), DB::raw('MONTH(tanggal)'))
-            ->orderByDesc(DB::raw('YEAR(tanggal)'))
-            ->orderByDesc(DB::raw('MONTH(tanggal)'))
-            ->get();
-
-        // Data laporan penjemputan per bulan
-        $penjemputanReports = Penjemputan::where('id_siswa', $siswa->id_siswa)
-            ->select(
-                DB::raw('YEAR(tanggal) as tahun'),
-                DB::raw('MONTH(tanggal) as bulan'),
-                DB::raw('MAX(tanggal) as tanggal')
-            )
-            ->groupBy(DB::raw('YEAR(tanggal)'), DB::raw('MONTH(tanggal)'))
-            ->orderByDesc(DB::raw('YEAR(tanggal)'))
-            ->orderByDesc(DB::raw('MONTH(tanggal)'))
-            ->get();
-
-        return view('wali.laporan', compact(
-            'siswa',
-            'kehadiranReports',
-            'penjemputanReports'
-        ));
+    if (!$wali) {
+        return redirect()->route('wali.dashboard');
     }
+
+    $relasi = Relasi::where('id_wali', $wali->id_wali)->first();
+
+    if (!$relasi) {
+        return redirect()->route('wali.dashboard');
+    }
+
+    $siswa = Siswa::with('kelas')->find($relasi->id_siswa);
+
+    if (!$siswa) {
+        return redirect()->route('wali.dashboard');
+    }
+
+    // =========================
+    // QUERY KEHADIRAN
+    // =========================
+    $kehadiranQuery = Kehadiran::where(
+        'id_siswa',
+        $siswa->id_siswa
+    );
+
+    // Filter tanggal berdasarkan bulan dan tahun
+    if ($request->filled('tanggal')) {
+
+        $tanggal = Carbon::parse($request->tanggal);
+
+        $kehadiranQuery
+            ->whereMonth('tanggal', $tanggal->month)
+            ->whereYear('tanggal', $tanggal->year);
+    }
+
+    $kehadiranReports = $kehadiranQuery
+        ->select(
+            DB::raw('YEAR(tanggal) as tahun'),
+            DB::raw('MONTH(tanggal) as bulan'),
+            DB::raw('MAX(tanggal) as tanggal')
+        )
+        ->groupBy(
+            DB::raw('YEAR(tanggal)'),
+            DB::raw('MONTH(tanggal)')
+        )
+        ->orderByDesc(DB::raw('YEAR(tanggal)'))
+        ->orderByDesc(DB::raw('MONTH(tanggal)'))
+        ->get();
+
+
+    // =========================
+    // QUERY PENJEMPUTAN
+    // =========================
+    $penjemputanQuery = Penjemputan::where(
+        'id_siswa',
+        $siswa->id_siswa
+    );
+
+    // Filter tanggal berdasarkan bulan dan tahun
+    if ($request->filled('tanggal')) {
+
+        $tanggal = Carbon::parse($request->tanggal);
+
+        $penjemputanQuery
+            ->whereMonth('tanggal', $tanggal->month)
+            ->whereYear('tanggal', $tanggal->year);
+    }
+
+    $penjemputanReports = $penjemputanQuery
+        ->select(
+            DB::raw('YEAR(tanggal) as tahun'),
+            DB::raw('MONTH(tanggal) as bulan'),
+            DB::raw('MAX(tanggal) as tanggal')
+        )
+        ->groupBy(
+            DB::raw('YEAR(tanggal)'),
+            DB::raw('MONTH(tanggal)')
+        )
+        ->orderByDesc(DB::raw('YEAR(tanggal)'))
+        ->orderByDesc(DB::raw('MONTH(tanggal)'))
+        ->get();
+
+
+    // =========================
+    // FILTER JENIS LAPORAN
+    // =========================
+
+    if ($request->jenis === 'Kehadiran') {
+        $penjemputanReports = collect();
+    }
+
+    if ($request->jenis === 'Penjemputan') {
+        $kehadiranReports = collect();
+    }
+
+
+    return view('wali.laporan', compact(
+        'siswa',
+        'kehadiranReports',
+        'penjemputanReports'
+    ));
+}
 
     public function downloadLaporan($bulan,$tahun)
     {

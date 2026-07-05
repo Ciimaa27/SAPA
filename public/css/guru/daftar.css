@@ -16,15 +16,31 @@ font-weight:600;
 }
 
 .btn-kembali{
-display:inline-flex;
-align-items:center;
-gap:6px;
-padding:6px 14px;
-border:1px solid #b996ff;
-border-radius:6px;
-color:#7d57c2;
-text-decoration:none;
-margin-bottom:25px;
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+
+    background:#e9e1ff;
+    color:#6f42c1;
+
+    border:1px solid #d6c8ff;
+    border-radius:6px;
+
+    padding:4px 10px;
+    font-size:12px;
+    font-weight:500;
+
+    text-decoration:none;
+
+    width:fit-content;
+    max-width:max-content;
+
+    margin-bottom:25px;
+}
+
+.btn-kembali:hover{
+    background:#dcd0ff;
+    color:#5a34a3;
 }
 
 
@@ -165,16 +181,16 @@ border-radius:4px;
     }
 
     .status-select,
-    .btn-simpan-status {
+    .btn-simpan {
         width: 100%;
     }
 }
+
 
 /* ================================
    PAGINATION
 ================================ */
 
-/* PAGINATION BOOTSTRAP */
 .pagination {
     display: flex;
     align-items: center;
@@ -203,60 +219,28 @@ border-radius:4px;
     box-shadow: none;
 }
 
-/* HALAMAN AKTIF */
 .pagination .page-item.active .page-link {
     background: #7040c8;
     border-color: #7040c8;
     color: #ffffff;
 }
 
-/* PREVIOUS / NEXT DISABLED */
 .pagination .page-item.disabled .page-link {
     background: #eef2f5;
     border-color: #dce2e8;
     color: #aeb9c5;
 }
 
-/* HOVER */
 .pagination .page-item:not(.active):not(.disabled) .page-link:hover {
     background: #f8f5ff;
     border-color: #7040c8;
     color: #7040c8;
 }
 
-.btn-kembali {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
 
-    width: fit-content;
-    padding: 7px 12px;
-
-    background-color: #f3edff;
-    border: 1px solid #d5c2ff;
-    border-radius: 6px;
-
-    color: #6842d9;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.2;
-
-    text-decoration: none;
-    box-shadow: none;
-}
-
-.btn-kembali i {
-    font-size: 13px;
-    color: #6842d9;
-}
-
-.btn-kembali:hover {
-    background-color: #eee5ff;
-    border-color: #c9b0ff;
-    color: #6842d9;
-    text-decoration: none;
-}
+/* ================================
+   LEBAR KOLOM TABEL
+================================ */
 
 .table-custom th:nth-child(1),
 .table-custom td:nth-child(1) {
