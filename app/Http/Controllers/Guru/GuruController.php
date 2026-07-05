@@ -317,4 +317,52 @@ class GuruController extends Controller
         'Status penjemputan berhasil diperbarui.'
     );
 }
+
+    public function showDetail($id)
+    {
+        // Contoh: FP-1 menjadi 1
+        $idSiswa = str_replace('FP-', '', $id);
+
+        $penjemputan = Penjemputan::with([
+                'siswa',
+                'siswa.kelas',
+                'wali'
+            ])
+            ->where('id_siswa', $idSiswa)
+            ->whereDate('tanggal', now()->toDateString())
+            ->latest('jam_jemput')
+            ->first();
+
+        if (!$penjemputan) {
+            abort(404, 'Data penjemputan tidak ditemukan.');
+        }
+
+        $log = [
+            'waktu' => $penjemputan->tanggal . ' ' .
+                    ($penjemputan->jam_jemput ?? ''),
+
+            'id_scan' => 'FP-' . $penjemputan->id_siswa,
+
+            'nama' => $penjemputan->siswa
+                ? $penjemputan->siswa->nama_siswa
+                : '-',
+
+            'kelas' => $penjemputan->siswa &&
+                    $penjemputan->siswa->kelas
+                ? $penjemputan->siswa->kelas->nama_kelas
+                : '-',
+
+            'alat' => $penjemputan->metode ?? 'Fingerprint',
+
+            'peran' => 'Siswa',
+
+            'status' => $penjemputan->status ?? '-',
+
+            'nama_wali' => $penjemputan->wali
+                ? $penjemputan->wali->nama_wali
+                : '-',
+        ];
+
+        return view('guru.detail-riwayat', compact('log'));
+    }
 }
