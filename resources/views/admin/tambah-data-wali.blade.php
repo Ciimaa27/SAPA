@@ -12,7 +12,7 @@
 @endpush
 
 @section('content')
-    
+
 <div class="main-dashboard">
     <div class="container-dashboard">
 
@@ -23,7 +23,6 @@
 
         <!-- CARD -->
         <div class="card-form">
-
             <!-- BUTTON KEMBALI -->
             <div class="mb-4">
                 <a href="/admin/data-wali" class="btn-kembali">
@@ -34,37 +33,18 @@
             <form action="{{ route('wali.store') }}" method="POST">
                 @csrf
 
-                <!-- ID FINGERPRINT -->
-                    <div class="form-group full">
-                        <label>ID Fingerprint</label>
-                        <input
-                            type="text"
-                            name="fingerprint_id"
-                            value="{{ old('fingerprint_id') }}"
-                            placeholder="Masukkan nomor ID fingerprint"
-                            required
-                        >
-                        <small class="form-text">
-                            *Masukkan ID fingerprint yang terdaftar pada sensor sidik jari
-                        </small>
-                    </div>
-
                 <!-- NAMA -->
                 <div class="form-group full">
                     <label>Nama orangtua/wali</label>
-                    <input type="text" name="nama_wali" placeholder="Masukkan nama lengkap orang tua">
-                    <small class="form-text">
-                        *Perhatikan penulisan nama, agar tidak ada kesalahan pendataan
-                    </small>
+                    <input type="text" name="nama_wali" value="{{ old('nama_wali') }}" placeholder="Masukkan nama lengkap orang tua">
+                    <small class="form-text">*Perhatikan penulisan nama, agar tidak ada kesalahan pendataan</small>
                 </div>
 
                 <!-- NOMOR HP -->
                 <div class="form-group full">
                     <label>Nomor HP</label>
-                    <input type="text" name="no_hp" placeholder="Masukkan nomor HP">
-                    <small class="form-text">
-                        *Nomor yang dimasukkan wajib terdaftar di WhatsApp
-                    </small>
+                    <input type="text" name="no_hp" value="{{ old('no_hp') }}" placeholder="Masukkan nomor HP">
+                    <small class="form-text">*Nomor yang dimasukkan wajib terdaftar di WhatsApp</small>
                 </div>
 
                 <!-- JENIS KELAMIN -->
@@ -72,8 +52,8 @@
                     <label>Jenis kelamin</label>
                     <select name="jenis_kelamin">
                         <option value="">-- Pilih jenis kelamin --</option>
-                        <option value="laki-laki">Laki-laki</option>
-                        <option value="perempuan">Perempuan</option>
+                        <option value="laki-laki" {{ old('jenis_kelamin') == 'laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                        <option value="perempuan" {{ old('jenis_kelamin') == 'perempuan' ? 'selected' : '' }}>Perempuan</option>
                     </select>
                 </div>
 
@@ -82,9 +62,7 @@
                     <button type="reset" class="btn btn-danger btn-sm">Reset</button>
                     <button type="submit" class="btn btn-success btn-sm">Simpan</button>
                 </div>
-
             </form>
-
         </div>
 
     </div>

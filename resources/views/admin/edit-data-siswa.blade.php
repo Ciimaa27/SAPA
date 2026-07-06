@@ -2,18 +2,15 @@
 
 @section('title', 'Edit Data Siswa')
 
-{{-- 🔥 SIDEBAR --}}
 @section('sidebar')
     @include('layouts.sidebar-admin')
 @endsection
 
-{{-- 🔥 CSS --}}
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
 <link rel="stylesheet" href="{{ asset('css/admin/edit-data-siswa.css') }}">
 @endpush
 
-{{-- 🔥 CONTENT --}}
 @section('content')
 
 <div class="main-dashboard">
@@ -26,7 +23,6 @@
 
         <!-- CARD -->
         <div class="card-form">
-
             <!-- BUTTON KEMBALI -->
             <a href="{{ route('data-siswa') }}" class="btn btn-kembali mb-3">
                 ← Kembali
@@ -36,26 +32,22 @@
                 @csrf
                 @method('PUT')
 
-                <!-- ROW 1 -->
+                <!-- NIS -->
                 <div class="form-row">
                     <div class="form-group">
                         <label>NIS siswa</label>
-                        <input type="text" name="nis" value="{{ $siswa->nis }}">
-                    </div>
-
-                    <div class="form-group">
-                        <label>UID RFID</label>
-                        <input type="text" name="rfid_uid" value="{{ $siswa->rfid_uid }}" placeholder="Masukkan UID RFID">
+                        <input type="text" name="nis" value="{{ old('nis', $siswa->nis) }}">
                     </div>
                 </div>
 
+                <!-- KELAS -->
                 <div class="form-row">
                     <div class="form-group">
                         <label>Kelas</label>
                         <select name="id_kelas" class="form-select">
                             <option value="">Pilih kelas</option>
                             @foreach($kelas as $k)
-                                <option value="{{ $k->id_kelas }}" {{ $siswa->id_kelas == $k->id_kelas ? 'selected' : '' }}>
+                                <option value="{{ $k->id_kelas }}" {{ old('id_kelas', $siswa->id_kelas) == $k->id_kelas ? 'selected' : '' }}>
                                     {{ $k->nama_kelas }}
                                 </option>
                             @endforeach
@@ -66,45 +58,45 @@
                 <!-- NAMA -->
                 <div class="form-group full">
                     <label>Nama lengkap siswa</label>
-                    <input type="text" name="nama_siswa" value="{{ $siswa->nama_siswa }}">
-                    <small class="form-text">
-                        *Pastikan penulisan nama siswa, agar tidak ada kesalahan pendataan
-                    </small>
+                    <input type="text" name="nama_siswa" value="{{ old('nama_siswa', $siswa->nama_siswa) }}">
+                    <small class="form-text">*Pastikan penulisan nama siswa, agar tidak ada kesalahan pendataan</small>
                 </div>
 
                 <!-- JENIS KELAMIN -->
                 <div class="form-group full">
                     <label>Jenis kelamin</label>
                     <select name="jenis_kelamin">
-                        <option value="Laki-laki" {{ $siswa->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-                        <option value="Perempuan" {{ $siswa->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                        <option value="Laki-laki" {{ old('jenis_kelamin', $siswa->jenis_kelamin) == 'Laki-laki' ? 'selected' : '' }}>
+                            Laki-laki
+                        </option>
+                        <option value="Perempuan" {{ old('jenis_kelamin', $siswa->jenis_kelamin) == 'Perempuan' ? 'selected' : '' }}>
+                            Perempuan
+                        </option>
                     </select>
                 </div>
 
-                <!-- ROW 2 -->
+                <!-- TEMPAT LAHIR -->
                 <div class="form-row">
                     <div class="form-group">
                         <label>Tempat lahir</label>
-                        <input type="text" name="tempat_lahir" value="{{ $siswa->tempat_lahir }}">
+                        <input type="text" name="tempat_lahir" value="{{ old('tempat_lahir', $siswa->tempat_lahir) }}">
                     </div>
                 </div>
 
-                <!-- ROW 3 -->
+                <!-- TANGGAL LAHIR -->
                 <div class="form-row">
                     <div class="form-group">
                         <label>Tanggal lahir</label>
-                        <input type="date" name="tanggal_lahir" value="{{ $siswa->tanggal_lahir }}">
+                        <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', $siswa->tanggal_lahir) }}">
                     </div>
                 </div>
 
                 <!-- BUTTON -->
                 <div class="form-action">
-                    <a href="/admin/data-siswa" class="btn-batal">Batal</a>
+                    <a href="{{ route('data-siswa') }}" class="btn-batal">Batal</a>
                     <button type="submit" class="btn-simpan">Simpan</button>
                 </div>
-
             </form>
-
         </div>
 
     </div>

@@ -9,39 +9,54 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        // VALIDASI
-        $request->validate([
-            'username' => 'required',
-            'password' => 'required'
-        ]);
+        $request->validate(
+            [
+                'username' => ['required'],
+                'password' => ['required'],
+            ],
+            [
+                'username.required' => 'Nama pengguna wajib diisi.',
+                'password.required' => 'Kata sandi wajib diisi.',
+            ]
+        );
 
-        // 🔥 PAKAI USERNAME
         $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials)) {
-
+            $request->session()->regenerate();
             $user = Auth::user();
 
-            // 🔥 PAKAI id_role (karena DB kamu begitu)
             switch ($user->id_role) {
                 case 1:
                     return redirect()->route('admin.dashboard');
-
                 case 2:
                     return redirect()->route('guru.dashboard');
-
                 case 3:
                     return redirect()->route('kepsek.dashboard');
-
                 case 4:
                     return redirect()->route('wali.dashboard');
-
                 default:
                     Auth::logout();
-                    return redirect()->route('login')->with('error', 'Role tidak dikenali');
+                    $request->session()->invalidate();
+                    $request->session()->regenerateToken();
+
+                    return redirect()
+                        ->route('login')
+                        ->with('error', 'Role pengguna tidak dikenali.');
             }
         }
 
-        return back()->with('error', 'Username atau password salah');
+        return back()
+            ->withInput($request->only('username'))
+            ->with('error', 'Nama pengguna atau kata sandi salah.');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login');
     }
 }
