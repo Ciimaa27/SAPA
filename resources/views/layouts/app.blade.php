@@ -67,10 +67,16 @@ function confirmLogout() {
     })
 }
 
-function toggleSidebar(){
-    document.querySelector('.sidebar-admin')
-            .classList.toggle('show-sidebar');
+function toggleSidebar() {
+    const sidebar = document.querySelector(
+        '.sidebar-admin, .sidebar-guru, .sidebar-kepsek, .sidebar'
+    );
+
+    if (sidebar) {
+        sidebar.classList.toggle('show-sidebar');
+    }
 }
+
 </script>
 
 {{-- SCRIPT PER HALAMAN --}}

@@ -44,7 +44,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 6px 10px;  
+    padding: 6px 10px;
     margin-bottom: 2px;
     text-decoration: none;
     color: #555;
@@ -131,4 +131,114 @@ body {
 .row-item strong {
     color: #e68600;
     font-weight: 500;
+}
+/* =====================================
+   RESPONSIVE SIDEBAR WALI
+===================================== */
+
+.mobile-menu-btn {
+    display: none;
+}
+
+@media (max-width: 767.98px) {
+
+    /* TOMBOL HAMBURGER */
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        position: fixed;
+        top: 10px;
+        left: 12px;
+
+        width: 34px;
+        height: 34px;
+
+        padding: 0;
+        border: none;
+        border-radius: 7px;
+
+        background: #6f42c1;
+        color: #fff;
+
+        z-index: 10001;
+
+        transition: left 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+        width: 230px;
+        height: 100dvh;
+
+        position: fixed;
+        top: 0;
+        left: -230px;
+
+        padding: 16px 12px 12px;
+
+        z-index: 10000;
+
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        transition: left 0.3s ease;
+    }
+
+    /* SIDEBAR TERBUKA */
+    .sidebar.show-sidebar {
+        left: 0;
+    }
+
+    /* LOGO SAPA */
+    .sidebar .logo {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+
+        margin: 0 45px 0 0 !important;
+
+        font-size: 20px !important;
+        line-height: 24px !important;
+        font-weight: 800 !important;
+
+        color: #7b5cff !important;
+    }
+
+    /* SUB LOGO */
+    .sidebar .sub-logo {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+
+        margin: 2px 45px 10px 0 !important;
+
+        font-size: 10px !important;
+        line-height: 14px !important;
+
+        color: #666 !important;
+    }
+
+    /* HAMBURGER BERGESER SAAT SIDEBAR TERBUKA */
+    body:has(.sidebar.show-sidebar) .mobile-menu-btn {
+        left: 184px;
+    }
+
+    /* CONTENT FULL WIDTH SAAT SIDEBAR TERTUTUP */
+    .content {
+        margin-left: 0 !important;
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+
+/* =====================================
+   SWEETALERT TETAP DI DEPAN SIDEBAR
+===================================== */
+
+.swal2-container {
+    z-index: 99999 !important;
 }

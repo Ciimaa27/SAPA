@@ -27,7 +27,7 @@
     height: 32px;
     padding: 0 10px;
 
-    mmargin-top: 8px;
+    margin-top: 8px;
     margin-bottom: 8px;
 
     background-color: #f1eaff;
@@ -205,4 +205,161 @@
 .btn-simpan:hover {
     background: #12b886;
     color: white;
+}
+/* ===================================== */
+/* RESPONSIVE TABLET DAN MOBILE */
+/* ===================================== */
+
+@media (max-width: 768px) {
+
+    /* Hilangkan ruang sidebar saat sidebar tertutup */
+    .content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    .main-dashboard {
+        width: 100%;
+        padding: 10px !important;
+    }
+
+    .container-dashboard {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+    }
+
+    /* Judul */
+    .card h5 {
+        font-size: 16px;
+    }
+
+    /* Informasi kelas */
+    .info-kelas {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .info-row {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 80px 8px minmax(0, 1fr);
+        gap: 6px;
+        align-items: center;
+    }
+
+    .info-row label {
+        width: auto;
+        font-size: 12px;
+        margin: 0;
+    }
+
+    .info-row span {
+        width: auto;
+    }
+
+    .info-row .form-control {
+        width: 100%;
+        min-width: 0;
+        font-size: 12px;
+    }
+
+    /* Tabel dapat digeser horizontal */
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table {
+        min-width: 560px;
+    }
+
+    .table th,
+    .table td {
+        font-size: 12px;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+    /* Status H I S A */
+    .status-group {
+        gap: 5px;
+        flex-wrap: nowrap;
+    }
+
+    .status-btn {
+        width: 28px;
+        height: 28px;
+        flex-shrink: 0;
+        font-size: 11px;
+    }
+}
+
+
+/* ===================================== */
+/* HP KECIL */
+/* ===================================== */
+
+@media (max-width: 576px) {
+
+    .main-dashboard {
+        padding: 8px !important;
+    }
+
+    .card {
+        border-radius: 8px;
+    }
+
+    .card.p-4 {
+        padding: 14px !important;
+    }
+
+    .card.p-3 {
+        padding: 12px !important;
+    }
+
+    .card h5 {
+        font-size: 15px;
+    }
+
+    .btn-kembali {
+        height: 30px;
+        font-size: 11px;
+        padding: 0 9px;
+    }
+
+    .info-row {
+        grid-template-columns: 72px 6px minmax(0, 1fr);
+        gap: 5px;
+        margin-bottom: 8px;
+    }
+
+    .info-row label,
+    .info-row .form-control {
+        font-size: 11px;
+    }
+
+    .table {
+        min-width: 520px;
+    }
+
+    .table th,
+    .table td {
+        font-size: 11px;
+    }
+
+    .status-btn {
+        width: 26px;
+        height: 26px;
+        font-size: 10px;
+    }
+
+    .btn-danger,
+    .btn-success {
+        font-size: 11px;
+        padding: 6px 12px;
+    }
 }

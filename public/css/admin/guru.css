@@ -247,111 +247,206 @@ body{
     height: 14px;
 }
 
-/* ===================================== */
-/* RESPONSIVE TABLET */
-/* ===================================== */
+/* =====================================
+   RESPONSIVE TABLET DAN MOBILE
+===================================== */
 
-@media (max-width:768px){
+@media (max-width: 767.98px) {
 
-
-
-    .main-dashboard{
-        padding:10px;
+    .main-dashboard {
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
     }
 
-    .container-dashboard{
-        max-width:100%;
+    .container-dashboard {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
     }
 
-    /* Toolbar atas */
-    .card .d-flex.align-items-center.gap-3{
-        flex-direction:column;
-        align-items:stretch !important;
-        gap:10px !important;
+
+    /* ===============================
+       TAB GURU DAN KELAS
+    =============================== */
+
+    .toolbar-guru,
+    .toolbar-kelas {
+        display: flex !important;
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 10px !important;
     }
 
-    .btn-tab{
-        text-align:center;
+    .btn-tab {
+        width: 100%;
+        text-align: center;
     }
 
-    .search-flex{
-        width:100%;
+
+    /* ===============================
+       FORM FILTER GURU
+    =============================== */
+
+    #filterGuruForm {
+        display: flex !important;
+        flex-direction: column;
+        align-items: stretch !important;
+        width: 100%;
+        gap: 10px !important;
     }
 
-    /* Tombol tambah */
-    .btn-tambah-guru,
-    .btn-tambah-kelas{
-        width:100%;
-        justify-content:center;
+    #filterKelas {
+        width: 100% !important;
+        height: 40px;
     }
 
-    /* Table */
-    .table-container{
-        overflow-x:auto;
-        overflow-y:auto;
-        -webkit-overflow-scrolling:touch;
+    .btn-tambah-guru {
+        width: 100%;
+        height: 40px;
+        justify-content: center;
     }
 
-    .table{
-        min-width:900px;
+    #filterGuruForm .input-group {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        width: 100%;
     }
 
-    .table th,
-    .table td{
-        white-space:nowrap;
-        font-size:12px;
+    #filterGuruForm .input-group-text {
+        width: auto !important;
+        flex: 0 0 auto;
     }
 
-    /* Pagination */
-    .pagination{
-        flex-wrap:wrap;
-        justify-content:center;
+    #searchInputGuru {
+        width: 1% !important;
+        flex: 1 1 auto;
+        min-width: 0;
     }
 
+
+    /* ===============================
+       TOOLBAR KELAS
+    =============================== */
+
+    .btn-tambah-kelas {
+        width: 100%;
+        height: 40px;
+        justify-content: center;
+    }
+
+    .toolbar-kelas .search-flex {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        width: 100%;
+    }
+
+    .toolbar-kelas .input-group-text {
+        width: auto !important;
+        flex: 0 0 auto;
+    }
+
+    #searchInputKelas {
+        width: 1% !important;
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+
+    /* ===============================
+       TABLE
+    =============================== */
+
+    .table-container {
+        width: 100%;
+        max-width: 100%;
+
+        overflow-x: auto;
+        overflow-y: auto;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table-container .table {
+        width: max-content;
+        min-width: 850px;
+        margin-bottom: 0;
+    }
+
+    .table-container .table th,
+    .table-container .table td {
+        white-space: nowrap;
+        font-size: 12px;
+        padding: 10px 14px;
+        vertical-align: middle;
+    }
+
+
+    /* ===============================
+       TOMBOL AKSI TABLE
+    =============================== */
+
+    .table-container .btn-sm {
+        width: auto;
+    }
+
+
+    /* ===============================
+       PAGINATION
+    =============================== */
+
+    .pagination {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 4px;
+    }
+
+    .pagination .page-item .page-link {
+        padding: 5px 9px !important;
+        font-size: 12px !important;
+    }
+
+
+    /* ===============================
+       MODAL
+    =============================== */
+
+    .confirm-modal-dialog {
+        width: calc(100% - 30px);
+        max-width: 420px;
+    }
 }
 
-/* ===================================== */
-/* RESPONSIVE HP */
-/* ===================================== */
 
-@media (max-width:576px){
+/* =====================================
+   HP KECIL
+===================================== */
 
-    .main-dashboard{
-        padding:8px;
+@media (max-width: 575.98px) {
+
+    .card {
+        border-radius: 8px;
     }
 
-    .card{
-        border-radius:8px;
+    .card h5 {
+        font-size: 15px;
     }
 
-    .card h5{
-        font-size:15px;
-    }
-
-    .btn-tab{
-        width:100%;
-    }
-
-    .table th,
-    .table td{
-        font-size:11px;
-    }
-
-    .btn-sm{
-        font-size:11px;
+    .table-container .table th,
+    .table-container .table td {
+        font-size: 11px;
+        padding: 10px 12px;
     }
 
     .btn-tambah-guru,
-    .btn-tambah-kelas{
-        font-size:12px;
-        padding:8px 12px;
+    .btn-tambah-kelas {
+        font-size: 12px;
     }
 
-    .pagination .page-link{
-        padding:5px 8px !important;
-        font-size:11px !important;
+    .pagination .page-item .page-link {
+        padding: 5px 8px !important;
+        font-size: 11px !important;
     }
-
 }
 
 /* ===== PENYELARASAN LEBAR CARD DAN FILTER (FILE KEDUA) ===== */
@@ -367,7 +462,7 @@ body{
     padding: 5px 30px 20px 20px;
 }
 
-/* Memastikan area navigasi tab/tombol di atas tabel (Guru & Kelas) 
+/* Memastikan area navigasi tab/tombol di atas tabel (Guru & Kelas)
    mengambil ruang baris yang konsisten seperti form-filter di gambar pertama */
 .filter-wrapper-guru {
     display: flex;

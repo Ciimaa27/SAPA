@@ -32,7 +32,7 @@
         </div>
 
         <div class="card mb-3 p-3">
-            <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center gap-3 toolbar-guru">
 
                 <a href="{{ route('guru') }}" class="btn btn-tab active">
                     Guru
@@ -97,12 +97,6 @@
 
 
      <div class="card">
-
-    <!-- TABLE -->
-    <div class="table-container table-responsive">
-        <table class="table table-hover align-middle mb-0"
-               id="dataTableGuru">
-            </div>
 
             <!-- TABLE -->
             <div class="table-container table-responsive">

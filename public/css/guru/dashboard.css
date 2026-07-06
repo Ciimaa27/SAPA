@@ -182,3 +182,178 @@ body {
     background: #ffe5e5;
     color: #ff6b6b;
 }
+
+/* =====================================
+   RESPONSIVE DASHBOARD GURU
+===================================== */
+
+@media (max-width: 991.98px) {
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 767.98px) {
+
+    /* SIDEBAR */
+
+    .sidebar-guru {
+        width: 230px;
+        height: 100dvh;
+
+        position: fixed;
+        top: 0;
+        left: -230px;
+
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        transition: left 0.3s ease;
+
+        z-index: 10000;
+    }
+
+    .sidebar-guru.show-sidebar {
+        left: 0;
+    }
+
+
+    /* HAMBURGER */
+
+    .mobile-menu-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+
+        position: fixed;
+
+        top: 14px;
+        left: 12px;
+
+        width: 32px;
+        height: 32px;
+
+        padding: 0;
+
+        border: none;
+        border-radius: 7px;
+
+        background: #6f42c1;
+        color: #fff;
+
+        font-size: 14px;
+
+        z-index: 10001;
+
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+        transition: left 0.3s ease;
+    }
+
+
+    /* Saat sidebar terbuka */
+
+    body:has(.sidebar-guru.show-sidebar) .mobile-menu-btn {
+        left: 188px;
+        right: auto;
+    }
+
+
+    /* RUANG TOPBAR UNTUK HAMBURGER */
+
+    .topbar-left {
+        margin-left: 42px;
+    }
+
+
+    /* MAIN */
+
+    .main-guru {
+        width: 100%;
+        max-width: 100%;
+
+        overflow-x: hidden;
+    }
+
+
+    /* WELCOME */
+
+    .welcome-box {
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+
+
+    /* SECTION */
+
+    .section {
+        margin-bottom: 18px;
+    }
+
+    .section-title {
+        padding: 10px 12px;
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+
+
+    /* CARD */
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 10px;
+    }
+
+    .card-dashboard {
+        width: 100%;
+        min-width: 0;
+
+        padding: 12px;
+    }
+
+    .card-dashboard p {
+        font-size: 11px;
+        padding-right: 22px;
+    }
+
+    .card-dashboard h3 {
+        font-size: 18px;
+        margin: 0;
+    }
+
+    .icon-orange {
+        right: 10px;
+        top: 10px;
+        font-size: 13px;
+    }
+}
+
+
+/* =====================================
+   HP KECIL
+===================================== */
+
+@media (max-width: 575.98px) {
+
+    .welcome-box {
+        font-size: 13px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .card-dashboard {
+        padding: 14px;
+    }
+}

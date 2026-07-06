@@ -113,56 +113,80 @@
     opacity: 0.8;
 }
 
-/* ===================================== */
-/* RESPONSIVE TOPBAR */
-/* ===================================== */
+/* =====================================
+   RESPONSIVE TOPBAR
+===================================== */
 
-@media (max-width:768px){
+@media (max-width: 767.98px) {
 
-    .topbar-admin{
+    .topbar-admin {
+        left: 0;
+        width: 100%;
 
-        display:flex;
-        align-items:center;
-        justify-content:space-between;
+        height: 60px;
 
-        padding:10px 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
-        min-height:60px;
+        padding: 0 12px;
+
+        z-index: 1000;
     }
 
-    /* beri ruang untuk tombol hamburger */
-    .topbar-left{
-        margin-left:50px;
-        flex:1;
-        overflow:hidden;
+    .content {
+        margin-left: 0;
+        width: 100%;
+        max-width: 100%;
+
+        padding: 75px 12px 20px;
+
+        overflow-x: hidden;
     }
 
-    #tanggal{
-        display:block;
-
-        font-size:11px;
-
-        white-space:nowrap;
-        overflow:hidden;
-        text-overflow:ellipsis;
+    .topbar-left {
+        margin-left: 50px;
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
     }
 
-    .topbar-right{
-        display:flex;
-        align-items:center;
-        gap:12px;
+    #tanggal {
+        display: block;
+
+        font-size: 11px;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
-    #jam{
-        font-size:11px;
+    .topbar-right {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        gap: 10px;
     }
 
-    .topbar-right .fa-bell{
-        font-size:14px;
+    #jam {
+        font-size: 11px;
     }
 
-    #userIcon{
-        font-size:24px;
+    .topbar-right .fa-bell {
+        font-size: 14px;
     }
 
+    #userIcon {
+        font-size: 20px;
+    }
+
+    .user-dropdown {
+        position: fixed;
+        top: 65px;
+        right: 10px;
+    }
+
+    .user-card {
+        width: min(260px, calc(100vw - 20px));
+    }
 }

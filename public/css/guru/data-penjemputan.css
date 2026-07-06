@@ -206,3 +206,139 @@
     background-color: #f3edff;
     color: #6f42c1;
 }
+
+/* ===================================== */
+/* RESPONSIVE TABLET & MOBILE */
+/* ===================================== */
+
+@media (max-width: 768px) {
+
+    /* Hilangkan ruang bekas sidebar */
+    .content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    .main-dashboard {
+        width: 100%;
+        padding: 10px !important;
+    }
+
+    .container-dashboard {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+    }
+
+    /* Card */
+    .card-box {
+        width: 100%;
+        padding: 14px;
+        border-radius: 10px;
+    }
+
+    .page-title {
+        font-size: 16px;
+    }
+
+    /* Search */
+    .input-group {
+        width: 100%;
+    }
+
+    .input-group input {
+        width: 100%;
+        min-width: 0;
+        font-size: 12px;
+    }
+
+    /* Table scroll horizontal */
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table-custom {
+        min-width: 650px;
+    }
+
+    .table-custom th,
+    .table-custom td {
+        white-space: nowrap;
+        font-size: 12px;
+    }
+
+    /* Tombol aksi */
+    .btn-aksi {
+        width: 32px;
+        height: 32px;
+    }
+
+    /* Pagination */
+    .pagination-wrapper {
+        justify-content: center;
+        padding-top: 15px;
+        overflow-x: auto;
+    }
+
+    .pagination {
+        flex-wrap: nowrap;
+    }
+
+    .pagination .page-link {
+        min-width: 34px;
+        height: 34px;
+        font-size: 12px;
+    }
+}
+
+
+/* ===================================== */
+/* HP KECIL */
+/* ===================================== */
+
+@media (max-width: 576px) {
+
+    .main-dashboard {
+        padding: 8px !important;
+    }
+
+    .card-box {
+        padding: 12px;
+        border-radius: 8px;
+    }
+
+    .page-title {
+        font-size: 15px;
+    }
+
+    .input-group input {
+        font-size: 11px;
+    }
+
+    .table-custom {
+        min-width: 600px;
+    }
+
+    .table-custom th,
+    .table-custom td {
+        font-size: 11px;
+        padding: 8px 10px;
+    }
+
+    .btn-aksi {
+        width: 30px;
+        height: 30px;
+        font-size: 11px;
+    }
+
+    .pagination .page-link {
+        min-width: 30px;
+        height: 30px;
+        padding: 4px 7px;
+        font-size: 11px;
+    }
+}

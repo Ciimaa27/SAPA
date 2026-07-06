@@ -9,13 +9,7 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/kepsek/dashboard.css') }}">
 
-<style>
-/* 🔥 FIX CHART SIZE */
-.chart-container {
-    max-width: 500px;
-    height: 250px;
-}
-</style>
+
 @endpush
 
 @section('content')
@@ -96,37 +90,58 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-const ctx = document.getElementById('statistikChart');
+const ctx = document.getElementById('chartKehadiran');
 
-new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: @json($labels),
-        datasets: [
-            {
-                label: 'Hadir',
-                data: @json($dataHadir),
-                backgroundColor: '#22c55e',
-                borderColor: '#22c55e',
-                borderRadius: 8
+if (ctx) {
+    new Chart(ctx, {
+        type: 'bar',
+
+        data: {
+            labels: @json($labels),
+
+            datasets: [
+                {
+                    label: 'Hadir',
+                    data: @json($dataHadir),
+                    backgroundColor: '#22c55e',
+                    borderColor: '#22c55e',
+                    borderRadius: 8
+                },
+                {
+                    label: 'Tidak hadir',
+                    data: @json($dataTidakHadir),
+                    backgroundColor: '#ef4444',
+                    borderColor: '#ef4444',
+                    borderRadius: 8
+                }
+            ]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
             },
-            {
-                label: 'Tidak hadir',
-                data: @json($dataTidakHadir),
-                backgroundColor: '#ef4444',
-                borderColor: '#ef4444',
-                borderRadius: 8
-            }
-        ]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: 'top'
+
+            scales: {
+                x: {
+                    ticks: {
+                        autoSkip: false,
+                        maxRotation: 45,
+                        minRotation: 0
+                    }
+                },
+
+                y: {
+                    beginAtZero: true
+                }
             }
         }
-    }
-});
+    });
+}
 </script>
+@endpush

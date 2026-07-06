@@ -163,13 +163,7 @@ body{
     height:14px;
 }
 
-/* ===== CONTENT ===== */
-.content{
-    margin-left:230px;
-    padding-top:60px;
-    padding-left:10px;
-    padding-right:10px;
-}
+
 
 /* ===================================== */
 /* RESPONSIVE TABLET */
@@ -177,11 +171,7 @@ body{
 
 @media (max-width:768px){
 
-    .content{
-        margin-left:0;
-        padding-left:10px;
-        padding-right:10px;
-    }
+
 
     .main-dashboard{
         padding:10px;
@@ -209,10 +199,22 @@ body{
     }
 
     /* Search */
-    #searchInputWali{
-        width:100%;
-    }
+   .input-group{
+    display:flex;
+    flex-wrap:nowrap;
+    width:100%;
+}
 
+.input-group .input-group-text{
+    width:auto !important;
+    flex:0 0 auto;
+}
+
+#searchInputWali{
+    width:1% !important;
+    flex:1 1 auto;
+    min-width:0;
+}
     /* Table */
     .table-container{
         overflow-x:auto;

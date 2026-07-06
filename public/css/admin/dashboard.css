@@ -1,121 +1,221 @@
-.main-dashboard{
-    min-height:100vh;
+.main-dashboard {
+    min-height: 100vh;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
-/* CARD */
+/* =========================
+   CARD
+========================= */
 
-.card-dashboard{
-    background:#ffffff;
-    border-radius:10px;
-    padding:12px 14px;
-    box-shadow:0 2px 6px rgba(0,0,0,0.05);
-    position:relative;
-    border:1px solid #eee;
-    transition:0.2s;
+.card-dashboard {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 12px 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    position: relative;
+    border: 1px solid #eee;
+    transition: 0.2s;
+    width: 100%;
 }
 
-.card-dashboard:hover{
-    transform:translateY(-2px);
-    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+.card-dashboard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* SECTION */
+/* =========================
+   SECTION
+========================= */
 
-.section{
-    margin-bottom:18px;
+.section {
+    margin-bottom: 18px;
 }
 
-.section-title{
-    font-size:14px;
-    font-weight:600;
-    color:#555;
-    margin-bottom:10px;
+.section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 10px;
 }
 
-/* CARD TEXT */
+/* =========================
+   CARD TEXT
+========================= */
 
-.card-dashboard p{
-    font-size:12px;
-    color:#777;
-    margin-bottom:3px;
+.card-dashboard p {
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 3px;
 }
 
-.card-dashboard h3{
-    font-size:20px;
-    font-weight:700;
-    color:#6a4bc4;
-    margin:0;
+.card-dashboard h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #6a4bc4;
+    margin: 0;
 }
 
-/* ICON */
+/* =========================
+   ICON
+========================= */
 
-.icon-orange{
-    position:absolute;
-    right:12px;
-    top:12px;
-    font-size:16px;
-    color:#f2b177;
+.icon-orange {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    font-size: 16px;
+    color: #f2b177;
 }
 
-/* CHART */
+/* =========================
+   CHART
+========================= */
 
-.card-dashboard canvas{
-    margin-top:10px;
+.card-dashboard canvas {
+    margin-top: 10px;
+    max-width: 100%;
 }
 
-/* TABLE */
+/* =========================
+   TABLE
+========================= */
 
-.table{
-    font-size:12px;
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
-.table thead th{
-    font-size:12px;
-    font-weight:600;
-    color:#666;
+.table {
+    font-size: 12px;
+    margin-bottom: 0;
 }
 
-.table tbody td{
-    font-size:12px;
-    vertical-align:middle;
+.table thead th {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    white-space: nowrap;
 }
 
-/* BADGE */
-
-.badge{
-    font-size:11px;
-    padding:4px 6px;
+.table tbody td {
+    font-size: 12px;
+    vertical-align: middle;
+    white-space: nowrap;
 }
 
-.badge-icon{
-    position:absolute;
-    right:12px;
-    bottom:10px;
-    width:22px;
-    height:22px;
-    border-radius:5px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:11px;
+/* =========================
+   BADGE
+========================= */
+
+.badge {
+    font-size: 11px;
+    padding: 4px 6px;
 }
 
-.badge-icon.up{
-    background:#ffe3c6;
-    color:#f4a261;
+.badge-icon {
+    position: absolute;
+    right: 12px;
+    bottom: 10px;
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
 }
 
-.badge-icon.down{
-    background:#ffe3c6;
-    color:#f4a261;
+.badge-icon.up,
+.badge-icon.down {
+    background: #ffe3c6;
+    color: #f4a261;
 }
 
-.badge-icon.success{
-    background:#e4fff5;
-    color:#2ec4b6;
+.badge-icon.success {
+    background: #e4fff5;
+    color: #2ec4b6;
 }
 
-.badge-icon.danger{
-    background:#ffe5e5;
-    color:#ff6b6b;
+.badge-icon.danger {
+    background: #ffe5e5;
+    color: #ff6b6b;
+}
+
+/* =====================================
+   TABLET
+===================================== */
+
+@media (max-width: 991.98px) {
+
+    .card-dashboard {
+        height: 100%;
+    }
+}
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 767.98px) {
+
+    .main-dashboard {
+        padding: 0;
+    }
+
+    .section {
+        margin-bottom: 20px;
+    }
+
+    .section-title {
+        font-size: 13px;
+        margin-bottom: 8px;
+    }
+
+    .card-dashboard {
+        padding: 14px;
+        border-radius: 8px;
+    }
+
+    .card-dashboard h3 {
+        font-size: 18px;
+    }
+
+    .card-dashboard p {
+        font-size: 11px;
+    }
+
+    .card-dashboard h6 {
+        font-size: 13px;
+    }
+
+    .table {
+        min-width: 700px;
+    }
+
+    .table thead th,
+    .table tbody td {
+        font-size: 11px;
+    }
+
+    .badge {
+        font-size: 10px;
+    }
+}
+
+/* =====================================
+   HP KECIL
+===================================== */
+
+@media (max-width: 575.98px) {
+
+    .card-dashboard {
+        padding: 12px;
+    }
+
+    .card-dashboard h3 {
+        font-size: 17px;
+    }
 }

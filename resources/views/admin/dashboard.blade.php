@@ -23,7 +23,7 @@
 
         <div class="row g-3">
 
-            <div class="col-md-3">
+            <div class="col-12 col-sm-6 col-lg-3">
                 <div class="card-dashboard">
                     <h3>{{ $totalSiswa }}</h3>
                     <p>Total Siswa</p>
@@ -31,7 +31,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-12 col-sm-6 col-lg-3">
                 <div class="card-dashboard">
                     <h3>{{ $totalWali }}</h3>
                     <p>Total akun wali</p>
@@ -39,7 +39,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-12 col-sm-6 col-lg-3">
                 <div class="card-dashboard">
                     <h3>{{ $totalGuru }}</h3>
                     <p>Total akun guru</p>
@@ -47,7 +47,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-12 col-sm-6 col-lg-3">
                 <div class="card-dashboard">
                     <h3>{{ $totalKepsek }}</h3>
                     <p>Total akun kepsek</p>
@@ -64,7 +64,7 @@
 
         <div class="row g-3">
 
-            <div class="col-md-3">
+            <div class="col-12 col-sm-6 col-lg-3">
                 <div class="card-dashboard">
                     <p>Kehadiran hari ini</p>
                     <h3>{{ $hadirHariIni }}</h3>
@@ -74,7 +74,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-12 col-sm-6 col-lg-3">
                 <div class="card-dashboard">
                     <p>Tidak hadir</p>
                     <h3>{{ $tidakHadir }}</h3>
@@ -84,7 +84,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-12 col-sm-6 col-lg-3">
                 <div class="card-dashboard">
                     <p>Sudah dijemput</p>
                     <h3>{{ $sudahJemput }}</h3>
@@ -94,7 +94,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-12 col-sm-6 col-lg-3">
                 <div class="card-dashboard">
                     <p>Belum dijemput</p>
                     <h3>{{ $belumJemput }}</h3>
@@ -110,14 +110,14 @@
     <!-- ================= GRAFIK ================= -->
     <div class="row g-3 mt-2">
 
-        <div class="col-md-8">
+        <div class="col-12 col-lg-8">
             <div class="card-dashboard">
                 <h6>Grafik Kehadiran</h6>
                 <canvas id="chartBar"></canvas>
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-12 col-lg-4">
             <div class="card-dashboard">
                 <h6>Grafik Penjemputan</h6>
                 <canvas id="chartDonut"></canvas>
@@ -132,72 +132,108 @@
             <div class="card-dashboard">
                 <h6 class="mb-3">Log aktivitas perangkat</h6>
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Waktu</th>
-                            <th>ID Scan</th>
-                            <th>Nama</th>
-                            <th>Jenis Perangkat</th>
-                            <th>Peran</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($logs as $log)
-                        <tr>
-                            {{-- Waktu --}}
-                            <td>{{ \Carbon\Carbon::parse($log->created_at)->format('H:i d/m/Y') }}</td>
+                <div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Waktu</th>
+                <th>ID Scan</th>
+                <th>Nama</th>
+                <th>Jenis Perangkat</th>
+                <th>Peran</th>
+                <th>Status</th>
+            </tr>
+        </thead>
 
-                            {{-- ID Scan --}}
-                            <td>
-                                @if($log->uid_rfid)
-                                    {{ $log->uid_rfid }}
-                                @elseif($log->fingerprint_id)
-                                    {{ $log->fingerprint_id }}
-                                @else
-                                    -
-                                @endif
-                            <td>
-                                @if($log->uid_rfid)
-                                    {{-- Nama Siswa --}}
-                                    @php
-                                        $siswa = \App\Models\Siswa::whereRaw('LOWER(rfid_uid) = ?', [strtolower($log->uid_rfid)])->first();
-                                    @endphp
-                                    {{ $siswa->nama_siswa ?? '-' }}
-                                @elseif($log->fingerprint_id)
-                                    {{-- Nama Wali/Orang Tua --}}
-                                    @php
-                                        $wali = \App\Models\Wali::where('fingerprint_id', $log->fingerprint_id)->first();
-                                    @endphp
-                                    {{ $wali->nama_wali ?? 'Orang Tua' }}
-                                @else
-                                    -
-                                @endif
-                            </td>
+        <tbody>
+            @foreach($logs as $log)
+            <tr>
 
-                            {{-- Jenis Perangkat --}}
-                            <td>{{ $log->getDeviceType() }}</td>
-                            <td>
-                                @if($log->uid_rfid) Siswa
-                                @elseif($log->fingerprint_id) Orang Tua
-                                @else - @endif
-                            </td>
+                {{-- Waktu --}}
+                <td>
+                    {{ \Carbon\Carbon::parse($log->created_at)->format('H:i d/m/Y') }}
+                </td>
 
-                            {{-- Status --}}
-                            <td>
-                                @if($log->uid_rfid)
-                                    <span class="badge bg-success">Berhasil</span>
-                                @elseif($log->fingerprint_id)
-                                    <span class="badge bg-primary">Sudah dijemput</span>
-                                @else
-                                    <span class="badge bg-secondary">-</span>
-                                @endif
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                {{-- ID Scan --}}
+                <td>
+                    @if($log->uid_rfid)
+                        {{ $log->uid_rfid }}
+                    @elseif($log->fingerprint_id)
+                        {{ $log->fingerprint_id }}
+                    @else
+                        -
+                    @endif
+                </td>
+
+                {{-- Nama --}}
+                <td>
+                    @if($log->uid_rfid)
+
+                        @php
+                            $siswa = \App\Models\Siswa::whereRaw(
+                                'LOWER(rfid_uid) = ?',
+                                [strtolower($log->uid_rfid)]
+                            )->first();
+                        @endphp
+
+                        {{ $siswa->nama_siswa ?? '-' }}
+
+                    @elseif($log->fingerprint_id)
+
+                        @php
+                            $wali = \App\Models\Wali::where(
+                                'fingerprint_id',
+                                $log->fingerprint_id
+                            )->first();
+                        @endphp
+
+                        {{ $wali->nama_wali ?? 'Orang Tua' }}
+
+                    @else
+                        -
+                    @endif
+                </td>
+
+                {{-- Jenis Perangkat --}}
+                <td>
+                    {{ $log->getDeviceType() }}
+                </td>
+
+                {{-- Peran --}}
+                <td>
+                    @if($log->uid_rfid)
+                        Siswa
+                    @elseif($log->fingerprint_id)
+                        Orang Tua
+                    @else
+                        -
+                    @endif
+                </td>
+
+                {{-- Status --}}
+                <td>
+                    @if($log->uid_rfid)
+                        <span class="badge bg-success">
+                            Berhasil
+                        </span>
+
+                    @elseif($log->fingerprint_id)
+                        <span class="badge bg-primary">
+                            Sudah dijemput
+                        </span>
+
+                    @else
+                        <span class="badge bg-secondary">
+                            -
+                        </span>
+                    @endif
+                </td>
+
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 
                 <hr>
                                     {{-- Paginasi --}}
@@ -224,12 +260,12 @@
         {
             label: 'Hadir',
             data: @json($dataHadir),
-            backgroundColor: '#11a88c' // hijau
+            backgroundColor: '#22C55E' // hijau
         },
         {
             label: 'Tidak hadir',
             data: @json($dataTidakHadir),
-            backgroundColor: '#D95F6A' // merah
+            backgroundColor: '#F94144' // merah
         }
             ]
         }
@@ -244,8 +280,8 @@
             datasets: [{
                 data: [{{ $sudahJemput }}, {{ $belumJemput }}],
                 backgroundColor: [
-                '#198754', // Sudah dijemput = hijau
-                '#6f42c1'  // Belum dijemput = ungu
+                '#22C55E', // Sudah dijemput = hijau
+                '#F94144'  // Belum dijemput = merah
             ]
             }]
         }
@@ -253,9 +289,3 @@
 </script>
 
 @endsection
-
-<script>
-
-setInterval(loadData, 3000);
-loadData();
-</script>

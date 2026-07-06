@@ -8,12 +8,7 @@
     padding:5px 30px 20px 20px;
 }
 
-.content{
-    margin-left:230px;
-    padding-top:60px;
-    padding-left:10px;
-    padding-right:10px;
-}
+
 
 .sticky-toolbar{
     position: sticky;
@@ -269,115 +264,178 @@ body{
     }
 }
 
-/* ===================================== */
-/* RESPONSIVE MOBILE */
-/* ===================================== */
+/* =====================================
+   RESPONSIVE TABLET & MOBILE
+===================================== */
 
-@media (max-width:768px){
+@media (max-width: 767.98px) {
 
-    /* Content */
-    .content{
-        margin-left:0;
-        padding-left:10px;
-        padding-right:10px;
+    .main-dashboard {
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
     }
 
-    .main-dashboard{
-        padding:10px;
+    .container-dashboard {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
     }
 
-    .container-dashboard{
-        max-width:100%;
+    /* Header halaman */
+
+    .sticky-header {
+        position: static;
+        padding: 14px !important;
     }
 
-    /* Header Card */
-    .card h5{
-        font-size:16px;
+    .sticky-header h5 {
+        font-size: 16px;
+        margin: 0;
     }
 
     /* Toolbar */
-    .d-flex.align-items-center.gap-3.flex-wrap{
 
-        display:flex !important;
-        flex-direction:column;
-        align-items:stretch !important;
-        gap:10px !important;
+    .sticky-toolbar {
+        position: static;
+    }
+
+    .sticky-toolbar .d-flex.align-items-center.gap-3.flex-wrap {
+        display: flex !important;
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 10px !important;
     }
 
     /* Total akun */
-    .d-flex.align-items-center.gap-3.flex-wrap > div:first-child{
-        width:100%;
+
+    .total-data {
+        width: 100%;
+        height: 40px;
+        justify-content: center;
     }
 
-    /* Filter */
-    .d-flex.align-items-center.gap-3.flex-wrap > div[style*="width:180px"]{
-        width:100% !important;
+    /* Filter role */
+
+    .sticky-toolbar div[style*="width:180px"] {
+        width: 100% !important;
+    }
+
+    .sticky-toolbar .form-select {
+        width: 100%;
+        height: 40px;
     }
 
     /* Tombol tambah */
-    .btn-tambah,
-    .btn.btn-sm{
-        width:100%;
-        justify-content:center;
+
+    .btn-tambah {
+        width: 100%;
+        height: 40px;
+        justify-content: center;
     }
 
     /* Search */
-    form.ms-auto{
-        max-width:100% !important;
-        width:100% !important;
-        margin-left:0 !important;
+
+    .sticky-toolbar form[style*="flex: 1"] {
+        width: 100%;
+        flex: none !important;
     }
 
-    /* Table */
-    .table-container{
-        overflow-x:auto;
-        -webkit-overflow-scrolling:touch;
+    .sticky-toolbar .input-group {
+        width: 100%;
     }
 
-    .table{
-        min-width:700px;
+    .sticky-toolbar .input-group-text,
+    .sticky-toolbar .form-control {
+        height: 40px;
     }
 
-    .table th,
-    .table td{
-        font-size:12px;
-        white-space:nowrap;
+    /* =====================================
+       TABLE MOBILE
+    ===================================== */
+
+    .table-container {
+        width: 100%;
+        max-width: 100%;
+
+        overflow-x: auto;
+        overflow-y: auto;
+
+        -webkit-overflow-scrolling: touch;
     }
 
-    /* Aksi */
-    .col-aksi{
-        min-width:100px;
+    .table-container .table {
+        width: max-content;
+        min-width: 750px;
+        margin-bottom: 0;
+    }
+
+    .table-container .table th,
+    .table-container .table td {
+        padding: 12px 14px;
+        font-size: 12px;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+    .table-container .table thead th {
+        position: sticky;
+        top: 0;
+        background: #f8f9fa;
+        z-index: 2;
+    }
+
+    .col-aksi {
+        min-width: 100px;
+    }
+
+    /* Jangan buat tombol Edit dan Hapus selebar layar */
+
+    .table-container .btn.btn-sm {
+        width: auto;
     }
 
     /* Pagination */
-    .pagination{
-        flex-wrap:wrap;
-        justify-content:center;
+
+    .pagination {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 4px;
     }
 
-    .pagination .page-link{
-        padding:5px 10px;
-        font-size:12px;
+    .pagination .page-link {
+        padding: 5px 9px;
+        font-size: 12px;
     }
 
+    /* Modal */
+
+    .confirm-modal-dialog {
+        width: calc(100% - 30px);
+        max-width: 420px;
+    }
 }
 
-/* HP KECIL */
-@media (max-width:576px){
 
-    .card{
-        border-radius:10px;
+/* =====================================
+   HP KECIL
+===================================== */
+
+@media (max-width: 575.98px) {
+
+    .sticky-header h5 {
+        font-size: 15px;
     }
 
-    .card h5{
-        font-size:15px;
+    .sticky-toolbar {
+        padding: 12px !important;
     }
 
-    .table th,
-    .table td{
-        font-size:11px;
+    .table-container .table th,
+    .table-container .table td {
+        font-size: 12px;
+        padding: 10px 12px;
     }
-
 }
 
 .total-data{
@@ -481,4 +539,12 @@ body{
     justify-content: flex-end;
     gap: 10px;
     border-top: 1px solid #eee;
+}
+
+
+@media (max-width: 767.98px) {
+    .main-dashboard > .container-dashboard > .card:nth-of-type(1),
+    .main-dashboard > .container-dashboard > .card:nth-of-type(2) {
+        top: auto !important;
+    }
 }
