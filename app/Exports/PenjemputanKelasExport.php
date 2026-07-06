@@ -2,20 +2,16 @@
 
 namespace App\Exports;
 
-use App\Models\Siswa;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
-
 use Maatwebsite\Excel\Events\AfterSheet;
-
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
-
 
 class PenjemputanKelasExport implements
     FromArray,
@@ -26,32 +22,28 @@ class PenjemputanKelasExport implements
     protected $kelasId;
     protected $bulan;
 
-
     /*
     |--------------------------------------------------------------------------
     | CONSTRUCTOR
     |--------------------------------------------------------------------------
     */
-
     public function __construct($kelasId, $bulan)
     {
         $this->kelasId = $kelasId;
         $this->bulan = $bulan;
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | HEADER EXCEL
     |--------------------------------------------------------------------------
     */
-
     public function headings(): array
     {
         return [
             'No',
+            'Tanggal',
             'Nama Siswa',
-            'Jumlah Penjemputan',
             'Tepat Waktu',
             'Terlambat',
             'Ayah',
@@ -60,13 +52,11 @@ class PenjemputanKelasExport implements
         ];
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | DATA EXCEL
     |--------------------------------------------------------------------------
     */
-
     public function array(): array
     {
         /*
@@ -75,502 +65,293 @@ class PenjemputanKelasExport implements
         |--------------------------------------------------------------------------
         |
         | Contoh:
-        |
         | 2026-07
         |
         | $tahun = 2026
         | $bulan = 07
         |
         */
-
         [$tahun, $bulan] = explode('-', $this->bulan);
-
 
         /*
         |--------------------------------------------------------------------------
-        | QUERY REKAP PENJEMPUTAN
+        | TENTUKAN PERIODE LAPORAN
         |--------------------------------------------------------------------------
         */
+        $awalBulan = Carbon::createFromFormat('Y-m-d', $this->bulan . '-01')->startOfDay();
+        $akhirBulan = $awalBulan->copy()->endOfMonth()->endOfDay();
+        $hariIni = Carbon::today();
 
-        $siswas = Siswa::query()
+        /*
+        |--------------------------------------------------------------------------
+        | JIKA BULAN YANG DIPILIH MASIH DI MASA DEPAN
+        |--------------------------------------------------------------------------
+        |
+        | Tidak ada data yang boleh ditampilkan.
+        |
+        */
+        if ($awalBulan->gt($hariIni)) {
+            return [];
+        }
 
+        /*
+        |--------------------------------------------------------------------------
+        | BATAS AKHIR DATA
+        |--------------------------------------------------------------------------
+        |
+        | Jika bulan laporan adalah bulan berjalan:
+        | batas akhir = hari ini.
+        |
+        | Jika bulan laporan sudah lewat:
+        | batas akhir = akhir bulan.
+        |
+        */
+        $batasAkhir = $akhirBulan->gt($hariIni) ? $hariIni : $akhirBulan;
+
+        /*
+        |--------------------------------------------------------------------------
+        | QUERY DATA PENJEMPUTAN PER HARI
+        |--------------------------------------------------------------------------
+        */
+        $penjemputans = DB::table('penjemputan')
             /*
             |--------------------------------------------------------------------------
-            | JOIN PENJEMPUTAN
+            | JOIN SISWA
             |--------------------------------------------------------------------------
             */
-
-            ->leftJoin(
-                'penjemputan',
-                'siswa.id_siswa',
-                '=',
-                'penjemputan.id_siswa'
-            )
-
-
+            ->join('siswa', 'penjemputan.id_siswa', '=', 'siswa.id_siswa')
             /*
             |--------------------------------------------------------------------------
             | JOIN SISWA WALI
             |--------------------------------------------------------------------------
-            |
-            | Digunakan untuk mengetahui hubungan:
-            |
-            | Ayah
-            | Ibu
-            | Wali
-            |
             */
-
             ->leftJoin('siswa_wali', function ($join) {
-
-                $join->on(
-                    'penjemputan.id_siswa',
-                    '=',
-                    'siswa_wali.id_siswa'
-                );
-
-                $join->on(
-                    'penjemputan.id_wali',
-                    '=',
-                    'siswa_wali.id_wali'
-                );
+                $join->on('penjemputan.id_siswa', '=', 'siswa_wali.id_siswa');
+                $join->on('penjemputan.id_wali', '=', 'siswa_wali.id_wali');
             })
-
-
             /*
             |--------------------------------------------------------------------------
             | FILTER KELAS
             |--------------------------------------------------------------------------
             */
-
-            ->where(
-                'siswa.id_kelas',
-                $this->kelasId
-            )
-
-
+            ->where('siswa.id_kelas', $this->kelasId)
             /*
             |--------------------------------------------------------------------------
-            | SELECT DATA SISWA
+            | FILTER AWAL BULAN
             |--------------------------------------------------------------------------
             */
-
+            ->whereDate('penjemputan.tanggal', '>=', $awalBulan->format('Y-m-d'))
+            /*
+            |--------------------------------------------------------------------------
+            | FILTER SAMPAI BATAS AKHIR
+            |--------------------------------------------------------------------------
+            */
+            ->whereDate('penjemputan.tanggal', '<=', $batasAkhir->format('Y-m-d'))
+            /*
+            |--------------------------------------------------------------------------
+            | PILIH DATA
+            |--------------------------------------------------------------------------
+            */
             ->select(
-                'siswa.id_siswa',
-                'siswa.nama_siswa'
-            )
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | JUMLAH PENJEMPUTAN
-            |--------------------------------------------------------------------------
-            */
-
-            ->selectRaw(
-                "
-                COUNT(
-                    CASE
-                        WHEN YEAR(penjemputan.tanggal) = ?
-                        AND MONTH(penjemputan.tanggal) = ?
-                        THEN penjemputan.id
-                    END
-                ) AS jumlah_penjemputan
-                ",
-                [
-                    $tahun,
-                    $bulan
-                ]
-            )
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | TEPAT WAKTU
-            |--------------------------------------------------------------------------
-            |
-            | Menggunakan kolom:
-            |
-            | penjemputan.status
-            |
-            | BUKAN:
-            |
-            | penjemputan.status_penjemputan
-            |
-            */
-
-            ->selectRaw(
-                "
-                COUNT(
-                    CASE
-                        WHEN LOWER(penjemputan.status) = 'tepat waktu'
-                        AND YEAR(penjemputan.tanggal) = ?
-                        AND MONTH(penjemputan.tanggal) = ?
-                        THEN penjemputan.id
-                    END
-                ) AS tepat_waktu
-                ",
-                [
-                    $tahun,
-                    $bulan
-                ]
-            )
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | TERLAMBAT
-            |--------------------------------------------------------------------------
-            */
-
-            ->selectRaw(
-                "
-                COUNT(
-                    CASE
-                        WHEN LOWER(penjemputan.status) = 'terlambat'
-                        AND YEAR(penjemputan.tanggal) = ?
-                        AND MONTH(penjemputan.tanggal) = ?
-                        THEN penjemputan.id
-                    END
-                ) AS terlambat
-                ",
-                [
-                    $tahun,
-                    $bulan
-                ]
-            )
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | DIJEMPUT AYAH
-            |--------------------------------------------------------------------------
-            */
-
-            ->selectRaw(
-                "
-                COUNT(
-                    CASE
-                        WHEN LOWER(siswa_wali.hubungan) = 'ayah'
-                        AND YEAR(penjemputan.tanggal) = ?
-                        AND MONTH(penjemputan.tanggal) = ?
-                        THEN penjemputan.id
-                    END
-                ) AS ayah
-                ",
-                [
-                    $tahun,
-                    $bulan
-                ]
-            )
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | DIJEMPUT IBU
-            |--------------------------------------------------------------------------
-            */
-
-            ->selectRaw(
-                "
-                COUNT(
-                    CASE
-                        WHEN LOWER(siswa_wali.hubungan) = 'ibu'
-                        AND YEAR(penjemputan.tanggal) = ?
-                        AND MONTH(penjemputan.tanggal) = ?
-                        THEN penjemputan.id
-                    END
-                ) AS ibu
-                ",
-                [
-                    $tahun,
-                    $bulan
-                ]
-            )
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | DIJEMPUT WALI
-            |--------------------------------------------------------------------------
-            */
-
-            ->selectRaw(
-                "
-                COUNT(
-                    CASE
-                        WHEN LOWER(siswa_wali.hubungan) = 'wali'
-                        AND YEAR(penjemputan.tanggal) = ?
-                        AND MONTH(penjemputan.tanggal) = ?
-                        THEN penjemputan.id
-                    END
-                ) AS wali
-                ",
-                [
-                    $tahun,
-                    $bulan
-                ]
-            )
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | GROUP SISWA
-            |--------------------------------------------------------------------------
-            */
-
-            ->groupBy(
-                'siswa.id_siswa',
-                'siswa.nama_siswa'
-            )
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | URUTKAN NAMA
-            |--------------------------------------------------------------------------
-            */
-
-            ->orderBy(
+                'penjemputan.tanggal',
+                'penjemputan.status',
                 'siswa.nama_siswa',
-                'asc'
+                'siswa_wali.hubungan'
             )
-
+            /*
+            |--------------------------------------------------------------------------
+            | URUTKAN BERDASARKAN TANGGAL
+            |--------------------------------------------------------------------------
+            */
+            ->orderBy('penjemputan.tanggal', 'asc')
+            /*
+            |--------------------------------------------------------------------------
+            | URUTKAN NAMA SISWA
+            |--------------------------------------------------------------------------
+            */
+            ->orderBy('siswa.nama_siswa', 'asc')
             ->get();
-
 
         /*
         |--------------------------------------------------------------------------
         | SUSUN DATA UNTUK EXCEL
         |--------------------------------------------------------------------------
         */
-
         $data = [];
 
+        foreach ($penjemputans as $index => $item) {
+            /*
+            |--------------------------------------------------------------------------
+            | STATUS PENJEMPUTAN
+            |--------------------------------------------------------------------------
+            */
+            $status = strtolower(trim($item->status ?? ''));
 
-        foreach ($siswas as $idx => $siswa) {
+            /*
+            |--------------------------------------------------------------------------
+            | HUBUNGAN PENJEMPUT
+            |--------------------------------------------------------------------------
+            */
+            $hubungan = strtolower(trim($item->hubungan ?? ''));
 
+            /*
+            |--------------------------------------------------------------------------
+            | MASUKKAN DATA
+            |--------------------------------------------------------------------------
+            */
             $data[] = [
-
                 /*
                 | No
                 */
-
-                $idx + 1,
-
+                $index + 1,
 
                 /*
-                | Nama siswa
+                | Tanggal
                 */
-
-                $siswa->nama_siswa,
-
+                date('d-m-Y', strtotime($item->tanggal)),
 
                 /*
-                | Jumlah penjemputan
+                | Nama Siswa
                 */
-
-                (int) $siswa->jumlah_penjemputan,
-
+                $item->nama_siswa,
 
                 /*
-                | Tepat waktu
+                | Tepat Waktu
                 */
-
-                (int) $siswa->tepat_waktu,
-
+                $status === 'tepat waktu' ? 1 : 0,
 
                 /*
                 | Terlambat
                 */
-
-                (int) $siswa->terlambat,
-
+                $status === 'terlambat' ? 1 : 0,
 
                 /*
                 | Ayah
                 */
-
-                (int) $siswa->ayah,
-
+                $hubungan === 'ayah' ? 1 : 0,
 
                 /*
                 | Ibu
                 */
-
-                (int) $siswa->ibu,
-
+                $hubungan === 'ibu' ? 1 : 0,
 
                 /*
                 | Wali
                 */
-
-                (int) $siswa->wali,
+                $hubungan === 'wali' ? 1 : 0,
             ];
         }
 
-
         return $data;
     }
-
 
     /*
     |--------------------------------------------------------------------------
     | STYLE EXCEL
     |--------------------------------------------------------------------------
     */
-
     public function registerEvents(): array
     {
         return [
-
             AfterSheet::class => function (AfterSheet $event) {
-
-                $sheet =
-                    $event->sheet->getDelegate();
-
+                $sheet = $event->sheet->getDelegate();
 
                 /*
                 |--------------------------------------------------------------------------
-                | HEADER TABEL
+                | STYLE HEADER
                 |--------------------------------------------------------------------------
                 */
-
-                $sheet
-                    ->getStyle('A1:H1')
-                    ->applyFromArray([
-
-                        'font' => [
-
-                            'bold' => true,
-
-                            'color' => [
-                                'rgb' => 'FFFFFF'
-                            ],
-                        ],
-
-                        'fill' => [
-
-                            'fillType' =>
-                                Fill::FILL_SOLID,
-
-                            'startColor' => [
-                                'rgb' => '4472C4'
-                            ],
-                        ],
-
-                        'alignment' => [
-
-                            'horizontal' =>
-                                Alignment::HORIZONTAL_CENTER,
-
-                            'vertical' =>
-                                Alignment::VERTICAL_CENTER,
-                        ],
-                    ]);
-
+                $sheet->getStyle('A1:H1')->applyFromArray([
+                    'font' => [
+                        'bold' => true,
+                        'color' => ['rgb' => 'FFFFFF'],
+                    ],
+                    'fill' => [
+                        'fillType' => Fill::FILL_SOLID,
+                        'startColor' => ['rgb' => '4472C4'],
+                    ],
+                    'alignment' => [
+                        'horizontal' => Alignment::HORIZONTAL_CENTER,
+                        'vertical' => Alignment::VERTICAL_CENTER,
+                    ],
+                ]);
 
                 /*
                 |--------------------------------------------------------------------------
                 | TINGGI HEADER
                 |--------------------------------------------------------------------------
                 */
-
-                $sheet
-                    ->getRowDimension(1)
-                    ->setRowHeight(24);
-
+                $sheet->getRowDimension(1)->setRowHeight(26);
 
                 /*
                 |--------------------------------------------------------------------------
-                | AMBIL BARIS TERAKHIR
+                | BARIS TERAKHIR
                 |--------------------------------------------------------------------------
                 */
-
-                $lastRow =
-                    $sheet->getHighestRow();
-
+                $lastRow = $sheet->getHighestRow();
 
                 /*
                 |--------------------------------------------------------------------------
-                | BORDER TABEL
+                | BORDER SEMUA DATA
                 |--------------------------------------------------------------------------
                 */
-
                 if ($lastRow >= 1) {
-
-                    $sheet
-                        ->getStyle(
-                            "A1:H{$lastRow}"
-                        )
+                    $sheet->getStyle("A1:H{$lastRow}")
                         ->getBorders()
                         ->getAllBorders()
-                        ->setBorderStyle(
-                            Border::BORDER_THIN
-                        )
+                        ->setBorderStyle(Border::BORDER_THIN)
                         ->getColor()
                         ->setRGB('BFBFBF');
                 }
-
 
                 /*
                 |--------------------------------------------------------------------------
                 | ALIGNMENT DATA
                 |--------------------------------------------------------------------------
                 */
-
                 if ($lastRow >= 2) {
-
                     /*
                     | No
                     */
-
-                    $sheet
-                        ->getStyle(
-                            "A2:A{$lastRow}"
-                        )
+                    $sheet->getStyle("A2:A{$lastRow}")
                         ->getAlignment()
-                        ->setHorizontal(
-                            Alignment::HORIZONTAL_CENTER
-                        );
-
+                        ->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
                     /*
-                    | Kolom angka
+                    | Tanggal
                     */
-
-                    $sheet
-                        ->getStyle(
-                            "C2:H{$lastRow}"
-                        )
+                    $sheet->getStyle("B2:B{$lastRow}")
                         ->getAlignment()
-                        ->setHorizontal(
-                            Alignment::HORIZONTAL_CENTER
-                        );
-
+                        ->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
                     /*
-                    | Vertical center
+                    | Status dan Penjemput
                     */
-
-                    $sheet
-                        ->getStyle(
-                            "A2:H{$lastRow}"
-                        )
+                    $sheet->getStyle("D2:H{$lastRow}")
                         ->getAlignment()
-                        ->setVertical(
-                            Alignment::VERTICAL_CENTER
-                        );
+                        ->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+                    /*
+                    | Vertical Center
+                    */
+                    $sheet->getStyle("A2:H{$lastRow}")
+                        ->getAlignment()
+                        ->setVertical(Alignment::VERTICAL_CENTER);
                 }
-
 
                 /*
                 |--------------------------------------------------------------------------
                 | FREEZE HEADER
                 |--------------------------------------------------------------------------
                 */
-
                 $sheet->freezePane('A2');
+
+                /*
+                |--------------------------------------------------------------------------
+                | AUTO FILTER
+                |--------------------------------------------------------------------------
+                */
+                $sheet->setAutoFilter("A1:H{$lastRow}");
             },
         ];
     }

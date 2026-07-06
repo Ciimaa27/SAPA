@@ -220,102 +220,105 @@ class GuruController extends Controller
     }
 
     public function daftarPenjemputan($id_kelas)
-        {
-            $kelas = Kelas::with('guru')->findOrFail($id_kelas);
+{
+    $kelas = Kelas::with('guru')->findOrFail($id_kelas);
+    $today = Carbon::today();
 
-            $today = Carbon::today();
+    $siswas = Siswa::where('id_kelas', $id_kelas)
+        ->orderBy('nama_siswa')
+        ->paginate(10)
+        ->through(function ($siswa) use ($today) {
+            $penjemputan = Penjemputan::where('id_siswa', $siswa->id_siswa)
+                ->whereDate('tanggal', $today)
+                ->first();
 
-            $siswas = Siswa::where('id_kelas', $id_kelas)
-                ->orderBy('nama_siswa')
-                ->paginate(10)
-                ->through(function ($siswa) use ($today) {
+            return (object) [
+                'id_siswa'   => $siswa->id_siswa,
+                'nis'        => $siswa->nis,
+                'nama_siswa' => $siswa->nama_siswa,
+                'status'     => $penjemputan ? $penjemputan->status : 'Menunggu',
+                'id_wali'    => $penjemputan ? $penjemputan->id_wali : null,
+            ];
+        });
 
-                    $penjemputan = Penjemputan::where(
-                            'id_siswa',
-                            $siswa->id_siswa
-                        )
-                        ->whereDate('tanggal', $today)
-                        ->first();
+    $idSiswaHalaman = collect($siswas->items())->pluck('id_siswa');
 
-                    return (object)[
-                        'id_siswa' => $siswa->id_siswa,
-                        'nis' => $siswa->nis,
-                        'nama_siswa' => $siswa->nama_siswa,
-                        'status' => $penjemputan
-                            ? $penjemputan->status
-                            : 'Menunggu',
-                    ];
-                });
+    $daftarPenjemput = DB::table('siswa_wali')
+        ->join('wali', 'siswa_wali.id_wali', '=', 'wali.id_wali')
+        ->select(
+            'siswa_wali.id_siswa',
+            'siswa_wali.id_wali',
+            'siswa_wali.hubungan',
+            'wali.nama_wali'
+        )
+        ->whereIn('siswa_wali.id_siswa', $idSiswaHalaman)
+        ->orderBy('siswa_wali.hubungan')
+        ->get()
+        ->groupBy('id_siswa');
 
-            return view('guru.penjemputan', compact(
-                'kelas',
-                'siswas',
-                'today'
-            ));
-        }
+    return view(
+        'guru.penjemputan',
+        compact(
+            'kelas',
+            'siswas',
+            'today',
+            'daftarPenjemput'
+        )
+    );
+}
 
     public function updateStatusPenjemputan(Request $request)
 {
     $request->validate([
-        'id_siswa' => 'required',
-        'tanggal'  => 'required|date',
-        'status'   => 'required|in:Menunggu,Dijemput',
+        'id_siswa' => ['required'],
+        'tanggal'  => ['required', 'date'],
+        'status'   => ['required', 'in:Menunggu,Dijemput'],
+        'id_wali'  => ['nullable', 'required_if:status,Dijemput'],
     ]);
 
-    // Cari relasi siswa dengan wali
-    $relasi = DB::table('siswa_wali')
-        ->where('id_siswa', $request->id_siswa)
-        ->first();
-
-    if (!$relasi) {
-        return back()->with(
-            'error',
-            'Relasi siswa dan wali tidak ditemukan.'
-        );
-    }
-
-    // Cek data penjemputan siswa pada tanggal tersebut
     $penjemputan = DB::table('penjemputan')
         ->where('id_siswa', $request->id_siswa)
         ->whereDate('tanggal', $request->tanggal)
         ->first();
 
-    if ($penjemputan) {
+    if ($request->status === 'Dijemput') {
+        $relasi = DB::table('siswa_wali')
+            ->where('id_siswa', $request->id_siswa)
+            ->where('id_wali', $request->id_wali)
+            ->first();
 
-        if ($request->status === 'Dijemput') {
-            DB::table('penjemputan')
-                ->where('id', $penjemputan->id)
-                ->update([
-                    'status' => 'Dijemput',
-                    'jam_jemput' => now()->format('H:i:s'),
-                    'metode' => 'Manual',
-                ]);
-        } else {
-            DB::table('penjemputan')
-                ->where('id', $penjemputan->id)
-                ->update([
-                    'status' => 'Menunggu',
-                ]);
+        if (!$relasi) {
+            return back()->with('error', 'Penjemput tidak terdaftar sebagai wali siswa.');
         }
 
-    } else {
-
-        if ($request->status === 'Dijemput') {
+        if ($penjemputan) {
+            DB::table('penjemputan')
+                ->where('id', $penjemputan->id)
+                ->update([
+                    'id_wali'    => $request->id_wali,
+                    'status'     => 'Dijemput',
+                    'jam_jemput' => now()->format('H:i:s'),
+                    'metode'     => 'Manual',
+                ]);
+        } else {
             DB::table('penjemputan')->insert([
-                'id_siswa'  => $request->id_siswa,
-                'id_wali'   => $relasi->id_wali,
-                'tanggal'   => $request->tanggal,
+                'id_siswa'   => $request->id_siswa,
+                'id_wali'    => $request->id_wali,
+                'tanggal'    => $request->tanggal,
                 'jam_jemput' => now()->format('H:i:s'),
-                'status'    => 'Dijemput',
-                'metode'    => 'Manual',
+                'status'     => 'Dijemput',
+                'metode'     => 'Manual',
             ]);
+        }
+    } else {
+        if ($penjemputan) {
+            DB::table('penjemputan')
+                ->where('id', $penjemputan->id)
+                ->delete();
         }
     }
 
-    return back()->with(
-        'success',
-        'Status penjemputan berhasil diperbarui.'
-    );
+    return back()->with('success', 'Status penjemputan berhasil diperbarui.');
 }
 
     public function showDetail($id)
@@ -323,11 +326,7 @@ class GuruController extends Controller
         // Contoh: FP-1 menjadi 1
         $idSiswa = str_replace('FP-', '', $id);
 
-        $penjemputan = Penjemputan::with([
-                'siswa',
-                'siswa.kelas',
-                'wali'
-            ])
+        $penjemputan = Penjemputan::with(['siswa', 'siswa.kelas', 'wali'])
             ->where('id_siswa', $idSiswa)
             ->whereDate('tanggal', now()->toDateString())
             ->latest('jam_jemput')
@@ -338,29 +337,14 @@ class GuruController extends Controller
         }
 
         $log = [
-            'waktu' => $penjemputan->tanggal . ' ' .
-                    ($penjemputan->jam_jemput ?? ''),
-
+            'waktu' => $penjemputan->tanggal . ' ' . ($penjemputan->jam_jemput ?? ''),
             'id_scan' => 'FP-' . $penjemputan->id_siswa,
-
-            'nama' => $penjemputan->siswa
-                ? $penjemputan->siswa->nama_siswa
-                : '-',
-
-            'kelas' => $penjemputan->siswa &&
-                    $penjemputan->siswa->kelas
-                ? $penjemputan->siswa->kelas->nama_kelas
-                : '-',
-
+            'nama' => $penjemputan->siswa ? $penjemputan->siswa->nama_siswa : '-',
+            'kelas' => $penjemputan->siswa && $penjemputan->siswa->kelas ? $penjemputan->siswa->kelas->nama_kelas : '-',
             'alat' => $penjemputan->metode ?? 'Fingerprint',
-
             'peran' => 'Siswa',
-
             'status' => $penjemputan->status ?? '-',
-
-            'nama_wali' => $penjemputan->wali
-                ? $penjemputan->wali->nama_wali
-                : '-',
+            'nama_wali' => $penjemputan->wali ? $penjemputan->wali->nama_wali : '-',
         ];
 
         return view('guru.detail-riwayat', compact('log'));

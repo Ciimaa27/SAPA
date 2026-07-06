@@ -1,221 +1,296 @@
-.main-dashboard{
-padding:20px;
+/* ==================================================
+   HALAMAN UTAMA
+================================================== */
+.main-dashboard {
+    padding: 10px 20px 20px 20px;
 }
 
-.card-box{
-background:#fff;
-border-radius:10px;
-padding:16px;
-box-shadow:0 2px 8px rgba(0,0,0,.08);
+/* ==================================================
+   CARD
+================================================== */
+.card-box {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.page-title{
-margin:0;
-font-size:22px;
-font-weight:600;
+/* ==================================================
+   JUDUL HALAMAN
+================================================== */
+.page-title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
 }
 
-.btn-kembali{
-    display:inline-flex;
-    align-items:center;
-    gap:5px;
-
-    background:#e9e1ff;
-    color:#6f42c1;
-
-    border:1px solid #d6c8ff;
-    border-radius:6px;
-
-    padding:4px 10px;
-    font-size:12px;
-    font-weight:500;
-
-    text-decoration:none;
-
-    width:fit-content;
-    max-width:max-content;
-
-    margin-bottom:25px;
+/* ==================================================
+   TOMBOL KEMBALI
+================================================== */
+.btn-kembali {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    width: fit-content;
+    max-width: max-content;
+    margin-bottom: 25px;
+    padding: 4px 10px;
+    background: #e9e1ff;
+    color: #6f42c1;
+    border: 1px solid #d6c8ff;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
 }
 
-.btn-kembali:hover{
-    background:#dcd0ff;
-    color:#5a34a3;
+.btn-kembali:hover {
+    background: #dcd0ff;
+    color: #5a34a3;
 }
 
-
-
-.info-wrapper{
-width:360px;
+/* ==================================================
+   INFORMASI KELAS
+================================================== */
+.info-wrapper {
+    width: 360px;
+    max-width: 100%;
 }
 
-.info-row{
-display:flex;
-align-items:center;
-margin-bottom:12px;
+.info-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
 }
 
-.info-row label{
-width:90px;
-font-size:14px;
+.info-row:last-child {
+    margin-bottom: 0;
 }
 
-.info-row span{
-width:20px;
+.info-row label {
+    width: 90px;
+    flex-shrink: 0;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
 }
 
-.info-row input{
-flex:1;
-border:none;
-background:#f1f1f1;
-padding:8px 12px;
-border-radius:5px;
+.info-row span {
+    width: 20px;
+    flex-shrink: 0;
 }
 
-.table-header{
-display:flex;
-justify-content:flex-end;
-margin-bottom:10px;
+.info-row input {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background: #f1f1f1;
+    color: #555555;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    outline: none;
 }
 
-.btn-laporan{
-border:1px solid #5ea6ff;
-color:#5ea6ff;
-padding:6px 14px;
-border-radius:6px;
-text-decoration:none;
-font-size:13px;
+/* ==================================================
+   TABLE CONTAINER
+================================================== */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
 }
 
-.table-custom{
-width:100%;
-border-collapse:collapse;
+/* ==================================================
+   TABEL
+================================================== */
+.table-custom {
+    width: 100%;
+    min-width: 850px;
+    border-collapse: collapse;
+    table-layout: fixed;
 }
 
 .table-custom th,
-.table-custom td{
-padding:12px;
-border-bottom:1px solid #e9e9e9;
-font-size:14px;
+.table-custom td {
+    padding: 12px;
+    border-bottom: 1px solid #e9e9e9;
+    font-size: 14px;
+    vertical-align: middle;
 }
 
-.table-custom th{
-color:#888;
-font-weight:600;
+.table-custom th {
+    color: #888888;
+    font-weight: 600;
+    text-align: left;
+    background: #ffffff;
 }
 
-.badge-purple{
-background:#e7d8ff;
-border:1px solid #b996ff;
-color:#7d57c2;
-padding:4px 12px;
-border-radius:4px;
+.table-custom tbody tr:last-child td {
+    border-bottom: none;
 }
 
-.badge-orange{
-background:#fff2dc;
-border:1px solid #ffb74d;
-color:#ff9800;
-padding:4px 12px;
-border-radius:4px;
+.table-custom tbody tr:hover {
+    background: #fafafa;
 }
 
-/* FORM STATUS PENJEMPUTAN */
-.form-status {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 8px;
-    margin: 0;
+/* ==================================================
+   LEBAR 5 KOLOM TABEL
+================================================== */
+/* NIS */
+.table-custom th:nth-child(1),
+.table-custom td:nth-child(1) {
+    width: 15%;
 }
 
-/* SELECT STATUS */
+/* NAMA LENGKAP */
+.table-custom th:nth-child(2),
+.table-custom td:nth-child(2) {
+    width: 25%;
+}
+
+/* STATUS */
+.table-custom th:nth-child(3),
+.table-custom td:nth-child(3) {
+    width: 17%;
+}
+
+/* PENJEMPUT */
+.table-custom th:nth-child(4),
+.table-custom td:nth-child(4) {
+    width: 28%;
+}
+
+/* AKSI */
+.table-custom th:nth-child(5),
+.table-custom td:nth-child(5) {
+    width: 15%;
+    text-align: center;
+}
+
+/* ==================================================
+   SELECT STATUS
+================================================== */
 .status-select {
-    width: 120px;
-    height: 32px;
-    box-sizing: border-box;
-    padding: 4px 8px;
-
+    width: 100%;
+    height: 36px;
+    padding: 4px 10px;
     font-family: 'Poppins', sans-serif;
-    font-size: 11px;
-
-    color: #555;
-    background: #fff;
-
-    border: 1px solid #ddd;
+    font-size: 12px;
+    color: #555555;
+    background: #ffffff;
+    border: 1px solid #dddddd;
     border-radius: 6px;
-
     outline: none;
     cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* TOMBOL SIMPAN */
-.btn-simpan {
-    background: #20c997;
-    padding: 6px 14px;
+.status-select:hover {
+    border-color: #bca7e8;
+}
 
-    color: white;
+.status-select:focus {
+    border-color: #7040c8;
+    box-shadow: 0 0 0 3px rgba(112, 64, 200, 0.12);
+}
 
-    border: none;
+/* ==================================================
+   SELECT PENJEMPUT
+================================================== */
+.penjemput-select {
+    width: 100%;
+    height: 36px;
+    padding: 4px 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    color: #555555;
+    background: #ffffff;
+    border: 1px solid #dddddd;
     border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
 
-    font-size: 13px;
+.penjemput-select:hover:not(:disabled) {
+    border-color: #bca7e8;
+}
 
+.penjemput-select:focus {
+    border-color: #7040c8;
+    box-shadow: 0 0 0 3px rgba(112, 64, 200, 0.12);
+}
+
+/* SELECT DISABLED */
+.penjemput-select:disabled {
+    color: #999999;
+    background: #f1f1f1;
+    border-color: #e0e0e0;
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+/* ==================================================
+   TOMBOL SIMPAN
+================================================== */
+.btn-simpan {
+    min-width: 90px;
+    height: 36px;
+    padding: 6px 14px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
+    gap: 6px;
+    background: #198a2e;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
     cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
 }
 
 .btn-simpan:hover {
     background: #12b886;
-    color: white;
+    color: #ffffff;
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-    .form-status {
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .status-select,
-    .btn-simpan {
-        width: 100%;
-    }
+.btn-simpan:active {
+    transform: scale(0.98);
 }
 
+.btn-simpan:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
 
-/* ================================
+/* ==================================================
    PAGINATION
-================================ */
-
+================================================== */
 .pagination {
     display: flex;
     align-items: center;
     gap: 8px;
+    margin: 0;
 }
 
 .pagination .page-item .page-link {
     width: 36px;
     height: 36px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding: 0;
     margin: 0;
-
     background: #ffffff;
     border: 1px solid #d8dee8;
     border-radius: 7px;
-
     color: #7040c8;
     font-size: 13px;
     font-weight: 500;
-
     box-shadow: none;
 }
 
@@ -237,22 +312,118 @@ border-radius:4px;
     color: #7040c8;
 }
 
-
-/* ================================
-   LEBAR KOLOM TABEL
-================================ */
-
-.table-custom th:nth-child(1),
-.table-custom td:nth-child(1) {
-    width: 28%;
+/* ==================================================
+   RESPONSIVE TABLET
+================================================== */
+@media (max-width: 992px) {
+    .table-custom {
+        min-width: 800px;
+    }
 }
 
-.table-custom th:nth-child(2),
-.table-custom td:nth-child(2) {
-    width: 32%;
+/* ==================================================
+   RESPONSIVE MOBILE
+================================================== */
+@media (max-width: 768px) {
+    .main-dashboard {
+        padding: 12px;
+    }
+
+    .card-box {
+        padding: 14px;
+    }
+
+    .page-title {
+        font-size: 18px;
+    }
+
+    /* INFORMASI */
+    .info-wrapper {
+        width: 100%;
+    }
+
+    .info-row {
+        align-items: center;
+    }
+
+    .info-row label {
+        width: 85px;
+        font-size: 12px;
+    }
+
+    .info-row span {
+        width: 15px;
+    }
+
+    .info-row input {
+        font-size: 12px;
+    }
+
+    /* TABEL */
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table-custom {
+        min-width: 800px;
+    }
+
+    /* PAGINATION */
+    .pagination {
+        gap: 5px;
+    }
+
+    .pagination .page-item .page-link {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
 }
 
-.table-custom th:nth-child(3),
-.table-custom td:nth-child(3) {
-    width: 40%;
+/* ==================================================
+   RESPONSIVE MOBILE KECIL
+================================================== */
+@media (max-width: 480px) {
+    .main-dashboard {
+        padding: 10px;
+    }
+
+    .card-box {
+        padding: 12px;
+        border-radius: 8px;
+    }
+
+    .btn-kembali {
+        margin-bottom: 18px;
+    }
+
+    .info-row {
+        display: grid;
+        grid-template-columns: 80px 10px 1fr;
+    }
+
+    .info-row label,
+    .info-row span {
+        width: auto;
+    }
+
+    .table-custom th,
+    .table-custom td {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .status-select,
+    .penjemput-select {
+        height: 34px;
+        font-size: 11px;
+    }
+
+    .btn-simpan {
+        min-width: 80px;
+        height: 34px;
+        padding: 5px 10px;
+        font-size: 11px;
+    }
 }

@@ -14,45 +14,53 @@
 
 @section('content')
 <div class="main-dashboard">
-    <!-- JUDUL -->
     <div class="card-box">
-        <h5 class="page-title">Daftar Penjemputan siswa</h5>
+        <h5 class="page-title">Daftar Penjemputan Siswa</h5>
     </div>
 
-    <!-- INFORMASI -->
     <div class="card-box mt-3">
         <a href="{{ route('guru.data-penjemputan') }}" class="btn-kembali">
             <i class="fas fa-arrow-left"></i> Kembali
         </a>
+
         <div class="info-wrapper">
             <div class="info-row">
-                <label>Kelas</label><span>:</span>
+                <label>Kelas</label>
+                <span>:</span>
                 <input type="text" value="{{ $kelas->nama_kelas }}" readonly>
             </div>
+
             <div class="info-row">
-                <label>Wali kelas</label><span>:</span>
+                <label>Wali kelas</label>
+                <span>:</span>
                 <input type="text" value="{{ $kelas->guru ? $kelas->guru->nama_guru : 'N/A' }}" readonly>
             </div>
+
             <div class="info-row">
-                <label>Tanggal</label><span>:</span>
+                <label>Tanggal</label>
+                <span>:</span>
                 <input type="text" value="{{ $today->format('d-m-Y') }}" readonly>
             </div>
         </div>
     </div>
 
-    <!-- TABEL -->
     <div class="card-box mt-3">
         <div class="table-container">
             <table class="table-custom">
                 <thead>
                     <tr>
                         <th>NIS</th>
-                        <th>Nama lengkap</th>
+                        <th>Nama Lengkap</th>
                         <th>Status</th>
+                        <th>Penjemput</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($siswas as $row)
+                        @php
+                            $penjemputSiswa = $daftarPenjemput->get($row->id_siswa, collect());
+                        @endphp
                         <tr>
                             <td>{{ $row->nis }}</td>
                             <td>{{ $row->nama_siswa }}</td>
@@ -62,31 +70,45 @@
                                     <input type="hidden" name="id_siswa" value="{{ $row->id_siswa }}">
                                     <input type="hidden" name="tanggal" value="{{ $today->format('Y-m-d') }}">
 
-                                    <select name="status" class="status-select">
-                                        <option value="Menunggu" {{ $row->status == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
-                                        <option value="Dijemput" {{ $row->status == 'Dijemput' ? 'selected' : '' }}>Dijemput</option>
+                                    <select name="status" class="status-select" onchange="ubahStatus(this)">
+                                        <option value="Menunggu" {{ ($row->status ?? 'Menunggu') === 'Menunggu' ? 'selected' : '' }}>
+                                            Menunggu
+                                        </option>
+                                        <option value="Dijemput" {{ $row->status === 'Dijemput' ? 'selected' : '' }}>
+                                            Dijemput
+                                        </option>
                                     </select>
-
-                                    <button type="submit" class="btn-simpan">
-                                        <i class="fa-solid fa-floppy-disk"></i> Simpan
-                                    </button>
+                            </td>
+                            <td>
+                                <select name="id_wali" class="penjemput-select" {{ $row->status === 'Dijemput' ? '' : 'disabled' }}>
+                                    <option value="">Pilih Penjemput</option>
+                                    @foreach($penjemputSiswa as $penjemput)
+                                        <option value="{{ $penjemput->id_wali }}" {{ $row->id_wali == $penjemput->id_wali ? 'selected' : '' }}>
+                                            {{ ucfirst($penjemput->hubungan) }} - {{ $penjemput->nama_wali }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn-simpan">
+                                     Simpan
+                                </button>
                                 </form>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="3" class="text-center text-muted">Tidak ada siswa dalam kelas ini</td>
+                            <td colspan="5" class="text-center text-muted">Tidak ada siswa dalam kelas ini</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
 
-        <!-- PAGINATION -->
+        @if($siswas->hasPages())
         <div class="p-3 d-flex justify-content-end">
             <nav>
                 <ul class="pagination mb-0">
-                    <!-- PREVIOUS -->
                     @if ($siswas->onFirstPage())
                         <li class="page-item disabled"><span class="page-link">‹</span></li>
                     @else
@@ -98,7 +120,6 @@
                         $last = $siswas->lastPage();
                     @endphp
 
-                    <!-- FIRST PAGE -->
                     @if ($current > 3)
                         <li class="page-item"><a class="page-link" href="{{ $siswas->url(1) }}">1</a></li>
                         @if ($current > 4)
@@ -106,14 +127,12 @@
                         @endif
                     @endif
 
-                    <!-- MIDDLE PAGES -->
                     @for ($i = max(1, $current - 1); $i <= min($last, $current + 1); $i++)
                         <li class="page-item {{ $i == $current ? 'active' : '' }}">
                             <a class="page-link" href="{{ $siswas->url($i) }}">{{ $i }}</a>
                         </li>
                     @endfor
 
-                    <!-- LAST PAGE -->
                     @if ($current < $last - 2)
                         @if ($current < $last - 3)
                             <li class="page-item disabled"><span class="page-link">...</span></li>
@@ -121,7 +140,6 @@
                         <li class="page-item"><a class="page-link" href="{{ $siswas->url($last) }}">{{ $last }}</a></li>
                     @endif
 
-                    <!-- NEXT -->
                     @if ($siswas->hasMorePages())
                         <li class="page-item"><a class="page-link" href="{{ $siswas->nextPageUrl() }}">›</a></li>
                     @else
@@ -130,13 +148,38 @@
                 </ul>
             </nav>
         </div>
-        <!-- END PAGINATION -->
+        @endif
     </div>
-    <!-- END CARD TABLE -->
 </div>
 
 <script>
+    function ubahStatus(select) {
+        const row = select.closest('tr');
+        const penjemput = row.querySelector('.penjemput-select');
+
+        if (select.value === 'Dijemput') {
+            penjemput.disabled = false;
+        } else {
+            penjemput.value = '';
+            penjemput.disabled = true;
+        }
+    }
+
     function simpanStatus(form) {
+        const status = form.querySelector('.status-select');
+        const penjemput = form.querySelector('.penjemput-select');
+
+        if (status.value === 'Dijemput' && penjemput.value === '') {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Pilih Penjemput',
+                text: 'Silakan pilih siapa yang menjemput siswa.',
+                confirmButtonColor: '#6f42c1',
+                confirmButtonText: 'OK'
+            });
+            return false;
+        }
+
         const btn = form.querySelector('.btn-simpan');
         if (btn) {
             btn.disabled = true;
@@ -151,7 +194,7 @@
     Swal.fire({
         icon: 'success',
         title: 'Berhasil',
-        text: '{{ session('success') }}',
+        text: @json(session('success')),
         confirmButtonColor: '#6f42c1',
         confirmButtonText: 'OK'
     });
@@ -163,7 +206,7 @@
     Swal.fire({
         icon: 'error',
         title: 'Gagal',
-        text: '{{ session('error') }}',
+        text: @json(session('error')),
         confirmButtonColor: '#dc3545',
         confirmButtonText: 'OK'
     });
