@@ -44,15 +44,6 @@
                 @csrf
                 @method('PUT')
 
-                <!-- ID FINGERPRINT -->
-                <div class="form-group full">
-                    <label>ID Fingerprint</label>
-                    <input type="text" name="fingerprint_id" value="{{ old('fingerprint_id', $wali->fingerprint_id) }}" placeholder="Masukkan nomor ID fingerprint">
-                    <small class="form-text">
-                        *Masukkan ID fingerprint yang terdaftar pada sensor sidik jari
-                    </small>
-                </div>
-
                 <!-- NAMA -->
                 <div class="form-group full">
                     <label>Nama orangtua/wali</label>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Tambah Siswa')
+@section('title', 'Tambah Siswa')
 
 @section('sidebar')
     @include('layouts.sidebar-admin')
@@ -21,11 +21,9 @@
         </div>
 
         <div class="card p-4">
-
-<a href="{{ route('data-siswa') }}" class="btn-kembali mb-3">
-    <i class="fas fa-arrow-left"></i>
-    Kembali
-</a>
+            <a href="{{ route('data-siswa') }}" class="btn-kembali mb-3">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </a>
 
             {{-- ERROR --}}
             @if ($errors->any())
@@ -37,40 +35,23 @@
             <form action="{{ route('store-siswa') }}" method="POST">
                 @csrf
 
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label>NIS</label>
-                        <input
-                            type="text"
-                            name="nis"
-                            class="form-control"
-                            value="{{ old('nis') }}"
-                            placeholder="Masukkan NIS"
-                        >
-                    </div>
-
-                    <div class="col-md-6">
-                        <label>UID RFID</label>
-                        <input
-                            type="text"
-                            name="rfid_uid"
-                            class="form-control"
-                            value="{{ old('rfid_uid') }}"
-                            placeholder="Masukkan UID RFID"
-                            required>
-                    </div>
+                <div class="mb-3">
+                    <label>NIS</label>
+                    <input
+                        type="text"
+                        name="nis"
+                        class="form-control"
+                        value="{{ old('nis') }}"
+                        placeholder="Masukkan NIS"
+                    >
                 </div>
 
                 <div class="mb-3">
                     <label>Kelas</label>
                     <select name="id_kelas" class="form-select">
                         <option value="">Pilih kelas</option>
-
                         @foreach($kelas as $k)
-                            <option
-                                value="{{ $k->id_kelas }}"
-                                {{ old('id_kelas') == $k->id_kelas ? 'selected' : '' }}
-                            >
+                            <option value="{{ $k->id_kelas }}" {{ old('id_kelas') == $k->id_kelas ? 'selected' : '' }}>
                                 {{ $k->nama_kelas }}
                             </option>
                         @endforeach
@@ -107,9 +88,7 @@
                     <button type="reset" class="btn btn-danger btn-sm">Reset</button>
                     <button type="submit" class="btn btn-success btn-sm">Simpan</button>
                 </div>
-
             </form>
-
         </div>
 
     </div>

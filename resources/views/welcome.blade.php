@@ -126,7 +126,7 @@
 
             <div class="col-md-3 col-6">
                 <div class="stats-card" data-aos="zoom-in" data-aos-delay="100">
-                    <h3 class="counter" data-target="500">0</h3>
+                    <h3 class="counter" data-target="400">0</h3>
                     <p>Siswa Aktif</p>
                 </div>
             </div>
@@ -482,7 +482,7 @@
                 setTimeout(update, 40);
             } else {
                 counter.innerText = target;
-                if (target == 500) counter.innerText = "500+";
+                if (target == 400) counter.innerText = "400+";
                 if (target == 98) counter.innerText = "98%";
             }
         }
