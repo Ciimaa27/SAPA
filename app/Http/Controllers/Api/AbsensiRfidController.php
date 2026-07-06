@@ -109,8 +109,10 @@ class AbsensiRfidController extends Controller
                         $siswa->id_siswa
                     )
                     ->whereNotNull('wali.no_hp')
+                    ->whereNotNull('wali.id_user')
                     ->select(
                         'wali.id_wali',
+                        'wali.id_user',
                         'wali.nama_wali',
                         'wali.no_hp'
                     )
@@ -142,7 +144,7 @@ class AbsensiRfidController extends Controller
                     // =========================
 
                     DB::table('notifikasi')->insert([
-                        'id_user' => null,
+                        'id_user' => $wali->id_user,
                         'id_siswa' => $siswa->id_siswa,
                         'id_wali' => $wali->id_wali,
                         'judul' => 'Kehadiran Siswa',
