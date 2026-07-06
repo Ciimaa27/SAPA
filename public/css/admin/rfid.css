@@ -1,19 +1,14 @@
-/* CONTAINER */
 .container-dashboard {
     max-width: 1100px;
     margin: 0 auto;
 }
-
 .main-dashboard {
     padding: 5px 30px 20px 20px;
 }
-
-/* SEARCH */
 .search-flex {
     flex: 1;
+    margin-left: auto;
 }
-
-/* TAB BUTTON */
 .btn-tab {
     background: #f3f4f6;
     border: 1px solid #e5e7eb;
@@ -24,78 +19,57 @@
     color: #6b7280;
     transition: 0.2s;
 }
-
-/* ACTIVE TAB (UNGU) */
 .btn-tab.active {
     background: #ede9fe;
     color: #7c3aed;
     border: 1px solid #ddd6fe;
 }
-
-/* ✅ BUTTON TAMBAH (UNGU TRANSPARAN) */
 .btn-tambah {
     display: flex;
     align-items: center;
     gap: 6px;
     padding: 6px 14px;
     font-weight: 500;
-    background: rgba(139, 92, 246, 0.15); /* ungu transparan */
+    background: rgba(139, 92, 246, 0.15);
     color: #7c3aed;
     border: 1px solid rgba(139, 92, 246, 0.3);
     border-radius: 8px;
     font-size: 13px;
     transition: 0.2s;
 }
-
-/* hover biar halus */
 .btn-tambah:hover {
     background: rgba(139, 92, 246, 0.25);
 }
-
-/* TABLE */
 .table {
     background: #fff;
     border-radius: 10px;
     overflow: hidden;
 }
-
-/* TEXT */
 .table td {
     font-size: 13px;
     color: #374151;
 }
-
 .table th {
     font-size: 13px;
     font-weight: 600;
     color: #6b7280;
     background: #f9fafb;
 }
-
-/* SCROLL */
 .table-container {
     max-height: 400px;
     overflow-y: auto;
 }
-
-/* STICKY HEADER */
 .table thead th {
     position: sticky;
     top: 0;
     z-index: 2;
 }
-
-/* ROW BORDER */
 .table tbody tr {
     border-bottom: 1px solid #f1f5f9;
 }
-
-/* HOVER */
 .table tbody tr:hover {
     background: #f9fafb;
 }
-
-/* BUTTON HAPUS (TIDAK DIUBAH) */
 .btn-danger,
 button.btn-danger {
     background: #fee2e2;
@@ -105,34 +79,26 @@ button.btn-danger {
     border-radius: 6px;
     font-size: 12px;
 }
-
-/* CONTENT */
 .content {
     margin-left: 230px;
     padding-top: 60px;
     padding-left: 10px;
     padding-right: 10px;
 }
-
 .btn-tambah-rfid {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-
-    background: #f3f0ff;        /* ungu soft */
-    color: #6f42c1;             /* ungu teks */
+    background: #f3f0ff;
+    color: #6f42c1;
     border: 1px solid #d6c9ff;
-
     padding: 6px 14px;
     border-radius: 10px;
     font-size: 13px;
     font-weight: 500;
-
     text-decoration: none;
     transition: 0.2s;
 }
-
-/* ICON PLUS */
 .btn-tambah-rfid .icon-plus {
     background: #6f42c1;
     color: white;
@@ -144,11 +110,6 @@ button.btn-danger {
     justify-content: center;
     border-radius: 4px;
 }
-
-.search-flex {
-    margin-left: auto;
-}
-
 .btn-refresh {
     background-color: #6f42c1;
     color: white;
@@ -157,22 +118,17 @@ button.btn-danger {
     padding: 6px 12px;
     border-radius: 6px;
 }
-
 .btn-refresh:hover {
     background-color: #5a32a3;
     color: white;
 }
-
 .btn-refresh i {
     margin-right: 5px;
 }
-
-/* ===== PAGINATION ===== */
 .pagination {
     margin: 0;
     gap: 6px;
 }
-
 .pagination .page-item .page-link {
     border-radius: 6px !important;
     padding: 6px 12px;
@@ -181,162 +137,25 @@ button.btn-danger {
     background: #f1f3f5;
     color: #6c757d;
 }
-
 .pagination .page-item .page-link:hover {
     background: #e2e6ea;
 }
-
 .pagination .page-item.active .page-link {
     background: #6f42c1;
     color: #fff;
 }
-
 .pagination .page-item.disabled .page-link {
     background: #e9ecef;
     color: #adb5bd;
 }
-
 .pagination .page-link svg {
     width: 14px;
     height: 14px;
 }
-
-/* ===================================== */
-/* RESPONSIVE TABLET */
-/* ===================================== */
-
-@media (max-width:768px){
-
-    .content{
-        margin-left:0;
-        padding-left:10px;
-        padding-right:10px;
-    }
-
-    .main-dashboard{
-        padding:10px;
-    }
-
-    .container-dashboard{
-        max-width:100%;
-    }
-
-    /* TAB + SEARCH */
-    .card .d-flex.align-items-center.gap-3{
-        flex-direction:column;
-        align-items:stretch !important;
-        gap:10px !important;
-    }
-
-    .btn-tab{
-        text-align:center;
-    }
-
-    .search-flex{
-        width:100%;
-    }
-
-    /* RFID CARD */
-    #rfidUID,
-    #fingerprintID{
-        font-size:22px;
-        word-break:break-all;
-    }
-
-    /* Tombol tambah */
-    .btn-tambah-rfid{
-        width:100%;
-        justify-content:center;
-    }
-
-    /* Table */
-    .table-container{
-        overflow-x:auto;
-        overflow-y:auto;
-        -webkit-overflow-scrolling:touch;
-    }
-
-    .table{
-        min-width:650px;
-    }
-
-    .table th,
-    .table td{
-        white-space:nowrap;
-        font-size:12px;
-    }
-
-    /* Pagination */
-    .pagination{
-        flex-wrap:wrap;
-        justify-content:center;
-    }
-
-}
-
-/* ===================================== */
-/* RESPONSIVE HP */
-/* ===================================== */
-
-@media (max-width:576px){
-
-    .main-dashboard{
-        padding:8px;
-    }
-
-    .card{
-        border-radius:8px;
-    }
-
-    .card h5{
-        font-size:15px;
-    }
-
-    #rfidUID,
-    #fingerprintID{
-        font-size:18px;
-    }
-
-    .btn-tab{
-        width:100%;
-    }
-
-    .btn-tambah-rfid{
-        font-size:12px;
-        padding:8px 12px;
-    }
-
-    .table th,
-    .table td{
-        font-size:11px;
-    }
-
-    .btn-danger{
-        font-size:11px;
-        padding:4px 8px;
-    }
-
-    .pagination .page-link{
-        padding:5px 8px;
-        font-size:11px;
-    }
-
-}
-
-/* =========================
-   UID RFID
-========================= */
-
 .uid-rfid {
     font-weight: 600;
     letter-spacing: 0.5px;
 }
-
-
-/* =========================
-   STATUS RFID
-========================= */
-
 .status-terdaftar,
 .status-belum {
     display: inline-block;
@@ -346,22 +165,14 @@ button.btn-danger {
     padding: 7px 12px;
     border-radius: 20px;
 }
-
 .status-terdaftar {
     background-color: #e7f6ef;
     color: #198754;
 }
-
 .status-belum {
     background-color: #f1f1f4;
     color: #6c757d;
 }
-
-
-/* =========================
-   AKSI RFID
-========================= */
-
 .btn-daftar-rfid,
 .btn-lepas-rfid {
     font-size: 12px;
@@ -370,76 +181,59 @@ button.btn-danger {
     border-radius: 6px;
     padding: 6px 12px;
 }
-
 .btn-daftar-rfid {
     background-color: #6f42c1;
     color: #fff;
     border: none;
 }
-
 .btn-daftar-rfid:hover {
     background-color: #5d35a8;
     color: #fff;
 }
-
 .btn-lepas-rfid {
     background-color: #fff;
     color: #dc3545;
     border: 1px solid #dc3545;
 }
-
 .btn-lepas-rfid:hover {
     background-color: #dc3545;
     color: #fff;
 }
-
-/* =====================================
-   MODAL REGISTRASI RFID
-===================================== */
-
 #registerRfidModal .modal-content {
     border: none;
     border-radius: 14px;
     overflow: hidden;
 }
-
 #registerRfidModal .modal-header {
     border-bottom: 1px solid #f1f1f4;
     padding: 18px 20px;
 }
-
 #registerRfidModal .modal-title {
     font-size: 16px;
     font-weight: 600;
     color: #374151;
 }
-
 #registerRfidModal .modal-body {
     padding: 20px;
 }
-
 #registerRfidModal .modal-footer {
     border-top: 1px solid #f1f1f4;
     padding: 14px 20px;
 }
-
 .modal-data-value {
     background: #f9fafb;
     border: 1px solid #e5e7eb;
     border-radius: 8px;
     padding: 10px 12px;
-
     font-size: 14px;
     font-weight: 500;
     color: #374151;
 }
-
 .uid-modal {
     font-weight: 600;
     letter-spacing: 0.8px;
     color: #6f42c1;
 }
-
 .btn-simpan-rfid {
     background: #6f42c1;
     color: #fff;
@@ -449,16 +243,10 @@ button.btn-danger {
     font-size: 13px;
     font-weight: 500;
 }
-
 .btn-simpan-rfid:hover {
     background: #5a32a3;
     color: #fff;
 }
-
-/* =========================
-   STATUS FINGERPRINT
-========================= */
-
 .status-fingerprint-terdaftar,
 .status-fingerprint-belum {
     display: inline-block;
@@ -468,22 +256,14 @@ button.btn-danger {
     padding: 7px 12px;
     border-radius: 20px;
 }
-
 .status-fingerprint-terdaftar {
     background-color: #e7f6ef;
     color: #198754;
 }
-
 .status-fingerprint-belum {
     background-color: #f1f1f4;
     color: #6c757d;
 }
-
-
-/* =========================
-   AKSI FINGERPRINT
-========================= */
-
 .btn-daftar-fingerprint,
 .btn-lepas-fingerprint {
     font-size: 12px;
@@ -492,56 +272,128 @@ button.btn-danger {
     border-radius: 6px;
     padding: 6px 12px;
 }
-
 .btn-daftar-fingerprint {
     background-color: #6f42c1;
     color: #fff;
     border: none;
 }
-
 .btn-daftar-fingerprint:hover {
     background-color: #5d35a8;
     color: #fff;
 }
-
 .btn-lepas-fingerprint {
     background-color: #fff;
     color: #dc3545;
     border: 1px solid #dc3545;
 }
-
 .btn-lepas-fingerprint:hover {
     background-color: #dc3545;
     color: #fff;
 }
-
-
-/* =====================================
-   MODAL REGISTRASI FINGERPRINT
-===================================== */
-
 #modalDaftarFingerprint .modal-content {
     border: none;
     border-radius: 14px;
     overflow: hidden;
 }
-
 #modalDaftarFingerprint .modal-header {
     border-bottom: 1px solid #f1f1f4;
     padding: 18px 20px;
 }
-
 #modalDaftarFingerprint .modal-title {
     font-size: 16px;
     font-weight: 600;
     color: #374151;
 }
-
 #modalDaftarFingerprint .modal-body {
     padding: 20px;
 }
-
 #modalDaftarFingerprint .modal-footer {
     border-top: 1px solid #f1f1f4;
     padding: 14px 20px;
+}
+
+@media (max-width:768px){
+    .content{
+        margin-left:0;
+        padding-left:10px;
+        padding-right:10px;
+    }
+    .main-dashboard{
+        padding:10px;
+    }
+    .container-dashboard{
+        max-width:100%;
+    }
+    .card .d-flex.align-items-center.gap-3{
+        flex-direction:column;
+        align-items:stretch !important;
+        gap:10px !important;
+    }
+    .btn-tab{
+        text-align:center;
+    }
+    .search-flex{
+        width:100%;
+    }
+    #rfidUID,
+    #fingerprintID{
+        font-size:22px;
+        word-break:break-all;
+    }
+    .btn-tambah-rfid{
+        width:100%;
+        justify-content:center;
+    }
+    .table-container{
+        overflow-x:auto;
+        overflow-y:auto;
+        -webkit-overflow-scrolling:touch;
+    }
+    .table{
+        min-width:650px;
+    }
+    .table th,
+    .table td{
+        white-space:nowrap;
+        font-size:12px;
+    }
+    .pagination{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+}
+
+@media (max-width:576px){
+    .main-dashboard{
+        padding:8px;
+    }
+    .card{
+        border-radius:8px;
+    }
+    .card h5{
+        font-size:15px;
+    }
+    #rfidUID,
+    #fingerprintID{
+        font-size:18px;
+    }
+    .btn-tab{
+        width:100%;
+    }
+    .btn-tambah-rfid{
+        font-size:12px;
+        padding:8px 12px;
+    }
+    .table th,
+    .table td{
+        font-size:11px;
+    }
+    .btn-danger{
+        font-size:11px;
+        padding:4px 8px;
+    }
+    .pagination .page-link{
+        padding:5px 8px;
+        font-size:11px;
+    }
 }
