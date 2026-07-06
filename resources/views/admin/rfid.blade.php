@@ -30,7 +30,17 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
         @endif
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show">
+                {{ session('error') }}
 
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+                </button>
+            </div>
+        @endif
         <!-- TAB -->
         <div class="card mb-3 p-3">
             <div class="d-flex align-items-center gap-3">
@@ -51,14 +61,23 @@
 
         <!-- 🔥 REALTIME CARD -->
         @if($tab == 'rfid')
-        <div class="card p-3 mb-3 text-center">
-            <h5>Scan RFID Terakhir</h5>
-            <h3 id="rfidUID" style="font-weight:bold; color:#6f42c1;">Menunggu scan...</h3>
-        </div>
-        @else
-        <div class="card p-3 mb-3 text-center">
-            <h5>Scan Sidik Jari Terakhir</h5>
-            <h3 id="fingerprintID" style="font-weight:bold; color:#6f42c1;">Menunggu scan...</h3>
+        <div class="card p-4 mb-3 text-center scan-card">
+
+            <h5 class="scan-title">
+                RFID Terakhir Terdeteksi
+            </h5>
+            <h3 id="rfidUID" class="scan-value">
+                Menunggu scan...
+            </h3>
+            <div id="rfidStatus" class="mt-2">
+                <span class="badge bg-secondary">
+                    Menunggu kartu
+                </span>
+            </div>
+            <p id="rfidInstruction"
+            class="text-muted mt-3 mb-0">
+                Tempelkan kartu RFID pada perangkat pembaca.
+            </p>
         </div>
         @endif
 
@@ -69,13 +88,16 @@
                     <thead class="table-light">
                         <tr>
                             <th>No</th>
+
                             @if($tab == 'rfid')
                                 <th>Nama Siswa</th>
-                                <th>UID</th>
+                                <th>UID RFID</th>
+                                <th>Status</th>
                             @else
                                 <th>Nama Wali</th>
                                 <th>ID Fingerprint</th>
                             @endif
+
                             <th class="col-aksi">Aksi</th>
                         </tr>
                     </thead>
@@ -84,32 +106,94 @@
                         <tr>
                             <td>{{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}</td>
                             @if($tab == 'rfid')
-                                <td>{{ $item->nama_siswa }}</td>
-                                <td>{{ $item->rfid_uid ?? '-' }}</td>
+
+                                {{-- NAMA SISWA --}}
                                 <td>
-                                    <form action="{{ route('iot.destroy', ['tab' => 'rfid', 'id' => $item->id_siswa]) }}" method="POST" style="display:inline;">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Yakin hapus?')">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </form>
+                                    {{ $item->nama_siswa }}
                                 </td>
-                            @else
-                                <td>{{ $item->nama_wali }}</td>
-                                <td>{{ $item->fingerprint_id ?? '-' }}</td>
+                                {{-- UID RFID --}}
                                 <td>
-                                    <form action="{{ route('iot.destroy', ['tab' => 'sidik-jari', 'id' => $item->id_wali]) }}" method="POST" style="display:inline;">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Yakin hapus?')">
-                                            <i class="fa fa-trash"></i>
+                                    @if($item->rfid_uid)
+
+                                        <span class="uid-rfid">
+                                            {{ $item->rfid_uid }}
+                                        </span>
+
+                                    @else
+
+                                        <span class="text-muted">
+                                            Belum ada
+                                        </span>
+
+                                    @endif
+                                </td>
+                                {{-- STATUS --}}
+                                <td>
+                                    @if($item->rfid_uid)
+
+                                        <span class="badge status-terdaftar">
+                                            Terdaftar
+                                        </span>
+
+                                    @else
+
+                                        <span class="badge status-belum">
+                                            Belum Terdaftar
+                                        </span>
+
+                                    @endif
+                                </td>
+                                {{-- AKSI --}}
+                                <td>
+                                    @if(!$item->rfid_uid)
+                                        <button
+                                            type="button"
+                                            class="btn btn-daftar-rfid btn-sm"
+                                            data-id="{{ $item->id_siswa }}"
+                                            data-nama="{{ $item->nama_siswa }}"
+                                        >
+                                            <i class="fa fa-plus me-1"></i>
+                                            Daftarkan
                                         </button>
-                                    </form>
+                                    @else
+
+                                        <form
+                                            action="{{ route('iot.destroy', [
+                                                'tab' => 'rfid',
+                                                'id' => $item->id_siswa
+                                            ]) }}"
+                                            method="POST"
+                                            class="d-inline"
+                                        >
+
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button
+                                                type="submit"
+                                                class="btn btn-lepas-rfid btn-sm"
+                                                onclick="return confirm(
+                                                    'Apakah Anda yakin ingin melepaskan RFID dari {{ $item->nama_siswa }}?'
+                                                )"
+                                            >
+                                                <i class="fa fa-unlink me-1"></i>
+                                                Lepas RFID
+                                            </button>
+
+                                        </form>
+
+                                    @endif
                                 </td>
                             @endif
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="text-center">Tidak ada data</td>
+                            <td
+                                colspan="{{ $tab == 'rfid' ? 5 : 4 }}"
+                                class="text-center"
+                            >
+                                Tidak ada data
+                            </td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -169,7 +253,120 @@
 
     </div>
 </div>
+{{-- MODAL DAFTARKAN RFID --}}
+<div class="modal fade"
+     id="registerRfidModal"
+     tabindex="-1"
+     aria-hidden="true">
 
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <form method="POST"
+                  action="{{ route('iot.rfid.register') }}">
+
+                @csrf
+
+                {{-- HEADER --}}
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+                        Daftarkan RFID
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                    </button>
+
+                </div>
+
+
+                {{-- BODY --}}
+                <div class="modal-body">
+
+                    {{-- ID SISWA --}}
+                    <input type="hidden"
+                           name="id_siswa"
+                           id="modalSiswaId">
+
+
+                    {{-- UID RFID --}}
+                    <input type="hidden"
+                           name="uid_rfid"
+                           id="modalRfidUid">
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label text-muted">
+                            Nama Siswa
+                        </label>
+
+                        <div class="modal-data-value"
+                             id="modalNamaSiswa">
+                            -
+                        </div>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label text-muted">
+                            UID RFID
+                        </label>
+
+                        <div class="modal-data-value uid-modal"
+                             id="modalUidDisplay">
+                            -
+                        </div>
+
+                    </div>
+
+
+                    <div class="alert alert-light border mb-0">
+
+                        <i class="fa fa-info-circle me-1"></i>
+
+                        Pastikan kartu RFID dan siswa yang dipilih
+                        sudah sesuai sebelum menyimpan.
+
+                    </div>
+
+                </div>
+
+
+                {{-- FOOTER --}}
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-light"
+                            data-bs-dismiss="modal">
+
+                        Batal
+
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-simpan-rfid">
+
+                        <i class="fa fa-check me-1"></i>
+                        Daftarkan RFID
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
 {{-- SEARCH JS --}}
 <script>
     const searchInput = document.getElementById("searchInput");
@@ -197,49 +394,125 @@
     });
 </script>
 
-{{-- 🔥 RFID & FINGERPRINT REALTIME JS --}}
+{{-- RFID REALTIME JS --}}
 <script>
-let lastRFID = null;
-let lastFingerprint = null;
+    let lastRFID = null;
 
-function loadRFID(){
-    fetch('/admin/latest-rfid')
-    .then(res => res.json())
-    .then(data => {
-        if(data && data.uid_rfid){
-            document.getElementById('rfidUID').innerText = data.uid_rfid;
-            if(lastRFID !== data.uid_rfid){
+    function loadRFID() {
+        fetch('/admin/latest-rfid')
+            .then(res => res.json())
+            .then(data => {
+
+                if (!data || !data.uid_rfid) {
+                    return;
+                }
+
+                // Tampilkan UID
+                document.getElementById('rfidUID').innerText =
+                    data.uid_rfid;
+
+                // Simpan UID terakhir
                 lastRFID = data.uid_rfid;
-                searchInput.value = data.uid_rfid;
-                filterTable(data.uid_rfid);
-            }
-        }
-    })
-    .catch(error => { console.error('RFID Error:', error); });
-}
 
-function loadFingerprint(){
-    fetch('/admin/latest-fingerprint')
-    .then(res => res.json())
-    .then(data => {
-        if(data && data.fingerprint_id){
-            document.getElementById('fingerprintID').innerText = data.fingerprint_id;
-            if(lastFingerprint !== data.fingerprint_id){
-                lastFingerprint = data.fingerprint_id;
-                searchInput.value = data.fingerprint_id;
-                filterTable(data.fingerprint_id);
-            }
-        }
-    })
-    .catch(error => { console.error('Fingerprint Error:', error); });
-}
+                const status =
+                    document.getElementById('rfidStatus');
 
-@if($tab == 'rfid')
-    setInterval(loadRFID, 2000);
-    loadRFID();
-@else
-    setInterval(loadFingerprint, 2000);
-    loadFingerprint();
-@endif
+                const instruction =
+                    document.getElementById('rfidInstruction');
+
+                // RFID SUDAH TERDAFTAR
+                if (data.terdaftar) {
+
+                    status.innerHTML = `
+                        <span class="badge bg-success">
+                            Terdaftar
+                        </span>
+                    `;
+
+                    instruction.innerText =
+                        'Kartu RFID terdaftar atas nama ' +
+                        data.nama_siswa + '.';
+
+                }
+
+                // RFID BELUM TERDAFTAR
+                else {
+
+                    status.innerHTML = `
+                        <span class="badge bg-warning text-dark">
+                            Belum Terdaftar
+                        </span>
+                    `;
+
+                    instruction.innerText =
+                        'Pilih siswa pada tabel di bawah untuk mendaftarkan kartu RFID ini.';
+                }
+            })
+            .catch(error => {
+                console.error('RFID Error:', error);
+            });
+    }
+
+
+    @if($tab == 'rfid')
+        setInterval(loadRFID, 2000);
+        loadRFID();
+    @endif
 </script>
+
+
+{{-- MODAL RFID JS --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const buttons =
+        document.querySelectorAll('.btn-daftar-rfid');
+
+    buttons.forEach(function (button) {
+
+        button.addEventListener('click', function () {
+
+            // Belum ada kartu yang terbaca
+            if (!lastRFID) {
+
+                alert(
+                    'Belum ada kartu RFID yang terdeteksi. ' +
+                    'Silakan tempelkan kartu terlebih dahulu.'
+                );
+
+                return;
+            }
+
+            // Ambil siswa dari tombol
+            const siswaId = this.dataset.id;
+            const namaSiswa = this.dataset.nama;
+
+            // Isi modal
+            document.getElementById('modalSiswaId').value =
+                siswaId;
+
+            document.getElementById('modalNamaSiswa').innerText =
+                namaSiswa;
+
+            document.getElementById('modalRfidUid').value =
+                lastRFID;
+
+            document.getElementById('modalUidDisplay').innerText =
+                lastRFID;
+
+            // Tampilkan modal
+            const modalElement =
+                document.getElementById('registerRfidModal');
+
+            const modal =
+                bootstrap.Modal.getOrCreateInstance(
+                    modalElement
+                );
+
+            modal.show();
+        });
+    });
+});
+</script>
+
 @endsection

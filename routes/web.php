@@ -147,6 +147,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     // IOT
     Route::get('/status-perangkat', [IoTController::class, 'statusPerangkat'])->name('status-perangkat');
     Route::get('/iot/{tab?}', [RFIDController::class, 'index'])->name('iot.index');
+    Route::post('/iot/rfid/register', [RFIDController::class, 'registerRfid'])->name('iot.rfid.register');
+    Route::post('/iot/fingerprint/register',[RFIDController::class, 'registerFingerprint'])->name('iot.fingerprint.register');
     Route::delete('/iot/{tab}/{id}', [RFIDController::class, 'destroy'])->name('iot.destroy');
     Route::view('/tambah-data-rfid', 'admin.tambah-data-rfid')->name('tambah-data-rfid');
     Route::get('/latest-rfid', [RFIDController::class, 'latestRFID']);

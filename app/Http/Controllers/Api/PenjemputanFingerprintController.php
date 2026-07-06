@@ -142,6 +142,8 @@ class PenjemputanFingerprintController extends Controller
                     'id_wali' => $penjemput->id_wali,
                     'tanggal' => now()->toDateString(),
                     'jam_jemput' => now()->toTimeString(),
+                    'status' => 'Dijemput',
+                    'metode' => 'Fingerprint',
                 ]);
 
                 // =========================

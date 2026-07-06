@@ -322,3 +322,226 @@ button.btn-danger {
     }
 
 }
+
+/* =========================
+   UID RFID
+========================= */
+
+.uid-rfid {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+
+/* =========================
+   STATUS RFID
+========================= */
+
+.status-terdaftar,
+.status-belum {
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 7px 12px;
+    border-radius: 20px;
+}
+
+.status-terdaftar {
+    background-color: #e7f6ef;
+    color: #198754;
+}
+
+.status-belum {
+    background-color: #f1f1f4;
+    color: #6c757d;
+}
+
+
+/* =========================
+   AKSI RFID
+========================= */
+
+.btn-daftar-rfid,
+.btn-lepas-rfid {
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    border-radius: 6px;
+    padding: 6px 12px;
+}
+
+.btn-daftar-rfid {
+    background-color: #6f42c1;
+    color: #fff;
+    border: none;
+}
+
+.btn-daftar-rfid:hover {
+    background-color: #5d35a8;
+    color: #fff;
+}
+
+.btn-lepas-rfid {
+    background-color: #fff;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+.btn-lepas-rfid:hover {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* =====================================
+   MODAL REGISTRASI RFID
+===================================== */
+
+#registerRfidModal .modal-content {
+    border: none;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+#registerRfidModal .modal-header {
+    border-bottom: 1px solid #f1f1f4;
+    padding: 18px 20px;
+}
+
+#registerRfidModal .modal-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #374151;
+}
+
+#registerRfidModal .modal-body {
+    padding: 20px;
+}
+
+#registerRfidModal .modal-footer {
+    border-top: 1px solid #f1f1f4;
+    padding: 14px 20px;
+}
+
+.modal-data-value {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 10px 12px;
+
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.uid-modal {
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    color: #6f42c1;
+}
+
+.btn-simpan-rfid {
+    background: #6f42c1;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.btn-simpan-rfid:hover {
+    background: #5a32a3;
+    color: #fff;
+}
+
+/* =========================
+   STATUS FINGERPRINT
+========================= */
+
+.status-fingerprint-terdaftar,
+.status-fingerprint-belum {
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 7px 12px;
+    border-radius: 20px;
+}
+
+.status-fingerprint-terdaftar {
+    background-color: #e7f6ef;
+    color: #198754;
+}
+
+.status-fingerprint-belum {
+    background-color: #f1f1f4;
+    color: #6c757d;
+}
+
+
+/* =========================
+   AKSI FINGERPRINT
+========================= */
+
+.btn-daftar-fingerprint,
+.btn-lepas-fingerprint {
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    border-radius: 6px;
+    padding: 6px 12px;
+}
+
+.btn-daftar-fingerprint {
+    background-color: #6f42c1;
+    color: #fff;
+    border: none;
+}
+
+.btn-daftar-fingerprint:hover {
+    background-color: #5d35a8;
+    color: #fff;
+}
+
+.btn-lepas-fingerprint {
+    background-color: #fff;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+.btn-lepas-fingerprint:hover {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+
+/* =====================================
+   MODAL REGISTRASI FINGERPRINT
+===================================== */
+
+#modalDaftarFingerprint .modal-content {
+    border: none;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+#modalDaftarFingerprint .modal-header {
+    border-bottom: 1px solid #f1f1f4;
+    padding: 18px 20px;
+}
+
+#modalDaftarFingerprint .modal-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #374151;
+}
+
+#modalDaftarFingerprint .modal-body {
+    padding: 20px;
+}
+
+#modalDaftarFingerprint .modal-footer {
+    border-top: 1px solid #f1f1f4;
+    padding: 14px 20px;
+}
