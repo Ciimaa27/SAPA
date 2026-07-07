@@ -5,9 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use App\Services\FonnteService;
 class DataPenjemputanController extends Controller
 {
+    protected $fonnte;
+
+    public function __construct(FonnteService $fonnte)
+    {
+        $this->fonnte = $fonnte;
+    }
     /*
     |--------------------------------------------------------------------------
     | HALAMAN DATA PENJEMPUTAN
@@ -138,100 +144,214 @@ class DataPenjemputanController extends Controller
     */
     public function updateStatus(Request $request)
     {
-        /*
-        |--------------------------------------------------------------------------
-        | VALIDASI
-        |--------------------------------------------------------------------------
-        */
         $request->validate([
             'id_siswa' => 'required',
             'tanggal'  => 'required|date',
             'status'   => ['required', 'in:Menunggu,Dijemput'],
-            /* id_wali wajib jika status Dijemput */
             'id_wali'  => ['nullable', 'required_if:status,Dijemput'],
         ]);
 
-        /*
-        |--------------------------------------------------------------------------
-        | CEK PENJEMPUTAN YANG SUDAH ADA
-        |--------------------------------------------------------------------------
-        */
+        // =========================================
+        // CEK DATA PENJEMPUTAN
+        // =========================================
+
         $penjemputan = DB::table('penjemputan')
             ->where('id_siswa', $request->id_siswa)
             ->whereDate('tanggal', $request->tanggal)
             ->first();
 
-        /*
-        |--------------------------------------------------------------------------
-        | STATUS DIJEMPUT
-        |--------------------------------------------------------------------------
-        */
+        // Menentukan apakah WA perlu dikirim
+        $kirimNotif = false;
+
+
+        // =========================================
+        // STATUS DIJEMPUT
+        // =========================================
+
         if ($request->status === 'Dijemput') {
-            /*
-            |--------------------------------------------------------------------------
-            | VALIDASI RELASI SISWA DAN WALI
-            |--------------------------------------------------------------------------
-            | Memastikan wali yang dipilih memang terhubung dengan siswa tersebut.
-            */
+
+            // Pastikan wali memang terhubung dengan siswa
             $relasi = DB::table('siswa_wali')
                 ->where('id_siswa', $request->id_siswa)
                 ->where('id_wali', $request->id_wali)
                 ->first();
 
             if (!$relasi) {
-                return back()->with('error', 'Penjemput tidak terdaftar sebagai wali siswa.');
+                return back()->with(
+                    'error',
+                    'Penjemput tidak terdaftar sebagai wali siswa.'
+                );
             }
 
-            /*
-            |--------------------------------------------------------------------------
-            | JIKA DATA SUDAH ADA
-            |--------------------------------------------------------------------------
-            */
+
+            // =====================================
+            // DATA SUDAH ADA
+            // =====================================
+
             if ($penjemputan) {
+
+                // Kirim WA hanya jika sebelumnya belum Dijemput
+                if ($penjemputan->status !== 'Dijemput') {
+                    $kirimNotif = true;
+                }
+
                 DB::table('penjemputan')
                     ->where('id', $penjemputan->id)
                     ->update([
-                        'id_wali'    => $request->id_wali,
-                        'status'     => 'Dijemput',
+                        'id_wali' => $request->id_wali,
+                        'status' => 'Dijemput',
                         'jam_jemput' => now()->format('H:i:s'),
+                        'metode' => 'manual',
                     ]);
-            }
-            /*
-            |--------------------------------------------------------------------------
-            | JIKA DATA BELUM ADA
-            |--------------------------------------------------------------------------
-            */
-            else {
+
+            } else {
+
+                // =================================
+                // DATA BELUM ADA
+                // =================================
+
                 DB::table('penjemputan')->insert([
-                    'id_siswa'   => $request->id_siswa,
-                    'id_wali'    => $request->id_wali,
-                    'tanggal'    => $request->tanggal,
+                    'id_siswa' => $request->id_siswa,
+                    'id_wali' => $request->id_wali,
+                    'tanggal' => $request->tanggal,
                     'jam_jemput' => now()->format('H:i:s'),
-                    'status'     => 'Dijemput',
+                    'status' => 'Dijemput',
+                    'metode' => 'manual',
                 ]);
+
+                $kirimNotif = true;
             }
-        }
-        /*
-        |--------------------------------------------------------------------------
-        | STATUS MENUNGGU
-        |--------------------------------------------------------------------------
-        */
-        else {
-            /*
-            | Jika sebelumnya sudah ada data penjemputan,
-            | ubah status menjadi Menunggu.
-            */
+
+
+            // =====================================
+            // KIRIM NOTIFIKASI WA
+            // =====================================
+
+            if ($kirimNotif) {
+
+                // Ambil data siswa
+                $siswa = DB::table('siswa')
+                    ->where('id_siswa', $request->id_siswa)
+                    ->first();
+
+
+                // Ambil data penjemput
+                $penjemput = DB::table('wali')
+                    ->join(
+                        'siswa_wali',
+                        'wali.id_wali',
+                        '=',
+                        'siswa_wali.id_wali'
+                    )
+                    ->where(
+                        'wali.id_wali',
+                        $request->id_wali
+                    )
+                    ->where(
+                        'siswa_wali.id_siswa',
+                        $request->id_siswa
+                    )
+                    ->select(
+                        'wali.nama_wali',
+                        'siswa_wali.hubungan'
+                    )
+                    ->first();
+
+
+                // Ambil semua wali tujuan
+                $waliTujuan = DB::table('siswa_wali')
+                    ->join(
+                        'wali',
+                        'siswa_wali.id_wali',
+                        '=',
+                        'wali.id_wali'
+                    )
+                    ->where(
+                        'siswa_wali.id_siswa',
+                        $request->id_siswa
+                    )
+                    ->whereNotNull('wali.no_hp')
+                    ->select(
+                        'wali.id_wali',
+                        'wali.id_user',
+                        'wali.nama_wali',
+                        'wali.no_hp'
+                    )
+                    ->get();
+
+
+                foreach ($waliTujuan as $wali) {
+
+                    // Format sama dengan fingerprint
+                    $pesan =
+                        "Assalamu'alaikum Wr. Wb.\n"
+                        . "Yth. Bapak/Ibu {$wali->nama_wali},\n\n"
+                        . "Kami informasikan bahwa {$siswa->nama_siswa} "
+                        . "telah dijemput oleh {$penjemput->nama_wali} "
+                        . "({$penjemput->hubungan}) "
+                        . "pada pukul "
+                        . now()->format('H:i')
+                        . ".\n\n"
+                        . "Terima kasih.";
+
+
+                    // Kirim WA
+                    $hasil = $this->fonnte->kirim(
+                        $wali->no_hp,
+                        $pesan
+                    );
+
+
+                    // Simpan notifikasi jika wali punya akun
+                    if ($wali->id_user) {
+
+                        DB::table('notifikasi')->insert([
+                            'id_user' => $wali->id_user,
+                            'id_siswa' => $request->id_siswa,
+                            'id_wali' => $wali->id_wali,
+                            'judul' => 'Informasi Penjemputan',
+                            'pesan' => $pesan,
+                            'tipe' => 'penjemputan',
+                            'status' => 'terkirim',
+                            'is_pushed' => 1,
+                            'tipe_notif' => 'wa',
+
+                            'status_wa' =>
+                                isset($hasil['status'])
+                                && $hasil['status']
+                                    ? 'sukses'
+                                    : 'gagal',
+
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ]);
+                    }
+                }
+            }
+
+        } else {
+
+            // =========================================
+            // STATUS MENUNGGU
+            // =========================================
+
             if ($penjemputan) {
+
                 DB::table('penjemputan')
                     ->where('id', $penjemputan->id)
                     ->update([
-                        'status'     => 'Menunggu',
-                        'id_wali'    => null,
+                        'status' => 'Menunggu',
+                        'id_wali' => null,
                         'jam_jemput' => null,
+                        'metode' => 'manual',
                     ]);
             }
         }
 
-        return back()->with('success', 'Status penjemputan berhasil diperbarui.');
+
+        return back()->with(
+            'success',
+            'Status penjemputan berhasil diperbarui.'
+        );
     }
 }
