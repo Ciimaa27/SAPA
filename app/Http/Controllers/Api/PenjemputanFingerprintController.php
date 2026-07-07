@@ -27,6 +27,7 @@ class PenjemputanFingerprintController extends Controller
         $uid = strtoupper(trim($request->uid));
         $fingerprintId = $request->id_jari;
 
+
         // =========================
         // CARI SISWA
         // =========================
@@ -44,6 +45,7 @@ class PenjemputanFingerprintController extends Controller
                 'kelas.nama_kelas'
             )
             ->first();
+
 
         // =========================
         // RFID TIDAK DITEMUKAN
@@ -66,6 +68,7 @@ class PenjemputanFingerprintController extends Controller
                 'pesan' => 'RFID siswa tidak terdaftar',
             ], 404);
         }
+
 
         // =========================
         // CARI PENJEMPUT
@@ -95,6 +98,7 @@ class PenjemputanFingerprintController extends Controller
             )
             ->first();
 
+
         // =========================
         // FINGERPRINT TIDAK COCOK
         // =========================
@@ -117,6 +121,7 @@ class PenjemputanFingerprintController extends Controller
             ], 404);
         }
 
+
         try {
 
             // =========================
@@ -124,27 +129,96 @@ class PenjemputanFingerprintController extends Controller
             // =========================
 
             $sudahJemput = DB::table('penjemputan')
-                ->where('id_siswa', $siswa->id_siswa)
+                ->where(
+                    'id_siswa',
+                    $siswa->id_siswa
+                )
                 ->whereDate(
                     'tanggal',
                     now()->toDateString()
                 )
+                ->where(
+                    'status',
+                    'Dijemput'
+                )
                 ->exists();
 
+
             // =========================
-            // SIMPAN PENJEMPUTAN
+            // BELUM DIJEMPUT
             // =========================
 
             if (!$sudahJemput) {
 
-                DB::table('penjemputan')->insert([
-                    'id_siswa' => $siswa->id_siswa,
-                    'id_wali' => $penjemput->id_wali,
-                    'tanggal' => now()->toDateString(),
-                    'jam_jemput' => now()->toTimeString(),
-                    'status' => 'Dijemput',
-                    'metode' => 'Fingerprint',
-                ]);
+                // =========================
+                // CEK DATA HARI INI
+                // =========================
+
+                $dataHariIni = DB::table('penjemputan')
+                    ->where(
+                        'id_siswa',
+                        $siswa->id_siswa
+                    )
+                    ->whereDate(
+                        'tanggal',
+                        now()->toDateString()
+                    )
+                    ->first();
+
+
+                // =========================
+                // UPDATE JIKA SUDAH ADA
+                // =========================
+
+                if ($dataHariIni) {
+
+                    DB::table('penjemputan')
+                        ->where(
+                            'id',
+                            $dataHariIni->id
+                        )
+                        ->update([
+                            'id_wali' =>
+                                $penjemput->id_wali,
+
+                            'jam_jemput' =>
+                                now()->toTimeString(),
+
+                            'status' =>
+                                'Dijemput',
+
+                            'metode' =>
+                                'Fingerprint',
+                        ]);
+
+                } else {
+
+                    // =========================
+                    // INSERT DATA BARU
+                    // =========================
+
+                    DB::table('penjemputan')
+                        ->insert([
+                            'id_siswa' =>
+                                $siswa->id_siswa,
+
+                            'id_wali' =>
+                                $penjemput->id_wali,
+
+                            'tanggal' =>
+                                now()->toDateString(),
+
+                            'jam_jemput' =>
+                                now()->toTimeString(),
+
+                            'status' =>
+                                'Dijemput',
+
+                            'metode' =>
+                                'Fingerprint',
+                        ]);
+                }
+
 
                 // =========================
                 // AMBIL SEMUA WALI SISWA
@@ -161,13 +235,17 @@ class PenjemputanFingerprintController extends Controller
                         'siswa_wali.id_siswa',
                         $siswa->id_siswa
                     )
-                    ->whereNotNull('wali.no_hp')
+                    ->whereNotNull(
+                        'wali.no_hp'
+                    )
                     ->select(
                         'wali.id_wali',
+                        'wali.id_user',
                         'wali.nama_wali',
                         'wali.no_hp'
                     )
                     ->get();
+
 
                 // =========================
                 // KIRIM WA
@@ -186,35 +264,68 @@ class PenjemputanFingerprintController extends Controller
                         . ".\n\n"
                         . "Terima kasih.";
 
+
+                    // =========================
+                    // KIRIM KE FONNTE
+                    // =========================
+
                     $hasil = $this->fonnte->kirim(
                         $wali->no_hp,
                         $pesan
                     );
 
+
                     // =========================
                     // SIMPAN NOTIFIKASI
                     // =========================
 
-                    DB::table('notifikasi')->insert([
-                        'id_user' => null,
-                        'id_siswa' => $siswa->id_siswa,
-                        'id_wali' => $wali->id_wali,
-                        'judul' => 'Informasi Penjemputan',
-                        'pesan' => $pesan,
-                        'tipe' => 'penjemputan',
-                        'status' => 'terkirim',
-                        'is_pushed' => 1,
-                        'tipe_notif' => 'wa',
-                        'status_wa' =>
-                            isset($hasil['status'])
-                            && $hasil['status']
-                                ? 'sukses'
-                                : 'gagal',
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]);
+                    if ($wali->id_user) {
+
+                        DB::table('notifikasi')
+                            ->insert([
+                                'id_user' =>
+                                    $wali->id_user,
+
+                                'id_siswa' =>
+                                    $siswa->id_siswa,
+
+                                'id_wali' =>
+                                    $wali->id_wali,
+
+                                'judul' =>
+                                    'Informasi Penjemputan',
+
+                                'pesan' =>
+                                    $pesan,
+
+                                'tipe' =>
+                                    'penjemputan',
+
+                                'status' =>
+                                    'terkirim',
+
+                                'is_pushed' =>
+                                    1,
+
+                                'tipe_notif' =>
+                                    'wa',
+
+                                'status_wa' =>
+                                    isset($hasil['status'])
+                                    && $hasil['status']
+                                        ? 'sukses'
+                                        : 'gagal',
+
+                                'created_at' =>
+                                    now(),
+
+                                'updated_at' =>
+                                    now(),
+                            ]);
+                    }
                 }
             }
+
 
             // =========================
             // SIMPAN LOG TAP
@@ -223,23 +334,39 @@ class PenjemputanFingerprintController extends Controller
             DB::table('log_tap')->insert([
                 'id_device' => 2,
                 'uid_rfid' => $uid,
-                'fingerprint_id' => $fingerprintId,
-                'keterangan' => 'scan fingerprint',
-                'status' => 'berhasil',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'fingerprint_id' =>
+                    $fingerprintId,
+
+                'keterangan' =>
+                    'scan fingerprint',
+
+                'status' =>
+                    'berhasil',
+
+                'created_at' =>
+                    now(),
+
+                'updated_at' =>
+                    now(),
             ]);
+
 
             // =========================
             // RESPONSE ESP32
             // =========================
 
             return response()->json([
-                'status' => 'berhasil',
-                'sudah_dijemput' => $sudahJemput,
+                'status' =>
+                    'berhasil',
 
-                'nama_siswa' => $siswa->nama_siswa,
-                'kelas' => $siswa->nama_kelas ?? '-',
+                'sudah_dijemput' =>
+                    $sudahJemput,
+
+                'nama_siswa' =>
+                    $siswa->nama_siswa,
+
+                'kelas' =>
+                    $siswa->nama_kelas ?? '-',
 
                 'nama_penjemput' =>
                     $penjemput->nama_wali,
@@ -254,10 +381,13 @@ class PenjemputanFingerprintController extends Controller
                     now()->format('H:i:s'),
             ]);
 
+
         } catch (Throwable $e) {
 
             return response()->json([
-                'status' => 'gagal',
+                'status' =>
+                    'gagal',
+
                 'pesan' =>
                     'Gagal menyimpan penjemputan',
 

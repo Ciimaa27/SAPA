@@ -39,35 +39,66 @@
                     <thead class="table-light">
                         <tr>
                             <th>Waktu</th>
-                            <th>ID Scan</th>
-                            <th>Nama</th>
-                            <th>Jenis perangkat</th>
-                            <th>Peran</th>
+                            <th>ID Fingerprint</th>
+                            <th>Nama Siswa</th>
+                            <th>Penjemput</th>
+                            <th>Hubungan</th>
+                            <th>Metode</th>
                             <th>Status</th>
                         </tr>
                     </thead>
 
                     <tbody>
+                        @forelse ($logs as $item)
+                            <tr>
+                                <td>
+                                    {{ $item->tanggal }}
+                                    {{ $item->jam_jemput ?? '-' }}
+                                </td>
 
-                        @forelse($logs as $row)
-                        <tr>
-                            <td>{{ $row['waktu'] }}</td>
-                            <td>{{ $row['id_scan'] }}</td>
-                            <td>{{ $row['nama'] }}</td>
-                            <td>{{ $row['alat'] }}</td>
-                            <td>{{ $row['peran'] }}</td>
-                            <td>
-                                <span class="badge-status {{ strtolower(trim($row['status'])) == 'dijemput' ? 'success' : 'danger' }}">
-                                    {{ $row['status'] }}
-                                </span>
-                            </td>
-                        </tr>
+                                <td>
+                                    @if ($item->fingerprint_id)
+                                        {{ $item->fingerprint_id }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+
+                                <td>
+                                    {{ $item->nama_siswa ?? '-' }}
+                                </td>
+
+                                <td>
+                                    {{ $item->nama_wali ?? '-' }}
+                                </td>
+
+                                <td>
+                                    {{ $item->hubungan ?? '-' }}
+                                </td>
+
+                                <td>
+                                    {{ $item->metode ?? '-' }}
+                                </td>
+
+                                <td>
+                                    @if ($item->status === 'Dijemput')
+                                        <span class="status-dijemput">
+                                            Dijemput
+                                        </span>
+                                    @else
+                                        <span class="status-menunggu">
+                                            Menunggu
+                                        </span>
+                                    @endif
+                                </td>
+                            </tr>
                         @empty
-                        <tr>
-                            <td colspan="7" class="text-center text-muted">Tidak ada riwayat penjemputan</td>
-                        </tr>
+                            <tr>
+                                <td colspan="7" class="text-center">
+                                    Belum ada riwayat penjemputan.
+                                </td>
+                            </tr>
                         @endforelse
-
                     </tbody>
 
                 </table>

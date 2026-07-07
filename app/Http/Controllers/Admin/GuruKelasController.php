@@ -7,9 +7,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Guru;
 use Carbon\Carbon;
+use App\Services\FonnteService;
 
 class GuruKelasController extends Controller
 {
+    protected $fonnte;
+
+    public function __construct(FonnteService $fonnte)
+    {
+        $this->fonnte = $fonnte;
+    }
     // ========================
     // HALAMAN GURU
     // ========================
@@ -108,43 +115,67 @@ class GuruKelasController extends Controller
     // ========================
     public function siswaKelas(Request $request, $id)
     {
-        $tanggal = $request->query('tanggal', null);
+        $tanggal = $request->query('tanggal');
 
         if ($tanggal) {
             $tanggal = date('Y-m-d', strtotime($tanggal));
+        } else {
+            // Default selalu hari ini
+            $tanggal = Carbon::today()->toDateString();
         }
 
         $today = Carbon::today()->toDateString();
-        $sevenDaysAgo = Carbon::today()->subDays(6)->toDateString();
+        $sevenDaysAgo = Carbon::today()
+            ->subDays(6)
+            ->toDateString();
 
         $availableDates = DB::table('kehadiran')
-            ->join('siswa', 'kehadiran.id_siswa', '=', 'siswa.id_siswa')
+            ->join(
+                'siswa',
+                'kehadiran.id_siswa',
+                '=',
+                'siswa.id_siswa'
+            )
             ->where('siswa.id_kelas', $id)
-            ->whereBetween('kehadiran.tanggal', [$sevenDaysAgo, $today])
+            ->whereBetween(
+                'kehadiran.tanggal',
+                [$sevenDaysAgo, $today]
+            )
             ->distinct()
             ->orderByDesc('kehadiran.tanggal')
             ->pluck('kehadiran.tanggal');
 
-        if (!$tanggal && $availableDates->isNotEmpty()) {
-            $tanggal = $availableDates->first();
-        }
-
-        if (!$tanggal) {
-            $tanggal = date('Y-m-d');
-        }
-
         $kelas = DB::table('kelas')
-            ->leftJoin('guru', 'kelas.id_guru', '=', 'guru.id_guru')
-            ->select('kelas.id_kelas', 'kelas.nama_kelas', 'kelas.id_guru', 'guru.nama_guru')
+            ->leftJoin(
+                'guru',
+                'kelas.id_guru',
+                '=',
+                'guru.id_guru'
+            )
+            ->select(
+                'kelas.id_kelas',
+                'kelas.nama_kelas',
+                'kelas.id_guru',
+                'guru.nama_guru'
+            )
             ->where('kelas.id_kelas', $id)
             ->first();
 
         $siswa = DB::table('siswa')
             ->leftJoin('kehadiran', function ($join) use ($tanggal) {
-                $join->on('siswa.id_siswa', '=', 'kehadiran.id_siswa')
-                     ->whereDate('kehadiran.tanggal', '=', $tanggal);
+                $join->on(
+                    'siswa.id_siswa',
+                    '=',
+                    'kehadiran.id_siswa'
+                )
+                ->whereDate(
+                    'kehadiran.tanggal',
+                    '=',
+                    $tanggal
+                );
             })
             ->where('siswa.id_kelas', $id)
+            ->where('siswa.is_active', 1)
             ->select(
                 'siswa.id_siswa',
                 'siswa.nis',
@@ -158,7 +189,15 @@ class GuruKelasController extends Controller
             ->orderBy('siswa.nama_siswa')
             ->get();
 
-        return view('admin.siswa-kelas', compact('kelas', 'siswa', 'tanggal', 'availableDates'));
+        return view(
+            'admin.siswa-kelas',
+            compact(
+                'kelas',
+                'siswa',
+                'tanggal',
+                'availableDates'
+            )
+        );
     }
 
     // ========================
@@ -173,30 +212,53 @@ class GuruKelasController extends Controller
         foreach ($status as $id_siswa => $status_hadir) {
 
             $status_hadir = strtolower(trim($status_hadir));
-            $keteranganText = $keterangan[$id_siswa] ?? null;
 
-            $query = DB::table('kehadiran')
+            if ($status_hadir === '') {
+                continue;
+            }
+
+            $keteranganText =
+                $keterangan[$id_siswa] ?? null;
+
+            $kehadiran = DB::table('kehadiran')
                 ->where('id_siswa', $id_siswa)
-                ->where('tanggal', $tanggal);
+                ->where('tanggal', $tanggal)
+                ->first();
 
-            $kehadiran = $query->first();
+
+            // Apakah perlu kirim WA?
+            $kirimNotif = false;
+
+
+            // =================================
+            // DATA SUDAH ADA
+            // =================================
 
             if ($kehadiran) {
-                $updateData = [];
 
-                if ($status_hadir !== '') {
-                    $updateData['status_hadir'] = $status_hadir;
+                // kirim notif hanya kalau status berubah
+                if (
+                    strtolower($kehadiran->status_hadir)
+                    !== $status_hadir
+                ) {
+                    $kirimNotif = true;
                 }
 
-                if ($keteranganText !== null) {
-                    $updateData['keterangan'] = $keteranganText;
-                }
+                DB::table('kehadiran')
+                    ->where('id_siswa', $id_siswa)
+                    ->where('tanggal', $tanggal)
+                    ->update([
+                        'status_hadir' => $status_hadir,
+                        'keterangan' => $keteranganText,
+                    ]);
 
-                if (!empty($updateData)) {
-                    $query->update($updateData);
-                }
+            }
 
-            } elseif ($status_hadir !== '') {
+            // =================================
+            // DATA BELUM ADA
+            // =================================
+
+            else {
 
                 DB::table('kehadiran')->insert([
                     'id_siswa' => $id_siswa,
@@ -206,11 +268,117 @@ class GuruKelasController extends Controller
                     'status_hadir' => $status_hadir,
                     'keterangan' => $keteranganText,
                 ]);
+
+                $kirimNotif = true;
+            }
+
+
+            // =================================
+            // KIRIM NOTIFIKASI
+            // =================================
+
+            if ($kirimNotif) {
+
+                $siswa = DB::table('siswa')
+                    ->where('id_siswa', $id_siswa)
+                    ->first();
+
+                $waliTujuan = DB::table('siswa_wali')
+                    ->join(
+                        'wali',
+                        'siswa_wali.id_wali',
+                        '=',
+                        'wali.id_wali'
+                    )
+                    ->where(
+                        'siswa_wali.id_siswa',
+                        $id_siswa
+                    )
+                    ->whereNotNull('wali.no_hp')
+                    ->select(
+                        'wali.id_wali',
+                        'wali.id_user',
+                        'wali.nama_wali',
+                        'wali.no_hp'
+                    )
+                    ->get();
+
+
+                foreach ($waliTujuan as $wali) {
+                    $statusLabel = ucfirst($status_hadir);
+                    if ($status_hadir === 'hadir') {
+                        $pesan =
+                            "Assalamu'alaikum Wr. Wb.\n"
+                            . "Yth. Bapak/Ibu {$wali->nama_wali},\n\n"
+                            . "Kami informasikan bahwa {$siswa->nama_siswa} "
+                            . "telah melakukan absensi masuk sekolah "
+                            . "pada pukul "
+                            . now()->format('H:i')
+                            . ".\n\n"
+                            . "Terima kasih.";
+
+                    } else {
+
+                        $pesan =
+                            "Assalamu'alaikum Wr. Wb.\n"
+                            . "Yth. Bapak/Ibu {$wali->nama_wali},\n\n"
+                            . "Kami informasikan bahwa {$siswa->nama_siswa} "
+                            . "memiliki status kehadiran {$statusLabel} "
+                            . "pada tanggal "
+                            . Carbon::parse($tanggal)->format('d-m-Y')
+                            . ".";
+
+                        if ($keteranganText) {
+                            $pesan .=
+                                "\nKeterangan: {$keteranganText}";
+                        }
+
+                        $pesan .=
+                            "\n\nTerima kasih.";
+                    }
+
+                    // KIRIM WA
+                    $hasil = $this->fonnte->kirim(
+                        $wali->no_hp,
+                        $pesan
+                    );
+
+
+                    // SIMPAN NOTIFIKASI
+                    // hanya jika wali punya akun
+                    if ($wali->id_user) {
+
+                        DB::table('notifikasi')->insert([
+                            'id_user' => $wali->id_user,
+                            'id_siswa' => $id_siswa,
+                            'id_wali' => $wali->id_wali,
+                            'judul' => 'Informasi Kehadiran',
+                            'pesan' => $pesan,
+                            'tipe' => 'kehadiran',
+                            'status' => 'terkirim',
+                            'is_pushed' => 1,
+                            'tipe_notif' => 'wa',
+
+                            'status_wa' =>
+                                isset($hasil['status'])
+                                && $hasil['status']
+                                    ? 'sukses'
+                                    : 'gagal',
+
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ]);
+                    }
+                }
             }
         }
 
-        return redirect()->back()
-            ->with('success', 'Data kehadiran berhasil disimpan');
+        return redirect()
+            ->back()
+            ->with(
+                'success',
+                'Data kehadiran berhasil disimpan'
+            );
     }
 
     // ========================
