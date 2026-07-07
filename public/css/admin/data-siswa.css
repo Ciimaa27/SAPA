@@ -329,4 +329,22 @@ body{
     margin-left: 4px;
 }
 
+.popup-success {
+    border-radius: 5px !important;
+}
+
+.popup-title {
+    font-size: 32px !important;
+    font-weight: 600 !important;
+}
+
+.popup-text {
+    font-size: 20px !important;
+}
+
+.popup-button {
+    padding: 12px 24px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+}
 

@@ -11,56 +11,118 @@ use Carbon\Carbon;
 class GuruKelasController extends Controller
 {
     // ========================
-    // HALAMAN GURU
+// HALAMAN GURU
+// ========================
+public function guru(Request $request)
+{
+    $kelasId = $request->query('kelas', null);
+    $search = $request->query('search', null);
+
+    // Load kelas options untuk filter
+    $kelasOptions = DB::table('kelas')
+        ->select('id_kelas', 'nama_kelas', 'id_guru')
+        ->get();
+
+    // Query awal guru
+    $query = Guru::query();
+
     // ========================
-    public function guru(Request $request)
-    {
-        $kelasId = $request->query('kelas', null);
+    // FILTER KELAS
+    // ========================
+    if ($kelasId) {
+        $idGuru = DB::table('kelas')
+            ->where('id_kelas', $kelasId)
+            ->value('id_guru');
 
-        // load kelas options for filter
-        $kelasOptions = DB::table('kelas')->select('id_kelas', 'nama_kelas', 'id_guru')->get();
-
-        if ($kelasId) {
-            // find the guru(s) assigned to selected kelas
-            $idGuru = DB::table('kelas')->where('id_kelas', $kelasId)->value('id_guru');
-
-            if ($idGuru) {
-                $guru = Guru::where('id_guru', $idGuru)->paginate(10)->appends(['kelas' => $kelasId]);
-                $total = Guru::where('id_guru', $idGuru)->count();
-            } else {
-                $guru = Guru::whereRaw('0 = 1')->paginate(10);
-                $total = 0;
-            }
+        if ($idGuru) {
+            $query->where('id_guru', $idGuru);
         } else {
-            $guru = Guru::paginate(10);
-            $total = Guru::count();
+            $query->whereRaw('0 = 1');
         }
-
-        return view('admin.guru', compact('guru', 'total', 'kelasOptions', 'kelasId'));
     }
 
     // ========================
-    // HALAMAN KELAS
+    // PENCARIAN
     // ========================
-    public function kelas()
-    {
-        $kelas = DB::table('kelas')
-            ->leftJoin('guru', 'kelas.id_guru', '=', 'guru.id_guru')
-            ->leftJoin('siswa', 'kelas.id_kelas', '=', 'siswa.id_kelas')
-            ->select(
-                'kelas.id_kelas',
+    if ($search) {
+        $query->where(function ($q) use ($search) {
+            $q->where('nama_guru', 'like', '%' . $search . '%')
+              ->orWhere('nip', 'like', '%' . $search . '%')
+              ->orWhere('no_hp', 'like', '%' . $search . '%')
+              ->orWhere('tempat_lahir', 'like', '%' . $search . '%')
+              ->orWhere('tanggal_lahir', 'like', '%' . $search . '%');
+        });
+    }
+
+    // Total hasil sesuai filter dan pencarian
+    $total = (clone $query)->count();
+
+    // Pagination
+    $guru = $query
+        ->paginate(10)
+        ->withQueryString();
+
+    return view('admin.guru', compact(
+        'guru',
+        'total',
+        'kelasOptions',
+        'kelasId'
+    ));
+}
+
+// ========================
+// HALAMAN KELAS
+// ========================
+public function kelas(Request $request)
+{
+    $search = $request->query('search', null);
+
+    $query = DB::table('kelas')
+        ->leftJoin('guru', 'kelas.id_guru', '=', 'guru.id_guru')
+        ->leftJoin('siswa', 'kelas.id_kelas', '=', 'siswa.id_kelas')
+        ->select(
+            'kelas.id_kelas',
+            'kelas.nama_kelas',
+            'kelas.id_guru',
+            'guru.nama_guru',
+            DB::raw('COUNT(siswa.id_siswa) as jumlah_siswa')
+        );
+
+    // ========================
+    // PENCARIAN
+    // ========================
+    if ($search) {
+        $query->where(function ($q) use ($search) {
+            $q->where(
                 'kelas.nama_kelas',
-                'kelas.id_guru',
-                'guru.nama_guru',
-                DB::raw('COUNT(siswa.id_siswa) as jumlah_siswa')
+                'like',
+                '%' . $search . '%'
             )
-            ->groupBy('kelas.id_kelas', 'kelas.nama_kelas', 'kelas.id_guru', 'guru.nama_guru')
-            ->paginate(10);
-
-        $total = DB::table('kelas')->count();
-
-        return view('admin.kelas', compact('kelas', 'total'));
+            ->orWhere(
+                'guru.nama_guru',
+                'like',
+                '%' . $search . '%'
+            );
+        });
     }
+
+    $kelas = $query
+        ->groupBy(
+            'kelas.id_kelas',
+            'kelas.nama_kelas',
+            'kelas.id_guru',
+            'guru.nama_guru'
+        )
+        ->paginate(10)
+        ->withQueryString();
+
+    $total = DB::table('kelas')->count();
+
+    return view('admin.kelas', compact(
+        'kelas',
+        'total'
+    ));
+}
 
     // ========================
     // FORM TAMBAH KELAS

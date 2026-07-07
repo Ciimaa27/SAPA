@@ -17,13 +17,14 @@ class LaporanController extends Controller
 {
     public function index(Request $request)
     {
-        $bulan = $request->bulan ?? now()->format('Y-m');
-        [$tahun, $bulanAngka] = explode('-', $bulan);
+        $tanggal = $request->tanggal ?? now()->format('Y-m-d');
+
         $kelasFilter = $request->filled('kelas') ? $request->kelas : null;
 
         $kelasOptions = Kelas::orderBy('nama_kelas')->get();
 
         $kelasQuery = Kelas::orderBy('nama_kelas');
+
         if ($kelasFilter) {
             $kelasQuery->where('id_kelas', $kelasFilter);
         }
@@ -31,12 +32,10 @@ class LaporanController extends Controller
         $kelas = $kelasQuery->paginate(10)->appends($request->query());
 
         $kehadiranQuery = Kehadiran::join('siswa', 'kehadiran.id_siswa', '=', 'siswa.id_siswa')
-            ->whereYear('kehadiran.tanggal', $tahun)
-            ->whereMonth('kehadiran.tanggal', $bulanAngka);
+            ->whereDate('kehadiran.tanggal', $tanggal);
 
         $penjemputanQuery = Penjemputan::join('siswa', 'penjemputan.id_siswa', '=', 'siswa.id_siswa')
-            ->whereYear('penjemputan.tanggal', $tahun)
-            ->whereMonth('penjemputan.tanggal', $bulanAngka);
+            ->whereDate('penjemputan.tanggal', $tanggal);
 
         if ($kelasFilter) {
             $kehadiranQuery->where('siswa.id_kelas', $kelasFilter);
@@ -53,7 +52,14 @@ class LaporanController extends Controller
             ->select('siswa.id_kelas', DB::raw('COUNT(*) as total'))
             ->pluck('total', 'siswa.id_kelas');
 
-        return view('admin.laporan', compact('kelas', 'kelasOptions', 'bulan', 'kelasFilter', 'kehadiranCounts', 'penjemputanCounts'));
+        return view('admin.laporan', compact(
+            'kelas',
+            'kelasOptions',
+            'tanggal',
+            'kelasFilter',
+            'kehadiranCounts',
+            'penjemputanCounts'
+        ));
     }
 
     public function downloadKehadiran($id_siswa)

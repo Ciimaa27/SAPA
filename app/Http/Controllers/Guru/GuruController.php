@@ -67,25 +67,44 @@ class GuruController extends Controller
         ]);
     }
 
-    public function kehadiran()
-    {
-        // Get paginated kelas with jumlah siswa
-        $kelasList = Kelas::with('guru', 'siswa')
-            ->paginate(10)
-            ->through(function($kelas) {
-                return [
-                    'id_kelas' => $kelas->id_kelas,
-                    'kelas' => $kelas->nama_kelas,
-                    'wali' => $kelas->guru ? $kelas->guru->nama_guru : 'N/A',
-                    'jumlah' => $kelas->siswa()->count(),
-                ];
+public function kehadiran(Request $request)
+{
+    $cari = $request->query('cari');
+
+    $kelasList = Kelas::with(['guru', 'siswa'])
+        ->when($cari, function ($query) use ($cari) {
+            $query->where(function ($q) use ($cari) {
+
+                // Cari nama kelas
+                $q->where('nama_kelas', 'like', '%' . $cari . '%')
+
+                  // Cari nama wali kelas / guru
+                  ->orWhereHas('guru', function ($guru) use ($cari) {
+                      $guru->where(
+                          'nama_guru',
+                          'like',
+                          '%' . $cari . '%'
+                      );
+                  });
             });
+        })
+        ->paginate(10)
+        ->withQueryString()
+        ->through(function ($kelas) {
+            return [
+                'id_kelas' => $kelas->id_kelas,
+                'kelas' => $kelas->nama_kelas,
+                'wali' => $kelas->guru
+                    ? $kelas->guru->nama_guru
+                    : 'N/A',
+                'jumlah' => $kelas->siswa->count(),
+            ];
+        });
 
-        return view('guru.kehadiran', [
-            'data' => $kelasList,
-        ]);
-    }
-
+    return view('guru.kehadiran', [
+        'data' => $kelasList,
+    ]);
+}
     public function detailKehadiran($id_kelas)
     {
         // Get kelas details with guru
@@ -171,24 +190,46 @@ class GuruController extends Controller
         return redirect()->back()->with('success', 'Data kehadiran berhasil disimpan');
     }
 
-    public function dataPenjemputan()
-    {
-        // Get paginated kelas with jumlah siswa
-        $kelasList = Kelas::with('guru', 'siswa')
-            ->paginate(10)
-            ->through(function($kelas) {
-                return [
-                    'id_kelas' => $kelas->id_kelas,
-                    'kelas' => $kelas->nama_kelas,
-                    'wali' => $kelas->guru ? $kelas->guru->nama_guru : 'N/A',
-                    'jumlah' => $kelas->siswa()->count(),
-                ];
-            });
+    public function dataPenjemputan(Request $request)
+{
+    $cari = $request->query('cari');
 
-        return view('guru.data-penjemputan', [
-            'data' => $kelasList,
-        ]);
-    }
+    $kelasList = Kelas::with(['guru', 'siswa'])
+        ->when($cari, function ($query) use ($cari) {
+            $query->where(function ($q) use ($cari) {
+
+                // Cari berdasarkan nama kelas
+                $q->where('nama_kelas', 'like', '%' . $cari . '%')
+
+                  // Cari berdasarkan nama wali kelas
+                  ->orWhereHas('guru', function ($guru) use ($cari) {
+                      $guru->where(
+                          'nama_guru',
+                          'like',
+                          '%' . $cari . '%'
+                      );
+                  });
+
+            });
+        })
+        ->orderBy('nama_kelas')
+        ->paginate(10)
+        ->withQueryString()
+        ->through(function ($kelas) {
+            return [
+                'id_kelas' => $kelas->id_kelas,
+                'kelas' => $kelas->nama_kelas,
+                'wali' => $kelas->guru
+                    ? $kelas->guru->nama_guru
+                    : 'N/A',
+                'jumlah' => $kelas->siswa->count(),
+            ];
+        });
+
+    return view('guru.data-penjemputan', [
+        'data' => $kelasList,
+    ]);
+}
 
     public function penjemputan()
     {

@@ -44,12 +44,24 @@
 
         <!-- TAMPILKAN -->
         <div style="width:170px;">
-            <select id="filterRelasiHubungan" class="form-select form-select-sm">
-                <option value="">Tampilkan</option>
-                <option value="ibu">Ibu</option>
-                <option value="ayah">Ayah</option>
-                <option value="wali">Wali</option>
-            </select>
+<select id="filterRelasiHubungan" class="form-select form-select-sm">
+    <option value="">Tampilkan</option>
+
+    <option value="ibu"
+        {{ request('hubungan') == 'ibu' ? 'selected' : '' }}>
+        Ibu
+    </option>
+
+    <option value="ayah"
+        {{ request('hubungan') == 'ayah' ? 'selected' : '' }}>
+        Ayah
+    </option>
+
+    <option value="wali"
+        {{ request('hubungan') == 'wali' ? 'selected' : '' }}>
+        Wali
+    </option>
+</select>
         </div>
 
         <!-- TAMBAH -->
@@ -64,9 +76,11 @@
                 <i class="fa fa-search"></i>
             </span>
             <input type="text"
-                   id="searchInputRelasi"
-                   class="form-control"
-                   placeholder="Pencarian">
+       id="searchInputRelasi"
+       class="form-control"
+       placeholder="Pencarian"
+       value="{{ request('search') }}"
+       autocomplete="off">
         </div>
 
     </div>
@@ -235,93 +249,224 @@
     </div>
 </div>
 
-<!-- 🔥 SCRIPT SEARCH -->
+<!-- SCRIPT SEARCH, FILTER, PAGINATION, DELETE -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    // =========================
-    // SEARCH DAN FILTER
-    // =========================
+    const input =
+        document.getElementById("searchInputRelasi");
 
-    const input = document.getElementById("searchInputRelasi");
-    const filter = document.getElementById("filterRelasiHubungan");
-
-    function filterRows() {
-
-        const keyword = input.value.toLowerCase();
-        const selectedStatus = filter.value.toLowerCase();
-
-        const rows = document.querySelectorAll(
-            '#dataTableRelasi tbody tr'
-        );
-
-        rows.forEach(function (row) {
-
-            const text = row.textContent.toLowerCase();
-
-            const hubungan =
-                row.querySelector('td:nth-child(5)')
-                ?.textContent
-                .trim()
-                .toLowerCase() ?? '';
-
-            const matchesSearch =
-                text.includes(keyword);
-
-            const matchesFilter =
-                selectedStatus === '' ||
-                hubungan === selectedStatus;
-
-            row.style.display =
-                matchesSearch && matchesFilter
-                    ? ''
-                    : 'none';
-        });
-    }
-
-    input.addEventListener('keyup', filterRows);
-    filter.addEventListener('change', filterRows);
-
-
-    // =========================
-    // POPUP DELETE
-    // =========================
+    const filter =
+        document.getElementById("filterRelasiHubungan");
 
     const confirmModal =
-        document.getElementById('confirmModal');
+        document.getElementById("confirmModal");
 
     const confirmBtn =
-        document.querySelector('.btn-confirm');
+        document.querySelector(".btn-confirm");
 
     const cancelBtn =
-        document.querySelector('.btn-cancel');
+        document.querySelector(".btn-cancel");
 
     const backdrop =
-        document.querySelector('.confirm-modal-backdrop');
+        document.querySelector(".confirm-modal-backdrop");
 
+    let searchTimer;
     let activeForm = null;
 
 
-    document.querySelectorAll('.btn-delete')
-        .forEach(function (button) {
+    // =========================
+    // LOAD DATA RELASI
+    // =========================
+    async function loadRelasi(url = null) {
 
-            button.addEventListener('click', function () {
+        const keyword = input.value.trim();
+        const hubungan = filter.value;
 
-                activeForm =
-                    button.closest('.delete-form');
+        try {
 
-                confirmModal.classList.add('show');
-            });
+            let requestUrl;
 
-        });
+            if (url) {
+
+                requestUrl = new URL(
+                    url,
+                    window.location.origin
+                );
+
+            } else {
+
+                requestUrl = new URL(
+                    "{{ route('relasi.index') }}",
+                    window.location.origin
+                );
+
+                if (keyword !== "") {
+                    requestUrl.searchParams.set(
+                        "search",
+                        keyword
+                    );
+                }
+
+                if (hubungan !== "") {
+                    requestUrl.searchParams.set(
+                        "hubungan",
+                        hubungan
+                    );
+                }
+            }
 
 
-    confirmBtn.addEventListener('click', function () {
+            const response =
+                await fetch(requestUrl.toString());
+
+            const html =
+                await response.text();
+
+            const parser =
+                new DOMParser();
+
+            const doc =
+                parser.parseFromString(
+                    html,
+                    "text/html"
+                );
+
+
+            // =========================
+            // UPDATE TABEL
+            // =========================
+            const newBody =
+                doc.querySelector(
+                    "#dataTableRelasi tbody"
+                );
+
+            const currentBody =
+                document.querySelector(
+                    "#dataTableRelasi tbody"
+                );
+
+            if (newBody && currentBody) {
+
+                currentBody.innerHTML =
+                    newBody.innerHTML;
+            }
+
+
+            // =========================
+            // UPDATE PAGINATION
+            // =========================
+            const newPagination =
+                doc.querySelector(".pagination");
+
+            const currentPagination =
+                document.querySelector(".pagination");
+
+            if (newPagination && currentPagination) {
+
+                currentPagination.innerHTML =
+                    newPagination.innerHTML;
+
+            } else if (
+                !newPagination &&
+                currentPagination
+            ) {
+
+                currentPagination.innerHTML = "";
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Pencarian relasi gagal:",
+                error
+            );
+        }
+    }
+
+
+    // =========================
+    // SEARCH OTOMATIS
+    // =========================
+    input.addEventListener("input", function () {
+
+        clearTimeout(searchTimer);
+
+        searchTimer = setTimeout(function () {
+
+            loadRelasi();
+
+        }, 700);
+
+    });
+
+
+    // =========================
+    // FILTER HUBUNGAN
+    // =========================
+    filter.addEventListener("change", function () {
+
+        clearTimeout(searchTimer);
+
+        loadRelasi();
+
+    });
+
+
+    // =========================
+    // PAGINATION TANPA RELOAD
+    // =========================
+    document.addEventListener("click", function (event) {
+
+        const paginationLink =
+            event.target.closest(
+                ".pagination a.page-link"
+            );
+
+        if (!paginationLink) {
+            return;
+        }
+
+        event.preventDefault();
+
+        loadRelasi(
+            paginationLink.href
+        );
+
+    });
+
+
+    // =========================
+    // BUKA POPUP DELETE
+    // =========================
+    document.addEventListener("click", function (event) {
+
+        const deleteButton =
+            event.target.closest(".btn-delete");
+
+        if (!deleteButton) {
+            return;
+        }
+
+        activeForm =
+            deleteButton.closest(".delete-form");
+
+        confirmModal.classList.add("show");
+
+    });
+
+
+    // =========================
+    // KONFIRMASI DELETE
+    // =========================
+    confirmBtn.addEventListener("click", function () {
 
         if (activeForm) {
 
             confirmBtn.disabled = true;
-            confirmBtn.textContent = 'Menghapus...';
+
+            confirmBtn.textContent =
+                "Menghapus...";
 
             activeForm.submit();
         }
@@ -329,24 +474,29 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
+    // =========================
+    // TUTUP POPUP
+    // =========================
     function closeModal() {
 
-        confirmModal.classList.remove('show');
+        confirmModal.classList.remove("show");
 
         activeForm = null;
     }
 
 
     cancelBtn.addEventListener(
-        'click',
+        "click",
         closeModal
     );
 
+
     backdrop.addEventListener(
-        'click',
+        "click",
         closeModal
     );
 
 });
 </script>
+
 @endsection

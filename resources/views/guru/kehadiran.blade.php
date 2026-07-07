@@ -21,19 +21,32 @@
             <h5 class="mb-0">Daftar Kehadiran Kelas</h5>
         </div>
 
-        <!-- SEARCH -->
-        <div class="card mb-3 p-3">
-            <div class="d-flex align-items-center gap-3">
+<!-- SEARCH -->
+<div class="card mb-3 p-3">
 
-                <div class="input-group input-group-sm search-flex">
-                    <span class="input-group-text bg-white">
-                        <i class="fa fa-search"></i>
-                    </span>
-                    <input type="text" id="searchInputKehadiran" class="form-control" placeholder="Pencarian">
-                </div>
+    <form id="searchFormKehadiran"
+          method="GET"
+          action="{{ url()->current() }}">
 
-            </div>
+        <div class="input-group input-group-sm search-flex">
+
+            <span class="input-group-text bg-white">
+                <i class="fa fa-search"></i>
+            </span>
+
+            <input type="text"
+                   id="searchInputKehadiran"
+                   name="cari"
+                   value="{{ request('cari') }}"
+                   class="form-control"
+                   placeholder="Pencarian"
+                   autocomplete="off">
+
         </div>
+
+    </form>
+
+</div>
 
         <!-- TABLE -->
         <div class="card">
@@ -77,73 +90,73 @@
                 </table>
             </div>
 
-            <div class="pagination-wrapper">
-    <nav>
-        <ul class="pagination mb-0">
+            {{-- PAGINATION --}}
+<div class="pagination-wrapper">
 
-            {{-- PREVIOUS --}}
-            @if ($data->onFirstPage())
-                <li class="page-item disabled">
-                    <span class="page-link">‹</span>
-                </li>
-            @else
-                <li class="page-item">
-                    <a class="page-link"
-                       href="{{ $data->previousPageUrl() }}">
-                        ‹
-                    </a>
-                </li>
-            @endif
+    {{-- PREVIOUS --}}
+    @if ($data->onFirstPage())
+        <span class="page-item-custom disabled">
+            ‹
+        </span>
+    @else
+        <a href="{{ $data->previousPageUrl() }}"
+           class="page-item-custom">
+            ‹
+        </a>
+    @endif
 
+    {{-- NOMOR HALAMAN --}}
+    @foreach ($data->getUrlRange(1, $data->lastPage()) as $page => $url)
 
-            {{-- NOMOR HALAMAN --}}
-            @php
-                $current = $data->currentPage();
-                $last = $data->lastPage();
-            @endphp
+        @if ($page == $data->currentPage())
+            <span class="page-item-custom active">
+                {{ $page }}
+            </span>
+        @else
+            <a href="{{ $url }}"
+               class="page-item-custom">
+                {{ $page }}
+            </a>
+        @endif
 
-            @for ($i = 1; $i <= $last; $i++)
-                <li class="page-item {{ $i == $current ? 'active' : '' }}">
-                    <a class="page-link"
-                       href="{{ $data->url($i) }}">
-                        {{ $i }}
-                    </a>
-                </li>
-            @endfor
+    @endforeach
 
+    {{-- NEXT --}}
+    @if ($data->hasMorePages())
+        <a href="{{ $data->nextPageUrl() }}"
+           class="page-item-custom">
+            ›
+        </a>
+    @else
+        <span class="page-item-custom disabled">
+            ›
+        </span>
+    @endif
 
-            {{-- NEXT --}}
-            @if ($data->hasMorePages())
-                <li class="page-item">
-                    <a class="page-link"
-                       href="{{ $data->nextPageUrl() }}">
-                        ›
-                    </a>
-                </li>
-            @else
-                <li class="page-item disabled">
-                    <span class="page-link">›</span>
-                </li>
-            @endif
-
-        </ul>
-    </nav>
 </div>
 
 {{-- SEARCH SCRIPT --}}
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    let input = document.getElementById("searchInputKehadiran");
 
-    input.addEventListener("keyup", function() {
-        let keyword = this.value.toLowerCase();
-        let rows = document.querySelectorAll("#dataTableKehadiran tbody tr");
+    const searchInput =
+        document.getElementById("searchInputKehadiran");
 
-        rows.forEach(function(row) {
-            let text = row.textContent.toLowerCase();
-            row.style.display = text.includes(keyword) ? "" : "none";
-        });
+    const searchForm =
+        document.getElementById("searchFormKehadiran");
+
+    let typingTimer;
+
+    searchInput.addEventListener("input", function () {
+
+        clearTimeout(typingTimer);
+
+        typingTimer = setTimeout(function () {
+            searchForm.submit();
+        }, 700);
+
     });
+
 });
 </script>
 

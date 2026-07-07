@@ -33,65 +33,80 @@
         </div>
 
                 <!-- FILTER -->
-                <div style="width:180px;">
-                    <form method="GET" action="{{ route('kelola-akun.index') }}">
-                        <select name="role"
-                                class="form-select form-select-sm"
-                                onchange="this.form.submit()">
+<div style="width:180px;">
+    <form method="GET"
+          action="{{ route('kelola-akun.index') }}"
+          id="filterForm">
 
-                            <option value="Admin"
-                                {{ request('role') == 'Admin' ? 'selected' : '' }}>
-                                Admin
-                            </option>
+        <input type="hidden"
+               name="search"
+               value="{{ request('search') }}">
 
-                            <option value="Guru"
-                                {{ request('role') == 'Guru' ? 'selected' : '' }}>
-                                Guru
-                            </option>
+        <select name="role"
+                class="form-select form-select-sm"
+                onchange="this.form.submit()">
 
-                            <option value="Kepala Sekolah"
-                                {{ request('role') == 'Kepala Sekolah' ? 'selected' : '' }}>
-                                Kepala Sekolah
-                            </option>
+            <option value="">Semua Peran</option>
 
-                            <option value="Orang Tua/Wali"
-                                {{ request('role') == 'Orang Tua/Wali' ? 'selected' : '' }}>
-                                Wali
-                            </option>
+            <option value="Admin"
+                {{ request('role') == 'Admin' ? 'selected' : '' }}>
+                Admin
+            </option>
 
-                        </select>
-                    </form>
-                </div>
+            <option value="Guru"
+                {{ request('role') == 'Guru' ? 'selected' : '' }}>
+                Guru
+            </option>
 
-                <!-- TAMBAH -->
-                <a href="{{ route('kelola-akun.create') }}"
-                class="btn-tambah">
-                    Tambah
-                    <i class="fa fa-plus"></i>
-                </a>
+            <option value="Kepala Sekolah"
+                {{ request('role') == 'Kepala Sekolah' ? 'selected' : '' }}>
+                Kepala Sekolah
+            </option>
 
-                <!-- SEARCH -->
+            <option value="Orangtua/Wali"
+                {{ request('role') == 'Orangtua/Wali' ? 'selected' : '' }}>
+                Wali
+            </option>
+
+        </select>
+    </form>
+</div>
+
+
+<!-- TAMBAH -->
+<a href="{{ route('kelola-akun.create') }}"
+   class="btn-tambah">
+    Tambah
+    <i class="fa fa-plus"></i>
+</a>
+
+
+<!-- SEARCH -->
 <form method="GET"
-    action="{{ route('kelola-akun.index') }}"
-    style="flex: 1;">
+      action="{{ route('kelola-akun.index') }}"
+      id="searchFormAkun"
+      style="flex: 1;">
 
     <input type="hidden"
-        name="role"
-        value="{{ request('role') }}">
+           name="role"
+           value="{{ request('role') }}">
 
     <div class="input-group input-group-sm">
+
         <span class="input-group-text bg-white border">
             <i class="fa fa-search"></i>
         </span>
 
         <input type="text"
-            name="search"
-            value="{{ request('search') }}"
-            class="form-control"
-            placeholder="Pencarian">
+               name="search"
+               id="searchInputAkun"
+               value="{{ request('search') }}"
+               class="form-control"
+               placeholder="Pencarian"
+               autocomplete="off">
+
     </div>
 </form>
-
             </div>
         </div>
 
@@ -265,46 +280,113 @@
     </div>
 </div>
 
-<!-- SCRIPT -->
+<!-- SCRIPT SEARCH + DELETE -->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
 
-    const confirmModal = document.getElementById('confirmModal');
-    const confirmBtn   = document.querySelector('.btn-confirm');
-    const cancelBtn    = document.querySelector('.btn-cancel');
+    // ==========================
+    // SEARCH OTOMATIS
+    // ==========================
+    const searchInput = document.getElementById("searchInputAkun");
+    const searchForm = document.getElementById("searchFormAkun");
+
+    let searchTimer;
+
+    if (searchInput && searchForm) {
+
+        searchInput.addEventListener("input", function () {
+
+            clearTimeout(searchTimer);
+
+            searchTimer = setTimeout(function () {
+                searchForm.submit();
+            }, 1000);
+
+        });
+    }
+
+
+    // ==========================
+    // MODAL DELETE
+    // ==========================
+    const confirmModal = document.getElementById("confirmModal");
+    const confirmBtn = document.querySelector(".btn-confirm");
+    const cancelBtn = document.querySelector(".btn-cancel");
+    const backdrop = document.querySelector(".confirm-modal-backdrop");
 
     let activeForm = null;
 
-    // DELETE
-    document.querySelectorAll('.btn-delete').forEach(btn => {
-        btn.addEventListener('click', () => {
-            activeForm = btn.closest('.delete-form');
-            confirmModal.classList.add('show');
+
+    document.querySelectorAll(".btn-delete").forEach(function (btn) {
+
+        btn.addEventListener("click", function () {
+
+            activeForm = btn.closest(".delete-form");
+
+            if (confirmModal) {
+                confirmModal.classList.add("show");
+            }
+
         });
+
     });
 
-    confirmBtn.addEventListener('click', () => {
-        if (activeForm) activeForm.submit();
-    });
 
-    cancelBtn.addEventListener('click', () => {
-        confirmModal.classList.remove('show');
-    });
+    if (confirmBtn) {
 
+        confirmBtn.addEventListener("click", function () {
+
+            if (activeForm) {
+
+                confirmBtn.disabled = true;
+                confirmBtn.textContent = "Menghapus...";
+
+                activeForm.submit();
+            }
+
+        });
+
+    }
+
+
+    function closeModal() {
+
+        if (confirmModal) {
+            confirmModal.classList.remove("show");
+        }
+
+        activeForm = null;
+    }
+
+
+    if (cancelBtn) {
+        cancelBtn.addEventListener("click", closeModal);
+    }
+
+
+    if (backdrop) {
+        backdrop.addEventListener("click", closeModal);
+    }
 
 });
 </script>
+
+
+<!-- SWEETALERT SUCCESS -->
 @if(session('success'))
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        Swal.fire({
-            title: 'Berhasil!',
-            text: '{{ session('success') }}',
-            icon: 'success',
-            confirmButtonText: 'OK',
-            confirmButtonColor: '#198754'
-        });
+document.addEventListener("DOMContentLoaded", function () {
+
+    Swal.fire({
+        title: "Berhasil!",
+        text: @json(session('success')),
+        icon: "success",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#198754"
     });
-    </script>
+
+});
+</script>
 @endif
+
 @endsection

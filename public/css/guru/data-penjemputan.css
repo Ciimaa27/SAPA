@@ -342,3 +342,73 @@
         font-size: 11px;
     }
 }
+
+/* ===========================
+   PAGINATION
+=========================== */
+
+.pagination-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 16px 16px 14px;
+}
+
+.pagination-wrapper .pagination {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+}
+
+.pagination-wrapper .page-item {
+    margin: 0;
+}
+
+.pagination-wrapper .page-link {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 7px;
+
+    background: #f1f3f5;
+    color: #6c757d;
+
+    font-size: 13px;
+    line-height: 1;
+
+    box-shadow: none;
+}
+
+/* HALAMAN AKTIF */
+.pagination-wrapper .page-item.active .page-link {
+    background: #7141c9;
+    color: #ffffff;
+    border: none;
+}
+
+/* NOMOR HALAMAN TIDAK AKTIF */
+.pagination-wrapper .page-item:not(.active):not(.disabled) .page-link {
+    background: #f1f3f5;
+    color: #6c757d;
+}
+
+/* DISABLED */
+.pagination-wrapper .page-item.disabled .page-link {
+    background: #eef1f4;
+    color: #b5bdc5;
+    opacity: 1;
+}
+
+/* HOVER */
+.pagination-wrapper .page-item:not(.active):not(.disabled) .page-link:hover {
+    background: #e9ecef;
+    color: #7141c9;
+}

@@ -102,3 +102,51 @@
     background: #11a88c;
     color: #fff;
 }
+
+/* ===========================
+   PAGINATION
+=========================== */
+
+.pagination-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 7px;
+    margin-top: 16px;
+}
+
+.page-item-custom {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+    background-color: #e9edf2;
+    color: #9aa3ad;
+
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+
+    transition: 0.2s ease;
+}
+
+.page-item-custom.active {
+    background-color: #7048c8;
+    color: #ffffff;
+}
+
+.page-item-custom:not(.disabled):not(.active):hover {
+    background-color: #ddd3f8;
+    color: #7048c8;
+}
+
+.page-item-custom.disabled {
+    background-color: #e9edf2;
+    color: #b9c0c8;
+    cursor: default;
+    pointer-events: none;
+}

@@ -44,7 +44,10 @@ class DataPenjemputanController extends Controller
             });
         }
 
-        $kelas = $kelas->orderBy('kelas.nama_kelas')->get();
+        $kelas = $kelas
+        ->orderBy('kelas.nama_kelas')
+        ->paginate(9)
+        ->withQueryString();
 
         return view('admin.data-penjemputan', compact('kelas'));
     }

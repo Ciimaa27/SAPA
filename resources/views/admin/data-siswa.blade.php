@@ -76,25 +76,45 @@
                     <i class="fa fa-arrow-up"></i>
                 </button>
 
-                <form method="GET" action="{{ route('data-siswa') }}" style="flex: 1; max-width: 500px;">
-                    <div class="input-group input-group-sm">
-                        <span class="input-group-text bg-white border">
-                            <i class="fa fa-search"></i>
-                        </span>
-                        <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Pencarian">
-                    </div>
-                </form>
+<form id="searchFormSiswa"
+      method="GET"
+      action="{{ route('data-siswa') }}"
+      style="flex: 1; max-width: 500px;">
+
+    <div class="input-group input-group-sm">
+        <span class="input-group-text bg-white border">
+            <i class="fa fa-search"></i>
+        </span>
+
+        <input type="text"
+               id="searchInputSiswa"
+               name="search"
+               value="{{ request('search') }}"
+               class="form-control"
+               placeholder="Pencarian"
+               autocomplete="off">
+    </div>
+</form>
 
             </div>
         </div>
 
-        <!-- ✅ ALERT -->
-        @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-        @endif
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if(session('success'))
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: @json(session('success')),
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#198754',
+        allowOutsideClick: false
+    });
+});
+</script>
+@endif
 
         <!-- TABLE -->
         <div class="card">
@@ -105,7 +125,6 @@
                         <tr>
                             <th>No</th>
                             <th>NIS</th>
-                            <th>UID RFID</th>
                             <th>Nama lengkap</th>
                             <th>Kelas</th>
                             <th>Jenis Kelamin</th>
@@ -122,7 +141,6 @@
                             </td>
 
                             <td>{{ $item->nis }}</td>
-                            <td>{{ $item->rfid_uid ?? '-' }}</td>
                             <td>{{ $item->nama_siswa }}</td>
                             <td>{{ $item->kelas->nama_kelas ?? '-' }}</td>
                             <td>{{ $item->jenis_kelamin }}</td>
@@ -372,9 +390,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const formArsip = document.getElementById('formArsip');
     const namaSiswa = document.getElementById('namaSiswa');
 
-    document.querySelectorAll('.btn-arsip').forEach(function(btn){
+    document.querySelectorAll('.btn-arsip').forEach(function(btn) {
 
-        btn.addEventListener('click', function(){
+        btn.addEventListener('click', function() {
 
             const id = this.dataset.id;
             const nama = this.dataset.nama;
@@ -383,8 +401,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
             formArsip.action =
                 "{{ url('/admin/arsip-siswa') }}/" + id;
-
         });
+
+    });
+
+});
+</script>
+
+
+{{-- SEARCH OTOMATIS --}}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const searchInput = document.getElementById("searchInputSiswa");
+    const searchForm = document.getElementById("searchFormSiswa");
+
+    let typingTimer;
+
+    searchInput.addEventListener("input", function () {
+
+        clearTimeout(typingTimer);
+
+        typingTimer = setTimeout(function () {
+            searchForm.submit();
+        }, 700);
 
     });
 

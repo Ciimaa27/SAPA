@@ -24,13 +24,26 @@
         <!-- SEARCH + TABLE -->
         <div class="card-box">
 
-            <!-- SEARCH -->
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text bg-white">
-                    <i class="fa fa-search"></i>
-                </span>
-                <input type="text" id="searchData" class="form-control" placeholder="Pencarian">
-            </div>
+<!-- SEARCH -->
+<form id="searchFormPenjemputan"
+      method="GET"
+      action="{{ route('guru.data-penjemputan') }}">
+
+    <div class="input-group input-group-sm mb-3">
+        <span class="input-group-text bg-white">
+            <i class="fa fa-search"></i>
+        </span>
+
+        <input type="text"
+               id="searchInputPenjemputan"
+               name="cari"
+               value="{{ request('cari') }}"
+               class="form-control"
+               placeholder="Pencarian"
+               autocomplete="off">
+    </div>
+
+</form>
 
             <!-- TABLE -->
             <div class="table-container">
@@ -127,14 +140,26 @@
 </div>
 
 <script>
-document.getElementById("searchData").addEventListener("keyup", function() {
-    let keyword = this.value.toLowerCase();
-    let rows = document.querySelectorAll("#tableData tbody tr");
+document.addEventListener("DOMContentLoaded", function () {
 
-    rows.forEach(row => {
-        let text = row.textContent.toLowerCase();
-        row.style.display = text.includes(keyword) ? "" : "none";
+    const searchInput =
+        document.getElementById("searchInputPenjemputan");
+
+    const searchForm =
+        document.getElementById("searchFormPenjemputan");
+
+    let typingTimer;
+
+    searchInput.addEventListener("input", function () {
+
+        clearTimeout(typingTimer);
+
+        typingTimer = setTimeout(function () {
+            searchForm.submit();
+        }, 700);
+
     });
+
 });
 </script>
 

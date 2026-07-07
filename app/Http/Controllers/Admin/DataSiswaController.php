@@ -118,8 +118,8 @@ public function update(Request $request, $id)
         'rfid_uid' => $request->rfid_uid,
     ]);
 
-    return redirect()->route('data-siswa')
-        ->with('success', 'Data siswa berhasil diupdate');
+return redirect()->route('data-siswa')
+    ->with('success', 'Data siswa berhasil diperbarui!');
 }
 
     // ========================

@@ -75,7 +75,7 @@
     </a>
 
 
-   <!-- SEARCH -->
+<!-- SEARCH -->
 <div class="input-group input-group-sm"
      style="flex: 1;">
 
@@ -84,9 +84,12 @@
     </span>
 
     <input type="text"
+           name="search"
            id="searchInputGuru"
            class="form-control"
-           placeholder="Pencarian">
+           placeholder="Pencarian"
+           value="{{ request('search') }}"
+           autocomplete="off">
 
 </div>
 
@@ -299,34 +302,103 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // =========================
-    // SEARCH
-    // =========================
+// SEARCH BACKEND TANPA RELOAD
+// =========================
 
-    const input = document.getElementById("searchInputGuru");
+const input = document.getElementById("searchInputGuru");
 
-    if (input) {
-        input.addEventListener("keyup", function () {
+let searchTimer;
 
-            const keyword = this.value.toLowerCase();
+if (input) {
 
-            const rows = document.querySelectorAll(
-                "#dataTableGuru tbody tr"
-            );
+    input.addEventListener("input", function () {
 
-            rows.forEach(function (row) {
+        clearTimeout(searchTimer);
 
-                const text = row.textContent.toLowerCase();
+        const keyword = this.value;
+        const kelas = filterKelas ? filterKelas.value : "";
 
-                if (text.includes(keyword)) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
+        searchTimer = setTimeout(async function () {
+
+            try {
+
+                const url = new URL(
+                    "{{ route('guru') }}",
+                    window.location.origin
+                );
+
+                // SEARCH
+                if (keyword.trim() !== "") {
+                    url.searchParams.set("search", keyword);
                 }
 
-            });
-        });
-    }
+                // FILTER KELAS TETAP DIBAWA
+                if (kelas !== "") {
+                    url.searchParams.set("kelas", kelas);
+                }
 
+                const response = await fetch(url.toString());
+
+                const html = await response.text();
+
+                const parser = new DOMParser();
+
+                const doc = parser.parseFromString(
+                    html,
+                    "text/html"
+                );
+
+
+                // =========================
+                // UPDATE TABLE
+                // =========================
+
+                const newBody =
+                    doc.querySelector("#dataTableGuru tbody");
+
+                const currentBody =
+                    document.querySelector("#dataTableGuru tbody");
+
+                if (newBody && currentBody) {
+
+                    currentBody.innerHTML =
+                        newBody.innerHTML;
+
+                }
+
+
+                // =========================
+                // UPDATE PAGINATION
+                // =========================
+
+                const newPagination =
+                    doc.querySelector(".pagination");
+
+                const currentPagination =
+                    document.querySelector(".pagination");
+
+                if (newPagination && currentPagination) {
+
+                    currentPagination.innerHTML =
+                        newPagination.innerHTML;
+
+                }
+
+
+            } catch (error) {
+
+                console.error(
+                    "Pencarian guru gagal:",
+                    error
+                );
+
+            }
+
+        }, 500);
+
+    });
+
+}
 
     // =========================
     // MODAL DELETE

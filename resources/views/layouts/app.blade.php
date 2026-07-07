@@ -14,6 +14,8 @@
     <!-- GLOBAL CSS -->
     <link rel="stylesheet" href="{{ asset('css/topbar.css') }}">
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     {{-- CSS PER HALAMAN --}}
     @stack('styles')
 </head>

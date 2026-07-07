@@ -244,7 +244,7 @@
                 const instruction = document.getElementById('rfidInstruction');
 
                 if (data.terdaftar) {
-                    status.innerHTML = `<span class="badge bg-success">Terdaftar</span>`;
+                    status.innerHTML = `<span class="badge status-terdaftar">Terdaftar</span>`;
                     instruction.innerText = 'Kartu RFID terdaftar atas nama ' + data.nama_siswa + '.';
                 } else {
                     status.innerHTML = `<span class="badge bg-warning text-dark">Belum Terdaftar</span>`;

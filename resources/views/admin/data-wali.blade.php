@@ -63,14 +63,25 @@
                     </a>
 
                 <!-- SEARCH BACKEND -->
-                <div style="flex: 1;">
-                    <div class="input-group input-group-sm">
-                        <span class="input-group-text bg-white border">
-                            <i class="fa fa-search"></i>
-                        </span>
-                        <input type="text" id="searchInputWali" class="form-control" placeholder="Pencarian">
-                    </div>
-                </div>
+<div style="flex: 1;">
+    <form action="{{ route('data-wali') }}" method="GET" id="searchFormWali">
+        <div class="input-group input-group-sm">
+            <span class="input-group-text bg-white border">
+                <i class="fa fa-search"></i>
+            </span>
+
+            <input
+                type="text"
+                name="search"
+                id="searchInputWali"
+                class="form-control"
+                placeholder="Pencarian"
+                value="{{ request('search') }}"
+                autocomplete="off"
+            >
+        </div>
+    </form>
+</div>
 
             </div>
         </div>
@@ -82,7 +93,6 @@
                     <thead class="table-light">
                         <tr>
                             <th>No</th>
-                            <th>ID Fingerprint</th>
                             <th>Nama orangtua/wali</th>
                             <th>No. HP</th>
                             <th>Jenis Kelamin</th>
@@ -97,7 +107,6 @@
                             <td>
                                 {{ ($wali->currentPage() - 1) * $wali->perPage() + $loop->iteration }}
                             </td>
-                            <td>{{ $row->fingerprint_id ?? '-' }}</td>
                             <td>{{ $row->nama_wali }}</td>
                             <td>{{ $row->no_hp ?? '-' }}</td>
                             <td class="text-capitalize">{{ $row->jenis_kelamin ?? '-' }}</td>
@@ -198,21 +207,50 @@
 <!-- SEARCH SCRIPT -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    let input = document.getElementById("searchInputWali");
+    const input = document.getElementById("searchInputWali");
 
-    input.addEventListener("keyup", function() {
-        let keyword = this.value.toLowerCase();
-        let rows = document.querySelectorAll("#dataTableWali tbody tr");
+    let timer;
 
-        rows.forEach(function(row) {
-            let text = row.textContent.toLowerCase();
+    input.addEventListener("input", function () {
+        clearTimeout(timer);
 
-            if (text.includes(keyword)) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
+        const keyword = this.value;
+
+        timer = setTimeout(async function () {
+            try {
+                const url = new URL("{{ route('data-wali') }}", window.location.origin);
+
+                if (keyword.trim() !== "") {
+                    url.searchParams.set("search", keyword);
+                }
+
+                const response = await fetch(url.toString());
+                const html = await response.text();
+
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, "text/html");
+
+                // Ambil tabel baru dari hasil backend
+                const newTable = doc.querySelector("#dataTableWali tbody");
+                const currentTable = document.querySelector("#dataTableWali tbody");
+
+                // Ambil pagination baru
+                const newPagination = doc.querySelector(".pagination");
+                const currentPagination = document.querySelector(".pagination");
+
+                if (newTable && currentTable) {
+                    currentTable.innerHTML = newTable.innerHTML;
+                }
+
+                if (newPagination && currentPagination) {
+                    currentPagination.innerHTML = newPagination.innerHTML;
+                }
+
+            } catch (error) {
+                console.error("Pencarian gagal:", error);
             }
-        });
+
+        }, 500);
     });
 });
 </script>

@@ -10,18 +10,71 @@ use App\Models\Wali;
 
 class RelasiController extends Controller
 {
-    // Tampilkan data relasi
-    public function index()
-    {
-            $relasi = Relasi::with(['siswa', 'wali'])
-            ->whereHas('siswa', function ($q) {
-            $q->where('is_active', 1);
-        })
-        ->orderBy('id_siswa', 'asc')
-        ->paginate(10);
+    // ========================
+// TAMPILKAN DATA RELASI
+// ========================
+public function index(Request $request)
+{
+    $search = $request->query('search', null);
+    $hubungan = $request->query('hubungan', null);
 
-        return view('admin.relasi', compact('relasi'));
+    $query = Relasi::with(['siswa', 'wali'])
+        ->whereHas('siswa', function ($q) {
+            $q->where('is_active', 1);
+        });
+
+    // ========================
+    // PENCARIAN
+    // ========================
+    if ($search) {
+
+        $query->where(function ($q) use ($search) {
+
+            // Cari berdasarkan nama siswa
+            $q->whereHas('siswa', function ($siswa) use ($search) {
+                $siswa->where(
+                    'nama_siswa',
+                    'like',
+                    '%' . $search . '%'
+                );
+            })
+
+            // Cari berdasarkan nama wali atau no HP
+            ->orWhereHas('wali', function ($wali) use ($search) {
+                $wali->where(
+                    'nama_wali',
+                    'like',
+                    '%' . $search . '%'
+                )
+                ->orWhere(
+                    'no_hp',
+                    'like',
+                    '%' . $search . '%'
+                );
+            })
+
+            // Cari berdasarkan hubungan
+            ->orWhere(
+                'hubungan',
+                'like',
+                '%' . $search . '%'
+            );
+        });
     }
+
+        // ========================
+    // FILTER HUBUNGAN
+    // ========================
+    if ($hubungan) {
+        $query->where('hubungan', $hubungan);
+    }
+    $relasi = $query
+        ->orderBy('id_siswa', 'asc')
+        ->paginate(10)
+        ->withQueryString();
+
+    return view('admin.relasi', compact('relasi'));
+}
 
     // Form tambah
     public function create()

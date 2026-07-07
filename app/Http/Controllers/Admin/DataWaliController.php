@@ -9,28 +9,45 @@ use App\Models\Wali;
 
 class DataWaliController extends Controller
 {
-    public function index()
-    {
-        $wali = DB::table('wali')
-            ->leftJoin('users', 'wali.id_user', '=', 'users.id')
-            ->select(
-                'wali.id_wali',
-                'wali.nama_wali',
-                'wali.no_hp',
-                'wali.jenis_kelamin',
-                'wali.fingerprint_id',
-                'users.username',
-                'users.email'
-            )
-            ->where('wali.is_active', 1)
-            ->orderByDesc('wali.id_wali')
-            ->paginate(10);
+    public function index(Request $request)
+{
+    $search = $request->input('search');
 
-        $total = DB::table('wali')->where('is_active', 1)->count();
+    $wali = DB::table('wali')
+        ->leftJoin('users', 'wali.id_user', '=', 'users.id')
+        ->select(
+            'wali.id_wali',
+            'wali.nama_wali',
+            'wali.no_hp',
+            'wali.jenis_kelamin',
+            'wali.fingerprint_id',
+            'users.username',
+            'users.email'
+        )
+        ->where('wali.is_active', 1)
 
-        return view('admin.data-wali', compact('wali', 'total'));
-    }
+        // PENCARIAN SELURUH DATA
+        ->when($search, function ($query, $search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('wali.nama_wali', 'like', '%' . $search . '%')
+                  ->orWhere('wali.no_hp', 'like', '%' . $search . '%')
+                  ->orWhere('wali.jenis_kelamin', 'like', '%' . $search . '%')
+                  ->orWhere('wali.fingerprint_id', 'like', '%' . $search . '%')
+                  ->orWhere('users.username', 'like', '%' . $search . '%')
+                  ->orWhere('users.email', 'like', '%' . $search . '%');
+            });
+        })
 
+        ->orderByDesc('wali.id_wali')
+        ->paginate(10)
+        ->withQueryString();
+
+    $total = DB::table('wali')
+        ->where('is_active', 1)
+        ->count();
+
+    return view('admin.data-wali', compact('wali', 'total'));
+}
     // ========================
     // FORM TAMBAH
     // ========================

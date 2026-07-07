@@ -59,7 +59,7 @@
                     <span class="input-group-text bg-white">
                         <i class="fa fa-search"></i>
                     </span>
-                    <input type="text" id="searchInputKelas" class="form-control" placeholder="Pencarian">
+                    <input type="text" name="search" id="searchInputKelas" class="form-control" placeholder="Pencarian"value="{{ request('search') }}"autocomplete="off">
                 </div>
 
             </div>
@@ -118,22 +118,95 @@
 <!-- 🔥 SCRIPT SEARCH -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    let input = document.getElementById("searchInputKelas");
 
-    input.addEventListener("keyup", function() {
-        let keyword = this.value.toLowerCase();
-        let rows = document.querySelectorAll("#dataTableKelas tbody tr");
+    const input = document.getElementById("searchInputKelas");
 
-        rows.forEach(function(row) {
-            let text = row.textContent.toLowerCase();
+    let searchTimer;
 
-            if (text.includes(keyword)) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
+    input.addEventListener("input", function () {
+
+        clearTimeout(searchTimer);
+
+        const keyword = this.value;
+
+        searchTimer = setTimeout(async function () {
+
+            try {
+
+                const url = new URL(
+                    "{{ route('kelas') }}",
+                    window.location.origin
+                );
+
+                // Jika ada pencarian
+                if (keyword.trim() !== "") {
+                    url.searchParams.set("search", keyword);
+                }
+
+                const response = await fetch(url.toString());
+
+                const html = await response.text();
+
+                const parser = new DOMParser();
+
+                const doc = parser.parseFromString(
+                    html,
+                    "text/html"
+                );
+
+
+                // =========================
+                // UPDATE ISI TABEL
+                // =========================
+
+                const newBody =
+                    doc.querySelector("#dataTableKelas tbody");
+
+                const currentBody =
+                    document.querySelector("#dataTableKelas tbody");
+
+                if (newBody && currentBody) {
+
+                    currentBody.innerHTML =
+                        newBody.innerHTML;
+
+                }
+
+
+                // =========================
+                // UPDATE PAGINATION
+                // =========================
+
+                const newPagination =
+                    doc.querySelector(".pagination");
+
+                const currentPagination =
+                    document.querySelector(".pagination");
+
+                if (newPagination && currentPagination) {
+
+                    currentPagination.innerHTML =
+                        newPagination.innerHTML;
+
+                } else if (!newPagination && currentPagination) {
+
+                    currentPagination.innerHTML = "";
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Pencarian kelas gagal:",
+                    error
+                );
+
             }
-        });
+
+        }, 500);
+
     });
+
 });
 </script>
 
