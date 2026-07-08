@@ -90,13 +90,15 @@
                                         <i class="fa fa-plus"></i> Daftarkan
                                     </button>
                                 @else
-                                    <form action="{{ route('iot.destroy', ['tab' => 'sidik-jari', 'id' => $item->id_wali]) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn-lepas-fingerprint" onclick="return confirm('Lepas sidik jari dari {{ $item->nama_wali }}?')">
-                                            <i class="fa fa-unlink"></i> Lepas Sidik Jari
-                                        </button>
-                                    </form>
+                                    <button type="button"
+                                            class="btn-lepas-fingerprint btn-buka-modal-lepas"
+                                            data-id="{{ $item->id_wali }}"
+                                            data-nama="{{ $item->nama_wali }}"
+                                            data-fingerprint="{{ $item->fingerprint_id }}">
+
+                                        <i class="fa fa-unlink"></i>
+                                        Lepas Sidik Jari
+                                    </button>
                                 @endif
                             </td>
                         </tr>
@@ -156,6 +158,110 @@
             </form>
         </div>
     </div>
+</div>
+<div class="modal fade"
+     id="modalLepasFingerprint"
+     tabindex="-1"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <form id="formLepasFingerprint"
+                  method="POST">
+
+                @csrf
+                @method('DELETE')
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+                        Lepas Sidik Jari
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+
+                <div class="modal-body">
+
+                    <p class="mb-3">
+                        Apakah Anda yakin ingin melepas sidik jari dari wali berikut?
+                    </p>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label text-muted">
+                            Nama Wali
+                        </label>
+
+                        <div id="modalLepasNama"
+                             class="modal-data-value uid-modal">
+                            -
+                        </div>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label text-muted">
+                            ID Sidik Jari
+                        </label>
+
+                        <div id="modalLepasFingerprintId"
+                             class="modal-data-value uid-modal">
+                            -
+                        </div>
+
+                    </div>
+
+
+                    <div class="alert alert-warning mb-0">
+
+                        <i class="fa fa-exclamation-triangle me-1"></i>
+
+                        Sidik jari akan dilepas dari data wali.
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-light"
+                            data-bs-dismiss="modal">
+
+                        Batal
+
+                    </button>
+
+
+                    <button type="submit"
+                            class="btn btn-danger">
+
+                        <i class="fa fa-unlink me-1"></i>
+
+                        Ya, Lepaskan
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
 </div>
 
 <script>
@@ -258,6 +364,48 @@ document.querySelectorAll('.btn-daftar-fingerprint').forEach(button => {
         const modal = new bootstrap.Modal(document.getElementById('modalDaftarFingerprint'));
         modal.show();
     });
+});
+
+document.querySelectorAll('.btn-buka-modal-lepas').forEach(button => {
+
+    button.addEventListener('click', function () {
+
+        const idWali = this.dataset.id;
+        const namaWali = this.dataset.nama;
+        const fingerprintId = this.dataset.fingerprint;
+
+
+        document.getElementById(
+            'modalLepasNama'
+        ).innerText = namaWali;
+
+
+        document.getElementById(
+            'modalLepasFingerprintId'
+        ).innerText = 'ID ' + fingerprintId;
+
+
+        const form = document.getElementById(
+            'formLepasFingerprint'
+        );
+
+
+        form.action =
+            "{{ url('/admin/iot/sidik-jari') }}/"
+            + idWali;
+
+
+        const modal = new bootstrap.Modal(
+            document.getElementById(
+                'modalLepasFingerprint'
+            )
+        );
+
+
+        modal.show();
+
+    });
+
 });
 
 setInterval(loadFingerprint, 2000);

@@ -102,13 +102,21 @@
                                             <i class="fa fa-plus me-1"></i>Daftarkan
                                         </button>
                                     @else
-                                        <form action="{{ route('iot.destroy', ['tab' => 'rfid', 'id' => $item->id_siswa]) }}" method="POST" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-lepas-rfid btn-sm" onclick="return confirm('Apakah Anda yakin ingin melepaskan RFID dari {{ $item->nama_siswa }}?')">
-                                                <i class="fa fa-unlink me-1"></i>Lepas RFID
-                                            </button>
-                                        </form>
+                                        <button type="button"
+                                                class="btn btn-lepas-rfid btn-sm btn-buka-modal-lepas-rfid"
+
+                                                data-url="{{ route('iot.destroy', [
+                                                    'tab' => 'rfid',
+                                                    'id' => $item->id_siswa
+                                                ]) }}"
+
+                                                data-nama="{{ $item->nama_siswa }}"
+                                                data-uid="{{ $item->rfid_uid }}">
+
+                                            <i class="fa fa-unlink me-1"></i>
+                                            Lepas RFID
+
+                                        </button>
                                     @endif
                                 </td>
                             @endif
@@ -203,6 +211,109 @@
         </div>
     </div>
 </div>
+<div class="modal fade"
+     id="modalLepasRfid"
+     tabindex="-1"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <form id="formLepasRfid"
+                  method="POST">
+
+                @csrf
+                @method('DELETE')
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+                        Lepas RFID
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+
+                <div class="modal-body">
+
+                    <p class="mb-3">
+                        Apakah Anda yakin ingin melepaskan RFID dari siswa berikut?
+                    </p>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label text-muted">
+                            Nama Siswa
+                        </label>
+
+                        <div class="modal-data-value uid-modal"
+                             id="modalLepasNamaSiswa">
+                            -
+                        </div>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label text-muted">
+                            UID RFID
+                        </label>
+
+                        <div class="modal-data-value uid-modal"
+                             id="modalLepasUid">
+                            -
+                        </div>
+
+                    </div>
+
+
+                    <div class="alert alert-warning mb-0">
+
+                        <i class="fa fa-exclamation-triangle me-1"></i>
+
+                        RFID akan dilepas dari data siswa dan dapat didaftarkan kembali ke siswa lain.
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-light"
+                            data-bs-dismiss="modal">
+
+                        Batal
+
+                    </button>
+
+
+                    <button type="submit"
+                            class="btn btn-danger">
+
+                        <i class="fa fa-unlink me-1"></i>
+                        Ya, Lepaskan
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
 
 <script>
     const searchInput = document.getElementById("searchInput");
@@ -285,6 +396,66 @@ document.addEventListener('DOMContentLoaded', function () {
             modal.show();
         });
     });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const tombolLepas =
+        document.querySelectorAll(
+            '.btn-buka-modal-lepas-rfid'
+        );
+
+    tombolLepas.forEach(function (button) {
+
+        button.addEventListener(
+            'click',
+            function () {
+
+                const namaSiswa =
+                    this.dataset.nama;
+
+                const uidRfid =
+                    this.dataset.uid;
+
+                const url =
+                    this.dataset.url;
+
+
+                document.getElementById(
+                    'modalLepasNamaSiswa'
+                ).innerText = namaSiswa;
+
+
+                document.getElementById(
+                    'modalLepasUid'
+                ).innerText = uidRfid;
+
+
+                document.getElementById(
+                    'formLepasRfid'
+                ).action = url;
+
+
+                const modalElement =
+                    document.getElementById(
+                        'modalLepasRfid'
+                    );
+
+
+                const modal =
+                    bootstrap.Modal.getOrCreateInstance(
+                        modalElement
+                    );
+
+
+                modal.show();
+
+            }
+        );
+
+    });
+
 });
 </script>
 @endsection
