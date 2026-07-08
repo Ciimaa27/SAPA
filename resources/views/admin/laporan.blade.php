@@ -39,6 +39,7 @@
                     @endforeach
                 </select>
 
+<<<<<<< HEAD
 
                 {{-- ================= PILIH TANGGAL ================= --}}
                 <div class="month-picker">
@@ -51,6 +52,16 @@
                 </div>
 
 
+=======
+                {{-- FILTER TANGGAL --}}
+                <input
+                    type="date"
+                    name="tanggal"
+                    class="form-control filter-tanggal"
+                    value="{{ $tanggal }}"
+                >
+                
+>>>>>>> origin/isma
                 {{-- BUTTON TERAPKAN --}}
                 <button type="submit" class="btn btn-primary btn-terapkan">
                     Terapkan
@@ -78,6 +89,7 @@
                         </tr>
                     </thead>
 
+<<<<<<< HEAD
 
                     <tbody>
 
@@ -88,6 +100,11 @@
                             {{-- KELAS --}}
                             <td>
                                 {{ $kls->nama_kelas }}
+=======
+                            {{-- TANGGAL --}}
+                            <td>
+                                {{ \Carbon\Carbon::parse($tanggal)->locale('id')->translatedFormat('d F Y') }}
+>>>>>>> origin/isma
                             </td>
 
 
@@ -111,6 +128,7 @@
 
                             {{-- EXPORT KEHADIRAN --}}
                             <td>
+<<<<<<< HEAD
                                 <a
                                     href="{{ route('laporan.kehadiran.export', [
                                         'id_kelas' => $kls->id_kelas,
@@ -119,6 +137,9 @@
                                     class="btn-excel"
                                     title="Export Kehadiran"
                                 >
+=======
+                                <a href="{{ route('laporan.kehadiran.export', ['id_kelas' => $kls->id_kelas, 'tanggal' => $tanggal]) }}" class="btn-excel" title="Export Kehadiran">
+>>>>>>> origin/isma
                                     <i class="fa-solid fa-file-excel"></i>
                                 </a>
                             </td>
@@ -126,6 +147,7 @@
 
                             {{-- EXPORT PENJEMPUTAN --}}
                             <td>
+<<<<<<< HEAD
                                 <a
                                     href="{{ route('laporan.penjemputan.export', [
                                         'id_kelas' => $kls->id_kelas,
@@ -134,6 +156,9 @@
                                     class="btn-excel"
                                     title="Export Penjemputan"
                                 >
+=======
+                                <a href="{{ route('laporan.penjemputan.export', ['id_kelas' => $kls->id_kelas, 'tanggal' => $tanggal]) }}" class="btn-excel" title="Export Penjemputan">
+>>>>>>> origin/isma
                                     <i class="fa-solid fa-file-excel"></i>
                                 </a>
                             </td>
@@ -295,5 +320,8 @@
 
     </div>
 </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/isma
 @endsection
