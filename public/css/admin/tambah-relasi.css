@@ -1,262 +1,369 @@
-/* ===== LAYOUT SAMA SEPERTI KELOLA AKUN ===== */
-
-.container-dashboard{
-    max-width:1100px;
-    margin:0 auto;
+/* ===================================== */
+/* LAYOUT */
+/* ===================================== */
+.container-dashboard {
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
-.main-dashboard{
-    padding:5px 30px 20px 20px;
+.main-dashboard {
+    padding: 5px 30px 20px 20px;
 }
 
-.content{
-    margin-left:230px;
-    padding-top:60px;
-    padding-left:10px;
-    padding-right:10px;
+.content {
+    margin-left: 230px;
+    padding-top: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
-/* ===== HEADER ===== */
-
-.page-title-box{
-    background:#fff;
-    padding:15px 20px;
-    border-radius:10px;
-    font-size:18px;
-    font-weight:600;
-    margin-bottom:15px;
-    box-shadow:0 2px 6px rgba(0,0,0,0.05);
+/* ===================================== */
+/* HEADER */
+/* ===================================== */
+.page-title-box {
+    background: #fff;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-/* ===== CARD ===== */
-
-.card-form{
-    background:#fff;
-    padding:20px;
-    padding-bottom:50px;
-    border-radius:10px;
-    box-shadow:0 2px 6px rgba(0,0,0,0.05);
-    overflow:visible;
+/* ===================================== */
+/* CARD */
+/* ===================================== */
+.card-form {
+    background: #fff;
+    padding: 20px;
+    padding-bottom: 50px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    overflow: visible;
 }
 
-/* ===== BUTTON KEMBALI ===== */
-
-.btn-kembali{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-
-    background:#eeeaff;
-    color:#6f42c1;
-    border:1px solid #d6c9ff;
-
-    padding:5px 12px;
-    border-radius:6px;
-    font-size:13px;
-
-    text-decoration:none;
-    margin-bottom:15px;
-    transition:0.2s;
+/* ===================================== */
+/* BUTTON KEMBALI */
+/* ===================================== */
+.btn-kembali {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #eeeaff;
+    color: #6f42c1;
+    border: 1px solid #d6c9ff;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    text-decoration: none;
+    margin-bottom: 15px;
+    transition: 0.2s;
 }
 
-.btn-kembali:hover{
-    background:#ddd6ff;
+.btn-kembali:hover {
+    background: #ddd6ff;
+    color: #6f42c1;
 }
 
-/* ===== FORM ===== */
-
-.form-group{
-    display:flex;
-    flex-direction:column;
-    margin-bottom:15px;
+/* ===================================== */
+/* FORM */
+/* ===================================== */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
 }
 
-.form-group label{
-    font-size:13px;
-    margin-bottom:5px;
-    color:#555;
+.form-group label {
+    font-size: 13px;
+    margin-bottom: 5px;
+    color: #555;
 }
 
+/* INPUT DAN SELECT BIASA */
 .form-group input,
-.form-group select{
-    height:40px;
-    padding:0 10px;
-    border:1px solid #ddd;
-    border-radius:6px;
-    background:#f8f9fa;
-    font-size:13px;
-    outline:none;
-}
-
-.form-group select{
-    position:relative;
-    z-index:10;
+.form-group select {
+    width: 100%;
+    height: 40px;
+    padding: 0 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #f8f9fa;
+    font-size: 13px;
+    outline: none;
 }
 
 .form-group input:focus,
-.form-group select:focus{
-    border-color:#6f42c1;
-    background:#fff;
+.form-group select:focus {
+    border-color: #6f42c1;
+    background: #fff;
 }
 
-/* ===== TEXT ===== */
-
-.form-text{
-    font-size:11px;
-    color:#888;
-    margin-top:4px;
+/* ===================================== */
+/* SELECT2 CONTAINER */
+/* ===================================== */
+.select2-container {
+    width: 100% !important;
+    font-size: 13px;
 }
 
-/* ===== BUTTON ACTION ===== */
+/* KOTAK SELECT UTAMA */
+.select2-container--default .select2-selection--single {
+    height: 40px;
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    transition: 0.2s;
+}
 
-.form-action{
-    display:flex;
-    justify-content:flex-end;
-    gap:8px;
-    margin-top:15px;
+/* TEXT DI DALAM SELECT */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    height: 40px;
+    padding-left: 10px;
+    padding-right: 35px;
+    line-height: 38px;
+    font-size: 13px;
+    color: #555;
+}
+
+/* PLACEHOLDER */
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: #777;
+    font-size: 13px;
+}
+
+/* PANAH DROPDOWN */
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 38px;
+    top: 0;
+    right: 6px;
+}
+
+/* TOMBOL X */
+.select2-container--default .select2-selection--single .select2-selection__clear {
+    height: 38px;
+    margin-right: 25px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #888;
+}
+
+/* FOCUS */
+.select2-container--default.select2-container--focus .select2-selection--single,
+.select2-container--default.select2-container--open .select2-selection--single {
+    border-color: #6f42c1;
+    background: #fff;
+    box-shadow: none;
+}
+
+/* ===================================== */
+/* SELECT2 DROPDOWN */
+/* ===================================== */
+.select2-dropdown {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+    overflow: hidden;
+    font-size: 13px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* AREA SEARCH */
+.select2-search--dropdown {
+    padding: 7px;
+}
+
+/* INPUT SEARCH */
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    height: 34px;
+    padding: 5px 9px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 12px;
+    color: #555;
+    outline: none;
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field:focus {
+    border-color: #6f42c1;
+}
+
+/* LIST HASIL */
+.select2-results__options {
+    max-height: 180px !important;
+}
+
+/* ITEM NAMA */
+.select2-results__option {
+    padding: 7px 10px;
+    font-size: 12px;
+    color: #555;
+    line-height: 1.4;
+}
+
+/* ITEM YANG DIHOVER */
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+    background: #eeeaff;
+    color: #6f42c1;
+}
+
+/* ITEM TERPILIH */
+.select2-container--default .select2-results__option--selected {
+    background: #f4f1ff;
+    color: #6f42c1;
+}
+
+/* PESAN TIDAK DITEMUKAN */
+.select2-results__message {
+    padding: 10px;
+    font-size: 12px;
+    color: #888;
+    text-align: center;
+}
+
+/* ===================================== */
+/* FORM TEXT */
+/* ===================================== */
+.form-text {
+    font-size: 11px;
+    color: #888;
+    margin-top: 4px;
+}
+
+/* ===================================== */
+/* BUTTON ACTION */
+/* ===================================== */
+.form-action {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 15px;
 }
 
 /* RESET */
-
 .btn-reset {
-    background-color: #dc3545;
-    border-color: #dc3545;
+    background: #dc3545;
+    padding: 6px 14px;
     color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
 .btn-reset:hover {
-    background-color: #bb2d3b;
-    border-color: #bb2d3b;
-    color: #fff;
+    background: #bb2d3b;
 }
 
 /* SIMPAN */
-
-.btn-simpan{
-    background:#1dd1a1;
-    padding:6px 14px;
-    color:white;
-    border-radius:6px;
-    border:none;
-    font-size:13px;
-    cursor:pointer;
-    transition:0.2s;
+.btn-simpan {
+    background: #1dd1a1;
+    padding: 6px 14px;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
-.btn-simpan:hover{
-    background:#10ac84;
+.btn-simpan:hover {
+    background: #10ac84;
 }
 
-/* ===== BODY ===== */
-
-body{
-    overflow-x:hidden;
+/* ===================================== */
+/* BODY */
+/* ===================================== */
+body {
+    overflow-x: hidden;
 }
 
 /* ===================================== */
 /* RESPONSIVE TABLET */
 /* ===================================== */
-
-@media (max-width:768px){
-
-    .content{
-        margin-left:0;
-        padding-left:10px;
-        padding-right:10px;
+@media (max-width: 768px) {
+    .content {
+        margin-left: 0;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
-    .main-dashboard{
-        padding:10px;
+    .main-dashboard {
+        padding: 10px;
     }
 
-    .container-dashboard{
-        max-width:100%;
+    .container-dashboard {
+        max-width: 100%;
     }
 
-    .page-title-box{
-        padding:12px 15px;
-        font-size:16px;
+    .page-title-box {
+        padding: 12px 15px;
+        font-size: 16px;
     }
 
-    .card-form{
-        padding:15px;
+    .card-form {
+        padding: 15px;
     }
-
 }
 
 /* ===================================== */
 /* RESPONSIVE HP */
 /* ===================================== */
-
-@media (max-width:576px){
-
-    .page-title-box{
-        font-size:15px;
-        padding:10px 12px;
+@media (max-width: 576px) {
+    .page-title-box {
+        font-size: 15px;
+        padding: 10px 12px;
     }
 
-    .card-form{
-        padding:12px;
-        border-radius:8px;
+    .card-form {
+        padding: 12px;
+        border-radius: 8px;
     }
 
-    .btn-kembali{
-        width:100%;
-        justify-content:center;
+    .btn-kembali {
+        width: 100%;
+        justify-content: center;
     }
 
-    .form-group label{
-        font-size:12px;
+    .form-group label {
+        font-size: 12px;
     }
 
     .form-group input,
-    .form-group select{
-        width:100%;
-        height:42px;
-        font-size:12px;
+    .form-group select {
+        width: 100%;
+        height: 42px;
+        font-size: 12px;
     }
 
-    .form-text{
-        font-size:10px;
-        line-height:1.4;
+    .select2-container--default .select2-selection--single {
+        height: 42px;
     }
 
-    .form-action{
-        flex-direction:column;
-        gap:8px;
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        height: 42px;
+        line-height: 40px;
+        font-size: 12px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 40px;
+    }
+
+    .form-text {
+        font-size: 10px;
+        line-height: 1.4;
+    }
+
+    .form-action {
+        flex-direction: column;
+        gap: 8px;
     }
 
     .btn-reset,
-    .btn-simpan{
-        width:100%;
-        padding:10px;
+    .btn-simpan {
+        width: 100%;
+        padding: 10px;
     }
-
-}
-
-/* ===== BATAL ===== */
-
-.btn-batal {
-    background: #ff6b6b;
-    padding: 6px 14px;
-
-    color: white;
-
-    border: none;
-    border-radius: 6px;
-
-    text-decoration: none;
-
-    font-size: 13px;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    cursor: pointer;
-}
-
-.btn-batal:hover {
-    background: #ee5253;
-    color: white;
 }

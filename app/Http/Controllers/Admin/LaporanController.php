@@ -14,74 +14,76 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class LaporanController extends Controller
 {
+    // ==========================================
+    // HALAMAN LAPORAN
+    // ==========================================
     public function index(Request $request)
     {
+<<<<<<< HEAD
         $tanggal = $request->tanggal ?? now()->format('Y-m-d');
 
         $kelasFilter = $request->filled('kelas') ? $request->kelas : null;
 
+=======
+        // Filter per hari
+        $tanggal = $request->tanggal ?? now()->format('Y-m-d');
+        $kelasFilter = $request->filled('kelas') ? $request->kelas : null;
+
+        // ==========================================
+        // PILIHAN KELAS UNTUK FILTER
+        // ==========================================
+>>>>>>> b19ef50a59010a78bec861d495c3b5e00dd4d232
         $kelasOptions = Kelas::orderBy('nama_kelas')->get();
 
+        // ==========================================
+        // DATA KELAS UNTUK TABEL
+        // ==========================================
         $kelasQuery = Kelas::orderBy('nama_kelas');
 
         if ($kelasFilter) {
             $kelasQuery->where('id_kelas', $kelasFilter);
         }
 
-        $kelas = $kelasQuery
-            ->paginate(10)
-            ->appends($request->query());
+        $kelas = $kelasQuery->paginate(10)->appends($request->query());
 
+<<<<<<< HEAD
+=======
+        // ==========================================
+        // QUERY KEHADIRAN PER HARI
+        // ==========================================
+>>>>>>> b19ef50a59010a78bec861d495c3b5e00dd4d232
         $kehadiranQuery = Kehadiran::join('siswa', 'kehadiran.id_siswa', '=', 'siswa.id_siswa')
             ->whereDate('kehadiran.tanggal', $tanggal);
 
+        // ==========================================
+        // QUERY PENJEMPUTAN PER HARI
+        // ==========================================
         $penjemputanQuery = Penjemputan::join('siswa', 'penjemputan.id_siswa', '=', 'siswa.id_siswa')
             ->whereDate('penjemputan.tanggal', $tanggal);
 
+        // ==========================================
+        // FILTER BERDASARKAN KELAS
+        // ==========================================
         if ($kelasFilter) {
-
-            $kehadiranQuery->where(
-                'siswa.id_kelas',
-                $kelasFilter
-            );
-
-            $penjemputanQuery->where(
-                'siswa.id_kelas',
-                $kelasFilter
-            );
+            $kehadiranQuery->where('siswa.id_kelas', $kelasFilter);
+            $penjemputanQuery->where('siswa.id_kelas', $kelasFilter);
         }
 
-
-        // ==========================
-        // JUMLAH KEHADIRAN
-        // ==========================
-
+        // ==========================================
+        // JUMLAH KEHADIRAN PER KELAS
+        // ==========================================
         $kehadiranCounts = $kehadiranQuery
             ->groupBy('siswa.id_kelas')
-            ->select(
-                'siswa.id_kelas',
-                DB::raw('COUNT(*) as total')
-            )
-            ->pluck(
-                'total',
-                'siswa.id_kelas'
-            );
+            ->select('siswa.id_kelas', DB::raw('COUNT(*) as total'))
+            ->pluck('total', 'siswa.id_kelas');
 
-
-        // ==========================
-        // JUMLAH PENJEMPUTAN
-        // ==========================
-
+        // ==========================================
+        // JUMLAH PENJEMPUTAN PER KELAS
+        // ==========================================
         $penjemputanCounts = $penjemputanQuery
             ->groupBy('siswa.id_kelas')
-            ->select(
-                'siswa.id_kelas',
-                DB::raw('COUNT(*) as total')
-            )
-            ->pluck(
-                'total',
-                'siswa.id_kelas'
-            );
+            ->select('siswa.id_kelas', DB::raw('COUNT(*) as total'))
+            ->pluck('total', 'siswa.id_kelas');
 
         return view('admin.laporan', compact(
             'kelas',
@@ -93,53 +95,32 @@ class LaporanController extends Controller
         ));
     }
 
-
+    // ==========================================
+    // DOWNLOAD FILE KEHADIRAN
+    // ==========================================
     public function downloadKehadiran($id_siswa)
     {
-        $record = Kehadiran::where(
-                'siswa_id',
-                $id_siswa
-            )
-            ->latest()
-            ->first();
+        $record = Kehadiran::where('siswa_id', $id_siswa)->latest()->first();
 
         if (!$record) {
-            return redirect()
-                ->back()
-                ->with(
-                    'error',
-                    'File tidak ditemukan'
-                );
+            return redirect()->back()->with('error', 'File tidak ditemukan');
         }
 
-        $file = $record->file_path
-            ?? $record->file
-            ?? null;
+        $file = $record->file_path ?? $record->file ?? null;
 
-        if (
-            $file &&
-            file_exists(storage_path('app/' . $file))
-        ) {
-            return response()->download(
-                storage_path('app/' . $file)
-            );
+        if ($file && file_exists(storage_path('app/' . $file))) {
+            return response()->download(storage_path('app/' . $file));
         }
 
-        return redirect()
-            ->back()
-            ->with(
-                'error',
-                'File tidak ditemukan'
-            );
+        return redirect()->back()->with('error', 'File tidak ditemukan');
     }
 
-
+    // ==========================================
+    // DOWNLOAD FILE PENJEMPUTAN
+    // ==========================================
     public function downloadPenjemputan($id)
     {
-        $record = Penjemputan::where(
-                'id_siswa',
-                $id
-            )
+        $record = Penjemputan::where('id_siswa', $id)
             ->orderBy('tanggal', 'desc')
             ->orderBy('jam_jemput', 'desc')
             ->first();
@@ -149,86 +130,43 @@ class LaporanController extends Controller
         }
 
         if (!$record) {
-            return redirect()
-                ->back()
-                ->with(
-                    'error',
-                    'File tidak ditemukan'
-                );
+            return redirect()->back()->with('error', 'File tidak ditemukan');
         }
 
-        $file = $record->file_path
-            ?? $record->file
-            ?? null;
+        $file = $record->file_path ?? $record->file ?? null;
 
-        if (
-            $file &&
-            file_exists(storage_path('app/' . $file))
-        ) {
-            return response()->download(
-                storage_path('app/' . $file)
-            );
+        if ($file && file_exists(storage_path('app/' . $file))) {
+            return response()->download(storage_path('app/' . $file));
         }
 
-        return redirect()
-            ->back()
-            ->with(
-                'error',
-                'File tidak ditemukan'
-            );
+        return redirect()->back()->with('error', 'File tidak ditemukan');
     }
 
-
-    // ==========================
+    // ==========================================
     // EXPORT KEHADIRAN PER HARI
-    // ==========================
-
-    public function exportKehadiran(
-        Request $request,
-        $id_kelas
-    ) {
+    // ==========================================
+    public function exportKehadiran(Request $request, $id_kelas)
+    {
         $kelas = Kelas::findOrFail($id_kelas);
-
-        $tanggal = $request->tanggal
-            ?? now()->format('Y-m-d');
+        $tanggal = $request->tanggal ?? now()->format('Y-m-d');
 
         return Excel::download(
-            new KehadiranKelasExport(
-                $id_kelas,
-                $tanggal
-            ),
-            'Kehadiran_'
-                . $kelas->nama_kelas
-                . '_'
-                . $tanggal
-                . '.xlsx'
+            new KehadiranKelasExport($id_kelas, $tanggal),
+            'Kehadiran_' . $kelas->nama_kelas . '_' . $tanggal . '.xlsx'
         );
     }
 
-
-    // ==========================
+    // ==========================================
     // EXPORT PENJEMPUTAN PER HARI
-    // ==========================
-
-    public function exportPenjemputan(
-        Request $request,
-        $id_kelas
-    ) {
+    // ==========================================
+    public function exportPenjemputan(Request $request, $id_kelas)
+    {
         $kelas = Kelas::findOrFail($id_kelas);
-
-        $tanggal = $request->tanggal
-            ?? now()->format('Y-m-d');
+        $tanggal = $request->tanggal ?? now()->format('Y-m-d');
 
         return Excel::download(
-            new PenjemputanKelasExport(
-                $id_kelas,
-                $tanggal
-            ),
-            'Penjemputan_'
-                . $kelas->nama_kelas
-                . '_'
-                . $tanggal
-                . '.xlsx'
+            new PenjemputanKelasExport($id_kelas, $tanggal),
+            'Penjemputan_' . $kelas->nama_kelas . '_' . $tanggal . '.xlsx'
         );
     }
 }
