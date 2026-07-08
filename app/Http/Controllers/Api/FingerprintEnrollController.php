@@ -21,38 +21,66 @@ class FingerprintEnrollController extends Controller
 
         try {
 
-            // Cek apakah ID fingerprint sudah digunakan wali
+            // ==========================================
+            // 1. CARI SISWA BERDASARKAN RFID
+            // ==========================================
+            $siswa = DB::table('siswa')
+                ->where('rfid_uid', $uid)
+                ->where('is_active', 1)
+                ->first();
+
+            if (!$siswa) {
+                return response()->json([
+                    'status' => 'gagal',
+                    'pesan' => 'RFID siswa tidak ditemukan',
+                ], 404);
+            }
+
+
+            // ==========================================
+            // 2. CEK APAKAH FINGERPRINT SUDAH TERDAFTAR
+            // ==========================================
             $wali = DB::table('wali')
                 ->where('fingerprint_id', $fingerprintId)
                 ->first();
 
 
-            // Simpan hasil enroll ke log_tap
+            // ==========================================
+            // 3. SIMPAN HASIL ENROLL KE LOG
+            // TIDAK UPDATE WALI DI SINI
+            // ==========================================
             DB::table('log_tap')->insert([
                 'id_device' => 2,
                 'uid_rfid' => $uid,
                 'fingerprint_id' => $fingerprintId,
                 'keterangan' => 'enroll fingerprint',
-
-                // status proses enroll berhasil
                 'status' => 'berhasil',
-
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
 
 
+            // ==========================================
+            // 4. RESPONSE
+            // ==========================================
             return response()->json([
                 'status' => 'berhasil',
                 'pesan' => 'Hasil enroll fingerprint diterima',
+
                 'fingerprint_id' => $fingerprintId,
+
                 'uid' => $uid,
 
-                // Status pendaftaran dicek dari tabel wali
+                'id_siswa' => $siswa->id_siswa,
+
+                'nama_siswa' => $siswa->nama_siswa,
+
                 'terdaftar' => $wali ? true : false,
 
                 'nama_wali' => $wali->nama_wali ?? null,
+
             ], 200);
+
 
         } catch (Throwable $e) {
 
