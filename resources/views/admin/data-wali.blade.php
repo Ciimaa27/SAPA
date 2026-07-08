@@ -63,25 +63,24 @@
                     </a>
 
                 <!-- SEARCH BACKEND -->
-<div style="flex: 1;">
-    <form action="{{ route('data-wali') }}" method="GET" id="searchFormWali">
-        <div class="input-group input-group-sm">
-            <span class="input-group-text bg-white border">
-                <i class="fa fa-search"></i>
-            </span>
-
-            <input
-                type="text"
-                name="search"
-                id="searchInputWali"
-                class="form-control"
-                placeholder="Pencarian"
-                value="{{ request('search') }}"
-                autocomplete="off"
-            >
-        </div>
-    </form>
-</div>
+                <div style="flex: 1;">
+                    <form action="{{ route('data-wali') }}" method="GET" id="searchFormWali">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-white border">
+                                <i class="fa fa-search"></i>
+                            </span>
+                            <input
+                                type="text"
+                                name="search"
+                                id="searchInputWali"
+                                class="form-control"
+                                placeholder="Pencarian"
+                                value="{{ request('search') }}"
+                                autocomplete="off"
+                            >
+                        </div>
+                    </form>
+                </div>
 
             </div>
         </div>
@@ -93,6 +92,7 @@
                     <thead class="table-light">
                         <tr>
                             <th>No</th>
+                            <th>ID Fingerprint</th>
                             <th>Nama orangtua/wali</th>
                             <th>No. HP</th>
                             <th>Jenis Kelamin</th>
@@ -104,9 +104,8 @@
                         @forelse($wali as $row)
                         <tr>
                             <!-- 🔥 NOMOR TIDAK RESET -->
-                            <td>
-                                {{ ($wali->currentPage() - 1) * $wali->perPage() + $loop->iteration }}
-                            </td>
+                            <td>{{ ($wali->currentPage() - 1) * $wali->perPage() + $loop->iteration }}</td>
+                            <td>{{ $row->fingerprint_id ?? '-' }}</td>
                             <td>{{ $row->nama_wali }}</td>
                             <td>{{ $row->no_hp ?? '-' }}</td>
                             <td class="text-capitalize">{{ $row->jenis_kelamin ?? '-' }}</td>

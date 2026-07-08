@@ -125,6 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <tr>
                             <th>No</th>
                             <th>NIS</th>
+                            <th>UID</th>
                             <th>Nama lengkap</th>
                             <th>Kelas</th>
                             <th>Jenis Kelamin</th>
@@ -141,6 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             </td>
 
                             <td>{{ $item->nis }}</td>
+                            <td>{{ $item->rfid_uid ?? '-' }}</td>
                             <td>{{ $item->nama_siswa }}</td>
                             <td>{{ $item->kelas->nama_kelas ?? '-' }}</td>
                             <td>{{ $item->jenis_kelamin }}</td>

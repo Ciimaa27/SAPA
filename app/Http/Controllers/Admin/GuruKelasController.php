@@ -18,64 +18,118 @@ class GuruKelasController extends Controller
         $this->fonnte = $fonnte;
     }
     // ========================
-// HALAMAN GURU
-// ========================
-public function guru(Request $request)
-{
-    $kelasId = $request->query('kelas', null);
-    $search = $request->query('search', null);
-
-    // Load kelas options untuk filter
-    $kelasOptions = DB::table('kelas')
-        ->select('id_kelas', 'nama_kelas', 'id_guru')
-        ->get();
-
-    // Query awal guru
-    $query = Guru::query();
-
+    // HALAMAN GURU
     // ========================
-    // FILTER KELAS
-    // ========================
-    if ($kelasId) {
-        $idGuru = DB::table('kelas')
-            ->where('id_kelas', $kelasId)
-            ->value('id_guru');
+    public function guru(Request $request)
+    {
+        $kelasId = $request->query('kelas', null);
+        $search = $request->query('search', null);
 
-        if ($idGuru) {
-            $query->where('id_guru', $idGuru);
-        } else {
-            $query->whereRaw('0 = 1');
+        // ========================
+        // DROPDOWN SEMUA KELAS
+        // ========================
+        $kelasOptions = DB::table('kelas')
+            ->select(
+                'id_kelas',
+                'nama_kelas',
+                'id_guru'
+            )
+            ->orderByRaw(
+                'CAST(SUBSTRING(nama_kelas, 1, 1) AS UNSIGNED) ASC'
+            )
+            ->orderByRaw(
+                'SUBSTRING(nama_kelas, 2) ASC'
+            )
+            ->get();
+
+
+        // ========================
+        // QUERY AWAL GURU
+        // ========================
+        $query = Guru::query();
+
+
+        // ========================
+        // FILTER KELAS
+        // ========================
+        if ($kelasId) {
+
+            $idGuru = DB::table('kelas')
+                ->where('id_kelas', $kelasId)
+                ->value('id_guru');
+
+            if ($idGuru) {
+
+                $query->where(
+                    'id_guru',
+                    $idGuru
+                );
+
+            } else {
+
+                $query->whereRaw('0 = 1');
+            }
         }
+
+
+        // ========================
+        // PENCARIAN
+        // ========================
+        if ($search) {
+
+            $query->where(function ($q) use ($search) {
+
+                $q->where(
+                    'nama_guru',
+                    'like',
+                    '%' . $search . '%'
+                )
+                ->orWhere(
+                    'nip',
+                    'like',
+                    '%' . $search . '%'
+                )
+                ->orWhere(
+                    'no_hp',
+                    'like',
+                    '%' . $search . '%'
+                )
+                ->orWhere(
+                    'tempat_lahir',
+                    'like',
+                    '%' . $search . '%'
+                )
+                ->orWhere(
+                    'tanggal_lahir',
+                    'like',
+                    '%' . $search . '%'
+                );
+            });
+        }
+
+
+        // ========================
+        // TOTAL DATA
+        // ========================
+        $total = (clone $query)->count();
+
+
+        // ========================
+        // PAGINATION
+        // ========================
+        $guru = $query
+            ->orderByDesc('id_guru')
+            ->paginate(10)
+            ->withQueryString();
+
+
+        return view('admin.guru', compact(
+            'guru',
+            'total',
+            'kelasOptions',
+            'kelasId'
+        ));
     }
-
-    // ========================
-    // PENCARIAN
-    // ========================
-    if ($search) {
-        $query->where(function ($q) use ($search) {
-            $q->where('nama_guru', 'like', '%' . $search . '%')
-              ->orWhere('nip', 'like', '%' . $search . '%')
-              ->orWhere('no_hp', 'like', '%' . $search . '%')
-              ->orWhere('tempat_lahir', 'like', '%' . $search . '%')
-              ->orWhere('tanggal_lahir', 'like', '%' . $search . '%');
-        });
-    }
-
-    // Total hasil sesuai filter dan pencarian
-    $total = (clone $query)->count();
-
-    // Pagination
-    $guru = $query
-        ->paginate(10)
-        ->withQueryString();
-
-    return view('admin.guru', compact(
-        'guru',
-        'total',
-        'kelasOptions',
-        'kelasId'
-    ));
-}
 
 // ========================
 // HALAMAN KELAS
@@ -152,7 +206,7 @@ public function kelas(Request $request)
             'id_guru' => 'required',
         ]);
 
-        $namaKelas = 'Kelas '.$request->tingkat.'-'.$request->sub_kelas;
+       $namaKelas = $request->tingkat . $request->sub_kelas;
 
         // 🚫 CEK DUPLIKAT
         $cek = DB::table('kelas')

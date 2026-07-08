@@ -59,26 +59,26 @@ class DataWaliController extends Controller
     // ========================
     // SIMPAN DATA
     // ========================
-public function store(Request $request)
-            {
-                $request->validate([
-                    'fingerprint_id' => 'required|string|unique:wali,fingerprint_id',
-                    'nama_wali' => 'required',
-                    'no_hp' => 'required|unique:wali,no_hp',
-                    'jenis_kelamin' => 'required',
-                ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama_wali' => 'required',
+            'no_hp' => 'required|unique:wali,no_hp',
+            'jenis_kelamin' => 'required',
+        ]);
 
-                Wali::create([
-                    'fingerprint_id' => $request->fingerprint_id,
-                    'nama_wali' => $request->nama_wali,
-                    'no_hp' => $request->no_hp,
-                    'jenis_kelamin' => $request->jenis_kelamin,
-                    'is_active' => 1,
-                ]);
+        Wali::create([
+            'fingerprint_id' => null,
+            'nama_wali' => $request->nama_wali,
+            'no_hp' => $request->no_hp,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'is_active' => 1,
+        ]);
 
-                return redirect()->route('data-wali')
-                    ->with('success', 'Data wali berhasil ditambahkan');
-            }
+        return redirect()
+            ->route('data-wali')
+            ->with('success', 'Data wali berhasil ditambahkan');
+    }
     // ========================
     // FORM EDIT
     // ========================
@@ -94,21 +94,22 @@ public function store(Request $request)
     public function update(Request $request, $id)
     {
         $request->validate([
-            'fingerprint_id' => 'required|string|unique:wali,fingerprint_id,'.$id.',id_wali',
             'nama_wali' => 'required',
             'no_hp' => 'required|unique:wali,no_hp,'.$id.',id_wali',
             'jenis_kelamin' => 'required',
         ]);
 
         $wali = Wali::findOrFail($id);
+
         $wali->update([
-            'fingerprint_id' => $request->fingerprint_id,
             'nama_wali' => $request->nama_wali,
             'no_hp' => $request->no_hp,
             'jenis_kelamin' => $request->jenis_kelamin,
         ]);
 
-        return redirect()->route('data-wali')->with('success', 'Data wali berhasil diupdate');
+        return redirect()
+            ->route('data-wali')
+            ->with('success', 'Data wali berhasil diupdate');
     }
 
     // ========================

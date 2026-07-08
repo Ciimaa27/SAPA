@@ -60,7 +60,7 @@ class DataSiswaController extends Controller
                 'tanggal_lahir' => 'required|date',
 
                 // UID RFID wajib dan tidak boleh sama
-                'rfid_uid' => 'required|string|unique:siswa,rfid_uid',
+               'rfid_uid' => 'nullable|string|unique:siswa,rfid_uid',
             ]);
 
             Siswa::create([
