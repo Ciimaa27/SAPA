@@ -17,127 +17,84 @@
     <div class="container-dashboard">
 
         <!-- TITLE -->
-        <div class="card-box">
-            <h5 class="page-title">Data penjemputan</h5>
-        </div>
-
-        <!-- SEARCH + TABLE -->
-        <div class="card-box">
-
-<!-- SEARCH -->
-<form id="searchFormPenjemputan"
-      method="GET"
-      action="{{ route('guru.data-penjemputan') }}">
-
-    <div class="input-group input-group-sm mb-3">
-        <span class="input-group-text bg-white">
-            <i class="fa fa-search"></i>
-        </span>
-
-        <input type="text"
-               id="searchInputPenjemputan"
-               name="cari"
-               value="{{ request('cari') }}"
-               class="form-control"
-               placeholder="Pencarian"
-               autocomplete="off">
-    </div>
-
-</form>
-
-            <!-- TABLE -->
-            <div class="table-container">
-                <table class="table-custom" id="tableData">
-
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Kelas</th>
-                            <th>Wali kelas</th>
-                            <th>Jumlah siswa</th>
-                            <th class="col-aksi">Aksi</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        @forelse($data as $row)
-                        <tr>
-                            <td>{{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}</td>
-                            <td>{{ $row['kelas'] }}</td>
-                            <td>{{ $row['wali'] }}</td>
-                            <td>{{ $row['jumlah'] }}</td>
-<td>
-    <a href="{{ route('guru.penjemputan', $row['id_kelas']) }}"
-       class="btn btn-success btn-sm btn-aksi"
-       title="Lihat status">
-        <i class="fa fa-eye"></i>
-    </a>
-</td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="5" class="text-center text-muted">Tidak ada data kelas</td>
-                        </tr>
-                        @endforelse
-
-                    </tbody>
-
-                </table>
+            <div class="card mb-3 p-3">
+                <h5 class="mb-0">Data Penjemputan</h5>
             </div>
 
-            <div class="pagination-wrapper">
-    <nav>
-        <ul class="pagination mb-0">
+            <!-- SEARCH -->
+            <div class="card mb-3 p-3">
+                <form id="searchFormPenjemputan" method="GET" action="{{ route('guru.data-penjemputan') }}">
+                    <div class="input-group input-group-sm search-flex">
+                        <span class="input-group-text bg-white">
+                            <i class="fa fa-search"></i>
+                        </span>
+                        <input type="text" id="searchInputPenjemputan" name="cari" value="{{ request('cari') }}" class="form-control" placeholder="Pencarian" autocomplete="off">
+                    </div>
+                </form>
+            </div>
 
-            {{-- PREVIOUS --}}
-            @if ($data->onFirstPage())
-                <li class="page-item disabled">
-                    <span class="page-link">‹</span>
-                </li>
-            @else
-                <li class="page-item">
-                    <a class="page-link"
-                       href="{{ $data->previousPageUrl() }}">
-                        ‹
-                    </a>
-                </li>
-            @endif
+            <!-- TABLE -->
+            <div class="card">
+                <div class="table-container">
+                    <table class="table table-hover align-middle mb-0" id="dataTablePenjemputan">
+                        <thead class="table-light">
+                            <tr>
+                                <th>No</th>
+                                <th>Kelas</th>
+                                <th>Wali kelas</th>
+                                <th>Jumlah siswa</th>
+                                <th class="col-aksi">Aksi</th>
+                            </tr>
+                        </thead>
 
+                        <tbody>
+                            @forelse($data as $row)
+                                <tr>
+                                    <td>{{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}</td>
+                                    <td>{{ $row['kelas'] }}</td>
+                                    <td>{{ $row['wali'] }}</td>
+                                    <td>{{ $row['jumlah'] }}</td>
+                                    <td>
+                                        <a href="{{ route('guru.penjemputan', $row['id_kelas']) }}" class="btn-detail" title="Lihat status">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">Tidak ada data kelas</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
 
-            {{-- NOMOR HALAMAN --}}
-            @php
-                $current = $data->currentPage();
-                $last = $data->lastPage();
-            @endphp
+                <!-- PAGINATION -->
+                <div class="pagination-wrapper">
+                    {{-- PREVIOUS --}}
+                    @if ($data->onFirstPage())
+                        <span class="page-item-custom disabled">‹</span>
+                    @else
+                        <a href="{{ $data->previousPageUrl() }}" class="page-item-custom">‹</a>
+                    @endif
 
-            @for ($i = 1; $i <= $last; $i++)
-                <li class="page-item {{ $i == $current ? 'active' : '' }}">
-                    <a class="page-link"
-                       href="{{ $data->url($i) }}">
-                        {{ $i }}
-                    </a>
-                </li>
-            @endfor
+                    {{-- NOMOR HALAMAN --}}
+                    @foreach ($data->getUrlRange(1, $data->lastPage()) as $page => $url)
+                        @if ($page == $data->currentPage())
+                            <span class="page-item-custom active">{{ $page }}</span>
+                        @else
+                            <a href="{{ $url }}" class="page-item-custom">{{ $page }}</a>
+                        @endif
+                    @endforeach
 
-
-            {{-- NEXT --}}
-            @if ($data->hasMorePages())
-                <li class="page-item">
-                    <a class="page-link"
-                       href="{{ $data->nextPageUrl() }}">
-                        ›
-                    </a>
-                </li>
-            @else
-                <li class="page-item disabled">
-                    <span class="page-link">›</span>
-                </li>
-            @endif
-
-        </ul>
-    </nav>
-</div>
+                    {{-- NEXT --}}
+                    @if ($data->hasMorePages())
+                        <a href="{{ $data->nextPageUrl() }}" class="page-item-custom">›</a>
+                    @else
+                        <span class="page-item-custom disabled">›</span>
+                    @endif
+                </div>
+            </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {

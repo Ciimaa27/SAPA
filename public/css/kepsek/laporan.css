@@ -1,94 +1,174 @@
-/* TAB */
+/* =========================================
+   TAB
+========================================= */
 .tab-wrapper {
     display: flex;
+    align-items: center;
     gap: 8px;
 }
 
 .tab-btn {
-    border: 1px solid #ddd;
-    background: #f8f9fa;
     padding: 6px 12px;
-    font-size: 12px;
+    background: #f8f9fa;
+    color: #555;
+    border: 1px solid #ddd;
     border-radius: 8px;
+    font-size: 12px;
     cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.tab-btn:hover {
+    background: #f1edff;
+    color: #6a4bc4;
 }
 
 .tab-btn.active {
     background: #e5dcff;
     color: #6a4bc4;
     border-color: #cfc3ff;
+    font-weight: 500;
 }
 
-/* FILTER */
+/* =========================================
+   FILTER
+========================================= */
 .filter-box {
     display: flex;
+    align-items: center;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
-/* BUTTON */
+/* =========================================
+   BUTTON UNDUH
+========================================= */
 .btn-unduh {
+    padding: 4px 10px;
     background: #e5dcff;
     color: #6a4bc4;
     border: none;
-    padding: 4px 10px;
     border-radius: 6px;
     font-size: 12px;
+    cursor: pointer;
+    transition: 0.2s ease;
 }
 
 .btn-unduh:hover {
     background: #d6ccff;
+    color: #6a4bc4;
 }
 
-.btn-excel{
-    width: 42px;
-    height: 38px;
-    border-radius: 8px;
-    background: #1D6F42;
-    color: white;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    text-decoration: none;
-    transition: 0.2s;
+/* =========================================
+   KOLOM AKSI
+========================================= */
+.col-aksi {
+    text-align: center !important;
+    vertical-align: middle !important;
 }
 
-.btn-excel:hover{
-    background: #185c37;
-    color: white;
-}
-
-.btn-excel i{
-    font-size: 18px;
-}
-
-/* KOLOM AKSI */
-.col-aksi{
-    text-align: center;
-    vertical-align: middle;
-}
-
-td.col-aksi{
+th.col-aksi {
     text-align: center !important;
 }
 
-.btn-excel{
-    width: 38px;
-    height: 38px;
+td.col-aksi {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
 
+/* =========================================
+   BUTTON EXCEL
+========================================= */
+.btn-excel {
+    width: 34px;
+    height: 34px;
+    padding: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
-    background: #22c55e;
-    color: #fff;
-    border-radius: 8px;
-    text-decoration: none;
+    background: #dcfce7 !important;
+    color: #166534 !important;
     border: none;
+    border-radius: 6px;
+    text-decoration: none !important;
+    cursor: pointer;
+    transition: 0.2s ease;
 }
 
-.btn-excel i{
-    font-size: 16px;
+/* ICON EXCEL */
+.btn-excel i {
+    color: #166534 !important;
+    font-size: 14px;
+    line-height: 1;
+}
 
+/* HOVER */
+.btn-excel:hover {
+    background: #bbf7d0 !important;
+    color: #14532d !important;
+    text-decoration: none !important;
+}
+
+.btn-excel:hover i {
+    color: #14532d !important;
+}
+
+/* FOCUS */
+.btn-excel:focus {
+    background: #dcfce7 !important;
+    color: #166534 !important;
+    outline: none;
+    box-shadow: none;
+}
+
+.btn-excel:focus i {
+    color: #166534 !important;
+}
+
+/* =========================================
+   RESPONSIVE TABLET
+========================================= */
+@media (max-width: 768px) {
+    .tab-wrapper {
+        flex-wrap: wrap;
+    }
+    .filter-box {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    .btn-excel {
+        width: 32px;
+        height: 32px;
+    }
+    .btn-excel i {
+        font-size: 13px;
+    }
+}
+
+/* =========================================
+   RESPONSIVE HP
+========================================= */
+@media (max-width: 576px) {
+    .tab-wrapper {
+        gap: 6px;
+    }
+    .tab-btn {
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+    .filter-box {
+        gap: 8px;
+    }
+    .btn-unduh {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    .btn-excel {
+        width: 30px;
+        height: 30px;
+        border-radius: 5px;
+    }
+    .btn-excel i {
+        font-size: 12px;
+    }
 }

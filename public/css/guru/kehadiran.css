@@ -60,35 +60,26 @@
     color: #fff !important;
 }
 
-/* ===========================
-   PAGINATION
-=========================== */
-
+/* PAGINATION */
 .pagination-wrapper {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: 6px;
-
     padding: 16px;
 }
 
 .page-item-custom {
     width: 34px;
     height: 34px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 7px;
-
     background: #f1f3f5;
     color: #6c757d;
-
     font-size: 13px;
     text-decoration: none;
-
     transition: 0.2s ease;
 }
 
