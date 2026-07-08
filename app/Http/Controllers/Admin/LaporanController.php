@@ -16,18 +16,9 @@ class LaporanController extends Controller
 {
     public function index(Request $request)
     {
-<<<<<<< HEAD
         $tanggal = $request->tanggal ?? now()->format('Y-m-d');
 
         $kelasFilter = $request->filled('kelas') ? $request->kelas : null;
-=======
-        // Filter per hari
-        $tanggal = $request->tanggal ?? now()->format('Y-m-d');
-
-        $kelasFilter = $request->filled('kelas')
-            ? $request->kelas
-            : null;
->>>>>>> origin/isma
 
         $kelasOptions = Kelas::orderBy('nama_kelas')->get();
 
@@ -41,44 +32,11 @@ class LaporanController extends Controller
             ->paginate(10)
             ->appends($request->query());
 
-<<<<<<< HEAD
         $kehadiranQuery = Kehadiran::join('siswa', 'kehadiran.id_siswa', '=', 'siswa.id_siswa')
             ->whereDate('kehadiran.tanggal', $tanggal);
 
         $penjemputanQuery = Penjemputan::join('siswa', 'penjemputan.id_siswa', '=', 'siswa.id_siswa')
             ->whereDate('penjemputan.tanggal', $tanggal);
-=======
-
-        // ==========================
-        // QUERY KEHADIRAN PER HARI
-        // ==========================
-
-        $kehadiranQuery = Kehadiran::join(
-                'siswa',
-                'kehadiran.id_siswa',
-                '=',
-                'siswa.id_siswa'
-            )
-            ->whereDate('kehadiran.tanggal', $tanggal);
-
-
-        // ==========================
-        // QUERY PENJEMPUTAN PER HARI
-        // ==========================
-
-        $penjemputanQuery = Penjemputan::join(
-                'siswa',
-                'penjemputan.id_siswa',
-                '=',
-                'siswa.id_siswa'
-            )
-            ->whereDate('penjemputan.tanggal', $tanggal);
-
-
-        // ==========================
-        // FILTER KELAS
-        // ==========================
->>>>>>> origin/isma
 
         if ($kelasFilter) {
 
@@ -125,10 +83,6 @@ class LaporanController extends Controller
                 'siswa.id_kelas'
             );
 
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/isma
         return view('admin.laporan', compact(
             'kelas',
             'kelasOptions',
