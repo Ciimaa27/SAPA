@@ -9,45 +9,82 @@ use App\Models\Wali;
 
 class DataWaliController extends Controller
 {
+    // ========================
+    // TAMPIL DATA
+    // ========================
     public function index(Request $request)
-{
-    $search = $request->input('search');
+    {
+        $search = $request->input('search');
 
-    $wali = DB::table('wali')
-        ->leftJoin('users', 'wali.id_user', '=', 'users.id')
-        ->select(
-            'wali.id_wali',
-            'wali.nama_wali',
-            'wali.no_hp',
-            'wali.jenis_kelamin',
-            'wali.fingerprint_id',
-            'users.username',
-            'users.email'
-        )
-        ->where('wali.is_active', 1)
+        $wali = DB::table('wali')
+            ->leftJoin(
+                'users',
+                'wali.id_user',
+                '=',
+                'users.id'
+            )
+            ->select(
+                'wali.id_wali',
+                'wali.nama_wali',
+                'wali.no_hp',
+                'wali.jenis_kelamin',
+                'wali.fingerprint_id',
+                'users.username',
+                'users.email'
+            )
+            ->where('wali.is_active', 1)
 
-        // PENCARIAN SELURUH DATA
-        ->when($search, function ($query, $search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('wali.nama_wali', 'like', '%' . $search . '%')
-                  ->orWhere('wali.no_hp', 'like', '%' . $search . '%')
-                  ->orWhere('wali.jenis_kelamin', 'like', '%' . $search . '%')
-                  ->orWhere('wali.fingerprint_id', 'like', '%' . $search . '%')
-                  ->orWhere('users.username', 'like', '%' . $search . '%')
-                  ->orWhere('users.email', 'like', '%' . $search . '%');
-            });
-        })
+            // PENCARIAN SELURUH DATA
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where(
+                        'wali.nama_wali',
+                        'like',
+                        '%' . $search . '%'
+                    )
+                    ->orWhere(
+                        'wali.no_hp',
+                        'like',
+                        '%' . $search . '%'
+                    )
+                    ->orWhere(
+                        'wali.jenis_kelamin',
+                        'like',
+                        '%' . $search . '%'
+                    )
+                    ->orWhere(
+                        'wali.fingerprint_id',
+                        'like',
+                        '%' . $search . '%'
+                    )
+                    ->orWhere(
+                        'users.username',
+                        'like',
+                        '%' . $search . '%'
+                    )
+                    ->orWhere(
+                        'users.email',
+                        'like',
+                        '%' . $search . '%'
+                    );
+                });
+            })
 
-        ->orderByDesc('wali.id_wali')
-        ->paginate(10)
-        ->withQueryString();
+            ->orderByDesc('wali.id_wali')
+            ->paginate(10)
+            ->withQueryString();
 
-    $total = DB::table('wali')
-        ->where('is_active', 1)
-        ->count();
+        $total = DB::table('wali')
+            ->where('is_active', 1)
+            ->count();
 
-    return view('admin.data-wali', compact('wali', 'total'));
-}
+        return view(
+            'admin.data-wali',
+            compact('wali', 'total')
+        );
+    }
+
+
     // ========================
     // FORM TAMBAH
     // ========================
@@ -56,14 +93,15 @@ class DataWaliController extends Controller
         return view('admin.tambah-data-wali');
     }
 
+
     // ========================
     // SIMPAN DATA
     // ========================
     public function store(Request $request)
     {
         $request->validate([
-            'nama_wali' => 'required',
-            'no_hp' => 'required|unique:wali,no_hp',
+            'nama_wali' => 'required|string|max:255',
+            'no_hp' => 'required|string|max:20|unique:wali,no_hp',
             'jenis_kelamin' => 'required',
         ]);
 
@@ -77,16 +115,26 @@ class DataWaliController extends Controller
 
         return redirect()
             ->route('data-wali')
-            ->with('success', 'Data wali berhasil ditambahkan');
+            ->with(
+                'success',
+                'Data wali berhasil ditambahkan'
+            );
     }
+
+
     // ========================
     // FORM EDIT
     // ========================
     public function edit($id)
     {
         $wali = Wali::findOrFail($id);
-        return view('admin.edit-data-wali', compact('wali'));
+
+        return view(
+            'admin.edit-data-wali',
+            compact('wali')
+        );
     }
+
 
     // ========================
     // UPDATE DATA
@@ -94,8 +142,13 @@ class DataWaliController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama_wali' => 'required',
-            'no_hp' => 'required|unique:wali,no_hp,'.$id.',id_wali',
+            'nama_wali' => 'required|string|max:255',
+
+            'no_hp' =>
+                'required|string|max:20|unique:wali,no_hp,' .
+                $id .
+                ',id_wali',
+
             'jenis_kelamin' => 'required',
         ]);
 
@@ -109,17 +162,27 @@ class DataWaliController extends Controller
 
         return redirect()
             ->route('data-wali')
-            ->with('success', 'Data wali berhasil diupdate');
+            ->with(
+                'success',
+                'Data wali berhasil diperbarui'
+            );
     }
 
+
     // ========================
-    // HAPUS
+    // HAPUS DATA
     // ========================
     public function destroy($id)
     {
         $wali = Wali::findOrFail($id);
+
         $wali->delete();
 
-        return redirect()->back()->with('success', 'Data wali berhasil dihapus');
+        return redirect()
+            ->back()
+            ->with(
+                'success',
+                'Data wali berhasil dihapus'
+            );
     }
 }

@@ -14,10 +14,9 @@
 
 <div class="main-guru">
 
-    <!-- 🔥 WELCOME -->
-    <div class="welcome-box">
-        Selamat Datang, Guru {{ auth()->user()->name ?? 'Andini' }}
-    </div>
+<div class="welcome-box">
+    Selamat Datang, Guru {{ auth()->user()->nama_lengkap }}
+</div>
 
     <!-- 🔥 STATISTIK -->
     <div class="section">
