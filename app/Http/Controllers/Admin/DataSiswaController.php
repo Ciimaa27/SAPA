@@ -11,30 +11,44 @@ use App\Models\ArsipSiswa;
 use App\Models\Wali;
 use App\Models\SiswaWali;
 use App\Models\User;
+
 class DataSiswaController extends Controller
 {
     // ========================
     // TAMPIL DATA
     // ========================
-    public function index(Request $request)
+public function index(Request $request)
     {
         $query = Siswa::with('kelas')
             ->where('is_active', 1);
 
+        // FILTER KELAS
+        if ($request->kelas) {
+            $query->where('id_kelas', $request->kelas);
+        }
+
+        // PENCARIAN
         if ($request->search) {
             $query->where(function ($q) use ($request) {
                 $q->where('nis', 'like', '%' . $request->search . '%')
-                ->orWhere('nama_siswa', 'like', '%' . $request->search . '%');
+                    ->orWhere('nama_siswa', 'like', '%' . $request->search . '%');
             });
         }
 
         $siswa = $query->orderByDesc('id_siswa')
-                    ->paginate(10)
-                    ->withQueryString();
+            ->paginate(10)
+            ->withQueryString();
 
         $total = Siswa::where('is_active', 1)->count();
 
-        return view('admin.data-siswa', compact('siswa', 'total'));
+        // AMBIL DATA KELAS UNTUK DROPDOWN
+        $kelas = Kelas::orderBy('nama_kelas')->get();
+
+        return view('admin.data-siswa', compact(
+            'siswa',
+            'total',
+            'kelas'
+        ));
     }
 
     // ========================
@@ -49,7 +63,7 @@ class DataSiswaController extends Controller
     // ========================
     // SIMPAN DATA
     // ========================
-        public function store(Request $request)
+    public function store(Request $request)
         {
             $request->validate([
                 'nis' => 'required|unique:siswa,nis',
@@ -58,9 +72,6 @@ class DataSiswaController extends Controller
                 'jenis_kelamin' => 'required',
                 'tempat_lahir' => 'required',
                 'tanggal_lahir' => 'required|date',
-
-                // UID RFID wajib dan tidak boleh sama
-                'rfid_uid' => 'required|string|unique:siswa,rfid_uid',
             ]);
 
             Siswa::create([
@@ -70,10 +81,6 @@ class DataSiswaController extends Controller
                 'jenis_kelamin' => $request->jenis_kelamin,
                 'tempat_lahir' => $request->tempat_lahir,
                 'tanggal_lahir' => $request->tanggal_lahir,
-
-                // UID dari form
-                'rfid_uid' => $request->rfid_uid,
-
                 'status' => 'aktif',
                 'is_active' => 1
             ]);
@@ -81,46 +88,47 @@ class DataSiswaController extends Controller
             return redirect()->route('data-siswa')
                 ->with('success', 'Data siswa berhasil ditambahkan');
         }
+
     // ========================
-// FORM EDIT
-// ========================
-public function edit($id)
-{
-    $siswa = Siswa::findOrFail($id);
-    $kelas = Kelas::orderBy('nama_kelas')->get();
-    return view('admin.edit-data-siswa', compact('siswa', 'kelas'));
-}
+    // FORM EDIT
+    // ========================
+    public function edit($id)
+    {
+        $siswa = Siswa::findOrFail($id);
+        $kelas = Kelas::orderBy('nama_kelas')->get();
+        return view('admin.edit-data-siswa', compact('siswa', 'kelas'));
+    }
 
-// ========================
-// UPDATE DATA
-// ========================
-public function update(Request $request, $id)
-{
-    $request->validate([
-        'nis' => 'required|unique:siswa,nis,'.$id.',id_siswa',
-        'nama_siswa' => 'required',
-        'id_kelas' => 'required',
-        'jenis_kelamin' => 'required',
-        'tempat_lahir' => 'required',
-        'tanggal_lahir' => 'required|date',
-        'rfid_uid' => 'nullable|string|unique:siswa,rfid_uid,'.$id.',id_siswa',
-    ]);
+    // ========================
+    // UPDATE DATA
+    // ========================
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nis' => 'required|unique:siswa,nis,' . $id . ',id_siswa',
+            'nama_siswa' => 'required',
+            'id_kelas' => 'required',
+            'jenis_kelamin' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required|date',
+            'rfid_uid' => 'nullable|string|unique:siswa,rfid_uid,' . $id . ',id_siswa',
+        ]);
 
-    $siswa = Siswa::findOrFail($id);
+        $siswa = Siswa::findOrFail($id);
 
-    $siswa->update([
-        'nis' => $request->nis,
-        'nama_siswa' => $request->nama_siswa,
-        'id_kelas' => $request->id_kelas,
-        'jenis_kelamin' => $request->jenis_kelamin,
-        'tempat_lahir' => $request->tempat_lahir,
-        'tanggal_lahir' => $request->tanggal_lahir,
-        'rfid_uid' => $request->rfid_uid,
-    ]);
+        $siswa->update([
+            'nis' => $request->nis,
+            'nama_siswa' => $request->nama_siswa,
+            'id_kelas' => $request->id_kelas,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'rfid_uid' => $request->rfid_uid,
+        ]);
 
-    return redirect()->route('data-siswa')
-        ->with('success', 'Data siswa berhasil diupdate');
-}
+        return redirect()->route('data-siswa')
+            ->with('success', 'Data siswa berhasil diupdate');
+    }
 
     // ========================
     // HAPUS
@@ -143,12 +151,14 @@ public function update(Request $request, $id)
         return view('admin.detail-siswa', compact('siswa'));
     }
 
+    // ========================
+    // PROSES KENAIKAN KELAS
+    // ========================
     public function kenaikanKelas()
     {
         DB::beginTransaction();
 
         try {
-
             // ==========================
             // ARSIPKAN SEMUA KELAS 6
             // ==========================
@@ -158,7 +168,6 @@ public function update(Request $request, $id)
             $siswaLulus = Siswa::whereIn('id_kelas', $kelas6)->get();
 
             foreach ($siswaLulus as $siswa) {
-
                 $kelasTerakhir = Kelas::find($siswa->id_kelas);
 
                 ArsipSiswa::create([
@@ -176,53 +185,49 @@ public function update(Request $request, $id)
                 ]);
             }
 
-    foreach ($siswaLulus as $siswa) {
+            foreach ($siswaLulus as $siswa) {
+                $relasi = SiswaWali::where('id_siswa', $siswa->id_siswa)->first();
 
-        $relasi = SiswaWali::where('id_siswa', $siswa->id_siswa)->first();
+                if ($relasi) {
+                    $masihAdaSiswaAktif = SiswaWali::join(
+                        'siswa',
+                        'siswa.id_siswa',
+                        '=',
+                        'siswa_wali.id_siswa'
+                    )
+                        ->where('siswa_wali.id_wali', $relasi->id_wali)
+                        ->where('siswa.is_active', 1)
+                        ->where('siswa.id_siswa', '!=', $siswa->id_siswa)
+                        ->exists();
 
-        if ($relasi) {
+                    if (!$masihAdaSiswaAktif) {
+                        Wali::where('id_wali', $relasi->id_wali)
+                            ->update([
+                                'is_active' => 0
+                            ]);
 
-            $masihAdaSiswaAktif = SiswaWali::join(
-                    'siswa',
-                    'siswa.id_siswa',
-                    '=',
-                    'siswa_wali.id_siswa'
-                )
-                ->where('siswa_wali.id_wali', $relasi->id_wali)
-                ->where('siswa.is_active', 1)
-                ->where('siswa.id_siswa', '!=', $siswa->id_siswa)
-                ->exists();
+                        $userId = Wali::where('id_wali', $relasi->id_wali)
+                            ->value('id_user');
 
-            if (!$masihAdaSiswaAktif) {
-
-                Wali::where('id_wali', $relasi->id_wali)
-                    ->update([
-                        'is_active' => 0
-                    ]);
-
-                $userId = Wali::where('id_wali', $relasi->id_wali)
-                    ->value('id_user');
-
-                User::where('id', $userId)
-                    ->update([
-                        'status' => 'nonaktif'
-                    ]);
+                        User::where('id', $userId)
+                            ->update([
+                                'status' => 'nonaktif'
+                            ]);
+                    }
+                }
             }
-        }
-    }
 
-    // Hapus siswa kelas 6
-    Siswa::whereIn('id_kelas', $kelas6)
-        ->update([
-            'status' => 'lulus',
-            'is_active' => 0
-        ]);
+            // Hapus/luluskan siswa kelas 6
+            Siswa::whereIn('id_kelas', $kelas6)
+                ->update([
+                    'status' => 'lulus',
+                    'is_active' => 0
+                ]);
 
             // ==========================
             // SIMPAN SISWA 2D DULU
             // ==========================
             $kelas2D = Kelas::where('nama_kelas', '2D')->first();
-
             $siswa2D = collect();
 
             if ($kelas2D) {
@@ -233,7 +238,6 @@ public function update(Request $request, $id)
             // KENAIKAN KELAS NORMAL
             // ==========================
             $mapping = [
-
                 // kelas 5 -> 6
                 '5A' => '6A',
                 '5B' => '6B',
@@ -264,7 +268,6 @@ public function update(Request $request, $id)
             $dataKenaikan = [];
 
             foreach ($mapping as $asal => $tujuan) {
-
                 $kelasAsal = Kelas::where('nama_kelas', $asal)->first();
                 $kelasTujuan = Kelas::where('nama_kelas', $tujuan)->first();
 
@@ -274,14 +277,13 @@ public function update(Request $request, $id)
 
                 $dataKenaikan[] = [
                     'siswa_ids' => Siswa::where('id_kelas', $kelasAsal->id_kelas)
-                                        ->pluck('id_siswa'),
+                        ->pluck('id_siswa'),
                     'tujuan' => $kelasTujuan->id_kelas
                 ];
             }
 
             // Baru lakukan update
             foreach ($dataKenaikan as $data) {
-
                 Siswa::whereIn('id_siswa', $data['siswa_ids'])
                     ->update([
                         'id_kelas' => $data['tujuan']
@@ -292,7 +294,6 @@ public function update(Request $request, $id)
             // KHUSUS 2D -> 3A,3B,3C
             // ==========================
             if ($siswa2D->count() > 0) {
-
                 $kelas3A = Kelas::where('nama_kelas', '3A')->first();
                 $kelas3B = Kelas::where('nama_kelas', '3B')->first();
                 $kelas3C = Kelas::where('nama_kelas', '3C')->first();
@@ -306,7 +307,6 @@ public function update(Request $request, $id)
                 $index = 0;
 
                 foreach ($siswa2D as $siswa) {
-
                     Siswa::where('id_siswa', $siswa->id_siswa)
                         ->update([
                             'id_kelas' => $tujuan[$index]
@@ -327,7 +327,6 @@ public function update(Request $request, $id)
                 ->with('success', 'Kenaikan kelas berhasil diproses.');
 
         } catch (\Exception $e) {
-
             DB::rollback();
 
             return redirect()
@@ -336,6 +335,9 @@ public function update(Request $request, $id)
         }
     }
 
+    // ========================
+    // ARSIP DATA
+    // ========================
     public function arsipSiswa(Request $request)
     {
         $query = ArsipSiswa::query();
@@ -357,7 +359,6 @@ public function update(Request $request, $id)
         ]);
 
         $siswa = Siswa::findOrFail($id);
-
         $kelas = Kelas::find($siswa->id_kelas);
 
         ArsipSiswa::create([

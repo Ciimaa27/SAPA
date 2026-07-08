@@ -100,7 +100,7 @@ class GuruKelasController extends Controller
         ]);
 
         return redirect()->route('kelas')
-            ->with('success','Kelas berhasil ditambahkan');
+            ->with('success', 'Kelas berhasil ditambahkan');
     }
 
     // ========================
@@ -171,7 +171,6 @@ class GuruKelasController extends Controller
         $keterangan = $request->input('keterangan', []);
 
         foreach ($status as $id_siswa => $status_hadir) {
-
             $status_hadir = strtolower(trim($status_hadir));
             $keteranganText = $keterangan[$id_siswa] ?? null;
 
@@ -195,9 +194,7 @@ class GuruKelasController extends Controller
                 if (!empty($updateData)) {
                     $query->update($updateData);
                 }
-
             } elseif ($status_hadir !== '') {
-
                 DB::table('kehadiran')->insert([
                     'id_siswa' => $id_siswa,
                     'id_device' => 1,

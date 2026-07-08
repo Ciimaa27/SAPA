@@ -37,7 +37,6 @@
 
 {{-- 🔥 CONTENT --}}
 @section('content')
-
 <div class="main-dashboard">
     <div class="container-dashboard">
 
@@ -46,47 +45,61 @@
             <h5 class="mb-0">Data siswa</h5>
         </div>
 
-        <!-- FILTER & ACTION -->
-        <div class="card mb-3 p-3">
-            <div class="d-flex align-items-center gap-3">
+       <!-- FILTER & ACTION -->
+            <div class="card mb-3 p-3">
+                <div class="d-flex align-items-center gap-3">
 
-        <div class="total-data">
-            Total Siswa : <strong>{{ $total }}</strong>
-        </div>
-
-                <div style="width:200px;">
-                    <select class="form-select form-select-sm">
-                        <option>Tampilkan</option>
-                        <option>10</option>
-                        <option>25</option>
-                        <option>50</option>
-                    </select>
-                </div>
-
-                <a href="{{ route('tambah-siswa') }}" class="btn-tambah">
-                    Tambah
-                    <i class="fa fa-plus"></i>
-                </a>
-
-                <button type="button"
-                        class="btn-kenaikan"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modalKenaikan">
-                    Kenaikan Kelas
-                    <i class="fa fa-arrow-up"></i>
-                </button>
-
-                <form method="GET" action="{{ route('data-siswa') }}" style="flex: 1; max-width: 500px;">
-                    <div class="input-group input-group-sm">
-                        <span class="input-group-text bg-white border">
-                            <i class="fa fa-search"></i>
-                        </span>
-                        <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Pencarian">
+                    <!-- TOTAL SISWA -->
+                    <div class="total-data">
+                        Total Siswa : <strong>{{ $total }}</strong>
                     </div>
-                </form>
 
+                    <!-- FILTER KELAS -->
+                    <form method="GET" action="{{ route('data-siswa') }}" id="filterForm">
+                        <select name="kelas" class="form-select form-select-sm" style="width: 200px;" onchange="this.form.submit()">
+                            <option value="">Semua Kelas</option>
+                            @foreach($kelas as $itemKelas)
+                                <option value="{{ $itemKelas->id_kelas }}" {{ request('kelas') == $itemKelas->id_kelas ? 'selected' : '' }}>
+                                    {{ $itemKelas->nama_kelas }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        <!-- mempertahankan pencarian -->
+                        @if(request('search'))
+                            <input type="hidden" name="search" value="{{ request('search') }}">
+                        @endif
+                    </form>
+
+                    <!-- BUTTON TAMBAH -->
+                    <a href="{{ route('tambah-siswa') }}" class="btn-tambah">
+                        Tambah
+                        <i class="fa fa-plus"></i>
+                    </a>
+
+                    <!-- BUTTON KENAIKAN KELAS -->
+                    <button type="button" class="btn-kenaikan" data-bs-toggle="modal" data-bs-target="#modalKenaikan">
+                        Kenaikan Kelas
+                        <i class="fa fa-arrow-up"></i>
+                    </button>
+
+                    <!-- SEARCH -->
+                    <form method="GET" action="{{ route('data-siswa') }}" style="flex: 1; max-width: 500px;">
+                        <!-- mempertahankan filter kelas -->
+                        @if(request('kelas'))
+                            <input type="hidden" name="kelas" value="{{ request('kelas') }}">
+                        @endif
+
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-white border">
+                                <i class="fa fa-search"></i>
+                            </span>
+                            <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Pencarian">
+                        </div>
+                    </form>
+
+                </div>
             </div>
-        </div>
 
         <!-- ✅ ALERT -->
         @if(session('success'))
@@ -99,7 +112,6 @@
         <!-- TABLE -->
         <div class="card">
             <div class="table-container">
-
                 <table class="table table-hover align-middle mb-0" id="dataTable">
                     <thead class="table-light">
                         <tr>
@@ -120,36 +132,25 @@
                             <td>
                                 {{ ($siswa->currentPage() - 1) * $siswa->perPage() + $loop->iteration }}
                             </td>
-
                             <td>{{ $item->nis }}</td>
                             <td>{{ $item->rfid_uid ?? '-' }}</td>
                             <td>{{ $item->nama_siswa }}</td>
                             <td>{{ $item->kelas->nama_kelas ?? '-' }}</td>
                             <td>{{ $item->jenis_kelamin }}</td>
                             <td>{{ $item->tempat_lahir }}, {{ $item->tanggal_lahir }}</td>
-
                             <td>
                                 <!-- LIHAT -->
-                                <a href="{{ route('data-siswa.show', $item->id_siswa) }}"
-                                class="btn btn-info btn-sm">
+                                <a href="{{ route('data-siswa.show', $item->id_siswa) }}" class="btn btn-info btn-sm">
                                     <i class="fa fa-eye"></i>
                                 </a>
 
                                 <!-- EDIT -->
-                                <a href="{{ route('edit-siswa', $item->id_siswa) }}"
-                                class="btn btn-warning btn-sm mx-1">
+                                <a href="{{ route('edit-siswa', $item->id_siswa) }}" class="btn btn-warning btn-sm mx-1">
                                     <i class="fa fa-pencil"></i>
                                 </a>
 
                                 <!-- ARSIP -->
-                                <button
-                                    type="button"
-                                    class="btn btn-secondary btn-sm btn-arsip"
-                                    data-id="{{ $item->id_siswa }}"
-                                    data-nama="{{ $item->nama_siswa }}"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#modalArsip">
-
+                                <button type="button" class="btn btn-secondary btn-sm btn-arsip" data-id="{{ $item->id_siswa }}" data-nama="{{ $item->nama_siswa }}" data-bs-toggle="modal" data-bs-target="#modalArsip">
                                     <i class="fa fa-box-archive"></i>
                                 </button>
                             </td>
@@ -157,7 +158,6 @@
                         @endforeach
                     </tbody>
                 </table>
-
             </div>
 
             <!-- PAGINATION -->
@@ -235,6 +235,7 @@
     </div>
 </div>
 
+<!-- MODAL KENAIKAN KELAS -->
 <div class="modal fade" id="modalKenaikan" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -244,7 +245,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-           <div class="modal-body">
+            <div class="modal-body">
                 <p>Sistem akan melakukan:</p>
 
                 <ul class="mb-3">
@@ -256,33 +257,17 @@
                     <li>Kelas 6 → Diarsipkan (Lulus)</li>
                 </ul>
 
-                <p class="mb-1">
-                    Pastikan seluruh data siswa sudah benar!!
-                </p>
-
-                <p class="text-danger fw-semibold mb-0">
-                    ⚠️Proses ini tidak dapat dibatalkan.
-                </p>
-
+                <p class="mb-1">Pastikan seluruh data siswa sudah benar!!</p>
+                <p class="text-danger fw-semibold mb-0">⚠️Proses ini tidak dapat dibatalkan.</p>
             </div>
 
             <div class="modal-footer">
-
-            <button type="submit" class="btn btn-primary">
-                        Proses
-                    </button>
-
-                <button type="button"
-                        class="btn btn-danger"
-                        data-bs-dismiss="modal">
-                    Batal
-                </button>
+                <button type="submit" class="btn btn-primary">Proses</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
 
                 <form action="{{ route('kenaikan-kelas') }}" method="POST">
                     @csrf
-
                 </form>
-
             </div>
 
         </div>
@@ -298,66 +283,26 @@
                 @csrf
 
                 <div class="modal-header">
-                    <h5 class="modal-title">
-                        Arsipkan Siswa
-                    </h5>
-
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal">
-                    </button>
+                    <h5 class="modal-title">Arsipkan Siswa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
                 <div class="modal-body">
-
-                    <p>
-                        Nama siswa:
-                        <strong id="namaSiswa"></strong>
-                    </p>
+                    <p>Nama siswa: <strong id="namaSiswa"></strong></p>
 
                     <div class="mb-3">
-                        <label class="form-label">
-                            Status Arsip
-                        </label>
-
-                        <select
-                            name="status"
-                            class="form-select"
-                            required>
-
-                            <option value="lulus">
-                                Lulus
-                            </option>
-
-                            <option value="pindah">
-                                Pindah
-                            </option>
-
-                            <option value="mengundurkan_diri">
-                                Mengundurkan Diri
-                            </option>
-
+                        <label class="form-label">Status Arsip</label>
+                        <select name="status" class="form-select" required>
+                            <option value="lulus">Lulus</option>
+                            <option value="pindah">Pindah</option>
+                            <option value="mengundurkan_diri">Mengundurkan Diri</option>
                         </select>
                     </div>
-
                 </div>
 
                 <div class="modal-footer">
-
-                    <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-bs-dismiss="modal">
-                        Batal
-                    </button>
-
-                    <button
-                        type="submit"
-                        class="btn btn-primary">
-                        Arsipkan
-                    </button>
-
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Arsipkan</button>
                 </div>
 
             </form>
@@ -366,29 +311,21 @@
     </div>
 </div>
 
+<!-- JAVASCRIPT -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-
     const formArsip = document.getElementById('formArsip');
     const namaSiswa = document.getElementById('namaSiswa');
 
     document.querySelectorAll('.btn-arsip').forEach(function(btn){
-
         btn.addEventListener('click', function(){
-
             const id = this.dataset.id;
             const nama = this.dataset.nama;
 
             namaSiswa.textContent = nama;
-
-            formArsip.action =
-                "{{ url('/admin/arsip-siswa') }}/" + id;
-
+            formArsip.action = "{{ url('/admin/arsip-siswa') }}/" + id;
         });
-
     });
-
 });
 </script>
-
 @endsection

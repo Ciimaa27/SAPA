@@ -2,29 +2,38 @@
    DATA PENJEMPUTAN
 =========================== */
 
-.search-input {
-    height: 38px;
-    padding-left: 38px;
-    font-size: 13px;
-    border-radius: 10px;
+/* ===========================
+   SEARCH
+=========================== */
+
+/* Ukuran tinggi search */
+.input-group .form-control,
+.input-group .input-group-text {
+    height: 34px;
 }
 
-.search-input:focus {
-    box-shadow: none;
-    border-color: #d6c8ff;
+/* Ukuran tulisan input / placeholder */
+.input-group .form-control {
+    font-size: 12px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
-.search-icon {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #b3b3b3;
-    z-index: 2;
+/* Ukuran icon search */
+.input-group .input-group-text i {
+    font-size: 12px;
 }
 
+/* Padding bagian icon */
+.input-group .input-group-text {
+    padding-left: 10px;
+    padding-right: 10px;
+}
 
-/* TABLE */
+/* ===========================
+   TABLE
+=========================== */
+
 .table-container {
     overflow-x: auto;
 }
@@ -35,25 +44,27 @@
     table-layout: fixed;
 }
 
-.table thead th{
-    background:#fff;
-    color:#8c8c8c;
-    font-size:13px;
-    font-weight:600;
-    border-bottom:1px solid #ececec;
-    text-align:center;
-    padding:8px 8px;
+.table thead th {
+    background: #fff;
+    color: #8c8c8c;
+    font-size: 13px;
+    font-weight: 600;
+    border-bottom: 1px solid #ececec;
+    text-align: center;
+    padding: 8px 8px;
 }
 
-.table tbody td{
-    font-size:13px;
-    vertical-align:middle;
-    text-align:center;
-    padding:10px 8px;
+.table tbody td {
+    font-size: 13px;
+    vertical-align: middle;
+    text-align: center;
+    padding: 10px 8px;
 }
 
+/* ===========================
+   LEBAR KOLOM
+=========================== */
 
-/* LEBAR KOLOM */
 .table th:nth-child(1),
 .table td:nth-child(1) {
     width: 7%;
@@ -80,22 +91,21 @@
     width: 18%;
 }
 
+/* ===========================
+   BUTTON STATUS
+=========================== */
 
-/* BUTTON STATUS */
 .btn-status {
     display: inline-block;
     padding: 6px 14px;
     border-radius: 8px;
-
     background: #dff9f4;
     border: 1px solid #9de8da;
     color: #11a88c;
-
     font-size: 13px;
     font-weight: 600;
     text-decoration: none;
-
-    transition: .2s;
+    transition: 0.2s;
 }
 
 .btn-status:hover {

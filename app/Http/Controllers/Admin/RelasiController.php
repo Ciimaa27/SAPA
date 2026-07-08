@@ -12,16 +12,17 @@ class RelasiController extends Controller
 {
     // Tampilkan data relasi
     public function index()
-    {
+        {
             $relasi = Relasi::with(['siswa', 'wali'])
-            ->whereHas('siswa', function ($q) {
-            $q->where('is_active', 1);
-        })
-        ->orderBy('id_siswa', 'asc')
-        ->paginate(10);
+                ->whereHas('siswa', function ($q) {
+                    $q->where('is_active', 1);
+                })
+                ->orderByDesc('created_at')
+                ->orderByDesc('id_siswa')
+                ->paginate(10);
 
-        return view('admin.relasi', compact('relasi'));
-    }
+            return view('admin.relasi', compact('relasi'));
+        }
 
     // Form tambah
     public function create()
@@ -44,17 +45,24 @@ class RelasiController extends Controller
 
     // Simpan data
     public function store(Request $request)
-    {
-        $request->validate([
-            'id_siswa' => 'required',
-            'id_wali' => 'required',
-            'hubungan' => 'required',
-        ]);
+        {
+            $request->validate([
+                'id_siswa' => 'required|exists:siswa,id_siswa',
+                'id_wali' => 'required|exists:wali,id_wali',
+                'hubungan' => 'required',
+            ]);
 
-        Relasi::create($request->all());
+            Relasi::create([
+                'id_siswa' => $request->id_siswa,
+                'id_wali' => $request->id_wali,
+                'hubungan' => $request->hubungan,
+                'created_at' => now(),
+            ]);
 
-        return redirect()->route('relasi.index')->with('success', 'Data berhasil ditambah');
-    }
+            return redirect()
+                ->route('relasi.index')
+                ->with('success', 'Data berhasil ditambahkan');
+        }
 
     // Form edit
     public function edit($id_siswa, $id_wali)
@@ -90,44 +98,56 @@ class RelasiController extends Controller
     }
 
     // Update data relasi
-    public function update(Request $request, $id_siswa, $id_wali)
-    {
-        $request->validate([
-            'id_siswa' => 'required|exists:siswa,id_siswa',
-            'id_wali' => 'required|exists:wali,id_wali',
-            'hubungan' => 'required',
-        ]);
+   public function update(Request $request, $id_siswa, $id_wali)
+{
+    $request->validate([
+        'id_siswa' => 'required|exists:siswa,id_siswa',
+        'id_wali' => 'required|exists:wali,id_wali',
+        'hubungan' => 'required',
+    ]);
 
-        $newSiswa = $request->input('id_siswa');
-        $newWali = $request->input('id_wali');
-        $hubungan = $request->input('hubungan');
+    $newSiswa = $request->input('id_siswa');
+    $newWali = $request->input('id_wali');
+    $hubungan = $request->input('hubungan');
 
-        if ($newSiswa == $id_siswa && $newWali == $id_wali) {
-            Relasi::where('id_siswa', $id_siswa)
-                ->where('id_wali', $id_wali)
-                ->update(['hubungan' => $hubungan]);
-        } else {
-            $exists = Relasi::where('id_siswa', $newSiswa)
-                ->where('id_wali', $newWali)
-                ->exists();
+    if ($newSiswa == $id_siswa && $newWali == $id_wali) {
 
-            if ($exists) {
-                return back()->withErrors(['relasi' => 'Relasi siswa dan wali sudah ada.'])->withInput();
-            }
-
-            Relasi::create([
-                'id_siswa' => $newSiswa,
-                'id_wali' => $newWali,
-                'hubungan' => $hubungan,
+        Relasi::where('id_siswa', $id_siswa)
+            ->where('id_wali', $id_wali)
+            ->update([
+                'hubungan' => $hubungan
             ]);
 
-            Relasi::where('id_siswa', $id_siswa)
-                ->where('id_wali', $id_wali)
-                ->delete();
+    } else {
+
+        $exists = Relasi::where('id_siswa', $newSiswa)
+            ->where('id_wali', $newWali)
+            ->exists();
+
+        if ($exists) {
+            return back()
+                ->withErrors([
+                    'relasi' => 'Relasi siswa dan wali sudah ada.'
+                ])
+                ->withInput();
         }
 
-        return redirect()->route('relasi.index')->with('success', 'Data relasi berhasil diupdate');
+        Relasi::create([
+            'id_siswa' => $newSiswa,
+            'id_wali' => $newWali,
+            'hubungan' => $hubungan,
+            'created_at' => now(),
+        ]);
+
+        Relasi::where('id_siswa', $id_siswa)
+            ->where('id_wali', $id_wali)
+            ->delete();
     }
+
+    return redirect()
+        ->route('relasi.index')
+        ->with('success', 'Data relasi berhasil diupdate');
+}
 
     // Hapus data
     public function destroy($id_siswa, $id_wali)

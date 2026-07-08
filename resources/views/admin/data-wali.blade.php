@@ -24,12 +24,15 @@
         background: #f8f9fa;
         z-index: 2;
     }
+
+    .alert {
+        margin-bottom: 15px;
+    }
 </style>
 @endpush
 
 {{-- 🔥 CONTENT --}}
 @section('content')
-
 <div class="main-dashboard">
     <div class="container-dashboard">
 
@@ -42,27 +45,26 @@
         <div class="card mb-3 p-3">
             <div class="d-flex align-items-center gap-3">
 
-             <div class="box-total">
-                Total Wali : <strong>{{ $total }}</strong>
-            </div>
+                <div class="box-total">
+                    Total Wali : <strong>{{ $total }}</strong>
+                </div>
 
                 <!-- FILTER DROPDOWN -->
                 <div style="width:180px;">
-                    <select class="form-select form-select-sm">
-                        <option>Tampilkan</option>
-                        <option>10</option>
-                        <option>25</option>
-                        <option>50</option>
+                    <select class="form-select form-select-sm" id="filterJenisKelamin">
+                        <option value="">Jenis Kelamin</option>
+                        <option value="laki-laki">Laki-laki</option>
+                        <option value="perempuan">Perempuan</option>
                     </select>
                 </div>
 
                 <!-- BUTTON TAMBAH -->
-                    <a href="{{ route('wali.create') }}" class="btn-tambah">
-                        Tambah
-                        <i class="fa fa-plus"></i>
-                    </a>
+                <a href="{{ route('wali.create') }}" class="btn-tambah">
+                    Tambah
+                    <i class="fa fa-plus"></i>
+                </a>
 
-                <!-- SEARCH BACKEND -->
+                <!-- SEARCH -->
                 <div style="flex: 1;">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text bg-white border">
@@ -74,6 +76,14 @@
 
             </div>
         </div>
+
+        <!-- ALERT SUCCESS -->
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        @endif
 
         <!-- TABLE -->
         <div class="card">
@@ -93,7 +103,7 @@
                     <tbody>
                         @forelse($wali as $row)
                         <tr>
-                            <!-- 🔥 NOMOR TIDAK RESET -->
+                            <!-- NOMOR TIDAK RESET -->
                             <td>
                                 {{ ($wali->currentPage() - 1) * $wali->perPage() + $loop->iteration }}
                             </td>
@@ -101,19 +111,15 @@
                             <td>{{ $row->nama_wali }}</td>
                             <td>{{ $row->no_hp ?? '-' }}</td>
                             <td class="text-capitalize">{{ $row->jenis_kelamin ?? '-' }}</td>
-
                             <td class="text-center">
-                                <a href="{{ route('edit-data-wali', ['id' => $row->id_wali]) }}"
-                                class="btn btn-warning btn-sm"
-                                title="Edit">
+                                <a href="{{ route('edit-data-wali', ['id' => $row->id_wali]) }}" class="btn btn-warning btn-sm" title="Edit">
                                     <i class="fa fa-pencil"></i>
                                 </a>
                             </td>
                         </tr>
-
                         @empty
                         <tr>
-                            <td colspan="5" class="text-center">Tidak ada data</td>
+                            <td colspan="6" class="text-center">Tidak ada data</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -195,16 +201,51 @@
     </div>
 </div>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("searchInputWali");
+    const filterJenisKelamin = document.getElementById("filterJenisKelamin");
+    const rows = document.querySelectorAll("#dataTableWali tbody tr");
+
+    function filterData() {
+        const keyword = searchInput.value.toLowerCase();
+        const jenisKelamin = filterJenisKelamin.value.toLowerCase();
+
+        rows.forEach(function (row) {
+            const text = row.textContent.toLowerCase();
+
+            // Kolom jenis kelamin adalah kolom ke-5
+            const genderCell = row.cells[4];
+            if (!genderCell) {
+                return;
+            }
+
+            const gender = genderCell.textContent.trim().toLowerCase();
+            const cocokPencarian = text.includes(keyword);
+            const cocokJenisKelamin = jenisKelamin === "" || gender === jenisKelamin;
+
+            if (cocokPencarian && cocokJenisKelamin) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+
+    searchInput.addEventListener("keyup", filterData);
+    filterJenisKelamin.addEventListener("change", filterData);
+});
+</script>
 <!-- SEARCH SCRIPT -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     let input = document.getElementById("searchInputWali");
 
-    input.addEventListener("keyup", function() {
+    input.addEventListener("keyup", function () {
         let keyword = this.value.toLowerCase();
         let rows = document.querySelectorAll("#dataTableWali tbody tr");
 
-        rows.forEach(function(row) {
+        rows.forEach(function (row) {
             let text = row.textContent.toLowerCase();
 
             if (text.includes(keyword)) {
@@ -216,5 +257,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
-
 @endsection
