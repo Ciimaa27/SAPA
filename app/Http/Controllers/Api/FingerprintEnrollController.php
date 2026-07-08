@@ -67,13 +67,38 @@ class FingerprintEnrollController extends Controller
 
         try {
 
+<<<<<<< HEAD
             // Cek apakah fingerprint sudah dipakai wali
+=======
+            // ==========================================
+            // 1. CARI SISWA BERDASARKAN RFID
+            // ==========================================
+            $siswa = DB::table('siswa')
+                ->where('rfid_uid', $uid)
+                ->where('is_active', 1)
+                ->first();
+
+            if (!$siswa) {
+                return response()->json([
+                    'status' => 'gagal',
+                    'pesan' => 'RFID siswa tidak ditemukan',
+                ], 404);
+            }
+
+
+            // ==========================================
+            // 2. CEK APAKAH FINGERPRINT SUDAH TERDAFTAR
+            // ==========================================
+>>>>>>> ISMA
             $wali = DB::table('wali')
                 ->where('fingerprint_id', $fingerprintId)
                 ->first();
 
 
-            // Simpan hasil enroll ke log_tap
+            // ==========================================
+            // 3. SIMPAN HASIL ENROLL KE LOG
+            // TIDAK UPDATE WALI DI SINI
+            // ==========================================
             DB::table('log_tap')->insert([
                 'id_device' => 2,
                 'uid_rfid' => $uid,
@@ -85,19 +110,34 @@ class FingerprintEnrollController extends Controller
             ]);
 
 
+            // ==========================================
+            // 4. RESPONSE
+            // ==========================================
             return response()->json([
                 'status' => 'berhasil',
                 'pesan' => 'Hasil enroll fingerprint diterima',
 
                 'fingerprint_id' => $fingerprintId,
+
                 'uid' => $uid,
 
+<<<<<<< HEAD
                 'terdaftar' => $wali ? true : false,
 
                 'nama_wali' =>
                     $wali->nama_wali ?? null,
+=======
+                'id_siswa' => $siswa->id_siswa,
+
+                'nama_siswa' => $siswa->nama_siswa,
+
+                'terdaftar' => $wali ? true : false,
+
+                'nama_wali' => $wali->nama_wali ?? null,
+>>>>>>> ISMA
 
             ], 200);
+
 
         } catch (Throwable $e) {
 
