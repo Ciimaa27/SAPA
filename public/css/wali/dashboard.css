@@ -124,14 +124,17 @@ body {
     border-bottom: none;
 }
 
-.row-item span {
-    color: #777;
+.table-box .row-item > span {
+    color: #555 !important;
+    font-weight: 700 !important;
 }
 
+/* VALUE */
 .row-item strong {
     color: #e68600;
     font-weight: 500;
 }
+
 /* =====================================
    RESPONSIVE SIDEBAR WALI
 ===================================== */

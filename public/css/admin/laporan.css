@@ -1,5 +1,3 @@
-
-
 /* =========================================
    LAYOUT
 ========================================= */
@@ -14,60 +12,60 @@
 
 /* FILTER */
 .form-select,
-.form-control{
-    font-size:13px;
+.form-control {
+    font-size: 13px;
 }
 
 /* TABLE */
-.table-container{
-    max-height:400px;
-    overflow-y:auto;
-    overflow-x:auto;
-    -webkit-overflow-scrolling:touch;
+.table-container {
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
-.table thead th{
-    position:sticky;
-    top:0;
-    background:#f8f9fa;
-    z-index:2;
+.table thead th {
+    position: sticky;
+    top: 0;
+    background: #f8f9fa;
+    z-index: 2;
 }
 
-.table th{
-    font-size:13px;
-    font-weight:600;
-    white-space:nowrap;
+.table th {
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
 }
 
-.table td{
-    font-size:13px;
-    white-space:nowrap;
+.table td {
+    font-size: 13px;
+    white-space: nowrap;
 }
 
-.table td .btn-sm{
-    width:34px;
-    height:34px;
-    padding:0;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:8px;
+.table td .btn-sm {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
 }
 
-.table td .btn-sm i{
-    font-size:14px;
+.table td .btn-sm i {
+    font-size: 14px;
 }
 
-.btn-info{
-    color:white;
+.btn-info {
+    color: white;
 }
 
 /* CONTENT */
-.content{
-    margin-left:230px;
-    padding-top:60px;
-    padding-left:10px;
-    padding-right:10px;
+.content {
+    margin-left: 230px;
+    padding-top: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .form-select:focus,
@@ -76,99 +74,79 @@
     box-shadow: 0 0 0 .15rem rgba(124,77,255,.15);
 }
 
-
-/* ===================================== */
-/* RESPONSIVE TABLET */
-/* ===================================== */
-
-@media (max-width:768px){
-
-    .content{
-        margin-left:0;
-        padding-left:10px;
-        padding-right:10px;
+/* =====================================
+   RESPONSIVE TABLET
+===================================== */
+@media (max-width:768px) {
+    .content {
+        margin-left: 0;
+        padding-left: 10px;
+        padding-right: 10px;
     }
-
-    .main-dashboard{
-        padding:10px;
+    .main-dashboard {
+        padding: 10px;
     }
-
-    .container-dashboard{
-        max-width:100%;
+    .container-dashboard {
+        max-width: 100%;
     }
-
-    .card form{
-        flex-direction:column;
-        align-items:stretch !important;
+    .card form {
+        flex-direction: column;
+        align-items: stretch !important;
     }
-
     .card form .form-select,
     .card form .form-control,
-    .card form .btn{
-        width:100% !important;
+    .card form .btn {
+        width: 100% !important;
     }
-
-    .table{
-        min-width:850px;
+    .table {
+        min-width: 850px;
     }
-
     .table th,
-    .table td{
-        font-size:12px;
+    .table td {
+        font-size: 12px;
     }
 }
-
-/* ===================================== */
-/* RESPONSIVE HP */
-/* ===================================== */
-
-@media (max-width:576px){
-
-    .main-dashboard{
-        padding:8px;
-    }
-
-    .card{
-        border-radius:8px;
-    }
-
-    .card h5{
-        font-size:15px;
-    }
-
-    .table th,
-    .table td{
-        font-size:11px;
-    }
-
-    .table td .btn-sm{
-        width:30px;
-        height:30px;
-    }
-
-    .table td .btn-sm i{
-        font-size:12px;
-    }
-}
-
 
 /* =====================================
+   RESPONSIVE HP
+===================================== */
+@media (max-width:576px) {
+    .main-dashboard {
+        padding: 8px;
+    }
+    .card {
+        border-radius: 8px;
+    }
+    .card h5 {
+        font-size: 15px;
+    }
+    .table th,
+    .table td {
+        font-size: 11px;
+    }
+    .table td .btn-sm {
+        width: 30px;
+        height: 30px;
+    }
+    .table td .btn-sm i {
+        font-size: 12px;
+    }
+}
+
 /* =====================================
    BUTTON TERAPKAN
 ===================================== */
-
-.btn-primary{
+.btn-primary {
     background: #6f42c1 !important;
     border-color: #6f42c1 !important;
     color: #fff !important;
-
     padding: 5px 12px;
     font-size: 12px;
     border-radius: 6px;
     height: 32px;
 }
 
-.btn-primary:hover{
+.btn-primary:hover {
     background: #6f42c1 !important;
     border-color: #6f42c1 !important;
     color: #fff !important;
@@ -176,7 +154,7 @@
 
 .btn-primary:focus,
 .btn-primary:active,
-.btn-primary:focus-visible{
+.btn-primary:focus-visible {
     background: #6f42c1 !important;
     border-color: #6f42c1 !important;
     color: #fff !important;
@@ -186,91 +164,105 @@
 /* =====================================
    BUTTON EXCEL
 ===================================== */
-
-.btn-excel{
+.btn-excel {
     width: 34px;
     height: 34px;
+    padding: 0;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    background: #198754;
-    color: #fff;
+    background: #dcfce7 !important;
+    color: #166534 !important;
 
-    border-radius: 7px;
-    text-decoration: none;
+    border: none;
+    border-radius: 6px;
 
-    transition: all .25s ease;
+    text-decoration: none !important;
+    transition: 0.2s ease;
 }
 
-.btn-excel i{
-    font-size: 16px;
+.btn-excel i {
+    font-size: 14px;
+    color: #166534 !important;
+}
+
+/* HOVER */
+.btn-excel:hover {
+    background: #bbf7d0 !important;
+    color: #14532d !important;
+}
+
+.btn-excel:hover i {
+    color: #14532d !important;
 }
 
 /* ===== PAGINATION ===== */
-
-.pagination{
-    margin:0;
-    gap:6px;
+.pagination {
+    margin: 0;
+    gap: 6px;
 }
 
-.pagination .page-item{
-    list-style:none;
+.pagination .page-item {
+    list-style: none;
 }
 
-.pagination .page-link{
-    min-width:36px;
-    height:36px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    padding:0;
-
-    border:1px solid #dee2e6;
-    border-radius:8px;
-
-    background:#fff;
-    color:#495057;
-    font-size:13px;
-
-    transition:.2s ease;
+.pagination .page-link {
+    min-width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    background: #fff;
+    color: #495057;
+    font-size: 13px;
+    transition: .2s ease;
 }
 
-.pagination .page-link:hover{
-    background:#f1f3f5;
-    color:#495057;
+.pagination .page-link:hover {
+    background: #f1f3f5;
+    color: #495057;
 }
 
-.pagination .page-item.active .page-link{
-    background:#6f42c1;
-    border-color:#6f42c1;
-    color:#fff;
-    font-weight:600;
+.pagination .page-item.active .page-link {
+    background: #6f42c1;
+    border-color: #6f42c1;
+    color: #fff;
+    font-weight: 600;
 }
 
-.pagination .page-item.disabled .page-link{
-    background:#e9ecef;
-    border-color:#dee2e6;
-    color:#adb5bd;
+.pagination .page-item.disabled .page-link {
+    background: #e9ecef;
+    border-color: #dee2e6;
+    color: #adb5bd;
 }
 
 /* ================= FILTER LAPORAN ================= */
-
 .filter-laporan {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
+/* FILTER KELAS */
 .filter-kelas {
-    width: 165px !important;
-    height: 42px;
+    width: 190px !important;
+    height: 38px !important;
+}
+
+/* BUTTON TERAPKAN */
+.btn-terapkan {
+    width: auto !important;
+    height: 38px !important;
+    padding: 0 16px !important;
+    font-size: 12px !important;
 }
 
 /* ================= MONTH PICKER ================= */
-
 .month-picker {
     position: relative;
     width: 210px;
@@ -301,7 +293,6 @@
 }
 
 /* ================= POPUP ================= */
-
 .month-picker-popup {
     display: none;
     position: absolute;
@@ -321,7 +312,6 @@
 }
 
 /* ================= HEADER TAHUN ================= */
-
 .month-picker-header {
     display: flex;
     align-items: center;
@@ -347,7 +337,6 @@
 }
 
 /* ================= GRID BULAN ================= */
-
 .month-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -373,35 +362,30 @@
 }
 
 /* ================= BUTTON ================= */
-
 .btn-terapkan {
     height: 42px;
 }
 
 /* ================= RESPONSIVE ================= */
-
 @media (max-width: 768px) {
     .filter-laporan {
         flex-wrap: wrap;
     }
-
     .filter-kelas,
     .month-picker {
         width: 100% !important;
     }
-
     .month-picker-popup {
         width: 100%;
     }
-
     .btn-terapkan {
         width: 100%;
     }
 }
+
 /* ===========================
    DATE PICKER
 =========================== */
-
 .month-picker {
     position: relative;
     width: 220px;
@@ -413,7 +397,6 @@
     padding: 0 45px 0 16px;
 }
 
-/* Mentokkan ikon kalender ke kanan */
 .month-picker-button::-webkit-calendar-picker-indicator {
     position: absolute;
     right: 14px;

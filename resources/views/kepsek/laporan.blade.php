@@ -12,6 +12,13 @@
 @endpush
 
 @section('content')
+@php
+    $namaBulanIndonesia = [
+        1  => 'Januari', 2  => 'Februari', 3  => 'Maret', 4  => 'April', 5  => 'Mei', 6  => 'Juni',
+        7  => 'Juli', 8  => 'Agustus', 9  => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'
+    ];
+    $tanggalIndonesia = date('j') . ' ' . $namaBulanIndonesia[(int) date('n')] . ' ' . date('Y');
+@endphp
 
 <div class="main-kepsek">
 
@@ -20,47 +27,19 @@
         <h5 class="mb-0">Laporan</h5>
     </div>
 
-    <!-- FILTER -->
+    <!-- FILTER TANGGAL -->
     <div class="card-dashboard mb-3">
-        <div class="filter-box d-flex gap-3 align-items-end">
-
-            <!-- FILTER BULAN -->
-            <div>
-                <label class="small text-muted d-block mb-1">
-                    Bulan dan Tahun
-                </label>
-
-                <input
-                    type="month"
-                    id="filter-bulan"
-                    class="form-control form-control-sm"
-                    value="{{ date('Y-m') }}"
-                >
+        <div class="filter-box">
+            <div class="filter-tanggal">
+                <label class="small text-muted d-block mb-1">Tanggal</label>
+                <input type="date" id="filter-tanggal" class="form-control form-control-sm" value="{{ date('Y-m-d') }}">
             </div>
-
-            <!-- FILTER TANGGAL -->
-            <div>
-                <label class="small text-muted d-block mb-1">
-                    Tanggal
-                </label>
-
-                <input
-                    type="date"
-                    id="filter-tanggal"
-                    class="form-control form-control-sm"
-                    value="{{ date('Y-m-d') }}"
-                >
-            </div>
-
         </div>
     </div>
 
-
     <!-- TABEL LAPORAN -->
     <div class="card-dashboard">
-
         <table class="table align-middle">
-
             <thead>
                 <tr>
                     <th>Judul</th>
@@ -69,114 +48,62 @@
                     <th class="col-aksi">Aksi</th>
                 </tr>
             </thead>
-
             <tbody>
                 <tr>
-
-                    <!-- JUDUL -->
-                    <td>
-                        <span id="nama-laporan">
-                            Laporan({{ date('d-m-Y') }}).xlsx
-                        </span>
-                    </td>
-
-                    <!-- KELAS -->
-                    <td>
-                        Semua Kelas
-                    </td>
-
-                    <!-- TANGGAL -->
-                    <td id="tanggal-laporan">
-                        {{ date('d-m-Y') }}
-                    </td>
-
-                    <!-- AKSI -->
+                    <td><span id="nama-laporan">Laporan({{ $tanggalIndonesia }}).xlsx</span></td>
+                    <td>Semua Kelas</td>
+                    <td id="tanggal-laporan">{{ $tanggalIndonesia }}</td>
                     <td class="col-aksi">
-
-                        <a href="javascript:void(0)"
-                           onclick="unduhExcelKepsek()"
-                           class="btn-excel"
-                           title="Download Laporan">
-
+                        <a href="javascript:void(0)" onclick="unduhExcelKepsek()" class="btn-excel" title="Download Laporan">
                             <i class="fa-solid fa-file-excel"></i>
-
                         </a>
-
                     </td>
-
                 </tr>
             </tbody>
-
         </table>
-
     </div>
 
 </div>
-
 @endsection
 
-
 @push('scripts')
-
 <script>
-
+document.addEventListener('DOMContentLoaded', function () {
     const filterTanggal = document.getElementById('filter-tanggal');
+    const namaBulanIndonesia = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
-    filterTanggal.addEventListener('change', function () {
+    function formatTanggalIndonesia(tanggal) {
+        if (!tanggal) return '';
+        const bagianTanggal = tanggal.split('-');
+        const tahun = bagianTanggal[0];
+        const bulan = parseInt(bagianTanggal[1], 10) - 1;
+        const hari = parseInt(bagianTanggal[2], 10);
 
-        if (!this.value) {
-            return;
-        }
-
-        const bagianTanggal = this.value.split('-');
-
-        const tanggalFormat =
-            bagianTanggal[2] + '-' +
-            bagianTanggal[1] + '-' +
-            bagianTanggal[0];
-
-        document.getElementById('nama-laporan').textContent =
-            'Laporan(' + tanggalFormat + ').xlsx';
-
-        document.getElementById('tanggal-laporan').textContent =
-            tanggalFormat;
-    });
-
-
-    function unduhExcelKepsek() {
-
-        const bulan =
-            document.getElementById('filter-bulan').value;
-
-        const tanggal =
-            document.getElementById('filter-tanggal').value;
-
-
-        if (!bulan) {
-
-            alert(
-                'Silakan tentukan bulan rekap laporan terlebih dahulu!'
-            );
-
-            return;
-        }
-
-
-        const baseUrl =
-            "{{ url('/kepsek/laporan/download') }}";
-
-
-        const downloadUrl =
-            baseUrl +
-            '/' +
-            bulan +
-            '?tanggal=' +
-            tanggal;
-
-
-        window.location.href = downloadUrl;
+        return hari + ' ' + namaBulanIndonesia[bulan] + ' ' + tahun;
     }
 
-</script>
+    filterTanggal.addEventListener('change', function () {
+        if (!this.value) return;
 
+        const tanggalIndonesia = formatTanggalIndonesia(this.value);
+        document.getElementById('nama-laporan').textContent = 'Laporan(' + tanggalIndonesia + ').xlsx';
+        document.getElementById('tanggal-laporan').textContent = tanggalIndonesia;
+    });
+});
+
+function unduhExcelKepsek() {
+    const tanggal = document.getElementById('filter-tanggal').value;
+
+    if (!tanggal) {
+        alert('Silakan pilih tanggal laporan terlebih dahulu!');
+        return;
+    }
+
+    const bulan = tanggal.substring(0, 7);
+    const baseUrl = "{{ url('/kepsek/laporan/download') }}";
+    const downloadUrl = baseUrl + '/' + bulan + '?tanggal=' + encodeURIComponent(tanggal);
+
+    window.location.href = downloadUrl;
+}
+</script>
 @endpush
