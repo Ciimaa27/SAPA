@@ -19,20 +19,10 @@ class LaporanController extends Controller
     // ==========================================
     public function index(Request $request)
     {
-<<<<<<< HEAD
         $tanggal = $request->tanggal ?? now()->format('Y-m-d');
 
         $kelasFilter = $request->filled('kelas') ? $request->kelas : null;
 
-=======
-        // Filter per hari
-        $tanggal = $request->tanggal ?? now()->format('Y-m-d');
-        $kelasFilter = $request->filled('kelas') ? $request->kelas : null;
-
-        // ==========================================
-        // PILIHAN KELAS UNTUK FILTER
-        // ==========================================
->>>>>>> b19ef50a59010a78bec861d495c3b5e00dd4d232
         $kelasOptions = Kelas::orderBy('nama_kelas')->get();
 
         // ==========================================
@@ -46,12 +36,6 @@ class LaporanController extends Controller
 
         $kelas = $kelasQuery->paginate(10)->appends($request->query());
 
-<<<<<<< HEAD
-=======
-        // ==========================================
-        // QUERY KEHADIRAN PER HARI
-        // ==========================================
->>>>>>> b19ef50a59010a78bec861d495c3b5e00dd4d232
         $kehadiranQuery = Kehadiran::join('siswa', 'kehadiran.id_siswa', '=', 'siswa.id_siswa')
             ->whereDate('kehadiran.tanggal', $tanggal);
 
