@@ -121,12 +121,15 @@ document.getElementById('btnKirim').addEventListener('click', function () {
         kelasDipilih.push(item.value);
     });
 
+    // Ambil alasan yang dipilih
+    const alasan = document.querySelector('select[name="alasan"]').value;
+
     Swal.fire({
         title: 'Kirim Notifikasi?',
         html: `
-            Jadwal pulang akan diperbarui dan notifikasi akan dikirim ke:
-            <br><br>
+            Jadwal pulang akan dikirim ke Orangtua/Wali siswa
             <b>Kelas ${kelasDipilih.join(', ')}</b>
+            dengan alasan <b>${alasan}</b>.
         `,
         icon: 'question',
         showCancelButton: true,
