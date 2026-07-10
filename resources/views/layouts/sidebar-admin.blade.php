@@ -22,8 +22,16 @@
 
         <p class="menu-title">Data Master</p>
 
-        {{-- DATA SISWA --}}
-        <li class="menu-item {{ request()->routeIs('    data-siswa', 'tambah-siswa', 'edit-siswa') ? 'active' : '' }}">
+       {{-- DATA SISWA --}}
+        <li class="menu-item {{
+            request()->routeIs(
+                'data-siswa',
+                'data-siswa.show',
+                'tambah-siswa',
+                'edit-siswa',
+                'detail-siswa'
+            ) ? 'active' : ''
+        }}">
             <a href="{{ route('data-siswa') }}">
                 <i class="fa-solid fa-users"></i> Data siswa
             </a>
@@ -68,13 +76,12 @@
             </a>
         </li>
 
-        {{-- JADWAL PULANG --}}
-        <li class="menu-item {{ request()->routeIs('jadwal-pulang') ? 'active' : '' }}">
+       {{-- JADWAL PULANG --}}
+        <li class="menu-item {{ request()->routeIs('jadwal-pulang*') ? 'active' : '' }}">
             <a href="{{ route('jadwal-pulang') }}">
                 <i class="fa-solid fa-clock"></i> Jadwal pulang
             </a>
         </li>
-
         <p class="menu-title">Monitoring IoT</p>
 
         {{-- STATUS PERANGKAT --}}
