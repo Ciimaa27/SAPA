@@ -28,7 +28,13 @@
                 <div class="d-flex align-items-center gap-2 search-flex">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text bg-white"><i class="fa fa-search"></i></span>
-                        <input type="text" id="searchInput" class="form-control" placeholder="Pencarian">
+                       <input
+                                type="text"
+                                id="searchInput"
+                                class="form-control"
+                                placeholder="Pencarian"
+                                value="{{ request('search') }}"
+                            >
                     </div>
                     <button type="button" class="btn btn-refresh btn-sm" id="refreshTable" title="Tampilkan semua data">
                         <i class="fa fa-refresh"></i> Refresh
@@ -90,14 +96,8 @@
                                         <i class="fa fa-plus"></i> Daftarkan
                                     </button>
                                 @else
-                                    <button type="button"
-                                            class="btn-lepas-fingerprint btn-buka-modal-lepas"
-                                            data-id="{{ $item->id_wali }}"
-                                            data-nama="{{ $item->nama_wali }}"
-                                            data-fingerprint="{{ $item->fingerprint_id }}">
-
-                                        <i class="fa fa-unlink"></i>
-                                        Lepas Sidik Jari
+                                    <button type="button" class="btn-lepas-fingerprint btn-buka-modal-lepas" data-id="{{ $item->id_wali }}" data-nama="{{ $item->nama_wali }}" data-fingerprint="{{ $item->fingerprint_id }}">
+                                        <i class="fa fa-unlink"></i> Lepas Sidik Jari
                                     </button>
                                 @endif
                             </td>
@@ -117,6 +117,7 @@
     </div>
 </div>
 
+<!-- MODAL DAFTAR FINGERPRINT -->
 <div class="modal fade" id="modalDaftarFingerprint" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -151,117 +152,45 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-simpan-rfid">
-                        <i class="fa fa-check me-1"></i>Daftarkan Sidik Jari
-                    </button>
+                    <button type="submit" class="btn btn-simpan-rfid"><i class="fa fa-check me-1"></i>Daftarkan Sidik Jari</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<div class="modal fade"
-     id="modalLepasFingerprint"
-     tabindex="-1"
-     aria-hidden="true">
 
+<!-- MODAL LEPAS FINGERPRINT -->
+<div class="modal fade" id="modalLepasFingerprint" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-
         <div class="modal-content">
-
-            <form id="formLepasFingerprint"
-                  method="POST">
-
+            <form id="formLepasFingerprint" method="POST">
                 @csrf
                 @method('DELETE')
-
                 <div class="modal-header">
-
-                    <h5 class="modal-title">
-                        Lepas Sidik Jari
-                    </h5>
-
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal">
-                    </button>
-
+                    <h5 class="modal-title">Lepas Sidik Jari</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-
-
                 <div class="modal-body">
-
-                    <p class="mb-3">
-                        Apakah Anda yakin ingin melepas sidik jari dari wali berikut?
-                    </p>
-
-
+                    <p class="mb-3">Apakah Anda yakin ingin melepas sidik jari dari wali berikut?</p>
                     <div class="mb-3">
-
-                        <label class="form-label text-muted">
-                            Nama Wali
-                        </label>
-
-                        <div id="modalLepasNama"
-                             class="modal-data-value uid-modal">
-                            -
-                        </div>
-
+                        <label class="form-label text-muted">Nama Wali</label>
+                        <div id="modalLepasNama" class="modal-data-value uid-modal">-</div>
                     </div>
-
-
                     <div class="mb-3">
-
-                        <label class="form-label text-muted">
-                            ID Sidik Jari
-                        </label>
-
-                        <div id="modalLepasFingerprintId"
-                             class="modal-data-value uid-modal">
-                            -
-                        </div>
-
+                        <label class="form-label text-muted">ID Sidik Jari</label>
+                        <div id="modalLepasFingerprintId" class="modal-data-value uid-modal">-</div>
                     </div>
-
-
                     <div class="alert alert-warning mb-0">
-
-                        <i class="fa fa-exclamation-triangle me-1"></i>
-
-                        Sidik jari akan dilepas dari data wali.
-
+                        <i class="fa fa-exclamation-triangle me-1"></i>Sidik jari akan dilepas dari data wali.
                     </div>
-
                 </div>
-
-
                 <div class="modal-footer">
-
-                    <button type="button"
-                            class="btn btn-light"
-                            data-bs-dismiss="modal">
-
-                        Batal
-
-                    </button>
-
-
-                    <button type="submit"
-                            class="btn btn-danger">
-
-                        <i class="fa fa-unlink me-1"></i>
-
-                        Ya, Lepaskan
-
-                    </button>
-
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger"><i class="fa fa-unlink me-1"></i>Ya, Lepaskan</button>
                 </div>
-
             </form>
-
         </div>
-
     </div>
-
 </div>
 
 <script>
@@ -270,14 +199,28 @@ const refreshButton = document.getElementById("refreshTable");
 let lastFingerprint = null;
 let fingerprintTerdaftar = false;
 
-function filterTable(keyword) {
-    keyword = String(keyword).toLowerCase().trim();
-    const rows = document.querySelectorAll("#dataTable tbody tr");
-    rows.forEach(row => {
-        const rowText = row.textContent.toLowerCase().trim();
-        row.style.display = rowText.includes(keyword) ? "" : "none";
-    });
-}
+let searchTimer;
+searchInput.addEventListener("input", function () {
+    clearTimeout(searchTimer);
+    const keyword = this.value.trim();
+    searchTimer = setTimeout(() => {
+        const url = new URL(window.location.href);
+        if (keyword !== "") {
+            url.searchParams.set("search", keyword);
+        } else {
+            url.searchParams.delete("search");
+        }
+        url.searchParams.delete("page");
+        window.location.href = url.toString();
+    }, 500);
+});
+
+refreshButton.addEventListener("click", function () {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("search");
+    url.searchParams.delete("page");
+    window.location.href = url.toString();
+});
 
 function filterBySiswa(idSiswa) {
     const rows = document.querySelectorAll("#dataTable tbody tr");
@@ -333,14 +276,10 @@ function loadFingerprint() {
             } else {
                 status.innerHTML = `<span class="status-fingerprint-belum">Belum Terdaftar</span>`;
                 instruction.innerText = 'Pilih wali siswa pada tabel, lalu klik Daftarkan.';
-                if (data.id_siswa) {
-                    filterBySiswa(data.id_siswa);
-                }
+                if (data.id_siswa) filterBySiswa(data.id_siswa);
             }
         })
-        .catch(error => {
-            console.error('Fingerprint Error:', error);
-        });
+        .catch(error => { console.error('Fingerprint Error:', error); });
 }
 
 document.querySelectorAll('.btn-daftar-fingerprint').forEach(button => {
@@ -361,54 +300,22 @@ document.querySelectorAll('.btn-daftar-fingerprint').forEach(button => {
         document.getElementById('modalHubungan').innerText = this.dataset.hubungan;
         document.getElementById('modalSiswa').innerText = this.dataset.siswa;
 
-        const modal = new bootstrap.Modal(document.getElementById('modalDaftarFingerprint'));
-        modal.show();
+        new bootstrap.Modal(document.getElementById('modalDaftarFingerprint')).show();
     });
 });
 
 document.querySelectorAll('.btn-buka-modal-lepas').forEach(button => {
-
     button.addEventListener('click', function () {
+        document.getElementById('modalLepasNama').innerText = this.dataset.nama;
+        document.getElementById('modalLepasFingerprintId').innerText = 'ID ' + this.dataset.fingerprint;
+        document.getElementById('formLepasFingerprint').action = "{{ url('/admin/iot/sidik-jari') }}/" + this.dataset.id;
 
-        const idWali = this.dataset.id;
-        const namaWali = this.dataset.nama;
-        const fingerprintId = this.dataset.fingerprint;
-
-
-        document.getElementById(
-            'modalLepasNama'
-        ).innerText = namaWali;
-
-
-        document.getElementById(
-            'modalLepasFingerprintId'
-        ).innerText = 'ID ' + fingerprintId;
-
-
-        const form = document.getElementById(
-            'formLepasFingerprint'
-        );
-
-
-        form.action =
-            "{{ url('/admin/iot/sidik-jari') }}/"
-            + idWali;
-
-
-        const modal = new bootstrap.Modal(
-            document.getElementById(
-                'modalLepasFingerprint'
-            )
-        );
-
-
-        modal.show();
-
+        new bootstrap.Modal(document.getElementById('modalLepasFingerprint')).show();
     });
-
 });
 
 setInterval(loadFingerprint, 2000);
 loadFingerprint();
 </script>
 @endsection
+
