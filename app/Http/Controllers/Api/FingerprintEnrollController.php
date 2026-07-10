@@ -67,9 +67,6 @@ class FingerprintEnrollController extends Controller
 
         try {
 
-<<<<<<< HEAD
-            // Cek apakah fingerprint sudah dipakai wali
-=======
             // ==========================================
             // 1. CARI SISWA BERDASARKAN RFID
             // ==========================================
@@ -89,7 +86,6 @@ class FingerprintEnrollController extends Controller
             // ==========================================
             // 2. CEK APAKAH FINGERPRINT SUDAH TERDAFTAR
             // ==========================================
->>>>>>> ISMA
             $wali = DB::table('wali')
                 ->where('fingerprint_id', $fingerprintId)
                 ->first();
@@ -116,26 +112,10 @@ class FingerprintEnrollController extends Controller
             return response()->json([
                 'status' => 'berhasil',
                 'pesan' => 'Hasil enroll fingerprint diterima',
-
                 'fingerprint_id' => $fingerprintId,
-
                 'uid' => $uid,
-
-<<<<<<< HEAD
                 'terdaftar' => $wali ? true : false,
-
-                'nama_wali' =>
-                    $wali->nama_wali ?? null,
-=======
-                'id_siswa' => $siswa->id_siswa,
-
-                'nama_siswa' => $siswa->nama_siswa,
-
-                'terdaftar' => $wali ? true : false,
-
                 'nama_wali' => $wali->nama_wali ?? null,
->>>>>>> ISMA
-
             ], 200);
 
 
@@ -143,11 +123,8 @@ class FingerprintEnrollController extends Controller
 
             return response()->json([
                 'status' => 'gagal',
-                'pesan' =>
-                    'Gagal menyimpan hasil enroll fingerprint',
-
+                'pesan' => 'Gagal menyimpan hasil enroll fingerprint',
                 'error' => $e->getMessage(),
-
             ], 500);
         }
     }

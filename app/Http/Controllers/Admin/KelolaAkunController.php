@@ -14,7 +14,7 @@ use Illuminate\Validation\Rule;
 class KelolaAkunController extends Controller
 {
     // ========================
-    // Tampilkan daftar akun
+    // TAMPILKAN DAFTAR AKUN
     // ========================
     public function index(Request $request)
     {
@@ -25,18 +25,18 @@ class KelolaAkunController extends Controller
             ->where('users.status', 'aktif')
             ->where(function ($q) {
                 $q->where('users.id_role', '!=', 4)
-                  ->orWhere(function ($q2) {
-                      $q2->where('users.id_role', 4)
-                         ->where('wali.is_active', 1);
-                  });
+                    ->orWhere(function ($q2) {
+                        $q2->where('users.id_role', 4)
+                            ->where('wali.is_active', 1);
+                    });
             });
 
         // SEARCH
-        if ($request->search) {
+        if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
                 $q->where('users.username', 'like', '%' . $request->search . '%')
-                  ->orWhere('users.nama_lengkap', 'like', '%' . $request->search . '%')
-                  ->orWhere('users.email', 'like', '%' . $request->search . '%');
+                    ->orWhere('users.nama_lengkap', 'like', '%' . $request->search . '%')
+                    ->orWhere('users.email', 'like', '%' . $request->search . '%');
             });
         }
 
@@ -45,10 +45,9 @@ class KelolaAkunController extends Controller
             $query->where('role.nama_role', $request->role);
         }
 
-        $total = $query->count();
+        $total = (clone $query)->count();
 
-        $users = $query
-            ->orderBy('users.id', 'asc')
+        $users = $query->orderBy('users.id', 'asc')
             ->paginate(10)
             ->withQueryString();
 
@@ -56,146 +55,179 @@ class KelolaAkunController extends Controller
     }
 
     // ========================
-    // Form tambah akun
+    // FORM TAMBAH AKUN
     // ========================
     public function create()
-        {
-            $guru = Guru::whereNull('id_user')
-                ->orderBy('nama_guru')
-                ->get();
+    {
+        // Guru yang belum mempunyai akun
+        $guru = Guru::whereNull('id_user')
+            ->orderBy('nama_guru', 'asc')
+            ->get();
 
-            $wali = Wali::whereNull('id_user')
-                ->where('is_active', 1)
-                ->orderBy('nama_wali')
-                ->get();
+        // Wali aktif yang belum mempunyai akun
+        $wali = Wali::whereNull('id_user')
+            ->where('is_active', 1)
+            ->orderBy('nama_wali', 'asc')
+            ->get();
 
-            return view('admin.tambah-akun', compact('guru', 'wali'));
-        }
+        return view('admin.tambah-akun', compact('guru', 'wali'));
+    }
 
     // ========================
-    // Form edit akun
+    // FORM EDIT AKUN
     // ========================
     public function edit($id)
     {
-        // 🔥 FIX: pakai id_user
         $user = User::where('id', $id)->firstOrFail();
-
         return view('admin.edit-kelola-akun', compact('user'));
     }
 
     // ========================
-    // Simpan akun
+    // SIMPAN AKUN
     // ========================
     public function store(Request $request)
-        {
-            $request->validate([
-                'nama_lengkap' => 'required|string|max:100',
-                'username'     => 'required|string|max:50|unique:users,username',
-                'email'        => 'required|email|unique:users,email',
-                'peran'        => ['required', Rule::in(['Admin', 'Guru', 'Kepala Sekolah', 'Orangtua/Wali'])],
-                'password'     => 'required|string|min:6|confirmed',
-            ], [
-                'password.required'  => 'Password wajib diisi.',
-                'password.min'       => 'Password minimal 6 karakter.',
-                'password.confirmed' => 'Konfirmasi password tidak sesuai.',
-            ]);
+    {
+        $request->validate([
+            'nama_lengkap' => ['required', 'string', 'max:100'],
+            'username' => ['required', 'string', 'max:50', 'unique:users,username'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'peran' => ['required', Rule::in(['Admin', 'Guru', 'Kepala Sekolah', 'Orangtua/Wali'])],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'data_user' => ['nullable', 'integer'],
+        ], [
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal 6 karakter.',
+            'password.confirmed' => 'Konfirmasi password tidak sesuai.',
+        ]);
 
-        $id_role = match($request->peran) {
+        // TENTUKAN ROLE
+        $id_role = match ($request->peran) {
             'Admin' => 1,
             'Guru' => 2,
             'Kepala Sekolah' => 3,
             'Orangtua/Wali' => 4,
-            default => 4,
         };
 
-        $user = User::create([
-            'id_role'       => $id_role,
-            'username'      => $request->username,
-            'nama_lengkap'  => $request->nama_lengkap,
-            'email'         => $request->email,
-            'password' => Hash::make($request->password),
-            'status'        => 'aktif',
-        ]);
-
-        // 🔥 FIX: pakai id_user
-        if ($id_role == 4) {
-            Wali::create([
-                'id_user'        => $user->id,
-                'nama_wali'      => $request->nama_lengkap,
-                'fingerprint_id' => null,
-                'no_wa'          => null,
-                'no_hp'          => null,
-                'is_active'      => 1
-            ]);
+        // VALIDASI PILIHAN GURU
+        if ($id_role == 2 && !$request->filled('data_user')) {
+            return back()->withInput()->withErrors(['data_user' => 'Silakan pilih guru.']);
         }
 
-        return redirect()->route('kelola-akun.index')
+        // VALIDASI PILIHAN WALI
+        if ($id_role == 4 && !$request->filled('data_user')) {
+            return back()->withInput()->withErrors(['data_user' => 'Silakan pilih wali.']);
+        }
+
+        // CEK GURU
+        if ($id_role == 2) {
+            $guru = Guru::where('id_guru', $request->data_user)
+                ->whereNull('id_user')
+                ->first();
+
+            if (!$guru) {
+                return back()->withInput()->withErrors([
+                    'data_user' => 'Data guru tidak ditemukan atau sudah memiliki akun.'
+                ]);
+            }
+        }
+
+        // CEK WALI
+        if ($id_role == 4) {
+            $wali = Wali::where('id_wali', $request->data_user)
+                ->whereNull('id_user')
+                ->where('is_active', 1)
+                ->first();
+
+            if (!$wali) {
+                return back()->withInput()->withErrors([
+                    'data_user' => 'Data wali tidak ditemukan atau sudah memiliki akun.'
+                ]);
+            }
+        }
+
+        // TRANSACTION
+        DB::transaction(function () use ($request, $id_role) {
+            // BUAT USER
+            $user = User::create([
+                'id_role' => $id_role,
+                'username' => $request->username,
+                'nama_lengkap' => $request->nama_lengkap,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'status' => 'aktif',
+            ]);
+
+            // HUBUNGKAN KE GURU
+            if ($id_role == 2) {
+                Guru::where('id_guru', $request->data_user)
+                    ->whereNull('id_user')
+                    ->update(['id_user' => $user->id]);
+            }
+
+            // HUBUNGKAN KE WALI
+            if ($id_role == 4) {
+                Wali::where('id_wali', $request->data_user)
+                    ->whereNull('id_user')
+                    ->where('is_active', 1)
+                    ->update(['id_user' => $user->id]);
+            }
+        });
+
+        return redirect()
+            ->route('kelola-akun.index')
             ->with('success', 'Akun pengguna berhasil ditambahkan!');
     }
 
     // ========================
-    // Update akun
+    // UPDATE AKUN
     // ========================
     public function update(Request $request, $id)
     {
-        // 🔥 FIX: pakai id_user
         $user = User::where('id', $id)->firstOrFail();
 
         $request->validate([
-            'nama_lengkap' => 'required|string|max:100',
-            'username' => 'required|string|max:50|unique:users,username,' . $user->id . ',id',
-            'email'    => 'required|email|unique:users,email,' . $user->id . ',id',
-            'peran'    => ['required', Rule::in(['Admin', 'Guru', 'Kepala Sekolah', 'Orangtua/Wali'])],
+            'nama_lengkap' => ['required', 'string', 'max:100'],
+            'username' => ['required', 'string', 'max:50', Rule::unique('users', 'username')->ignore($user->id, 'id')],
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($user->id, 'id')],
+            'peran' => ['required', Rule::in(['Admin', 'Guru', 'Kepala Sekolah', 'Orangtua/Wali'])],
         ]);
 
-        $id_role = match($request->peran) {
+        $id_role = match ($request->peran) {
             'Admin' => 1,
             'Guru' => 2,
             'Kepala Sekolah' => 3,
             'Orangtua/Wali' => 4,
-            default => 4,
         };
 
         $user->update([
-            'id_role'      => $id_role,
-            'username'     => $request->username,
+            'id_role' => $id_role,
+            'username' => $request->username,
             'nama_lengkap' => $request->nama_lengkap,
-            'email'        => $request->email,
+            'email' => $request->email,
         ]);
 
-        if ($id_role == 4 && !$user->wali) {
-            Wali::create([
-                'id_user'        => $user->id,
-                'nama_wali'      => $user->nama_lengkap,
-                'fingerprint_id' => null,
-                'no_wa'          => null,
-                'no_hp'          => null,
-                'is_active'      => 1
-            ]);
-        }
-
-        return redirect()->route('kelola-akun.index')
+        return redirect()
+            ->route('kelola-akun.index')
             ->with('success', 'Akun pengguna berhasil diperbarui!');
     }
 
     // ========================
-    // Hapus akun
+    // HAPUS AKUN
     // ========================
     public function destroy($id)
     {
         DB::transaction(function () use ($id) {
-
-            // Lepaskan hubungan guru dengan akun
+            // LEPASKAN AKUN DARI GURU
             DB::table('guru')
                 ->where('id_user', $id)
                 ->update(['id_user' => null]);
 
-            // Lepaskan hubungan wali dengan akun
+            // LEPASKAN AKUN DARI WALI
             DB::table('wali')
                 ->where('id_user', $id)
                 ->update(['id_user' => null]);
 
-            // Baru hapus akun
+            // HAPUS USER
             DB::table('users')
                 ->where('id', $id)
                 ->delete();

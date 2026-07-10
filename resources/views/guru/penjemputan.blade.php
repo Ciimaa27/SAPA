@@ -45,6 +45,12 @@
     </div>
 
     <div class="card-box mt-3">
+         {{-- CATATAN --}}
+        <div class="alert alert-warning py-2 px-3 mb-3 small" role="alert">
+            <i class="fa-solid fa-circle-exclamation me-2"></i>
+            <strong>Catatan:</strong>
+            Simpan perubahan setiap siswa satu per satu sebelum melanjutkan ke siswa berikutnya.
+        </div>
         <div class="table-container">
             <table class="table-custom">
                 <thead>

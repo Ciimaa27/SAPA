@@ -2,50 +2,59 @@
 
 @section('title', 'Status Penjemputan')
 
+{{-- ===========================
+    SIDEBAR
+=========================== --}}
 @section('sidebar')
     @include('layouts.sidebar-admin')
 @endsection
 
+{{-- ===========================
+    CSS / SCRIPTS ATAS
+=========================== --}}
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/sidebar-admin.css') }}">
 <link rel="stylesheet" href="{{ asset('css/admin/status-penjemputan.css') }}">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endpush
 
+{{-- ===========================
+    CONTENT
+=========================== --}}
 @section('content')
 <div class="main-dashboard">
     <div class="container-dashboard">
 
-        {{-- ================= JUDUL ================= --}}
+        {{-- JUDUL --}}
         <div class="card mb-3 p-3">
             <h5 class="mb-0">Status Penjemputan</h5>
         </div>
 
-        {{-- ================= TOMBOL KEMBALI ================= --}}
+        {{-- TOMBOL KEMBALI --}}
         <div class="mb-3">
             <a href="{{ route('data-penjemputan') }}" class="btn btn-kembali">
                 <i class="fa-solid fa-arrow-left me-2"></i> Kembali
             </a>
         </div>
-
-        {{-- ================= INFORMASI ================= --}}
+        {{-- CATATAN --}}
+        <div class="alert alert-warning py-2 px-3 mb-3 small" role="alert">
+            <i class="fa-solid fa-circle-exclamation me-2"></i>
+            <strong>Catatan:</strong>
+            Simpan perubahan setiap siswa satu per satu sebelum melanjutkan ke siswa berikutnya.
+        </div>
+        {{-- INFORMASI --}}
         <div class="card mb-3">
             <div class="card-body">
                 <div class="row">
-                    {{-- KELAS --}}
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-4 mb-3 mb-md-0">
                         <label class="form-label fw-semibold">Kelas</label>
                         <input type="text" class="form-control" value="{{ $kelas->nama_kelas }}" readonly>
                     </div>
-
-                    {{-- WALI KELAS --}}
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-4 mb-3 mb-md-0">
                         <label class="form-label fw-semibold">Wali Kelas</label>
                         <input type="text" class="form-control" value="{{ $kelas->nama_guru }}" readonly>
                     </div>
-
-                    {{-- TANGGAL --}}
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-4">
                         <label class="form-label fw-semibold">Tanggal</label>
                         <input type="date" class="form-control" value="{{ $tanggal }}" readonly>
                     </div>
@@ -53,7 +62,7 @@
             </div>
         </div>
 
-        {{-- ================= TABEL ================= --}}
+        {{-- TABEL DATA SISWA --}}
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -78,13 +87,8 @@
                                     $penjemputSiswa = $daftarPenjemput->get($item->id_siswa, collect());
                                 @endphp
                                 <tr>
-                                    {{-- NO --}}
                                     <td class="text-center">{{ $loop->iteration }}</td>
-
-                                    {{-- NIS --}}
                                     <td class="text-center">{{ $item->nis }}</td>
-
-                                    {{-- NAMA SISWA --}}
                                     <td class="text-start">{{ $item->nama_siswa }}</td>
 
                                     <form action="{{ route('data-penjemputan.update-status') }}" method="POST" onsubmit="return simpanStatus(this)">
@@ -92,7 +96,7 @@
                                         <input type="hidden" name="id_siswa" value="{{ $item->id_siswa }}">
                                         <input type="hidden" name="tanggal" value="{{ $tanggal }}">
 
-                                        {{-- STATUS --}}
+                                        {{-- STATUS SELECT --}}
                                         <td>
                                             <select name="status" class="form-select form-select-sm status-select" onchange="ubahStatus(this)">
                                                 <option value="Menunggu" {{ ($item->status ?? 'Menunggu') == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
@@ -100,7 +104,7 @@
                                             </select>
                                         </td>
 
-                                        {{-- PENJEMPUT --}}
+                                        {{-- PENJEMPUT SELECT --}}
                                         <td>
                                             <select name="id_wali" class="form-select form-select-sm penjemput-select" {{ $item->status == 'Dijemput' ? '' : 'disabled' }}>
                                                 <option value="">Pilih Penjemput</option>
@@ -132,7 +136,9 @@
     </div>
 </div>
 
-{{-- ================= SWEET ALERT SUCCESS ================= --}}
+{{-- ===========================
+    SWEET ALERT NOTIFIKASI
+=========================== --}}
 @if(session('success'))
 <script>
     Swal.fire({
@@ -145,7 +151,6 @@
 </script>
 @endif
 
-{{-- ================= SWEET ALERT ERROR ================= --}}
 @if(session('error'))
 <script>
     Swal.fire({
@@ -157,38 +162,28 @@
 </script>
 @endif
 
-{{-- ================= SCRIPT ================= --}}
+{{-- ===========================
+    JAVASCRIPT INTERAKSI
+=========================== --}}
 <script>
-    /*
-    |--------------------------------------------------------------------------
-    | STATUS BERUBAH
-    |--------------------------------------------------------------------------
-    */
+    // EVENT STATUS BERUBAH
     function ubahStatus(select) {
         const row = select.closest('tr');
         const penjemput = row.querySelector('.penjemput-select');
 
-        /* Jika Dijemput: aktifkan dropdown penjemput */
         if (select.value === 'Dijemput') {
             penjemput.disabled = false;
-        }
-        /* Jika Menunggu: kosongkan dan nonaktifkan penjemput */
-        else {
+        } else {
             penjemput.value = '';
             penjemput.disabled = true;
         }
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SIMPAN STATUS
-    |--------------------------------------------------------------------------
-    */
+    // HANDLER SIMPAN STATUS
     function simpanStatus(form) {
         const status = form.querySelector('.status-select');
         const penjemput = form.querySelector('.penjemput-select');
 
-        /* Validasi penjemput */
         if (status.value === 'Dijemput' && penjemput.value === '') {
             Swal.fire({
                 icon: 'warning',
@@ -199,7 +194,6 @@
             return false;
         }
 
-        /* Loading button */
         const btn = form.querySelector('.btn-simpan');
         btn.disabled = true;
         btn.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Menyimpan...`;
