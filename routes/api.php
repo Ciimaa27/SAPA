@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AbsensiRfidController;
 use App\Http\Controllers\Api\PenjemputanFingerprintController;
 use App\Http\Controllers\Api\FingerprintEnrollController;
+use App\Http\Controllers\Api\ResetDataController;
 
 
 // ABSENSI RFID
@@ -25,3 +26,6 @@ Route::post('/fingerprint/enroll-result', [
     FingerprintEnrollController::class,
     'store'
 ]);
+
+Route::post('/reset/fingerprint', [ResetDataController::class, 'resetFingerprint']);
+Route::post('/reset/siswa', [ResetDataController::class, 'resetSiswa']);

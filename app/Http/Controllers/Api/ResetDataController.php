@@ -9,18 +9,34 @@ use Throwable;
 class ResetDataController extends Controller
 {
     // ==========================================================
-    // RESET DATA SIDIK JARI
+    // RESET SEMUA ID SIDIK JARI WALI
     // ==========================================================
     public function resetFingerprint()
     {
         try {
-            DB::table('wali')->update([
-                'fingerprint_id' => null
-            ]);
+            $jumlah = 0;
+
+            DB::transaction(function () use (&$jumlah) {
+
+                // 1. Kosongkan fingerprint_id semua wali
+                $jumlah = DB::table('wali')
+                    ->whereNotNull('fingerprint_id')
+                    ->update([
+                        'fingerprint_id' => null
+                    ]);
+
+                // 2. Hapus log fingerprint lama
+                // Agar "Sidik Jari Terakhir Terdeteksi"
+                // tidak menampilkan ID lama seperti ID 4
+                DB::table('log_tap')
+                    ->whereNotNull('fingerprint_id')
+                    ->delete();
+            });
 
             return response()->json([
                 'success' => true,
-                'message' => 'Semua fingerprint wali berhasil direset'
+                'message' => 'Semua fingerprint wali dan log fingerprint berhasil direset',
+                'jumlah_data_diubah' => $jumlah
             ], 200);
 
         } catch (Throwable $e) {
@@ -35,35 +51,28 @@ class ResetDataController extends Controller
 
 
     // ==========================================================
-    // HAPUS SEMUA DATA SISWA
+    // RESET SEMUA UID RFID SISWA
     // ==========================================================
     public function resetSiswa()
     {
         try {
-
-            DB::transaction(function () {
-
-                // Hapus tabel yang berhubungan dengan siswa terlebih dahulu
-                DB::table('notifikasi')->delete();
-                DB::table('penjemputan')->delete();
-                DB::table('kehadiran')->delete();
-                DB::table('log_tap')->delete();
-                DB::table('siswa_wali')->delete();
-
-                // Terakhir hapus siswa
-                DB::table('siswa')->delete();
-            });
+            $jumlah = DB::table('siswa')
+                ->whereNotNull('rfid_uid')
+                ->update([
+                    'rfid_uid' => null
+                ]);
 
             return response()->json([
                 'success' => true,
-                'message' => 'Semua data siswa berhasil dihapus'
+                'message' => 'Semua UID RFID siswa berhasil direset',
+                'jumlah_data_diubah' => $jumlah
             ], 200);
 
         } catch (Throwable $e) {
 
             return response()->json([
                 'success' => false,
-                'message' => 'Gagal menghapus data siswa',
+                'message' => 'Gagal mereset UID RFID siswa',
                 'error' => $e->getMessage()
             ], 500);
         }
