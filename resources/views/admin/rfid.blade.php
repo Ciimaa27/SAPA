@@ -33,18 +33,42 @@
         @endif
 
         <div class="card mb-3 p-3">
-            <div class="d-flex align-items-center gap-3">
-                <a href="{{ route('iot.index', ['tab' => 'rfid']) }}" class="btn btn-tab {{ ($tab ?? 'rfid') == 'rfid' ? 'active' : '' }}">RFID</a>
-                <a href="{{ route('iot.index', ['tab' => 'sidik-jari']) }}" class="btn btn-tab {{ ($tab ?? '') == 'sidik-jari' ? 'active' : '' }}">Sidik jari</a>
-                <div class="d-flex align-items-center gap-2 search-flex">
-                    <div class="input-group input-group-sm">
-                        <span class="input-group-text bg-white"><i class="fa fa-search"></i></span>
-                        <input type="text" id="searchInput" class="form-control" placeholder="Pencarian">
+            <div class="d-flex align-items-center gap-2">
+                <a href="{{ route('iot.index', ['tab' => 'rfid']) }}"
+                class="btn btn-tab {{ ($tab ?? 'rfid') == 'rfid' ? 'active' : '' }}">
+                    RFID
+                </a>
+                <a href="{{ route('iot.index', ['tab' => 'sidik-jari']) }}"
+                class="btn btn-tab {{ ($tab ?? '') == 'sidik-jari' ? 'active' : '' }}">
+                    Sidik jari
+                </a>
+                <form method="GET"
+                    action="{{ route('iot.index', ['tab' => $tab]) }}"
+                    class="d-flex align-items-center gap-2">
+
+                    <div class="input-group input-group-sm" style="width:260px;">
+                        <span class="input-group-text bg-white">
+                            <i class="fa fa-search"></i>
+                        </span>
+
+                        <input type="text"
+                            name="search"
+                            class="form-control"
+                            value="{{ request('search') }}"
+                            placeholder="Pencarian...">
                     </div>
-                    <button type="button" class="btn btn-refresh btn-sm" id="refreshTable" title="Tampilkan semua data">
-                        <i class="fa fa-refresh"></i> Refresh
+
+                    <button class="btn btn-refresh btn-sm">
+                        Cari
                     </button>
-                </div>
+
+                    <a href="{{ route('iot.index',['tab'=>$tab]) }}"
+                    class="btn btn-refresh btn-sm">
+                        Refresh
+                    </a>
+
+                </form>
+
             </div>
         </div>
 
@@ -312,30 +336,6 @@
     </div>
 
 </div>
-
-<script>
-    const searchInput = document.getElementById("searchInput");
-    const refreshButton = document.getElementById("refreshTable");
-
-    function filterTable(keyword) {
-        keyword = keyword.toLowerCase().trim();
-        const rows = document.querySelectorAll("#dataTable tbody tr");
-        rows.forEach(row => {
-            const rowText = row.textContent.toLowerCase();
-            row.style.display = rowText.includes(keyword) ? "" : "none";
-        });
-    }
-
-    searchInput.addEventListener("keyup", function() {
-        filterTable(this.value);
-    });
-
-    refreshButton.addEventListener("click", function() {
-        searchInput.value = "";
-        const rows = document.querySelectorAll("#dataTable tbody tr");
-        rows.forEach(row => { row.style.display = ""; });
-    });
-</script>
 
 <script>
     let lastRFID = null;

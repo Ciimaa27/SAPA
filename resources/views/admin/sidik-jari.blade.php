@@ -20,26 +20,45 @@
         </div>
 
         <div class="card mb-3 p-3">
-            <div class="d-flex align-items-center gap-3">
-                <div class="d-flex align-items-center gap-2">
-                    <a href="{{ route('iot.index', ['tab' => 'rfid']) }}" class="btn btn-tab">RFID</a>
-                    <a href="{{ route('iot.index', ['tab' => 'sidik-jari']) }}" class="btn btn-tab active">Sidik Jari</a>
-                </div>
-                <div class="d-flex align-items-center gap-2 search-flex">
-                    <div class="input-group input-group-sm">
-                        <span class="input-group-text bg-white"><i class="fa fa-search"></i></span>
-                       <input
-                                type="text"
-                                id="searchInput"
-                                class="form-control"
-                                placeholder="Pencarian"
-                                value="{{ request('search') }}"
-                            >
+            <div class="d-flex align-items-center gap-2">
+
+                <a href="{{ route('iot.index', ['tab' => 'rfid']) }}"
+                class="btn btn-tab">
+                    RFID
+                </a>
+
+                <a href="{{ route('iot.index', ['tab' => 'sidik-jari']) }}"
+                class="btn btn-tab active">
+                    Sidik Jari
+                </a>
+
+                <form method="GET"
+                    action="{{ route('iot.index', ['tab' => 'sidik-jari']) }}"
+                    class="d-flex align-items-center gap-2 mb-0">
+
+                    <div class="input-group input-group-sm" style="width:260px;">
+                        <span class="input-group-text bg-white">
+                            <i class="fa fa-search"></i>
+                        </span>
+
+                        <input type="text"
+                            name="search"
+                            class="form-control"
+                            value="{{ request('search') }}"
+                            placeholder="Pencarian...">
                     </div>
-                    <button type="button" class="btn btn-refresh btn-sm" id="refreshTable" title="Tampilkan semua data">
-                        <i class="fa fa-refresh"></i> Refresh
+
+                    <button type="submit" class="btn btn-refresh btn-sm">
+                        Cari
                     </button>
-                </div>
+
+                    <a href="{{ route('iot.index',['tab'=>'sidik-jari']) }}"
+                    class="btn btn-refresh btn-sm">
+                        Refresh
+                    </a>
+
+                </form>
+
             </div>
         </div>
 
@@ -242,67 +261,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let fingerprintHalaman = sessionStorage.getItem(
         'fingerprint_halaman'
     );
-
-
-    // =====================================================
-    // SEARCH
-    // =====================================================
-    const searchInput = document.getElementById('searchInput');
-
-    let searchTimer = null;
-
-    if (searchInput) {
-
-        searchInput.addEventListener('input', function () {
-
-            clearTimeout(searchTimer);
-
-            searchTimer = setTimeout(() => {
-
-                const keyword = searchInput.value.trim();
-
-                const url = new URL(window.location.href);
-
-                if (keyword !== '') {
-
-                    url.searchParams.set(
-                        'search',
-                        keyword
-                    );
-
-                } else {
-
-                    url.searchParams.delete('search');
-                }
-
-                url.searchParams.delete('page');
-
-                window.location.href = url.toString();
-
-            }, 500);
-        });
-    }
-
-
-    // =====================================================
-    // REFRESH
-    // =====================================================
-    const refreshButton =
-        document.getElementById('refreshTable');
-
-    if (refreshButton) {
-
-        refreshButton.addEventListener('click', function () {
-
-            const url = new URL(window.location.href);
-
-            url.searchParams.delete('search');
-            url.searchParams.delete('page');
-
-            window.location.href = url.toString();
-        });
-    }
-
 
     // =====================================================
     // LOAD FINGERPRINT TERAKHIR
