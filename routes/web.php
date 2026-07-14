@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\LupaPasswordController;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Wali\DashboardController as WaliDashboardController;
+use App\Http\Controllers\Api\FingerprintEnrollController;
+use App\Http\Controllers\Admin\PengaturanController;
 
 
 /*
@@ -153,6 +155,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::view('/tambah-data-rfid', 'admin.tambah-data-rfid')->name('tambah-data-rfid');
     Route::get('/latest-rfid', [RFIDController::class, 'latestRFID']);
     Route::get('/latest-fingerprint', [RFIDController::class, 'latestFingerprint']);
+    Route::post('/fingerprint/cek-siswa',[FingerprintEnrollController::class, 'cekSiswa']);
+    Route::post('/fingerprint/enroll-result',[FingerprintEnrollController::class, 'store']);
 
     // JADWAL & PENJEMPUTAN
     Route::get('/jadwal-pulang', [JadwalPulangController::class, 'index'])->name('jadwal-pulang');
@@ -171,10 +175,16 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/laporan/kehadiran/export/{id_kelas}',[LaporanController::class, 'exportKehadiran'])->name('laporan.kehadiran.export');
     Route::get('/laporan/penjemputan/export/{id_kelas}',[LaporanController::class, 'exportPenjemputan'])->name('laporan.penjemputan.export');
 
-   // Arsip Siswa
-   Route::get('/arsip-siswa', [ArsipSiswaController::class, 'index'])->name('arsip-siswa');
-   Route::get('/admin/arsip-siswa/{tahun}/{status}/export',[ArsipSiswaController::class, 'exportByYear'])->name('arsip-siswa.export');
-   Route::get('/arsip-siswa/{tahun}/{status}', [ArsipSiswaController::class, 'showByYear'])->name('arsip-siswa.tahun');
+    // Arsip Siswa
+    Route::get('/arsip-siswa', [ArsipSiswaController::class, 'index'])->name('arsip-siswa');
+    Route::get('/admin/arsip-siswa/{tahun}/{status}/export',[ArsipSiswaController::class, 'exportByYear'])->name('arsip-siswa.export');
+    Route::get('/arsip-siswa/{tahun}/{status}', [ArsipSiswaController::class, 'showByYear'])->name('arsip-siswa.tahun');
+
+    Route::get('/pengaturan', [PengaturanController::class, 'index'])
+        ->name('admin.pengaturan');
+
+    Route::post('/pengaturan', [PengaturanController::class, 'update'])
+        ->name('admin.pengaturan.update');
 });
 
 

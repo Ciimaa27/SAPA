@@ -105,6 +105,14 @@
                 Arsip siswa
             </a>
         </li>
+
+        {{-- PENGATURAN SISTEM --}}
+        <li class="menu-item {{ request()->routeIs('admin.pengaturan*') ? 'active' : '' }}">
+            <a href="{{ route('admin.pengaturan') }}">
+                <i class="fa-solid fa-gear"></i>
+                Pengaturan Sistem
+            </a>
+        </li>
     </ul>
 
     {{-- LOGOUT --}}

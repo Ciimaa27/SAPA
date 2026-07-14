@@ -7,6 +7,7 @@ use App\Services\FonnteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Throwable;
+use App\Models\PengaturanSistem;
 
 class AbsensiRfidController extends Controller
 {
@@ -24,6 +25,21 @@ class AbsensiRfidController extends Controller
         ]);
 
         $uid = strtoupper(trim($request->uid));
+
+        $uid = strtoupper(trim($request->uid));
+
+        // =========================
+        // CEK STATUS SISTEM
+        // =========================
+
+        $pengaturan = PengaturanSistem::first();
+
+        if ($pengaturan && $pengaturan->status_sistem == 'nonaktif') {
+            return response()->json([
+                'status' => 'disabled',
+                'pesan' => 'Sistem sedang dinonaktifkan'
+            ], 200);
+        }
 
         // =========================
         // CARI SISWA

@@ -7,6 +7,7 @@ use App\Services\FonnteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Throwable;
+use App\Models\PengaturanSistem;
 
 class PenjemputanFingerprintController extends Controller
 {
@@ -27,6 +28,14 @@ class PenjemputanFingerprintController extends Controller
         $uid = strtoupper(trim($request->uid));
         $fingerprintId = $request->id_jari;
 
+        $pengaturan = PengaturanSistem::first();
+
+        if ($pengaturan && $pengaturan->status_sistem == 'nonaktif') {
+            return response()->json([
+                'status' => 'disabled',
+                'pesan'  => 'Sistem sedang dinonaktifkan'
+            ], 200);
+        }
 
         // =========================
         // CARI SISWA
