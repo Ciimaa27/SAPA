@@ -80,6 +80,35 @@ class PenjemputanFingerprintController extends Controller
 
 
         // =========================
+        // CEK KEHADIRAN HARI INI
+        // =========================
+
+        $sudahHadir = DB::table('kehadiran')
+            ->where('id_siswa', $siswa->id_siswa)
+            ->whereDate('tanggal', now()->toDateString())
+            ->where('status_hadir', 'hadir')
+            ->exists();
+
+        if (!$sudahHadir) {
+
+            DB::table('log_tap')->insert([
+                'id_device' => 2,
+                'uid_rfid' => $uid,
+                'fingerprint_id' => $fingerprintId,
+                'keterangan' => 'penjemputan ditolak',
+                'status' => 'gagal',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            return response()->json([
+            'status'      => 'belum_hadir',
+            'nama_siswa'  => $siswa->nama_siswa,
+            'kelas'       => $siswa->nama_kelas ?? '-',
+            'pesan'       => 'Siswa belum melakukan absensi masuk.'
+            ], 200);
+        }
+        // =========================
         // CARI PENJEMPUT
         // =========================
 
