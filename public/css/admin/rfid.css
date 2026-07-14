@@ -323,10 +323,10 @@ button.btn-danger {
     .container-dashboard{
         max-width:100%;
     }
-    .card .d-flex.align-items-center.gap-3{
-        flex-direction:column;
-        align-items:stretch !important;
-        gap:10px !important;
+    .card .d-flex.align-items-center{
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 10px !important;
     }
     .btn-tab{
         text-align:center;
@@ -395,4 +395,23 @@ button.btn-danger {
         padding:5px 8px;
         font-size:11px;
     }
+}
+
+@media (max-width:768px){
+
+    .card form{
+        width:100%;
+        display:flex;
+        flex-wrap:wrap;
+        gap:8px;
+    }
+
+    .card form .input-group{
+        width:100% !important;
+    }
+
+    .card form .btn{
+        flex:1;
+    }
+
 }
