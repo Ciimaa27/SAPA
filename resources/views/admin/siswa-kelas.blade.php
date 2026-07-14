@@ -158,8 +158,21 @@ document.querySelectorAll('.status-group').forEach(group => {
 
     buttons.forEach(btn => {
         btn.addEventListener('click', function () {
+
+            // Jika tombol yang sama diklik lagi
+            if (this.classList.contains('active')) {
+                this.classList.remove('active');
+                statusInput.value = ''; // kosongkan status
+                return;
+            }
+
+            // Hilangkan active dari semua tombol
             buttons.forEach(button => button.classList.remove('active'));
+
+            // Aktifkan tombol yang dipilih
             this.classList.add('active');
+
+            // Simpan status
             statusInput.value = this.dataset.status;
         });
     });

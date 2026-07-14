@@ -219,10 +219,15 @@ class GuruKelasController extends Controller
         foreach ($status as $id_siswa => $status_hadir) {
             $status_hadir = strtolower(trim($status_hadir));
 
-            // LEWATI STATUS KOSONG
-            if ($status_hadir === '') {
-                continue;
-            }
+        if ($status_hadir === '') {
+
+            DB::table('kehadiran')
+                ->where('id_siswa', $id_siswa)
+                ->where('tanggal', $tanggal)
+                ->delete();
+
+            continue;
+        }
 
             $keteranganText = $keterangan[$id_siswa] ?? null;
 
