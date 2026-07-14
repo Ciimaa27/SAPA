@@ -66,16 +66,25 @@
                 <!-- NAMA WALI -->
                 <div class="form-group">
                     <label>Nama wali siswa</label>
-                    <select name="id_wali" class="form-select">
+                    <select name="id_wali" id="selectWali" class="form-select">
                         <option value="">-- Pilih wali --</option>
                         @foreach($wali as $item)
-                            <option value="{{ $item->id_wali }}" {{ $item->id_wali == old('id_wali', $relasi->id_wali) ? 'selected' : '' }}>
+                            <option value="{{ $item->id_wali }}" data-no-hp="{{ $item->no_hp }}" {{ $item->id_wali == old('id_wali', $relasi->id_wali) ? 'selected' : '' }}>
                                 {{ $item->nama_wali }}
                             </option>
                         @endforeach
                     </select>
                     <small class="form-text">
                         *Pilih wali siswa, dan pastikan relasi sudah benar
+                    </small>
+                </div>
+
+                <!-- NO. TELEPON -->
+                <div class="form-group">
+                    <label for="nomorTlp">Nomor telepon</label>
+                    <input type="text" id="nomorTlp" class="form-control" value="{{ optional($wali->firstWhere('id_wali', old('id_wali', $relasi->id_wali)))->no_hp ?? '' }}" readonly>
+                    <small class="form-text">
+                        *Nomor telepon wali akan muncul otomatis saat memilih nama wali
                     </small>
                 </div>
 
@@ -104,3 +113,22 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const selectWali = document.getElementById('selectWali');
+    const nomorTlp = document.getElementById('nomorTlp');
+
+    if (!selectWali || !nomorTlp) return;
+
+    const updateNomorTlp = () => {
+        const selectedOption = selectWali.options[selectWali.selectedIndex];
+        nomorTlp.value = selectedOption ? (selectedOption.getAttribute('data-no-hp') || '') : '';
+    };
+
+    selectWali.addEventListener('change', updateNomorTlp);
+    updateNomorTlp();
+});
+</script>
+@endpush

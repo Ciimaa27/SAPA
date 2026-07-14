@@ -29,3 +29,13 @@ Route::post('/fingerprint/enroll-result', [
 
 Route::post('/reset/fingerprint', [ResetDataController::class, 'resetFingerprint']);
 Route::post('/reset/siswa', [ResetDataController::class, 'resetSiswa']);
+
+Route::get('/status-sistem', function () {
+
+    $pengaturan = \App\Models\PengaturanSistem::first();
+
+    return response()->json([
+        'status' => $pengaturan->status_sistem
+    ]);
+
+});

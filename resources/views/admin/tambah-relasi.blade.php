@@ -57,13 +57,22 @@
                     <select name="id_wali" id="selectWali" class="form-select searchable-select" required>
                         <option value=""></option>
                         @foreach ($wali as $item)
-                            <option value="{{ $item->id_wali }}" {{ old('id_wali') == $item->id_wali ? 'selected' : '' }}>
+                            <option value="{{ $item->id_wali }}" data-no-hp="{{ $item->no_hp }}" {{ old('id_wali') == $item->id_wali ? 'selected' : '' }}>
                                 {{ $item->nama_wali }}
                             </option>
                         @endforeach
                     </select>
                     <small class="form-text">
                         *Ketik atau pilih nama wali siswa dengan benar
+                    </small>
+                </div>
+
+                {{-- NO. TELEPON --}}
+                <div class="form-group">
+                    <label for="nomorTlp">Nomor telepon</label>
+                    <input type="text" id="nomorTlp" class="form-control" value="{{ optional($wali->firstWhere('id_wali', old('id_wali')))->no_hp ?? '' }}" readonly>
+                    <small class="form-text">
+                        *Nomor telepon wali akan muncul otomatis saat memilih nama wali
                     </small>
                 </div>
 
@@ -125,6 +134,11 @@ $(document).ready(function () {
             $('#selectWali').val(null).trigger('change');
         }, 0);
     });
+
+    $('#selectWali').on('change', function () {
+        const selectedOption = $(this).find('option:selected');
+        $('#nomorTlp').val(selectedOption.attr('data-no-hp') || '');
+    }).trigger('change');
 });
 </script>
 @endpush
