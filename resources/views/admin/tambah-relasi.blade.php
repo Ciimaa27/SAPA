@@ -68,13 +68,20 @@
                 </div>
 
                 {{-- NO. TELEPON --}}
-                <div class="form-group">
-                    <label for="nomorTlp">Nomor telepon</label>
-                    <input type="text" id="nomorTlp" class="form-control" value="{{ optional($wali->firstWhere('id_wali', old('id_wali')))->no_hp ?? '' }}" readonly>
-                    <small class="form-text">
-                        *Nomor telepon wali akan muncul otomatis saat memilih nama wali
-                    </small>
-                </div>
+                    <div class="form-group">
+                        <label for="nomorTlp">Nomor telepon</label>
+                        <input
+                            type="text"
+                            name="no_hp"
+                            id="nomorTlp"
+                            class="form-control"
+                            placeholder="Masukkan nomor telepon"
+                            value="{{ old('no_hp', optional($wali->firstWhere('id_wali', old('id_wali')))->no_hp ?? '') }}"
+                        >
+                        <small class="form-text">
+                            *Nomor telepon akan muncul otomatis saat memilih nama wali dan masih dapat diubah
+                        </small>
+                    </div>
 
                 {{-- STATUS HUBUNGAN --}}
                     <div class="form-group">
@@ -132,13 +139,17 @@ $(document).ready(function () {
         setTimeout(function () {
             $('#selectSiswa').val(null).trigger('change');
             $('#selectWali').val(null).trigger('change');
+            $('#nomorTlp').val('');
         }, 0);
     });
 
     $('#selectWali').on('change', function () {
         const selectedOption = $(this).find('option:selected');
-        $('#nomorTlp').val(selectedOption.attr('data-no-hp') || '');
-    }).trigger('change');
+        const nomor = selectedOption.attr('data-no-hp') || '';
+        $('#nomorTlp').val(nomor);
+    });
+
+    $('#selectWali').trigger('change');
 });
 </script>
 @endpush

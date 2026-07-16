@@ -80,13 +80,20 @@
                 </div>
 
                 <!-- NO. TELEPON -->
-                <div class="form-group">
-                    <label for="nomorTlp">Nomor telepon</label>
-                    <input type="text" id="nomorTlp" class="form-control" value="{{ optional($wali->firstWhere('id_wali', old('id_wali', $relasi->id_wali)))->no_hp ?? '' }}" readonly>
-                    <small class="form-text">
-                        *Nomor telepon wali akan muncul otomatis saat memilih nama wali
-                    </small>
-                </div>
+                    <div class="form-group">
+                        <label for="nomorTlp">Nomor telepon</label>
+                        <input
+                            type="text"
+                            name="no_hp"
+                            id="nomorTlp"
+                            class="form-control"
+                            placeholder="Masukkan nomor telepon wali"
+                            value="{{ old('no_hp', optional($wali->firstWhere('id_wali', old('id_wali', $relasi->id_wali)))->no_hp ?? '') }}"
+                        >
+                        <small class="form-text">
+                            *Nomor telepon akan muncul otomatis saat memilih nama wali dan masih dapat diubah
+                        </small>
+                    </div>
 
                 <!-- STATUS HUBUNGAN -->
                 <div class="form-group">
@@ -122,12 +129,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (!selectWali || !nomorTlp) return;
 
-    const updateNomorTlp = () => {
+    function updateNomorTlp() {
         const selectedOption = selectWali.options[selectWali.selectedIndex];
         nomorTlp.value = selectedOption ? (selectedOption.getAttribute('data-no-hp') || '') : '';
-    };
+    }
 
     selectWali.addEventListener('change', updateNomorTlp);
+
+    // Tampilkan nomor telepon saat halaman pertama kali dibuka
     updateNomorTlp();
 });
 </script>
