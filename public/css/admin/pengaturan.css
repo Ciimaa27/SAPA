@@ -169,7 +169,7 @@
     border:none;
     border-radius:8px;
     padding:14px;
-    background:#1f8a70;
+    background:#6f42c1;
     color:#fff;
     font-size:16px;
     font-weight:600;
@@ -178,7 +178,15 @@
 }
 
 .btn-save:hover{
-    background:#166b56;
+    background:#5a32a3;
+}
+
+.btn-save:active{
+    background:#4c2b8a;
+}
+
+.btn-save i{
+    margin-right:8px;
 }
 
 /* ===========================
